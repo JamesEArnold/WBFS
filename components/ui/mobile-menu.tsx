@@ -3,8 +3,8 @@ const hamburgerSvg = <svg fill="none" height="24" viewBox="0 0 24 24" width="24"
 
 export const MobileMenu = () => {
   return (
-    <div className="flex flex-col justify-center">
+    <button className="flex flex-col justify-center ">
       { hamburgerSvg }
-    </div>
+    </button>
   )
 };

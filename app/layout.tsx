@@ -6,7 +6,7 @@ const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
   title: 'Weisburn for Sheriff',
-  description: 'Website created by James Arnold',
+  description: 'The official site for the Stark County Republican Sheriff Representative Eric Weisburn.',
 }
 
 export default function RootLayout({

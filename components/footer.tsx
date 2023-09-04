@@ -8,7 +8,7 @@ export const Footer = () => {
       <Button className="uppercase p-8 font-bold text-lg drop-shadow-lg rounded-md">Contribute</Button>
       <hr className="h-px my-8 bg-gray-800 opacity-25 border-0 dark:bg-gray-700"></hr>
     </div>
-    <div className="flex flex-col mx-auto w-full h-full mt-6">
+    <div className="flex flex-col mx-auto w-full h-full mt-4">
       <Image
           priority
           src="/logo.svg"
