@@ -10,7 +10,6 @@ module.exports = {
     'eslint:recommended',
     'next/core-web-vitals',
     'next',
-    'plugin:cypress/recommended',
   ],
   parserOptions: {
     ecmaVersion: 2020,
