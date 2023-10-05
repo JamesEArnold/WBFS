@@ -13,7 +13,7 @@ export default function Home() {
   const [toggleRefresh, setToggleRefresh] = useState(false);
 
   useEffect(() => {
-    const donately = window.Donately;
+    const donately = (window as any).Donately;
 
     if (donately) {
       donately.init({
