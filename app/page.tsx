@@ -19,21 +19,13 @@ const structuredSeo = JSON.stringify({
 export default function Home() {
   return (
     <>
-      <Meta 
-        ogType='website'
-        structuredData={structuredSeo}
-      />
-      <header className="top-0 sticky z-50 shadow-md">
-        <MainNav />
-      </header>
-      <main className="relative flex flex-col md:mx-auto md:max-w-7xl">
+      <main className="relative flex flex-col max-w-full md:mx-auto md:max-w-7xl">
         <HeroSlide />
         <CallToActionTop />
         <MainAccordion />
         <AboutMe />
         <Carousel />
         <CallToActionBottom />
-        <Footer />
       </main>
     </>
   )

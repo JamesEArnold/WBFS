@@ -3,12 +3,12 @@ import Image from "next/image";
 
 export const Footer = () => {
   return <div className="bg-yellow-400">
-    <div className="flex flex-col w-10/12 mx-auto mt-6">
-      <Button className="uppercase p-8 font-bold text-lg drop-shadow-lg rounded-md my-2">Volunteer</Button>
-      <Button className="uppercase p-8 font-bold text-lg drop-shadow-lg rounded-md">Contribute</Button>
-      <hr className="h-px my-8 bg-gray-800 opacity-25 border-0 dark:bg-gray-700"></hr>
+    <div className="flex flex-col w-10/12 pt-6 mx-auto">
+      <Button className="p-8 my-2 text-lg font-bold uppercase rounded-md drop-shadow-lg">Volunteer</Button>
+      <Button className="p-8 text-lg font-bold uppercase rounded-md drop-shadow-lg">Contribute</Button>
+      <hr className="h-px my-8 bg-gray-800 border-0 opacity-25 dark:bg-gray-700"></hr>
     </div>
-    <div className="flex flex-col mx-auto w-full h-full mt-4">
+    <div className="flex flex-col w-full h-full mx-auto mt-4">
       <Image
           priority
           src="/logo.svg"
@@ -17,14 +17,14 @@ export const Footer = () => {
           width={380}
           className="mx-auto"
         />
-        <div className="flex w-8/12 uppercase mx-auto border-2 border-black opacity-40 my-2 rounded">
+        <div className="flex w-8/12 mx-auto my-2 uppercase border-2 border-black rounded opacity-40">
           <span className="mx-auto py-3 text-[11px] opacity-100">Paid for by Weisburn for Sheriff</span>
         </div>
-        <div className="flex flex-col w-8/12 mx-auto text-sm opacity-60 mt-4">
+        <div className="flex flex-col w-8/12 mx-auto mt-4 text-sm opacity-60">
           <span className="mx-auto">123 Fake Street Canton, OH 44701</span>
           <span className="mx-auto"> weisburnforsheriff@gmail.com</span>
         </div>
-        <div className="flex flex-center justify-center mt-4 mb-20">
+        <div className="flex justify-center mt-4 mb-20 flex-center">
           { /* TODO: Make these buttons, and then actually link them to the socials */}
           <Image
             src="/icon-facebook.svg"
