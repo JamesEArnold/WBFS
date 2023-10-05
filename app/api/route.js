@@ -1,6 +1,6 @@
-const http = require('http');
-const httpProxy = require('http-proxy');
-const auth = require('basic-auth');
+import http from 'http';
+import httpProxy from 'http-proxy';
+import auth from 'basic-auth';
 
 // Create a proxy server with custom application logic
 const proxy = httpProxy.createProxyServer({changeOrigin: true, autoRewrite: true, hostRewrite: true, followRedirects: true});
