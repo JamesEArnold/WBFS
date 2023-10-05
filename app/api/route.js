@@ -15,10 +15,14 @@ const server = http.createServer(function(req, res) {
 
   
   
-  // console.log('ORIGIN:', process.env.ORIGIN);
+  console.log('ORIGIN:', process.env.ORIGIN);
+  console.log('PASSWORD')
   
   const credentials = auth(req);
+  console.log('WERE AUTHED');
   if (!credentials || !isAuthed(credentials, username, password)) {
+    console.log('WERE DENIED');
+
     res.statusCode = 401;
     res.setHeader('WWW-Authenticate', 'Basic realm="example"');
     res.end('Access denied.');
@@ -40,7 +44,7 @@ const server = http.createServer(function(req, res) {
   
 });
 
-const port = process.env.AWS_LAMBDA_RUNTIME_API.split(':')[1];
+// const port = process.env.AWS_LAMBDA_RUNTIME_API.split(':')[1];
 console.log(`simple-basic-http-auth-proxy for Vercel started on port ${port}`);
 server.listen(port);
 
