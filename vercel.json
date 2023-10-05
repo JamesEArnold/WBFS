@@ -6,6 +6,6 @@
     }
   },
   "routes": [
-    {"src": "/(.*)", "dest": "/app/api/node-proxy.js"}
+    {"src": "/(.*)", "dest": "/api/node-proxy.js"}
   ]
 }
