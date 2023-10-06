@@ -24,7 +24,7 @@ export const Footer = () => {
           <span className="mx-auto">123 Fake Street Canton, OH 44701</span>
           <span className="mx-auto"> weisburnforsheriff@gmail.com</span>
         </div>
-        <div className="flex justify-center mt-4 mb-20 flex-center">
+        <div className="flex justify-center mt-4 mb-10 flex-center">
           { /* TODO: Make these buttons, and then actually link them to the socials */}
           <Image
             src="/icon-facebook.svg"
