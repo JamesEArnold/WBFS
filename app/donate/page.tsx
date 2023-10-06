@@ -38,7 +38,8 @@ export default function Home() {
   })
   return (
     <>
-      <main className="relative flex flex-col max-w-full md:mx-auto md:max-w-7xl">
+      <span>Please do not donate, this is a demo. Your money will be lost.</span>
+      <main className="relative flex flex-col max-w-full mt-3 md:mx-auto md:max-w-7xl">
         <script src="https://cdn.donately.com/dntly-core/1.8/core.min.js" type="text/javascript"></script>
         <div id="donation-form"></div>
       </main>
