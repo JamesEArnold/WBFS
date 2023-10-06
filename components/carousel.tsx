@@ -4,13 +4,13 @@ import Image from "next/image";
 export const Carousel = () => {
   return (
     <>
-      <div className="relative max-h-[17rem] w-full pt-8 overflow-hidden md:hidden">
+      <div className="relative max-h-[17rem] h-[40rem] w-full overflow-hidden md:hidden px-3">
         <Image
           src="/hof-bridge.jpg"
           width="0"
           height="0"
           sizes="100vw"
-          className="relative w-full h-full -translate-y-16 top-1/2"
+          className="relative w-full h-full"
           alt="Weisburn for Sheriff Hero Image"
         />
       </div>
