@@ -34,32 +34,33 @@ export const MainNav = () => {
           alt="Weisburn For Sheriff"
           height={100}
           width={220} />
-        <div className="hidden md:flex">
+        <div className="hidden md:flex md:mr-16">
           <NavigationMenu>
             <NavigationMenuList>
               <NavigationMenuItem>
-                <NavigationMenuTrigger>Home</NavigationMenuTrigger>
-                <NavigationMenuContent>
-                  <NavigationMenuLink>Link</NavigationMenuLink>
-                </NavigationMenuContent>
+                <Link href="/about" legacyBehavior passHref>
+                  <NavigationMenuLink className={`bg-black text-yellow-400 ${navigationMenuTriggerStyle()}`}>
+                    Home
+                  </NavigationMenuLink>
+                </Link>
               </NavigationMenuItem>
               <NavigationMenuItem>
                 <Link href="/about" legacyBehavior passHref>
-                  <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                  <NavigationMenuLink className={`bg-black text-yellow-400 ${navigationMenuTriggerStyle()}`}>
                     About
                   </NavigationMenuLink>
                 </Link>
               </NavigationMenuItem>
               <NavigationMenuItem>
                 <Link href="/news" legacyBehavior passHref>
-                  <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                  <NavigationMenuLink className={`bg-black text-yellow-400 ${navigationMenuTriggerStyle()}`}>
                     News
                   </NavigationMenuLink>
                 </Link>
               </NavigationMenuItem>
               <NavigationMenuItem>
                 <Link href="/volunteer" legacyBehavior passHref>
-                  <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                  <NavigationMenuLink className={`bg-black text-yellow-400 ${navigationMenuTriggerStyle()}`}>
                     Volunteer
                   </NavigationMenuLink>
                 </Link>
@@ -68,7 +69,7 @@ export const MainNav = () => {
           </NavigationMenu>
         </div>
         <div className="flex gap-2">
-          <MobileMenu onClick={() => setIsMobileNavOpen(!isMobileNavOpen)} />
+          <MobileMenu classNames="md:hidden" onClick={() => setIsMobileNavOpen(!isMobileNavOpen)} />
           <ButtonContribution />
         </div>
       </div>

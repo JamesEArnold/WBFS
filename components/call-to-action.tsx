@@ -3,7 +3,7 @@ import { EmailSignupForm } from "./ui/email-signup";
 
 export const CallToActionTop = () => {
   return (
-    <section className="p-3 min-h-[50vh]">
+    <section className="p-3 min-h-[50vh] md:hidden">
       <div className="bg-yellow-400 min-h-[48vh] py-16 text-center">
         <div className="mx-auto md:max-w-3xl">
           <h2 className="uppercase font-bold tracking-[0.2em] text-white">Stay Updated</h2>
@@ -12,20 +12,24 @@ export const CallToActionTop = () => {
           <EmailSignupForm />
           <div className="flex justify-center mt-4 flex-center">
             { /* TODO: Make these buttons, and then actually link them to the socials */}
-            <Image
-              src="/icon-facebook.svg"
-              width="50"
-              height="50"
-              alt="Weisburn for Sheriff Facebook"
-              className="mx-2"
-            />
-            <Image
-              src="/icon-twitter.png"
-              width="50"
-              height="50"
-              alt="Weisburn for Sheriff Twitter"
-              className="mx-2"
-            />
+            <a href="https://facebook.com/weisburnforsheriff">
+              <Image
+                src="/icon-facebook.svg"
+                width="50"
+                height="50"
+                alt="Weisburn for Sheriff Facebook"
+                className="mx-2"
+              />
+            </a>
+            <a href="https://instagram.com/weisburnforsheriff">
+              <Image
+                src="/icon-instagram.svg"
+                width="45"
+                height="45"
+                alt="Weisburn for Sheriff Twitter"
+                className="mx-2 mt-[2px]"
+              />
+            </a>
           </div>
         </div>
       </div>
@@ -42,20 +46,24 @@ export const CallToActionBottom = () => {
         <EmailSignupForm />
         <div className="flex justify-center mt-4 flex-center">
           { /* TODO: Make these buttons, and then actually link them to the socials */}
-          <Image
-            src="/icon-facebook.svg"
-            width="50"
-            height="50"
-            alt="Weisburn for Sheriff Facebook"
-            className="mx-2"
-          />
-          <Image
-            src="/icon-twitter.png"
-            width="50"
-            height="50"
-            alt="Weisburn for Sheriff Twitter"
-            className="mx-2"
-          />
+          <a href="https://facebook.com/weisburnforsheriff">
+            <Image
+              src="/icon-facebook.svg"
+              width="50"
+              height="50"
+              alt="Weisburn for Sheriff Facebook"
+              className="mx-2"
+            />
+          </a>
+          <a href="https://instagram.com/weisburnforsheriff">
+            <Image
+              src="/icon-instagram.svg"
+              width="45"
+              height="45"
+              alt="Weisburn for Sheriff Twitter"
+              className="mx-2 mt-[3px]"
+            />
+          </a>
         </div>
       </div>
     </section>

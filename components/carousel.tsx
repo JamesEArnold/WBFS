@@ -2,16 +2,38 @@ import Image from "next/image";
 
 
 export const Carousel = () => {
-  return (<div className="relative max-h-[17rem] w-full pt-16 overflow-hidden">
-      { /* TODO: Make this a sliding carousel of Stark County images. Just implement
-      the flow for now and we'll put the real pictures in later.  */}
-      <Image
-      src="/canton-image-1.jpg"
-      width="0"
-      height="0"
-      sizes="100vw"
-      className="w-full h-1/2"
-      alt="Weisburn for Sheriff Hero Image"
-      />
-</div>)
+  return (
+    <>
+      <div className="relative max-h-[17rem] w-full pt-8 overflow-hidden md:hidden">
+        <Image
+          src="/hof-bridge.jpg"
+          width="0"
+          height="0"
+          sizes="100vw"
+          className="relative w-full h-full -translate-y-16 top-1/2"
+          alt="Weisburn for Sheriff Hero Image"
+        />
+      </div>
+      <div className="relative gap-4 max-h-[30rem] pt-4 px-3 overflow-hidden hidden md:flex">
+          <Image
+            src="/hof-bridge.jpg"
+            width="0"
+            height="0"
+            sizes="100vw"
+            className="w-full h-[20.5rem]"
+            alt="Weisburn for Sheriff Hero Image"
+            objectFit="contain"
+          />
+          <Image
+            src="/flag.jpg"
+            width="0"
+            height="0"
+            sizes="100vw"
+            className="w-full h-[20.5rem]"
+            alt="Weisburn for Sheriff Hero Image"
+            objectFit="contain"
+          />
+        </div>
+    </>
+  )
 };

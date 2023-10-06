@@ -53,13 +53,13 @@ export function EmailSignupForm() {
           render={({ field }) => (
             <FormItem>
               <FormControl>
-                <Input placeholder="Email address" {...field} className="w-3/4 m-auto mt-6 h-10px drop-shadow-md rounded-md" />
+                <Input placeholder="Email address" {...field} className="w-3/4 m-auto mt-6 rounded-md h-10px drop-shadow-md" />
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
-        <Button type="submit" className="uppercase p-8 font-bold text-lg drop-shadow-md rounded-md">Get Involved</Button>
+        <Button type="submit" className="p-8 text-lg font-bold uppercase bg-black rounded-md drop-shadow-md">Get Involved</Button>
       </form>
     </Form>
 )};
