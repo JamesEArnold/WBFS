@@ -24,49 +24,54 @@ export const MainNav = () => {
 
 
   return (
-    <><div className="sticky z-10 flex justify-between min-w-full bg-yellow-400 md:min-w-full">
-      <Image
-        priority
-        src="/logo.svg"
-        alt="Weisburn For Sheriff"
-        height={100}
-        width={220} />
-      <div className="hidden md:flex">
-        <NavigationMenu>
-          <NavigationMenuList>
-            <NavigationMenuItem>
-              <NavigationMenuTrigger>Home</NavigationMenuTrigger>
-              <NavigationMenuContent>
-                <NavigationMenuLink>Link</NavigationMenuLink>
-              </NavigationMenuContent>
-            </NavigationMenuItem>
-            <NavigationMenuItem>
-              <Link href="/about" legacyBehavior passHref>
-                <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                  About
-                </NavigationMenuLink>
-              </Link>
-            </NavigationMenuItem>
-            <NavigationMenuItem>
-              <Link href="/news" legacyBehavior passHref>
-                <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                  News
-                </NavigationMenuLink>
-              </Link>
-            </NavigationMenuItem>
-            <NavigationMenuItem>
-              <Link href="/volunteer" legacyBehavior passHref>
-                <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                  Volunteer
-                </NavigationMenuLink>
-              </Link>
-            </NavigationMenuItem>
-          </NavigationMenuList>
-        </NavigationMenu>
+    <>
+    <div className="sticky z-10 flex justify-between min-w-full bg-yellow-400 md:min-w-full">
+      <div className="min-w-full md:min-w-[1024px] md:mx-auto">
+      <div className="flex justify-between min-w-full md:mx-auto md:px-3">
+        <Image
+          priority
+          src="/logo.svg"
+          alt="Weisburn For Sheriff"
+          height={100}
+          width={220} />
+        <div className="hidden md:flex">
+          <NavigationMenu>
+            <NavigationMenuList>
+              <NavigationMenuItem>
+                <NavigationMenuTrigger>Home</NavigationMenuTrigger>
+                <NavigationMenuContent>
+                  <NavigationMenuLink>Link</NavigationMenuLink>
+                </NavigationMenuContent>
+              </NavigationMenuItem>
+              <NavigationMenuItem>
+                <Link href="/about" legacyBehavior passHref>
+                  <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                    About
+                  </NavigationMenuLink>
+                </Link>
+              </NavigationMenuItem>
+              <NavigationMenuItem>
+                <Link href="/news" legacyBehavior passHref>
+                  <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                    News
+                  </NavigationMenuLink>
+                </Link>
+              </NavigationMenuItem>
+              <NavigationMenuItem>
+                <Link href="/volunteer" legacyBehavior passHref>
+                  <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                    Volunteer
+                  </NavigationMenuLink>
+                </Link>
+              </NavigationMenuItem>
+            </NavigationMenuList>
+          </NavigationMenu>
+        </div>
+        <div className="flex gap-2">
+          <MobileMenu onClick={() => setIsMobileNavOpen(!isMobileNavOpen)} />
+          <ButtonContribution />
+        </div>
       </div>
-      <div className="flex gap-2">
-        <MobileMenu onClick={() => setIsMobileNavOpen(!isMobileNavOpen)} />
-        <ButtonContribution />
       </div>
     </div>
       <>

@@ -19,7 +19,7 @@ const structuredSeo = JSON.stringify({
 export default function Home() {
   return (
     <>
-      <main className="relative flex flex-col max-w-full md:mx-auto md:max-w-7xl">
+      <main className="relative flex flex-col max-w-full md:mx-auto md:max-w-5xl">
         <HeroSlide />
         <CallToActionTop />
         <MainAccordion />
