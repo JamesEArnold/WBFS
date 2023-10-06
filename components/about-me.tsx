@@ -4,14 +4,14 @@ import { Button } from "./ui/button";
 export const AboutMe = () => {
   return (
     <section>
-      <div className="px-3">
+      <div className="px-3 mt-3">
         <div className="relative max-h-[17rem] w-full pt-4 overflow-hidden md:hidden">
           <Image
               src="/canton-image-2.jpg"
               width="0"
               height="0"
               sizes="100vw"
-              className="w-full h-1/2"
+              className="relative w-full -translate-y-16 h-1/2 top-1/2"
               alt="Weisburn for Sheriff Hero Image"
               />
         </div>
