@@ -45,8 +45,15 @@ const server = http.createServer(function(req, res) {
 });
 
 // const port = process.env.AWS_LAMBDA_RUNTIME_API.split(':')[1];
-console.log(`simple-basic-http-auth-proxy for Vercel started on port ${3000}`);
-server.listen(3000);
+console.log('connections: ', server.connections());
+if (server.connections() === 0) {
+  console.log(`simple-basic-http-auth-proxy for Vercel started on port ${3000}`);
+  try {
+    server.listen(3000);
+  } catch (error) {
+    console.log(JSON.stringify(error));
+  }
+}
 
 
 const isAuthed = function (credentials, username, password) {
