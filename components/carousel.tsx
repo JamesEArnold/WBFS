@@ -6,7 +6,7 @@ export const Carousel = () => {
     <>
       <div className="relative max-h-[17rem] h-[40rem] w-full overflow-hidden md:hidden px-3">
         <Image
-          src="/hof-bridge.jpg"
+          src="/flag.jpg"
           width="0"
           height="0"
           sizes="100vw"
