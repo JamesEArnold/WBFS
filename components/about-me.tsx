@@ -4,7 +4,7 @@ import { Button } from "./ui/button";
 export const AboutMe = () => {
   return (
     <section>
-      <div className="mt-3 md:px-3">
+      <div className="px-3 mt-3">
         <div className="relative max-h-[17rem] h-[40rem] w-full overflow-hidden md:hidden">
           <Image
               src="/canton-image-2.jpg"

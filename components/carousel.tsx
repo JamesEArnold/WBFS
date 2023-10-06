@@ -4,7 +4,7 @@ import Image from "next/image";
 export const Carousel = () => {
   return (
     <>
-      <div className="relative max-h-[17rem] h-[40rem] w-full overflow-hidden md:hidden">
+      <div className="relative max-h-[17rem] h-[40rem] w-full overflow-hidden md:hidden px-3">
         <Image
           src="/hof-bridge.jpg"
           width="0"
