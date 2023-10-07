@@ -28,7 +28,7 @@ export const HeroSlide = () => {
         </div>
         <div className="z-20 hidden w-full min-h-full py-16 text-center bg-yellow-400 md:block md:max-w-3xl md:mx-auto">
           <h2 className="uppercase font-bold tracking-[0.2em] text-white">stay updated</h2>
-          <h2 className="text-4xl font-bold uppercase">Protecting</h2>
+          <h2 className="text-4xl font-bold uppercase">Serving</h2>
           <h2 className="text-4xl font-bold uppercase">Stark County</h2>
           <EmailSignupForm />
           <div className="flex justify-center mt-4 flex-center">

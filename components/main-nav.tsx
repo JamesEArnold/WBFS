@@ -28,12 +28,14 @@ export const MainNav = () => {
     <div className="sticky z-10 flex justify-between min-w-full bg-yellow-400 md:min-w-full">
       <div className="min-w-full md:min-w-[1024px] md:mx-auto">
       <div className="flex justify-between min-w-full md:mx-auto md:px-3">
-        <Image
-          priority
-          src="/ElectWeisburn.png"
-          alt="Weisburn For Sheriff"
-          height={50}
-          width={150} />
+        {/* <div className="absolute top-0 left-0 bg-yellow-400"> */}
+          <Image
+            priority
+            src="/ElectWeisburn.png"
+            alt="Weisburn For Sheriff"
+            height={50}
+            width={150} />
+        {/* </div> */}
         <div className="hidden md:flex md:mr-16">
           <NavigationMenu>
             <NavigationMenuList>
