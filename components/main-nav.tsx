@@ -31,7 +31,7 @@ export const MainNav = () => {
         {/* <div className="absolute top-0 left-0 bg-yellow-400"> */}
           <Image
             priority
-            src="/ElectWeisburn.png"
+            src="/ElectWeisburnForSheriff.png"
             alt="Weisburn For Sheriff"
             height={50}
             width={150} />

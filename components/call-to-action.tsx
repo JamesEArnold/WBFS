@@ -41,7 +41,7 @@ export const CallToActionBottom = () => {
   return (
     <section className="p-3 min-h-[30vh]">
       <div className="min-h-[30vh] py-16 text-center md:max-w-3xl md:mx-auto">
-        <h2 className="uppercase font-bold tracking-[0.2em] text-weisburn-orange">join the team</h2>
+        <h2 className="uppercase font-bold tracking-[0.2em] text-yellow-400">join the team</h2>
         <h2 className="text-4xl font-bold uppercase">Get Involved</h2>
         <EmailSignupForm />
         <div className="flex justify-center mt-4 flex-center">

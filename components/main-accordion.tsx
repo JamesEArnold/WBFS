@@ -22,7 +22,7 @@ export function MainAccordion() {
             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
           </AccordionContent>
         </AccordionItem>
-        <AccordionItem value="item-2" className="bg-yellow-500">
+        <AccordionItem value="item-2" className="bg-[#fbd43b]">
             <AccordionTrigger className="justify-center font-bold uppercase">
               <span>
                 <FontAwesomeIcon icon={faClipboard} style={{color: "#000",}} className="px-3"/> 
@@ -33,7 +33,7 @@ export function MainAccordion() {
             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
             </AccordionContent>
         </AccordionItem>
-        <AccordionItem value="item-3" className="bg-yellow-600">
+        <AccordionItem value="item-3" className="bg-[#fcdd62]">
           <AccordionTrigger className="justify-center font-bold uppercase">
             <span>
               <FontAwesomeIcon icon={faHandshake} className="px-3"/> 
