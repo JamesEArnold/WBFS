@@ -6,7 +6,7 @@ export const HeroSlide = () => {
     // <div className="relative max-h-[17rem] w-full p-3 overflow-hidden">
     <>
     { /* Mobile Hero Image */}
-      <div className="relative max-h-[30rem] md:hidden max-w-md mx-auto md:w-full p-3 overflow-hidden">
+      <div className="relative max-h-[30rem] md:hidden max-w-md mx-auto md:w-full py-3 px-3 overflow-hidden">
         <Image
           src="/sheriffweisburn1.jpg"
           width="0"
@@ -16,16 +16,17 @@ export const HeroSlide = () => {
           alt="Weisburn for Sheriff Hero Image" />
       </div>
       { /* Desktop Hero Image */ }
-      <div className="relative hidden p-3 mx-auto overflow-hidden md:inline-block md:w-full">
-        <Image
-          src="/GradientHeroImagePerfect.png"
-          width="0"
-          height="0"
-          sizes="100vw"
-          className="w-full"
-          alt="Weisburn for Sheriff Hero Image" />
-      </div>
-        <div className="min-h-[48vh] absolute hidden md:block w-1/2 h-1/2 z-20 py-16 text-center md:max-w-3xl md:mx-auto top-0 left-0 translate-x-3/4">
+      <div className="hidden p-3 md:flex">
+        <div className="relative hidden max-w-[25rem] overflow-hidden md:inline-block mr-3">
+          <Image
+            src="/sheriffweisburn1.jpg"
+            width="0"
+            height="0"
+            sizes="100vw"
+            className="w-full"
+            alt="Weisburn for Sheriff Hero Image" />
+        </div>
+        <div className="z-20 hidden w-full min-h-full py-16 text-center bg-yellow-400 md:block md:max-w-3xl md:mx-auto">
           <h2 className="uppercase font-bold tracking-[0.2em] text-white">stay updated</h2>
           <h2 className="text-4xl font-bold uppercase">Protecting</h2>
           <h2 className="text-4xl font-bold uppercase">Stark County</h2>
@@ -48,6 +49,7 @@ export const HeroSlide = () => {
             />
           </div>
         </div>
+      </div>
   </>
   )
 };
