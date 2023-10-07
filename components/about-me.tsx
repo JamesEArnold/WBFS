@@ -7,7 +7,7 @@ export const AboutMe = () => {
       <div className="px-3 mt-3">
         <div className="relative max-h-[17rem] h-[40rem] w-full overflow-hidden md:hidden">
           <Image
-              src="/sheriff-trunk.jpg"
+              src="/cruiser.jpg"
               width="0"
               height="0"
               sizes="100vw"
@@ -17,7 +17,7 @@ export const AboutMe = () => {
         </div>
         <div className="relative gap-4 max-h-[30rem] pt-4 overflow-hidden hidden md:flex">
           <Image
-            src="/sheriff-trunk.jpg"
+            src="/cruiser.jpg"
             width="0"
             height="0"
             sizes="100vw"
