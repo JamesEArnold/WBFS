@@ -38,7 +38,7 @@ export const AboutMe = () => {
             about me
           </h2>
           <h2 className="py-3 text-3xl font-extrabold uppercase bg-yellow-400">
-            meet sheriff <br /> eric weisburn
+            meet <br /> eric weisburn
           </h2>
           <p className="py-3">
           Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. 
