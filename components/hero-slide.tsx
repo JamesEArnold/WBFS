@@ -26,27 +26,40 @@ export const HeroSlide = () => {
             className="w-full"
             alt="Weisburn for Sheriff Hero Image" />
         </div>
-        <div className="z-20 hidden w-full min-h-full py-16 text-center bg-yellow-400 md:block md:max-w-3xl md:mx-auto">
-          <h2 className="uppercase font-bold tracking-[0.2em] text-white">stay updated</h2>
-          <h2 className="text-4xl font-bold uppercase">Serving</h2>
-          <h2 className="text-4xl font-bold uppercase">Stark County</h2>
-          <EmailSignupForm />
-          <div className="flex justify-center mt-4 flex-center">
-            { /* TODO: Make these buttons, and then actually link them to the socials */}
-            <Image
-              src="/icon-facebook.svg"
-              width="50"
-              height="50"
-              alt="Weisburn for Sheriff Facebook"
-              className="mx-2"
-            />
-            <Image
-              src="/icon-instagram.svg"
-              width="50"
-              height="50"
-              alt="Weisburn for Sheriff Twitter"
-              className="mx-2"
-            />
+        <div className="relative hidden w-full my-auto mr-3 overflow-hidden md:inline-block">
+          <Image
+            src="/ElectWeisburnForSheriff.png"
+            width="0"
+            height="0"
+            sizes="100vw"
+            className="w-full bg-yellow-400"
+            alt="Weisburn for Sheriff Hero Image" />
+        </div>
+      </div>
+      <div className="px-3">
+        <div className="z-20 hidden w-full min-h-full py-16 mb-3 text-center border-[22px] border-yellow-400 md:block md:mx-auto">
+          <div className="max-w-3xl mx-auto">
+            <h2 className="uppercase font-bold tracking-[0.2em] text-yellow-400">stay updated</h2>
+            <h2 className="text-4xl font-bold uppercase">Serving</h2>
+            <h2 className="text-4xl font-bold uppercase">Stark County</h2>
+            <EmailSignupForm />
+            <div className="flex justify-center mt-4 flex-center">
+              { /* TODO: Make these buttons, and then actually link them to the socials */}
+              <Image
+                src="/icon-facebook.svg"
+                width="50"
+                height="50"
+                alt="Weisburn for Sheriff Facebook"
+                className="mx-2"
+              />
+              <Image
+                src="/icon-instagram.svg"
+                width="50"
+                height="50"
+                alt="Weisburn for Sheriff Twitter"
+                className="mx-2"
+              />
+            </div>
           </div>
         </div>
       </div>
