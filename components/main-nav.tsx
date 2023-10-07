@@ -30,10 +30,10 @@ export const MainNav = () => {
       <div className="flex justify-between min-w-full md:mx-auto md:px-3">
         <Image
           priority
-          src="/logo.svg"
+          src="/ElectWeisburn.png"
           alt="Weisburn For Sheriff"
-          height={100}
-          width={220} />
+          height={50}
+          width={150} />
         <div className="hidden md:flex md:mr-16">
           <NavigationMenu>
             <NavigationMenuList>
