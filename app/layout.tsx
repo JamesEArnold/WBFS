@@ -6,6 +6,8 @@ import { globalMeta } from '@/components/seo/globalMeta';
 import { MainNav } from '@/components/main-nav';
 import { Footer } from '@/components/footer';
 import Head from 'next/head';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -39,6 +41,18 @@ export default function RootLayout({
       />
       <header className="sticky top-0 z-50 shadow-md">
         <MainNav />
+        <ToastContainer
+          position="top-center"
+          autoClose={5000}
+          hideProgressBar={true}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="light"
+        />
       </header>
         {children}
       <Footer />
