@@ -29,12 +29,16 @@ export const MainNav = () => {
       <div className="min-w-full md:min-w-[1024px] md:mx-auto">
       <div className="flex justify-between min-w-full md:mx-auto md:px-3">
         {/* <div className="absolute top-0 left-0 bg-yellow-400"> */}
+        <Link href="/" legacyBehavior passHref>
           <Image
             priority
             src="/ElectWeisburnForSheriffText.png"
             alt="Weisburn For Sheriff"
             height={50}
-            width={150} />
+            width={150}
+            className="cursor-pointer"
+          />
+        </Link>
         {/* </div> */}
         <div className="hidden md:flex md:mr-16">
           <NavigationMenu>
@@ -53,13 +57,13 @@ export const MainNav = () => {
                   </NavigationMenuLink>
                 </Link>
               </NavigationMenuItem>
-              <NavigationMenuItem>
+              {/* <NavigationMenuItem>
                 <Link href="/news" legacyBehavior passHref>
                   <NavigationMenuLink className={`bg-black text-yellow-400 ${navigationMenuTriggerStyle()}`}>
                     News
                   </NavigationMenuLink>
                 </Link>
-              </NavigationMenuItem>
+              </NavigationMenuItem> */}
               <NavigationMenuItem>
                 <Link href="/volunteer" legacyBehavior passHref>
                   <NavigationMenuLink className={`bg-black text-yellow-400 ${navigationMenuTriggerStyle()}`}>

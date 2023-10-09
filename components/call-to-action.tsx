@@ -6,9 +6,9 @@ export const CallToActionTop = () => {
     <section className="p-3 min-h-[50vh] md:hidden">
       <div className="bg-yellow-400 min-h-[48vh] py-16 text-center">
         <div className="mx-auto md:max-w-3xl">
-          <h2 className="uppercase font-bold tracking-[0.2em] text-white">Stay Updated</h2>
-          <h2 className="text-4xl font-bold uppercase">Serving</h2>
-          <h2 className="text-4xl font-bold uppercase">Stark County</h2>
+          {/* <h2 className="uppercase font-bold tracking-[0.2em] text-white">Stay Updated</h2> */}
+          <h2 className="text-4xl font-bold uppercase">Stay Updated</h2>
+          <h2 className="text-4xl font-bold uppercase">Throughout my Campaign</h2>
           <EmailSignupForm />
           <div className="flex justify-center mt-4 flex-center">
             { /* TODO: Make these buttons, and then actually link them to the socials */}

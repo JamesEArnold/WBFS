@@ -15,11 +15,11 @@ export function MainAccordion() {
           <AccordionTrigger className="justify-center font-bold uppercase">
             <span>
               <FontAwesomeIcon icon={faCheckToSlot} className="px-3"/> 
-              Priorities
+              Events
             </span>
           </AccordionTrigger>
-          <AccordionContent className="px-3">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+          <AccordionContent className="px-3 text-lg text-center">
+            Check back in the near future for events.
           </AccordionContent>
         </AccordionItem>
         <AccordionItem value="item-2" className="bg-[#fbd43b]">
@@ -29,8 +29,12 @@ export function MainAccordion() {
                 Volunteer 
               </span>
             </AccordionTrigger>
-            <AccordionContent className="px-3">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+            <AccordionContent className="px-3 text-lg text-center">
+            I need boots on the ground. Stand by my side as I fight for a better Stark County.
+            Let our voices be heard.
+            <br />
+            <br />
+            Are <span className="font-bold">YOU</span> with me?            
             </AccordionContent>
         </AccordionItem>
         <AccordionItem value="item-3" className="bg-[#fcdd62]">
@@ -40,8 +44,11 @@ export function MainAccordion() {
               Contribute
             </span>
           </AccordionTrigger>
-          <AccordionContent className="px-3">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+          <AccordionContent className="px-3 text-lg text-center">
+          Your donation <span className="font-bold">WILL</span> make a huge impact.
+          <br />
+          <br />
+Thank you for your Support.          
           </AccordionContent>
         </AccordionItem>
       </Accordion>
