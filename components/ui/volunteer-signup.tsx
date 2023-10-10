@@ -171,7 +171,7 @@ export function VolunteerSignupForm() {
           control={form.control}
           name="tshirt"
           render={({ field }) => (
-            <FormItem className="flex flex-row items-start w-3/4 p-3 m-auto space-x-3 space-y-0 bg-white border rounded-md shadow text-start">
+            <FormItem className="flex flex-row items-start w-3/4 p-3 m-auto space-x-3 space-y-0 rounded-md text-start">
               <FormControl>
                 <Checkbox
                   checked={Boolean(field.value)}
@@ -190,7 +190,7 @@ export function VolunteerSignupForm() {
           control={form.control}
           name="campaignevents"
           render={({ field }) => (
-            <FormItem className="flex flex-row items-start w-3/4 p-3 mx-auto space-x-3 bg-white border rounded-md shadow text-start">
+            <FormItem className="flex flex-row items-start w-3/4 p-3 mx-auto space-x-3 rounded-md text-start">
               <FormControl className="align-middle">
                 <Checkbox
                   checked={Boolean(field.value)}
@@ -210,7 +210,7 @@ export function VolunteerSignupForm() {
           control={form.control}
           name="parade"
           render={({ field }) => (
-            <FormItem className="flex flex-row items-start w-3/4 p-3 m-auto space-x-3 space-y-0 bg-white border rounded-md shadow text-start">
+            <FormItem className="flex flex-row items-start w-3/4 p-3 m-auto space-x-3 space-y-0 rounded-md text-start">
               <FormControl>
                 <Checkbox
                   checked={Boolean(field.value)}
@@ -229,7 +229,7 @@ export function VolunteerSignupForm() {
           control={form.control}
           name="yardsign"
           render={({ field }) => (
-            <FormItem className="flex flex-row items-start w-3/4 p-3 m-auto space-x-3 space-y-0 bg-white border rounded-md shadow text-start">
+            <FormItem className="flex flex-row items-start w-3/4 p-3 m-auto space-x-3 space-y-0 rounded-md text-start">
               <FormControl>
                 <Checkbox
                   checked={Boolean(field.value)}
@@ -248,7 +248,7 @@ export function VolunteerSignupForm() {
           control={form.control}
           name="phonecalls"
           render={({ field }) => (
-            <FormItem className="flex flex-row items-start w-3/4 p-3 m-auto space-x-3 space-y-0 bg-white border rounded-md shadow text-start">
+            <FormItem className="flex flex-row items-start w-3/4 p-3 m-auto space-x-3 space-y-0 rounded-md text-start">
               <FormControl>
                 <Checkbox
                   checked={Boolean(field.value)}
@@ -267,7 +267,7 @@ export function VolunteerSignupForm() {
           control={form.control}
           name="knockdoors"
           render={({ field }) => (
-            <FormItem className="flex flex-row items-start w-3/4 p-3 m-auto space-x-3 space-y-0 bg-white border rounded-md shadow text-start">
+            <FormItem className="flex flex-row items-start w-3/4 p-3 m-auto space-x-3 space-y-0 rounded-md text-start">
               <FormControl>
                 <Checkbox
                   checked={Boolean(field.value)}
