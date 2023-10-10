@@ -34,7 +34,7 @@ const formSchema = z.object({
   last_name: z.string(),
   email: z.string().email().min(1, { message: "Please provide an email." }).email("Please provide a valid email address."),
   phone_number: z.string().regex(phoneRegex, 'Please provide a valid phone number'),
-  tshirt: z.string(),
+  tshirt: z.boolean(),
   campaignevents: z.boolean(),
   parade: z.boolean(),
   yardsign: z.boolean(),
@@ -53,7 +53,7 @@ export function VolunteerSignupForm() {
       last_name: "",
       email: "",
       phone_number: "",
-      tshirt: '',
+      tshirt: false,
       campaignevents: false,
       parade: false,
       yardsign: false,
@@ -69,6 +69,16 @@ export function VolunteerSignupForm() {
     axios
     .put("/volunteerList", {
       mail: values.email,
+      first_name: values.first_name,
+      last_name: values.last_name,
+      phone_number: values.phone_number,
+      tshirt: values.tshirt,
+      campaignevents: values.campaignevents,
+      parade: values.parade,
+      yardsign: values.yardsign,
+      knockdoors: values.knockdoors,
+      phonecalls: values.phonecalls,
+      about: values.about,
     })
     .then((result) => {
       if (result.status === 200) {
