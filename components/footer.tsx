@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { Button } from "./ui/button";
 import Image from "next/image";
 
@@ -5,8 +6,10 @@ export const Footer = () => {
   return <div className="bg-white">
     <div className="bg-yellow-400">
       <div className="flex flex-col w-10/12 py-6 mx-auto md:flex-row md:max-w-5xl md:justify-center">
-        <Button className="gap-4 p-8 my-2 text-lg font-bold uppercase bg-black rounded-md drop-shadow-lg md:w-64 md:mr-2">Volunteer</Button>
-        <Button className="gap-4 p-8 my-2 text-lg font-bold uppercase bg-black rounded-md drop-shadow-lg md:w-64">Contribute</Button>
+        {/* <Button className="gap-4 p-8 my-2 text-lg font-bold uppercase bg-black rounded-md drop-shadow-lg md:w-64 md:mr-2">Volunteer</Button> */}
+        <Link href="/donate" legacyBehavior passHref>
+          <Button className="gap-4 p-8 my-2 text-lg font-bold uppercase bg-black rounded-md drop-shadow-lg md:w-64">Contribute</Button>
+        </Link>
       </div>
     </div>
     {/* <hr className="w-8/12 h-px mx-auto my-8 bg-gray-800 border-0 opacity-25 dark:bg-gray-700"></hr> */}

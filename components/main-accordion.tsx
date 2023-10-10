@@ -6,6 +6,7 @@ import {
 } from "@/components/ui/accordion"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCheckToSlot, faClipboard, faHandshake } from '@fortawesome/free-solid-svg-icons'
+import { VolunteerSignupForm } from "./ui/volunteer-signup"
 
 export function MainAccordion() {
   return (
@@ -34,7 +35,9 @@ export function MainAccordion() {
             Let our voices be heard.
             <br />
             <br />
-            Are <span className="font-bold">YOU</span> with me?            
+            Are <span className="font-bold">YOU</span> with me?  
+
+            {/* <VolunteerSignupForm />           */}
             </AccordionContent>
         </AccordionItem>
         <AccordionItem value="item-3" className="bg-[#fcdd62]">

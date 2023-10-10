@@ -37,7 +37,7 @@ export const HeroSlide = () => {
         </div>
       </div>
       <div className="px-3">
-        <div className="z-20 hidden w-full min-h-full py-16 mb-3 text-center border-[22px] border-yellow-400 md:block md:mx-auto">
+        <div className="z-20 hidden w-full min-h-full py-16 mb-3 text-center border-[22px] border-yellow-400 md:block md:mx-auto" id="tempVolunteer">
           <div className="max-w-3xl mx-auto">
             {/* <h2 className="uppercase font-bold tracking-[0.2em] text-yellow-400">stay updated</h2> */}
             <h2 className="text-4xl font-bold uppercase">Stay Updated</h2>

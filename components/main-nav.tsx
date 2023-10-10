@@ -50,13 +50,13 @@ export const MainNav = () => {
                   </NavigationMenuLink>
                 </Link>
               </NavigationMenuItem>
-              <NavigationMenuItem>
+              {/* <NavigationMenuItem>
                 <Link href="/about" legacyBehavior passHref>
                   <NavigationMenuLink className={`bg-black text-yellow-400 ${navigationMenuTriggerStyle()}`}>
                     About
                   </NavigationMenuLink>
                 </Link>
-              </NavigationMenuItem>
+              </NavigationMenuItem> */}
               {/* <NavigationMenuItem>
                 <Link href="/news" legacyBehavior passHref>
                   <NavigationMenuLink className={`bg-black text-yellow-400 ${navigationMenuTriggerStyle()}`}>
@@ -64,13 +64,13 @@ export const MainNav = () => {
                   </NavigationMenuLink>
                 </Link>
               </NavigationMenuItem> */}
-              <NavigationMenuItem>
+              {/* <NavigationMenuItem>
                 <Link href="/volunteer" legacyBehavior passHref>
                   <NavigationMenuLink className={`bg-black text-yellow-400 ${navigationMenuTriggerStyle()}`}>
                     Volunteer
                   </NavigationMenuLink>
                 </Link>
-              </NavigationMenuItem>
+              </NavigationMenuItem> */}
             </NavigationMenuList>
           </NavigationMenu>
         </div>
@@ -94,14 +94,14 @@ export const MainNav = () => {
                   Home
                 </Link>
               </li>
-              <li>
+              {/* <li>
                 <a href="#"
                   className="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-yellow-400/30 active:bg-yellow-400/30 md:p-0"
                   onClick={() => setIsMobileNavOpen(false)}
                 >
                   About
                 </a>
-              </li>
+              </li> */}
               <li>
                 <Link
                   href="/donate"

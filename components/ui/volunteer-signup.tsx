@@ -19,6 +19,8 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { startTransition, useState } from "react"
 import PulseLoader from "react-spinners/PulseLoader";
+import { Checkbox } from "./checkbox"
+import { Label } from "./label"
 
 // TODO: You can add .refine() to this to make an async call to pass more validations
 // ie do we already have this email in the database?
@@ -28,11 +30,11 @@ const phoneRegex = new RegExp(
 );
 
 const formSchema = z.object({
-  firstName: z.string(),
-  lastName: z.string(),
+  first_name: z.string(),
+  last_name: z.string(),
   email: z.string().email().min(1, { message: "Please provide an email." }).email("Please provide a valid email address."),
-  phone: z.string().regex(phoneRegex, 'Please provide a valid phone number'),
-  tshirt: z.boolean(),
+  phone_number: z.string().regex(phoneRegex, 'Please provide a valid phone number'),
+  tshirt: z.string(),
   campaignevents: z.boolean(),
   parade: z.boolean(),
   yardsign: z.boolean(),
@@ -41,17 +43,17 @@ const formSchema = z.object({
   about: z.string(),
 })
 
-export function EmailSignupForm() {
+export function VolunteerSignupForm() {
   const [emailSubmit, setEmailSubmit] = useState<'initial' | 'pending' | 'complete'>('initial');
   // 1. Define your form.
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      firstName: "",
-      lastName: "",
+      first_name: "",
+      last_name: "",
       email: "",
-      phone: "",
-      tshirt: false,
+      phone_number: "",
+      tshirt: '',
       campaignevents: false,
       parade: false,
       yardsign: false,
@@ -94,13 +96,61 @@ export function EmailSignupForm() {
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+      <FormField
+          control={form.control}
+          name="first_name"
+          render={({ field }) => (
+            <FormItem>
+              <FormControl>
+                <Input placeholder="First Name" {...field} className="w-3/4 m-auto mt-6 rounded-md h-10px drop-shadow-md" />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="last_name"
+          render={({ field }) => (
+            <FormItem>
+              <FormControl>
+                <Input placeholder="Last Name" {...field} className="w-3/4 m-auto mt-6 rounded-md h-10px drop-shadow-md" />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
         <FormField
           control={form.control}
           name="email"
           render={({ field }) => (
+            <FormItem aria-required>
+              <FormControl>
+                <Input placeholder="Email address" {...field} className="w-3/4 m-auto mt-6 rounded-md h-10px drop-shadow-md" required={true} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="phone_number"
+          render={({ field }) => (
             <FormItem>
               <FormControl>
-                <Input placeholder="Email address" {...field} className="w-3/4 m-auto mt-6 rounded-md h-10px drop-shadow-md" />
+                <Input placeholder="Phone Number" {...field} className="w-3/4 m-auto mt-6 rounded-md h-10px drop-shadow-md" />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="tshirt"
+          render={({ field }) => (
+            <FormItem>
+              <FormControl>
+              <Input type="checkbox" {...field} className="w-3/4 m-auto mt-6 rounded-md h-10px drop-shadow-md" />
               </FormControl>
               <FormMessage />
             </FormItem>
