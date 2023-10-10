@@ -37,7 +37,7 @@ export function MainAccordion() {
             <br />
             Are <span className="font-bold">YOU</span> with me?  
 
-            {/* <VolunteerSignupForm />           */}
+            <VolunteerSignupForm />          
             </AccordionContent>
         </AccordionItem>
         <AccordionItem value="item-3" className="bg-[#fcdd62]">

@@ -125,8 +125,13 @@ export function VolunteerSignupForm() {
           name="email"
           render={({ field }) => (
             <FormItem aria-required>
+              <div className="flex justify-start w-3/4 m-auto">
+                <FormLabel className="text-xs">
+                  *Required
+                </FormLabel>
+              </div>
               <FormControl>
-                <Input placeholder="Email address" {...field} className="w-3/4 m-auto mt-6 rounded-md h-10px drop-shadow-md" required={true} />
+                <Input placeholder="Email address" {...field} className="w-3/4 mx-auto rounded-md h-10px drop-shadow-md" required={true} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -144,15 +149,121 @@ export function VolunteerSignupForm() {
             </FormItem>
           )}
         />
+        <div className="flex w-3/4 mx-auto">
+          <span className="border-b-2 border-black text-start">What are you interested in?</span>
+        </div>
         <FormField
           control={form.control}
           name="tshirt"
           render={({ field }) => (
-            <FormItem>
+            <FormItem className="flex flex-row items-start w-3/4 p-3 m-auto space-x-3 space-y-0 bg-white border rounded-md shadow text-start">
               <FormControl>
-              <Input type="checkbox" {...field} className="w-3/4 m-auto mt-6 rounded-md h-10px drop-shadow-md" />
+                <Checkbox
+                  checked={Boolean(field.value)}
+                  onCheckedChange={field.onChange}
+                />
               </FormControl>
-              <FormMessage />
+              <div className="space-y-1 leading-none">
+                <FormLabel>
+                  I'd like a T-shirt
+                </FormLabel>
+              </div>
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="campaignevents"
+          render={({ field }) => (
+            <FormItem className="flex flex-row items-start w-3/4 p-3 mx-auto space-x-3 bg-white border rounded-md shadow text-start">
+              <FormControl className="align-middle">
+                <Checkbox
+                  checked={Boolean(field.value)}
+                  onCheckedChange={field.onChange}
+                  className="my-auto align-middle"
+                />
+              </FormControl>
+              <div className="flex my-auto space-y-1 leading-none">
+                <FormLabel className="mb-2 align-middle">
+                  I'd like to attend campaign events
+                </FormLabel>
+              </div>
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="parade"
+          render={({ field }) => (
+            <FormItem className="flex flex-row items-start w-3/4 p-3 m-auto space-x-3 space-y-0 bg-white border rounded-md shadow text-start">
+              <FormControl>
+                <Checkbox
+                  checked={Boolean(field.value)}
+                  onCheckedChange={field.onChange}
+                />
+              </FormControl>
+              <div className="space-y-1 leading-none">
+                <FormLabel>
+                  I'd like to walk in a parade
+                </FormLabel>
+              </div>
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="yardsign"
+          render={({ field }) => (
+            <FormItem className="flex flex-row items-start w-3/4 p-3 m-auto space-x-3 space-y-0 bg-white border rounded-md shadow text-start">
+              <FormControl>
+                <Checkbox
+                  checked={Boolean(field.value)}
+                  onCheckedChange={field.onChange}
+                />
+              </FormControl>
+              <div className="space-y-1 leading-none">
+                <FormLabel>
+                  I'd like a yard sign
+                </FormLabel>
+              </div>
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="phonecalls"
+          render={({ field }) => (
+            <FormItem className="flex flex-row items-start w-3/4 p-3 m-auto space-x-3 space-y-0 bg-white border rounded-md shadow text-start">
+              <FormControl>
+                <Checkbox
+                  checked={Boolean(field.value)}
+                  onCheckedChange={field.onChange}
+                />
+              </FormControl>
+              <div className="space-y-1 leading-none">
+                <FormLabel>
+                  I'd like to make phone calls
+                </FormLabel>
+              </div>
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="knockdoors"
+          render={({ field }) => (
+            <FormItem className="flex flex-row items-start w-3/4 p-3 m-auto space-x-3 space-y-0 bg-white border rounded-md shadow text-start">
+              <FormControl>
+                <Checkbox
+                  checked={Boolean(field.value)}
+                  onCheckedChange={field.onChange}
+                />
+              </FormControl>
+              <div className="space-y-1 leading-none">
+                <FormLabel>
+                  I'd like to knock on doors
+                </FormLabel>
+              </div>
             </FormItem>
           )}
         />
