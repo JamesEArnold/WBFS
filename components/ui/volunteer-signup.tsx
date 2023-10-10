@@ -151,9 +151,14 @@ export function VolunteerSignupForm() {
           control={form.control}
           name="phone_number"
           render={({ field }) => (
-            <FormItem>
+            <FormItem aria-required>
+              <div className="flex justify-start w-3/4 m-auto">
+                <FormLabel className="text-xs">
+                  *Required
+                </FormLabel>
+              </div>
               <FormControl>
-                <Input placeholder="Phone Number" {...field} className="w-3/4 m-auto mt-6 rounded-md h-10px drop-shadow-md" />
+                <Input placeholder="Phone Number" {...field} className="w-3/4 mx-auto rounded-md h-10px drop-shadow-md" />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -194,7 +199,7 @@ export function VolunteerSignupForm() {
                 />
               </FormControl>
               <div className="flex my-auto space-y-1 leading-none">
-                <FormLabel className="mb-2 align-middle">
+                <FormLabel className="align-middle">
                   I'd like to attend campaign events
                 </FormLabel>
               </div>
@@ -278,7 +283,7 @@ export function VolunteerSignupForm() {
           )}
         />
         <Button type="submit" className="w-56 max-w-[224px] p-8 text-lg font-bold uppercase bg-black rounded-md drop-shadow-md">
-          { emailSubmit === 'initial' && 'Get Involved' }
+          { emailSubmit === 'initial' && 'Sign Up' }
           { emailSubmit === 'pending' && 
             <PulseLoader
               color={'#facc15'}
