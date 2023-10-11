@@ -45,20 +45,24 @@ export const HeroSlide = () => {
             <EmailSignupForm />
             <div className="flex justify-center mt-4 flex-center">
               { /* TODO: Make these buttons, and then actually link them to the socials */}
-              <Image
-                src="/icon-facebook.svg"
-                width="50"
-                height="50"
-                alt="Weisburn for Sheriff Facebook"
-                className="mx-2"
-              />
-              <Image
-                src="/icon-instagram.svg"
-                width="50"
-                height="50"
-                alt="Weisburn for Sheriff Twitter"
-                className="mx-2"
-              />
+              <a href="https://facebook.com/weisburnforsheriff">
+                <Image
+                  src="/icon-facebook.svg"
+                  width="50"
+                  height="50"
+                  alt="Weisburn for Sheriff Facebook"
+                  className="mx-2"
+                />
+              </a>
+              <a href="https://instagram.com/weisburnforsheriff">
+                <Image
+                  src="/icon-instagram.svg"
+                  width="50"
+                  height="50"
+                  alt="Weisburn for Sheriff Twitter"
+                  className="mx-2"
+                />
+              </a>
             </div>
           </div>
         </div>
