@@ -32,6 +32,21 @@ export default function Home() {
             alt="Weisburn for Sheriff Hero Image" />
         </div>
       </div>
+      <div className="flex flex-col mb-4 text-center">
+        <div className="p-4 mx-auto bg-gray-300 rounded shadow-md w-fit">
+          <span>Checks are accepted and can be made payable to:</span>
+          <br />
+          <blockquote className="font-bold">
+            Weisburn For Sheriff 
+            <br />
+            1102 Park Village
+            <br />
+            Louisville, OH 44641
+            <br />
+            <span className="text-xs font-normal">*Can not accept corporate checks</span>
+          </blockquote>
+        </div>
+      </div>
       </main>
       {/* { toggleRefresh && <div>Please refresh the page. This is only broken for development purposes.</div>} */}
     </>
