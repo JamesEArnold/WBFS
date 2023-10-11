@@ -51,7 +51,7 @@ export function MainAccordion() {
           Your donation <span className="font-bold">WILL</span> make a huge impact.
           <br />
           <br />
-Thank you for your Support.          
+          Thank you for your Support.
           </AccordionContent>
         </AccordionItem>
       </Accordion>
