@@ -34,7 +34,6 @@ const formSchema = z.object({
   last_name: z.string(),
   email: z.string().email().min(1, { message: "Please provide an email." }).email("Please provide a valid email address."),
   phone_number: z.string().regex(phoneRegex, 'Please provide a valid phone number'),
-  tshirt: z.boolean(),
   campaignevents: z.boolean(),
   parade: z.boolean(),
   yardsign: z.boolean(),
@@ -53,7 +52,6 @@ export function VolunteerSignupForm() {
       last_name: "",
       email: "",
       phone_number: "",
-      tshirt: false,
       campaignevents: false,
       parade: false,
       yardsign: false,
@@ -72,7 +70,6 @@ export function VolunteerSignupForm() {
       first_name: values.first_name,
       last_name: values.last_name,
       phone_number: values.phone_number,
-      tshirt: values.tshirt,
       campaignevents: values.campaignevents,
       parade: values.parade,
       yardsign: values.yardsign,
@@ -167,25 +164,6 @@ export function VolunteerSignupForm() {
         <div className="flex w-3/4 mx-auto">
           <span className="border-b-2 border-black text-start">What are you interested in?</span>
         </div>
-        <FormField
-          control={form.control}
-          name="tshirt"
-          render={({ field }) => (
-            <FormItem className="flex flex-row items-start w-3/4 p-3 m-auto space-x-3 space-y-0 rounded-md text-start">
-              <FormControl>
-                <Checkbox
-                  checked={Boolean(field.value)}
-                  onCheckedChange={field.onChange}
-                />
-              </FormControl>
-              <div className="space-y-1 leading-none">
-                <FormLabel>
-                  I'd like a T-shirt
-                </FormLabel>
-              </div>
-            </FormItem>
-          )}
-        />
         <FormField
           control={form.control}
           name="campaignevents"
