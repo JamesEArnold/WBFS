@@ -4,8 +4,8 @@ export default function Home() {
   return (
     <main className="relative flex flex-col max-w-full my-8 md:mx-auto md:max-w-5xl">
       <div className="flex">
-        <div>
-          <div className="absolute z-20 max-w-3xl mx-auto shadow-md md:top-80 md:left-7 left-7 top-64">
+        <div className="max-h-fit">
+          <div className="absolute z-20 max-w-3xl mx-auto shadow-md md:top-80 md:left-7 top-[6%]">
             <h2 className="px-3 font-semibold tracking-widest uppercase bg-white">
               about me
             </h2>
