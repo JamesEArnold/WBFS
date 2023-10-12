@@ -13,7 +13,9 @@ export const HeroSlide = () => {
           height="0"
           sizes="100vw"
           className="w-full h-1/2"
-          alt="Weisburn for Sheriff Hero Image" />
+          alt="Weisburn for Sheriff Hero Image" 
+          priority
+        />
       </div>
       { /* Desktop Hero Image */ }
       <div className="hidden p-3 md:flex">
@@ -24,7 +26,9 @@ export const HeroSlide = () => {
             height="0"
             sizes="100vw"
             className="w-full"
-            alt="Weisburn for Sheriff Hero Image" />
+            alt="Weisburn for Sheriff Hero Image" 
+            priority
+            />
         </div>
         <div className="relative hidden w-full my-auto mr-3 overflow-hidden md:inline-block">
           <Image
