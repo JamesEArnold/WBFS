@@ -17,10 +17,19 @@ import { ButtonContribution } from "./ui/button-contribution"
 import { MobileMenu } from "./ui/mobile-menu"
 import { useState } from "react"
 import { useDetectClickOutside } from 'react-detect-click-outside';
+import { usePathname } from 'next/navigation'
+
+const determineMenuHiglight = (activePath: string, pathToCheck: string) => {
+  if (activePath.includes(pathToCheck)) {
+    return 'bg-yellow-400';
+  }
+};
 
 export const MainNav = () => {
   const [isMobileNavOpen, setIsMobileNavOpen] = useState(false);
   const clickOutsideRef = useDetectClickOutside({ onTriggered: () => setIsMobileNavOpen(isMobileNavOpen ? false : false) });
+  const pathname = usePathname()
+
 
 
   return (
@@ -50,13 +59,13 @@ export const MainNav = () => {
                   </NavigationMenuLink>
                 </Link>
               </NavigationMenuItem>
-              {/* <NavigationMenuItem>
+              <NavigationMenuItem>
                 <Link href="/about" legacyBehavior passHref>
                   <NavigationMenuLink className={`bg-black text-yellow-400 ${navigationMenuTriggerStyle()}`}>
                     About
                   </NavigationMenuLink>
                 </Link>
-              </NavigationMenuItem> */}
+              </NavigationMenuItem>
               {/* <NavigationMenuItem>
                 <Link href="/news" legacyBehavior passHref>
                   <NavigationMenuLink className={`bg-black text-yellow-400 ${navigationMenuTriggerStyle()}`}>
@@ -87,25 +96,25 @@ export const MainNav = () => {
             <ul className="flex flex-col p-4 mx-4 font-medium border-2 border-gray-100 rounded-b-lg md:p-0 bg-gray-50">
               <li>
                 <Link href="/" 
-                  className="block py-2 pl-3 pr-4 text-black bg-yellow-400 rounded hover:bg-yellow-400/30 active:bg-yellow-400/30 md:p-0"
+                  className={`block py-2 pl-3 pr-4 text-black rounded hover:bg-yellow-400/30 active:bg-yellow-400/30 md:p-0 ${determineMenuHiglight(pathname, 'home')}`}
                   aria-current="page"
                   onClick={() => setIsMobileNavOpen(false)}
                 >
                   Home
                 </Link>
               </li>
-              {/* <li>
-                <a href="#"
-                  className="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-yellow-400/30 active:bg-yellow-400/30 md:p-0"
+              <li>
+                <a href="/about"
+                  className={`block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-yellow-400/30 active:bg-yellow-400/30 md:p-0 ${determineMenuHiglight(pathname, 'about')}`}
                   onClick={() => setIsMobileNavOpen(false)}
                 >
                   About
                 </a>
-              </li> */}
+              </li>
               <li>
                 <Link
                   href="/donate"
-                  className="block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-yellow-400/30 active:bg-yellow-400/30 md:p-0"
+                  className={`block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-yellow-400/30 active:bg-yellow-400/30 md:p-0 ${determineMenuHiglight(pathname, 'donate')}`}
                   onClick={() => setIsMobileNavOpen(false)}
                 >
                   Contribute
