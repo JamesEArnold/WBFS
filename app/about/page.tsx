@@ -149,7 +149,7 @@ local fire and health codes.
           Respectfully,
           </span>
           <br />
-          <div className="relative max-h-[50rem] md:h-1/4 md:w-full h-1/2 w-1/2 overflow-hidden mb-5">
+          <div className="relative max-h-[50rem] md:h-1/4 md:w-3/4 h-1/2 w-1/2 overflow-hidden mb-5">
               <Image
                   src="/signature.png"
                   width="0"
