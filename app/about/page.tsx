@@ -19,7 +19,7 @@ export default function Home() {
           </div>
           <div className="relative max-h-[50rem] md:h-[24rem] w-full h-full overflow-hidden">
             <Image
-                src="/weisburn-family.jpg"
+                src="/weisburn-family-min.jpg"
                 width="0"
                 height="0"
                 sizes="100vw"
