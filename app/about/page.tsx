@@ -25,6 +25,7 @@ export default function Home() {
                 sizes="100vw"
                 className="relative w-full h-full scale-125"
                 alt="Weisburn for Sheriff Hero Image"
+                priority
                 />
           </div>
         </div>
