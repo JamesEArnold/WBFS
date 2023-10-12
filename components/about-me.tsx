@@ -61,9 +61,9 @@ export const AboutMe = () => {
           </p>
         </div>
         <div className="py-3 mx-3 mb-8">
-          {/* <Link href="/about" legacyBehavior passHref>
+          <Link href="/about" legacyBehavior passHref>
             <Button className="text-black uppercase bg-yellow-400 rounded hover:bg-black hover:text-yellow-400"><span className="px-6 font-bold">Learn More</span></Button>
-          </Link> */}
+          </Link>
         </div>
       </div>
     </section>
