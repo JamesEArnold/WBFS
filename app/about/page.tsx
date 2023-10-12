@@ -5,7 +5,7 @@ export default function Home() {
     <main className="relative flex flex-col max-w-full my-8 md:mx-auto md:max-w-5xl">
       <div className="flex">
         <div>
-          <div className="absolute z-20 max-w-3xl mx-auto md:top-80 md:left-7 left-7 top-64">
+          <div className="absolute z-20 max-w-3xl mx-auto shadow-md md:top-80 md:left-7 left-7 top-64">
             <h2 className="px-3 font-semibold tracking-widest uppercase bg-white">
               about me
             </h2>
@@ -17,17 +17,19 @@ export default function Home() {
               eric weisburn
             </h2>
           </div>
-          <div className="relative max-h-[50rem] md:h-[24rem] w-full h-full overflow-hidden">
-            <Image
-                src="/weisburn-family-2-min.jpg"
-                width="0"
-                height="0"
-                sizes="100vw"
-                className="relative w-full h-full scale-125"
-                alt="Weisburn for Sheriff Hero Image"
-                priority
-                />
-          </div>
+          <div className="md:p-3 md:shadow-md bg-white/50">
+            <div className="relative max-h-[50rem] md:h-[24rem] w-full h-full overflow-hidden">
+              <Image
+                  src="/weisburn-family-2-min.jpg"
+                  width="0"
+                  height="0"
+                  sizes="100vw"
+                  className="relative w-full h-full scale-125"
+                  alt="Weisburn for Sheriff Hero Image"
+                  priority
+                  />
+            </div>
+            </div>
         </div>
         <div className="hidden max-w-xs mt-5 ml-20 text-justify md:block">
           <span>
@@ -141,24 +143,39 @@ local fire and health codes.
             </span> newly elected Sheriff.</span>
           </span>
         </section>
-        <section className="my-20">
-        <span className="text-xl font-bold">
-        Respectfully,
-        </span>
-        <br />
-        <div className="relative max-h-[50rem] md:h-1/4 md:w-1/4 h-1/2 w-1/2 overflow-hidden mb-5">
-            <Image
-                src="/signature.png"
-                width="0"
-                height="0"
-                sizes="100vw"
-                className="relative w-full h-full"
-                alt="Weisburn for Sheriff Hero Image"
-                />
-          </div>
-        <span className="text-xl font-bold">
-        Eric Weisburn
-        </span>
+        <section className="flex flex-col my-20 md:flex-row">
+        <div className="my-auto md:mx-3 md:mr-16">
+          <span className="text-xl font-bold">
+          Respectfully,
+          </span>
+          <br />
+          <div className="relative max-h-[50rem] md:h-1/4 md:w-full h-1/2 w-1/2 overflow-hidden mb-5">
+              <Image
+                  src="/signature.png"
+                  width="0"
+                  height="0"
+                  sizes="100vw"
+                  className="relative w-full h-full"
+                  alt="Weisburn for Sheriff Hero Image"
+                  />
+            </div>
+          <span className="text-xl font-bold">
+          Eric Weisburn
+          </span>
+        </div>
+        <div className="p-3 mt-10 shadow-md bg-white/50">
+          <div className="relative max-h-[50rem] md:h-[22rem] md:w-full w-full h-full overflow-hidden">
+              <Image
+                  src="/weisburn-grandkids-min.jpg"
+                  width="0"
+                  height="0"
+                  sizes="100vw"
+                  className="relative w-full h-full scale-125"
+                  alt="Weisburn for Sheriff Hero Image"
+                  priority
+                  />
+            </div>
+        </div>
         </section>
       </div>
     </main>
