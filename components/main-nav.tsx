@@ -20,6 +20,10 @@ import { useDetectClickOutside } from 'react-detect-click-outside';
 import { usePathname } from 'next/navigation'
 
 const determineMenuHiglight = (activePath: string, pathToCheck: string) => {
+  if (pathToCheck === 'home' && activePath === '/') {
+    return 'bg-yellow-400';
+  }
+
   if (activePath.includes(pathToCheck)) {
     return 'bg-yellow-400';
   }
@@ -96,7 +100,7 @@ export const MainNav = () => {
             <ul className="flex flex-col p-4 mx-4 font-medium border-2 border-gray-100 rounded-b-lg md:p-0 bg-gray-50">
               <li>
                 <Link href="/" 
-                  className={`block py-2 pl-3 pr-4 text-black rounded hover:bg-yellow-400/30 active:bg-yellow-400/30 md:p-0 ${determineMenuHiglight(pathname, 'home')}`}
+                  className={`block py-2 pl-3 pr-4 text-black rounded hover:bg-yellow-400/30 active:bg-yellow-400/30 md:p-0 ${determineMenuHiglight(pathname, '')}`}
                   aria-current="page"
                   onClick={() => setIsMobileNavOpen(false)}
                 >
