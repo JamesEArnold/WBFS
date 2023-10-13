@@ -49,7 +49,7 @@ export const HeroSlide = () => {
             <EmailSignupForm />
             <div className="flex justify-center mt-4 flex-center">
               { /* TODO: Make these buttons, and then actually link them to the socials */}
-              <a href="https://facebook.com/weisburnforsheriff">
+              <a href="https://www.facebook.com/profile.php?id=61551885341330">
                 <Image
                   src="/icon-facebook.svg"
                   width="50"
