@@ -31,7 +31,7 @@ export const Footer = () => {
         </div>
         <div className="flex justify-center mt-4 mb-10 flex-center">
           { /* TODO: Make these buttons, and then actually link them to the socials */}
-          <a href="https://www.facebook.com/profile.php?id=61551885341330">
+          <a href="https://www.facebook.com/profile.php?id=61552050077933">
             <Image
               src="/icon-facebook.svg"
               width="50"
