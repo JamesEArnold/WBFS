@@ -38,26 +38,27 @@ const zipCodeRegex = new RegExp(
   /(^\d{5}$)|(^\d{5}-\d{4}$)/
 );
 
-const formSchema = z.object({
-  first_name: z.string(),
-  last_name: z.string(),
-  email: z.string().email().min(1, { message: "Please provide an email." }).email("Please provide a valid email address."),
-  phone_number: z.string().regex(phoneRegex, 'Please provide a valid phone number'),
-  campaignevents: z.boolean(),
-  parade: z.boolean(),
-  yardsign: z.boolean(),
-  knockdoors: z.boolean(),
-  phonecalls: z.boolean(),
-  about: z.string(),
-  address_line_1: z.string().regex(streetAddressRegex, 'Please provide a valid street address.'),
-  city: z.string().regex(cityRegex, 'Please provide a valid city name'),
-  postal_code: z.string().regex(zipCodeRegex, 'Please provide a valid US zip code')
-})
-
 export function VolunteerSignupForm() {
   const [emailSubmit, setEmailSubmit] = useState<'initial' | 'pending' | 'complete'>('initial');
   const yardsign = useRef(false);
   // 1. Define your form.
+
+  const formSchema = z.object({
+    first_name: z.string(),
+    last_name: z.string(),
+    email: z.string().email().min(1, { message: "Please provide an email." }).email("Please provide a valid email address."),
+    phone_number: z.string().regex(phoneRegex, 'Please provide a valid phone number'),
+    campaignevents: z.boolean(),
+    parade: z.boolean(),
+    yardsign: z.boolean(),
+    knockdoors: z.boolean(),
+    phonecalls: z.boolean(),
+    about: z.string(),
+    address_line_1: yardsign.current ? z.string().regex(streetAddressRegex, 'Please provide a valid street address.') : z.string(),
+    city: yardsign.current ? z.string().regex(cityRegex, 'Please provide a valid city name') : z.string(),
+    postal_code: yardsign.current ? z.string().regex(zipCodeRegex, 'Please provide a valid US zip code') : z.string()
+  })
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
