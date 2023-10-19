@@ -49,6 +49,18 @@ const buildCustomFields = (request: any) => {
       result['phone_number'] = request['phone_number'];
     }
 
+    if (request['address_line_1'] !== '') {
+      result['address_line_1'] = request['address_line_1'];
+    }
+
+    if (request['city'] !== '') {
+      result['city'] = request['city'];
+    }
+
+    if (request['postal_code'] !== '') {
+      result['postal_code'] = request['postal_code'];
+    }
+
     return result;
 
   };

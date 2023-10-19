@@ -17,7 +17,7 @@ import {
 import { Input } from "@/components/ui/input"
 import axios from "axios";
 import { toast } from "react-toastify";
-import { startTransition, useState } from "react"
+import { startTransition, useRef, useState } from "react"
 import PulseLoader from "react-spinners/PulseLoader";
 import { Checkbox } from "./checkbox"
 import { Label } from "./label"
@@ -27,6 +27,15 @@ import { Label } from "./label"
 // Example here: https://stackoverflow.com/questions/75148276/email-validation-with-zod
 const phoneRegex = new RegExp(
   /^([+]?[\s0-9]+)?(\d{3}|[(]?[0-9]+[)])?([-]?[\s]?[0-9])+$/
+);
+const streetAddressRegex = new RegExp(
+  /\d{1,}(\s{1}\w{1,})(\s{1}?\w{1,})+/g
+);
+const cityRegex = new RegExp(
+  /^[a-zA-Z]+(?:[\s-'.&/][a-zA-Z]+)*(?:[.|\s])?(?:[\(a-z\)])*$/
+);
+const zipCodeRegex = new RegExp(
+  /(^\d{5}$)|(^\d{5}-\d{4}$)/
 );
 
 const formSchema = z.object({
@@ -40,10 +49,14 @@ const formSchema = z.object({
   knockdoors: z.boolean(),
   phonecalls: z.boolean(),
   about: z.string(),
+  address_line_1: z.string().regex(streetAddressRegex, 'Please provide a valid street address.'),
+  city: z.string().regex(cityRegex, 'Please provide a valid city name'),
+  postal_code: z.string().regex(zipCodeRegex, 'Please provide a valid US zip code')
 })
 
 export function VolunteerSignupForm() {
   const [emailSubmit, setEmailSubmit] = useState<'initial' | 'pending' | 'complete'>('initial');
+  const yardsign = useRef(false);
   // 1. Define your form.
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -58,6 +71,9 @@ export function VolunteerSignupForm() {
       knockdoors: false,
       phonecalls: false,
       about: "",
+      address_line_1: "",
+      city: "",
+      postal_code: "",
     },
   })
  
@@ -76,6 +92,9 @@ export function VolunteerSignupForm() {
       knockdoors: values.knockdoors,
       phonecalls: values.phonecalls,
       about: values.about,
+      address_line_1: values.address_line_1,
+      city: values.city,
+      postal_code: values.postal_code,
     })
     .then((result) => {
       if (result.status === 200) {
@@ -211,7 +230,7 @@ export function VolunteerSignupForm() {
               <FormControl>
                 <Checkbox
                   checked={Boolean(field.value)}
-                  onCheckedChange={field.onChange}
+                  onCheckedChange={(events) => { field.onChange(events); yardsign.current = !yardsign.current; }}
                 />
               </FormControl>
               <div className="space-y-1 leading-none">
@@ -222,6 +241,54 @@ export function VolunteerSignupForm() {
             </FormItem>
           )}
         />
+        { yardsign.current &&
+          <><FormField
+            control={form.control}
+            name="address_line_1"
+            render={({ field }) => (
+              <FormItem aria-required>
+                <div className="flex justify-start w-3/4 m-auto">
+                  <FormLabel className="text-xs">
+                    *Required
+                  </FormLabel>
+                </div>
+                <FormControl>
+                  <Input placeholder="Street Address" {...field} className="w-3/4 mx-auto rounded-md h-10px drop-shadow-md" required={true} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )} /><FormField
+              control={form.control}
+              name="city"
+              render={({ field }) => (
+                <FormItem aria-required>
+                  <div className="flex justify-start w-3/4 m-auto">
+                    <FormLabel className="text-xs">
+                      *Required
+                    </FormLabel>
+                  </div>
+                  <FormControl>
+                    <Input placeholder="City" {...field} className="w-3/4 mx-auto rounded-md h-10px drop-shadow-md" required={true} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )} /><FormField
+              control={form.control}
+              name="postal_code"
+              render={({ field }) => (
+                <FormItem aria-required>
+                  <div className="flex justify-start w-3/4 m-auto">
+                    <FormLabel className="text-xs">
+                      *Required
+                    </FormLabel>
+                  </div>
+                  <FormControl>
+                    <Input placeholder="Zip Code" {...field} className="w-3/4 mx-auto rounded-md h-10px drop-shadow-md" required={true} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )} /></>
+        }
         <FormField
           control={form.control}
           name="phonecalls"
