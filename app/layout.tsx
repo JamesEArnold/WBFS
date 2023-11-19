@@ -15,6 +15,7 @@ const inter = Inter({ subsets: ['latin'] })
 export const metadata: Metadata = {
   title: 'Weisburn for Sheriff',
   description: 'The official site for the Stark County Republican Sheriff Representative Eric Weisburn.',
+  verification: { google: '9J5nLPwwmIYa-i-ryNRJ10p0pB0wFeXk9IFXk5Ff1Mw' }
 }
 
 const structuredSeo = JSON.stringify({
@@ -34,7 +35,6 @@ export default function RootLayout({
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
         <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
         <link rel="icon" href="/favicon.ico" sizes="any" />
-        <meta name="google-site-verification" content="9J5nLPwwmIYa-i-ryNRJ10p0pB0wFeXk9IFXk5Ff1Mw" />
       </Head>
       <body className={`${inter.className}`}>
       <Meta 
