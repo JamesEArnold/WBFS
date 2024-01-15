@@ -7,27 +7,30 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCheckToSlot, faClipboard, faHandshake } from '@fortawesome/free-solid-svg-icons'
 import { VolunteerSignupForm } from "./ui/volunteer-signup"
+import Link from "next/link"
 
 export function MainAccordion() {
   return (
     <div className="px-3">
       <Accordion type="single" collapsible className="w-full">
-        <AccordionItem value="item-1" className="bg-yellow-400">
-          <AccordionTrigger className="justify-center font-bold uppercase">
-            <span>
-              <FontAwesomeIcon icon={faCheckToSlot} className="px-3"/> 
-              Events
-            </span>
-          </AccordionTrigger>
-          <AccordionContent className="px-3 text-lg text-center">
-            Check back in the near future for events.
-          </AccordionContent>
-        </AccordionItem>
+        <Link href="/events" legacyBehavior passHref>
+          <AccordionItem value="item-1" className="bg-yellow-400">
+            <AccordionTrigger className="justify-center font-bold uppercase">
+              <span>
+                <FontAwesomeIcon icon={faCheckToSlot} className="px-3"/> 
+                Events
+              </span>
+            </AccordionTrigger>
+            <AccordionContent className="px-3 text-lg text-center">
+              Check back in the near future for events.
+            </AccordionContent>
+          </AccordionItem>
+        </Link>
         <AccordionItem value="item-2" className="bg-[#fbd43b]">
             <AccordionTrigger className="justify-center font-bold uppercase">
               <span>
                 <FontAwesomeIcon icon={faClipboard} style={{color: "#000",}} className="px-3"/> 
-                Volunteer 
+                Ways To Help 
               </span>
             </AccordionTrigger>
             <AccordionContent className="px-3 text-lg text-center">

@@ -9,6 +9,7 @@ import Head from 'next/head';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Analytics } from '@vercel/analytics/react';
+import { MoveStuffAround, NotificationBanner } from '@/components/ui/notification-banner';
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -43,6 +44,7 @@ export default function RootLayout({
       />
       <header className="sticky top-0 z-50 shadow-md">
         <MainNav />
+        <NotificationBanner />
         <ToastContainer
           position="top-center"
           autoClose={5000}

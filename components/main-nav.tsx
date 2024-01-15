@@ -70,6 +70,13 @@ export const MainNav = () => {
                   </NavigationMenuLink>
                 </Link>
               </NavigationMenuItem>
+              <NavigationMenuItem>
+                <Link href="/events" legacyBehavior passHref>
+                  <NavigationMenuLink className={`bg-black text-yellow-400 ${navigationMenuTriggerStyle()}`}>
+                    Events
+                  </NavigationMenuLink>
+                </Link>
+              </NavigationMenuItem>
               {/* <NavigationMenuItem>
                 <Link href="/news" legacyBehavior passHref>
                   <NavigationMenuLink className={`bg-black text-yellow-400 ${navigationMenuTriggerStyle()}`}>
@@ -122,6 +129,15 @@ export const MainNav = () => {
                   onClick={() => setIsMobileNavOpen(false)}
                 >
                   Contribute
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/events"
+                  className={`block py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-yellow-400/30 active:bg-yellow-400/30 md:p-0 ${determineMenuHiglight(pathname, 'events')}`}
+                  onClick={() => setIsMobileNavOpen(false)}
+                >
+                  Events
                 </Link>
               </li>
             </ul>
