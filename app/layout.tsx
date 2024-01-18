@@ -9,7 +9,7 @@ import Head from 'next/head';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Analytics } from '@vercel/analytics/react';
-import { MoveStuffAround, NotificationBanner } from '@/components/ui/notification-banner';
+import { NotificationBanner } from '@/components/ui/notification-banner';
 
 const inter = Inter({ subsets: ['latin'] })
 
