@@ -1,8 +1,8 @@
 'use client';
 
-import { useEffect, useState } from "react";
+import { RefObject, useEffect, useState } from "react";
 
-export function useIsVisible(ref) {
+export function useIsVisible(ref: RefObject<HTMLElement>) {
   const [isIntersecting, setIntersecting] = useState(false);
 
   useEffect(() => {
@@ -10,7 +10,9 @@ export function useIsVisible(ref) {
       setIntersecting(entry.isIntersecting)
     );
 
-    observer.observe(ref.current);
+    if (ref.current) {
+      observer.observe(ref.current);
+    }
     return () => {
       observer.disconnect();
     };
