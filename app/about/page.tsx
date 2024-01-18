@@ -133,7 +133,7 @@ local fire and health codes.
           <hr className="w-3/4 mt-2 mb-4 border border-yellow-400" />
           <span className="">
           After a rewarding 31 years, I retired from the Stark County Sheriff’s Office.
-          As a life-long first responder and dedicated law enforcement officer, I am humbling asking for your
+          As a life-long first responder and dedicated law enforcement officer, I am humbly asking for your
           support so I can continue to protect Stark County… 
           <br />
           <br />
