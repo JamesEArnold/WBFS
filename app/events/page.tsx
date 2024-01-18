@@ -8,15 +8,15 @@ export default function Home() {
     <main className="relative flex flex-col max-w-full my-8 md:mx-auto md:max-w-5xl">
       <div className="flex">
         <div className="max-h-fit">
-          <div className="absolute z-20 max-w-3xl mx-auto shadow-md md:top-80 md:left-7 top-[25%]">
-            <h2 className="px-3 font-semibold tracking-widest uppercase bg-white">
+          <div className="absolute z-20 max-w-3xl mx-auto shadow-md md:left-7">
+            <h2 className="px-3 font-semibold tracking-widest uppercase bg-[#FAF9F6]">
               Support our
             </h2>
             <h2 className="px-3 py-3 text-3xl font-extrabold uppercase bg-yellow-400">
               UPCOMING EVENTS
             </h2>
           </div>
-          <div className="md:p-3 md:shadow-md bg-white/50">
+          {/* <div className="md:p-3 md:shadow-md bg-white/50">
             <div className="relative max-h-[50rem] md:h-[24rem] w-full h-full overflow-hidden">
               <Image
                   src="/weisburn-family-2-min.jpg"
@@ -28,19 +28,19 @@ export default function Home() {
                   priority
                   />
             </div>
-            </div>
+          </div> */}
         </div>
       </div>
-      <div className="flex flex-col mx-10 mt-20 text-justify">
+      <div className="flex flex-col mx-10 mt-20 text-justify md:mt-32">
         <section className="mt-10 md:mt-0">
           <h1 className="text-4xl font-bold">February 2024</h1>
           <hr className="w-3/4 mt-2 mb-4 border border-yellow-400" />
           <Link href="/events/kick-off" legacyBehavior passHref>
-            <div className="bg-white border rounded shadow-lg cursor-pointer border-gray-50 md:max-w-md">
+            <div className="bg-[#FAF9F6] border rounded shadow-lg cursor-pointer border-gray-50 md:max-w-md">
               <div className="p-4">
-                <div className="relative max-h-[50rem] md:h-[24rem] w-full h-full overflow-hidden">
+                <div className="relative max-h-[50rem] md:h-[20rem] w-full h-full overflow-hidden">
                     <Image
-                      src="/event-dinner.jpg"
+                      src="/arrowhead.jpg"
                       width="0"
                       height="0"
                       sizes="100vw"
@@ -70,8 +70,6 @@ export default function Home() {
               </div>
             </div>
           </Link>
-        </section>
-        <section className="flex flex-col my-20 md:flex-row"> 
         </section>
       </div>
     </main>

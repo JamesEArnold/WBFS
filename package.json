@@ -26,6 +26,8 @@
     "@types/react": "18.2.18",
     "@types/react-dom": "18.2.7",
     "@vercel/analytics": "^1.1.0",
+    "add-to-calendar-button": "^2.5.8",
+    "add-to-calendar-button-react": "^2.5.7",
     "autoprefixer": "10.4.14",
     "axios": "^1.5.1",
     "basic-auth": "^2.0.1",
