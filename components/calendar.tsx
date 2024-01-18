@@ -1,3 +1,4 @@
+// @ts-expect-error
 import Calendar from "@ericz1803/react-google-calendar";
 
 let calendars = [
