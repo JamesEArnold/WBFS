@@ -3,9 +3,11 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import Image from "next/image"
 import Link from "next/link"
 
+const month = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+
 export default function Home() {
   return (
-    <main className="relative flex flex-col max-w-full my-8 md:mx-auto md:max-w-5xl">
+    <main className="relative flex flex-col max-w-full my-8 md:mx-auto md:max-w-5xl min-h-[50vh]">
       <div className="flex">
         <div className="max-h-fit">
           <div className="absolute z-20 max-w-3xl mx-auto shadow-md md:left-7">
@@ -33,9 +35,21 @@ export default function Home() {
       </div>
       <div className="flex flex-col mx-10 mt-20 text-justify md:mt-32">
         <section className="mt-10 md:mt-0">
-          <h1 className="text-4xl font-bold">February 2024</h1>
+          <h1 className="text-4xl font-bold">{ month[new Date().getMonth()] } 2024</h1>
           <hr className="w-3/4 mt-2 mb-4 border border-yellow-400" />
-          <Link href="/events/kick-off" legacyBehavior passHref>
+          { /* Place the event card here when there is some */}
+          <div className="h-full p-12 my-auto mt-12 bg-slate-200">
+            <h1 className="text-4xl font-bold text-center uppercase">No events scheduled</h1>
+            <p className="text-3xl text-center uppercase">Check back soon</p>
+          </div>
+        </section>
+      </div>
+    </main>
+  )
+};
+
+// Event card
+{/* <Link href="/events/kick-off" legacyBehavior passHref>
             <div className="bg-[#FAF9F6] border rounded shadow-lg cursor-pointer border-gray-50 md:max-w-md">
               <div className="p-4">
                 <div className="relative max-h-[50rem] md:h-[20rem] w-full h-full overflow-hidden">
@@ -52,9 +66,9 @@ export default function Home() {
                 <div className="mt-2 text-sm italic text-gray-500">
                   February 28, 2024 - 5 PM - 7 PM
                 </div>
-                {/* <div className="mt-2 text-sm italic text-gray-500">
+                <div className="mt-2 text-sm italic text-gray-500">
                   1500 Rogwin Circle S.W., <br /> North Canton, Ohio 44720
-                </div> */}
+                </div>
                 <hr className="w-20 border-2 border-yellow-400"/>
                 <div className="relative mt-4 text-2xl font-extrabold text-black">
                   Campaign Kick Off Event
@@ -69,9 +83,4 @@ export default function Home() {
                 <FontAwesomeIcon icon={faArrowRight} className="w-6 text-gray-500"/>
               </div>
             </div>
-          </Link>
-        </section>
-      </div>
-    </main>
-  )
-};
+          </Link> */}
