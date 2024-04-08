@@ -1,9 +1,8 @@
-import { faArrowRight } from "@fortawesome/free-solid-svg-icons"
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import Image from "next/image"
-import Link from "next/link"
+import { SwansonEvent } from "./meet-and-greet/page"
 
 const month = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+
+const eventExpirations = [SwansonEvent.expirationTime];
 
 export default function Home() {
   return (
@@ -38,49 +37,15 @@ export default function Home() {
           <h1 className="text-4xl font-bold">{ month[new Date().getMonth()] } 2024</h1>
           <hr className="w-3/4 mt-2 mb-4 border border-yellow-400" />
           { /* Place the event card here when there is some */}
+          { (new Date().valueOf() < SwansonEvent.expirationTime) && SwansonEvent.eventCard }
+          { eventExpirations.every((expiration) => new Date().valueOf() > expiration) && 
           <div className="h-full p-12 my-auto mt-12 bg-slate-200">
             <h1 className="text-4xl font-bold text-center uppercase">No events scheduled</h1>
             <p className="text-3xl text-center uppercase">Check back soon</p>
           </div>
+          }
         </section>
       </div>
     </main>
   )
 };
-
-// Event card
-{/* <Link href="/events/kick-off" legacyBehavior passHref>
-            <div className="bg-[#FAF9F6] border rounded shadow-lg cursor-pointer border-gray-50 md:max-w-md">
-              <div className="p-4">
-                <div className="relative max-h-[50rem] md:h-[20rem] w-full h-full overflow-hidden">
-                    <Image
-                      src="/arrowhead.jpg"
-                      width="0"
-                      height="0"
-                      sizes="100vw"
-                      className="relative w-full h-full scale-125"
-                      alt="Weisburn for Sheriff Hero Image"
-                      priority
-                    />
-                </div>
-                <div className="mt-2 text-sm italic text-gray-500">
-                  February 28, 2024 - 5 PM - 7 PM
-                </div>
-                <div className="mt-2 text-sm italic text-gray-500">
-                  1500 Rogwin Circle S.W., <br /> North Canton, Ohio 44720
-                </div>
-                <hr className="w-20 border-2 border-yellow-400"/>
-                <div className="relative mt-4 text-2xl font-extrabold text-black">
-                  Campaign Kick Off Event
-                </div>
-                <div className="mt-1 text-sm">
-                  Join us as we kick off the Weisburn for Sheriff Campaign with friends and family.
-                </div>
-              </div>
-              <hr className="w-full border border-gray-200" />
-              <div className="flex justify-between p-4">
-                <span className="my-auto text-gray-500">READ MORE</span>
-                <FontAwesomeIcon icon={faArrowRight} className="w-6 text-gray-500"/>
-              </div>
-            </div>
-          </Link> */}
