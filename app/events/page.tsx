@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from "react";
-import { SwansonEvent } from "./meet-and-greet/page"
+import { SwansonEvent } from "@/components/events/swanson-event"
 
 const month = ["January","February","March","April","May","June","July","August","September","October","November","December"];
 
