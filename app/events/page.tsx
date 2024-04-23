@@ -1,3 +1,6 @@
+'use client';
+
+import { useState } from "react";
 import { SwansonEvent } from "./meet-and-greet/page"
 
 const month = ["January","February","March","April","May","June","July","August","September","October","November","December"];
@@ -5,6 +8,11 @@ const month = ["January","February","March","April","May","June","July","August"
 const eventExpirations = [SwansonEvent.expirationTime];
 
 export default function Home() {
+  const [rightNow, setRightNow] = useState(new Date().valueOf());
+  const [expiration, setExpiration] = useState(SwansonEvent.expirationTime);
+  console.log('right now: ', rightNow);
+  console.log('expiration: ', expiration);
+
   return (
     <main className="relative flex flex-col max-w-full my-8 md:mx-auto md:max-w-5xl min-h-[50vh]">
       <div className="flex">
