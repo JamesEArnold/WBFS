@@ -12,9 +12,24 @@ interface EventProps {
   addressLine2: string;
   eventName: string;
   eventSubtitle: string;
+  eventSubtitleLine2?: string;
+  eventSubtitleLine3?: string;
+  eventSubtitleLine4?: string;
 }
 
-export const EventCard = ({ link, imgSrc, imgStyling, time, addressLine1, addressLine2, eventName, eventSubtitle }: EventProps) => {
+export const EventCard = ({ 
+  link,
+  imgSrc,
+  imgStyling,
+  time,
+  addressLine1,
+  addressLine2,
+  eventName,
+  eventSubtitle,
+  eventSubtitleLine2,
+  eventSubtitleLine3,
+  eventSubtitleLine4,
+}: EventProps) => {
   return <Link href={link} legacyBehavior passHref>
             <div className="bg-[#FAF9F6] border rounded shadow-lg cursor-pointer border-gray-50 md:max-w-md">
               <div className="p-4">
@@ -42,6 +57,21 @@ export const EventCard = ({ link, imgSrc, imgStyling, time, addressLine1, addres
                 <div className="mt-1 text-sm">
                   {eventSubtitle}
                 </div>
+                { eventSubtitleLine2 && 
+                  <div className="mt-1 text-sm">
+                    {eventSubtitleLine2}
+                  </div>
+                }
+                { eventSubtitleLine3 && 
+                  <div className="mt-1 text-sm">
+                    {eventSubtitleLine3}
+                  </div>
+                }
+                { eventSubtitleLine4 && 
+                  <div className="mt-1 text-sm">
+                    {eventSubtitleLine4}
+                  </div>
+                }
               </div>
               <hr className="w-full border border-gray-200" />
               <div className="flex justify-between p-4">

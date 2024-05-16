@@ -53,7 +53,7 @@ export const MainNav = () => {
           />
         </Link>
         {/* </div> */}
-        <div className="hidden md:flex md:mr-16">
+        <div className="hidden md:flex">
           <NavigationMenu>
             <NavigationMenuList>
               <NavigationMenuItem>
