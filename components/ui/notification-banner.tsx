@@ -7,9 +7,13 @@ export const NotificationBanner = () => {
           <div className="font-bold text-white uppercase ticker__item">
             <span>
               <span className="text-yellow-300">Upcoming events:</span>
+              &nbsp;Campaign Picnic Fundraiser&nbsp;
+              <span className="text-yellow-300">|</span>
+              &nbsp;July 27th at V.F.W Pavilion&nbsp;
+              <span className="text-yellow-300"> --- </span> 
               &nbsp;Golf Fundraiser&nbsp;
               <span className="text-yellow-300">|</span> 
-              &nbsp;August 23rd at Arrowhead Golf Club
+              &nbsp;August 23rd at Arrowhead Golf Club&nbsp;
             </span>
             <br />
           </div>
