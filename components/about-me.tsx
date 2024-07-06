@@ -8,7 +8,7 @@ export const AboutMe = () => {
       <div className="px-3 mt-3">
         <div className="relative max-h-[17rem] h-[40rem] w-full overflow-hidden md:hidden">
           <Image
-              src="/cruiser.jpg"
+              src="/photos/weisburn-parade-1.jpg"
               width="0"
               height="0"
               sizes="100vw"
