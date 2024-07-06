@@ -26,11 +26,11 @@ export const AboutMe = () => {
             alt="Weisburn for Sheriff Hero Image"
           />
           <Image
-            src="/canton-image-3.jpg"
+            src="/photos/weisburn-parade.jpg"
             width="0"
             height="0"
             sizes="100vw"
-            className="w-full h-1/2"
+            className="w-[80%] h-1/2"
             alt="Weisburn for Sheriff Hero Image"
           />
         </div>

@@ -16,7 +16,7 @@ export const Carousel = () => {
       </div>
       <div className="relative gap-4 max-h-[30rem] pt-4 px-3 overflow-hidden hidden md:flex">
           <Image
-            src="/courthouse.jpg"
+            src="/photos/parade-group-2.jpg"
             width="0"
             height="0"
             sizes="100vw"
