@@ -8,7 +8,7 @@ import { JulyPicnicEvent } from "@/components/events/july-picnic";
 const month = ["January","February","March","April","May","June","July","August","September","October","November","December"];
 
 const eventExpirations = [SwansonEvent.expirationTime, GoldFundraiserEvent.expirationTime, JulyPicnicEvent.expirationTime];
-const evets = [GoldFundraiserEvent, JulyPicnicEvent]
+const events = [GoldFundraiserEvent, JulyPicnicEvent]
 
 export default function Home() {
   const [rightNow, setRightNow] = useState(new Date().valueOf());
@@ -45,15 +45,7 @@ export default function Home() {
       </div>
       <div className="flex flex-col mx-10 mt-20 text-justify md:mt-32">
         <section className="mt-10 md:mt-0">
-          {/* TODO: Uncomment this section when were ready to show monthly events.  But with the golf fundraiser
-          in August were just going to show August instead of the current month */}
-          {/* <h1 className="text-4xl font-bold">{ month[new Date().getMonth()] } 2024</h1> */}
-          <h1 className="text-4xl font-bold">JULY 2024</h1>
-          <hr className="w-3/4 mt-2 mb-4 border border-yellow-400" />
-          { /* Place the event card here when there is some */}
-          { (new Date().valueOf() < JulyPicnicEvent.expirationTime) && JulyPicnicEvent.eventCard }
-          <br className="my-8" />
-          <h1 className="text-4xl font-bold">AUGUST 2024</h1>
+          <h1 className="text-4xl font-bold">{ month[new Date().getMonth()] } 2024</h1>
           <hr className="w-3/4 mt-2 mb-4 border border-yellow-400" />
           { /* Place the event card here when there is some */}
           { (new Date().valueOf() < GoldFundraiserEvent.expirationTime) && GoldFundraiserEvent.eventCard }
