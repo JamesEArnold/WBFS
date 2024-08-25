@@ -4,7 +4,8 @@ export const NotificationBanner = () => {
   return (
 <div className="ticker-wrap">
         <div className="ticker">
-          <div className="font-bold text-white uppercase ticker__item">
+          { /* Fill in here for banner content */}
+          {/* <div className="font-bold text-white uppercase ticker__item">
             <span>
               <span className="text-yellow-300">Upcoming events:</span>
               &nbsp;Golf Fundraiser&nbsp;
@@ -12,7 +13,7 @@ export const NotificationBanner = () => {
               &nbsp;August 23rd at Arrowhead Golf Club&nbsp;
             </span>
             <br />
-          </div>
+          </div> */}
           <div className="font-bold text-white uppercase ticker__item">
             <span>Follow us on&nbsp;
               <a
