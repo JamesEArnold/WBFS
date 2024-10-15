@@ -58,16 +58,16 @@ export default function Home() {
       </div>
       <div className="flex flex-col mx-10 mt-20 text-justify md:mt-32">
         <section className="mt-10 md:mt-0">
-          {/* <h1 className="text-4xl font-bold">{ month[new Date().getMonth()] } 2024</h1> */}
-          <h1 className="text-4xl font-bold">September 2024</h1>
+          <h1 className="text-4xl font-bold">{ month[new Date().getMonth()] } 2024</h1>
+          {/* <h1 className="text-4xl font-bold">September 2024</h1> */}
           <hr className="w-3/4 mt-2 mb-4 border border-yellow-400" />
           {/* Place the event card here when there is some */}
-          {(new Date().valueOf() < FalconesFundraiserEvent.expirationTime) && FalconesFundraiserEvent.eventCard}
+          {/* {(new Date().valueOf() < FalconesFundraiserEvent.expirationTime) && FalconesFundraiserEvent.eventCard} */}
           {/* { eventExpirations.every((expiration) => new Date().valueOf() > expiration) &&  */}
-          {/* <div className="h-full p-12 my-auto mt-12 bg-slate-200">
+          <div className="h-full p-12 my-auto mt-12 bg-slate-200">
       <h1 className="text-4xl font-bold text-center uppercase">No events scheduled</h1>
       <p className="text-3xl text-center uppercase">Check back soon</p>
-    </div> */}
+    </div>
           {/* } */}
         </section>
       </div>

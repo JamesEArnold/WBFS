@@ -1,8 +1,15 @@
 import Image from "next/image";
 import { EmailSignupForm } from "./ui/email-signup";
+import { Video } from "./ui/videos";
 
 export const CallToActionTop = () => {
   return (
+    <>
+    <section className="p-3 md:hidden">
+      <div className="py-4 text-center bg-yellow-400" id="tempVolunteer">
+        <Video />
+      </div>
+    </section>
     <section className="p-3 min-h-[50vh] md:hidden">
       <div className="bg-yellow-400 min-h-[48vh] py-16 text-center" id="tempVolunteer">
         <div className="mx-auto md:max-w-3xl">
@@ -11,15 +18,14 @@ export const CallToActionTop = () => {
           <h2 className="text-4xl font-bold uppercase">Throughout my Campaign</h2>
           <EmailSignupForm />
           <div className="flex justify-center mt-4 flex-center">
-            { /* TODO: Make these buttons, and then actually link them to the socials */}
+            {/* TODO: Make these buttons, and then actually link them to the socials */}
             <a href="https://www.facebook.com/profile.php?id=61552050077933">
               <Image
                 src="/icon-facebook.svg"
                 width="50"
                 height="50"
                 alt="Weisburn for Sheriff Facebook"
-                className="mx-2"
-              />
+                className="mx-2" />
             </a>
             <a href="https://instagram.com/weisburnforsheriff">
               <Image
@@ -27,13 +33,13 @@ export const CallToActionTop = () => {
                 width="45"
                 height="45"
                 alt="Weisburn for Sheriff Twitter"
-                className="mx-2 mt-[2px]"
-              />
+                className="mx-2 mt-[2px]" />
             </a>
           </div>
         </div>
       </div>
     </section>
+    </>
   )
 };
 
