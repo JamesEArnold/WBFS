@@ -9,11 +9,11 @@ export const HeroSlide = () => {
     { /* Mobile Hero Image */}
       <div className="relative max-h-[30rem] md:hidden max-w-md mx-auto md:w-full py-3 px-3 overflow-hidden">
         <Image
-          src="/sheriffweisburn1.jpg"
+          src="/post-election/head-shot-with-hat.jpg"
           width="0"
           height="0"
           sizes="100vw"
-          className="w-full h-1/2"
+          className="w-full h-auto"
           alt="Weisburn for Sheriff Hero Image" 
           priority
         />
@@ -22,7 +22,7 @@ export const HeroSlide = () => {
       <div className="hidden p-3 md:flex">
         <div className="relative hidden max-w-[25rem] overflow-hidden md:inline-block mr-3">
           <Image
-            src="/sheriffweisburn1.jpg"
+            src="/post-election/head-shot-with-hat.jpg"
             width="0"
             height="0"
             sizes="100vw"
