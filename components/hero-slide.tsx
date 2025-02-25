@@ -49,7 +49,7 @@ export const HeroSlide = () => {
           <div className="max-w-3xl mx-auto">
             {/* <h2 className="uppercase font-bold tracking-[0.2em] text-yellow-400">stay updated</h2> */}
             <h2 className="text-4xl font-bold uppercase">Stay Updated</h2>
-            <h2 className="text-4xl font-bold uppercase">Throughout my Campaign</h2>
+            <h2 className="text-4xl font-bold uppercase">Join our effort</h2>
             <EmailSignupForm />
             <div className="flex justify-center mt-4 flex-center">
               { /* TODO: Make these buttons, and then actually link them to the socials */}

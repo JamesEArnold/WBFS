@@ -38,13 +38,13 @@ export const AboutMe = () => {
           <h2 className="font-semibold tracking-widest uppercase">
             about me
           </h2>
-          <h2 className="py-3 text-3xl font-extrabold uppercase bg-yellow-400">
-            meet <br className="hidden"/> GOP Candidate <br /> eric weisburn
+          <h2 className="py-3 text-4xl font-extrabold uppercase bg-yellow-400">
+            meet sheriff weisburn
           </h2>
           <p className="py-6 text-lg text-justify md:px-12">
-          Republican candidate Eric Weisburn has proven experience and commitment to the citizens of Stark County. 
-          With Eric's strong sense of duty, he will always lead the Sheriff’s Office from the frontline.
-          Place your trust in Eric Weisburn. He is the right choice… a Sheriff who will work for 
+          Sheriff Weisburn has proven experience and commitment to the citizens of Stark County. 
+          With his strong sense of duty, he will always lead the Sheriff’s Office from the frontline.
+          Place your trust in Sheriff Weisburn. He is the right choice… a Sheriff who works for 
             <span className="relative mx-3">
               <span className="absolute block -skew-y-3 bg-yellow-400 -inset-1" aria-hidden="true"></span>
               <span className="relative font-bold text-black">YOU!</span>

@@ -12,9 +12,9 @@ export default function Home() {
             <h2 className="px-3 py-3 text-3xl font-extrabold uppercase bg-yellow-400">
               meet&nbsp;
               <br className="hidden"/> 
-              GOP Candidate 
+              Sheriff 
               <br /> 
-              eric weisburn
+              weisburn
             </h2>
           </div>
           <div className="md:p-3 md:shadow-md bg-white/50">
@@ -33,12 +33,8 @@ export default function Home() {
         </div>
         <div className="hidden max-w-xs mt-5 ml-20 text-justify md:block">
           <span>
-            Thank you for taking the time to learn more about me and why I am committed to becoming
-            <span className="relative mx-2">
-              <span className="absolute block -skew-y-3 bg-yellow-400 -inset-1" aria-hidden="true"></span>
-              <span className="relative font-bold text-black">YOUR</span>
-            </span>
-            Sheriff!!
+          Thank you for taking the time to learn more about me and my career with
+          the Stark County Sheriff’s Office.
             <br />
             <br />
             I am a lifetime resident of Stark County. Growing up in a small town, my parents Jack and Maxine
@@ -53,12 +49,8 @@ export default function Home() {
         <section>
         <div className="block mt-10 text-justify md:hidden">
           <span>
-            Thank you for taking the time to learn more about me and why I am committed to becoming
-            <span className="relative mx-2">
-              <span className="absolute block -skew-y-3 bg-yellow-400 -inset-1" aria-hidden="true"></span>
-              <span className="relative font-bold text-black">YOUR</span>
-            </span>
-            Sheriff!!
+          Thank you for taking the time to learn more about me and my career with
+          the Stark County Sheriff’s Office.
             <br />
             <br />
             I am a lifetime resident of Stark County. Growing up in a small town, my parents Jack and Maxine
@@ -131,17 +123,31 @@ local fire and health codes.
         <section className="mt-10">
           <h1 className="text-4xl font-bold">2022</h1>
           <hr className="w-3/4 mt-2 mb-4 border border-yellow-400" />
-          <span className="">
           After a rewarding 31 years, I retired from the Stark County Sheriff’s Office.
-          As a life-long first responder and dedicated law enforcement officer, I am humbly asking for your
-          support so I can continue to protect Stark County… 
           <br />
           <br />
-          <span className="text-xl font-bold">as             <span className="relative mx-2">
+        </section>
+        <section className="mt-10">
+          <h1 className="text-4xl font-bold">2024</h1>
+          <hr className="w-3/4 mt-2 mb-4 border border-yellow-400" />
+          Team Weisburn for Sheriff worked tirelessly all summer to share Eric Weisburn’s vision and why he was the right choice for Sheriff. 
+          From parades and festivals to community events, we connected with voters across Stark County. On November 5th, 
+          the people spoke—choosing Eric Weisburn to lead the Sheriff’s Office in a new direction.
+          <br />
+          <br />
+        </section>
+        <section className="mt-10">
+          <h1 className="text-4xl font-bold">Currently</h1>
+          <hr className="w-3/4 mt-2 mb-4 border border-yellow-400" />
+          Sheriff Eric Weisburn began his term January 6, 2025. Sheriff Weisburn is
+          honored to serve as <span className="relative mx-2">
               <span className="absolute block -skew-y-3 bg-yellow-400 -inset-1" aria-hidden="true"></span>
-              <span className="relative font-bold text-black">YOUR</span>
-            </span> newly elected Sheriff.</span>
-          </span>
+              <span className="relative font-bold text-black">YOUR</span></span> Sheriff of Stark County. Thank you for your
+          trust and support, we won the election in November 2024, but the fight to
+          keep Stark County safe is far from over. Please consider contributing
+          today to support Weisburn For Sheriff.
+          <br />
+          <br />
         </section>
         <section className="flex flex-col my-20 md:flex-row">
         <div className="my-auto md:mx-3 md:mr-16">
