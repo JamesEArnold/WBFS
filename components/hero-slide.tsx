@@ -33,7 +33,7 @@ export const HeroSlide = () => {
         </div>
         <div className="relative hidden w-full my-auto mr-3 overflow-hidden md:inline-block">
           <Image
-            src="/ElectWeisburnForSheriff.png"
+            src="/post-election/ReElectWeisburnForSheriff.png"
             width="0"
             height="0"
             sizes="100vw"

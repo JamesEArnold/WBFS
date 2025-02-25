@@ -16,7 +16,7 @@ export const Footer = () => {
     <div className="flex flex-col w-full h-full mx-auto mt-4">
       <Image
           priority
-          src="/ElectWeisburnForSheriff.png"
+          src="/post-election/ReElectWeisburnForSheriff.png"
           alt="Weisburn For Sheriff"
           height={150}
           width={380}

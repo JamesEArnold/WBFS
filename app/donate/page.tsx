@@ -24,7 +24,7 @@ export default function Home() {
         <iframe src="https://donorbox.org/embed/weisburn-for-sheriff" name="donorbox" data-allowpaymentrequest="allowpaymentrequest" data-seamless="seamless" data-frameborder="0" scrolling="no" height="900px" width="100%" className="max-w-[500px] min-w-[250px] max-h-none"></iframe>
         <div className="relative hidden w-1/3 my-auto mr-3 overflow-hidden md:inline-block">
           <Image
-            src="/ElectWeisburnForSheriff.png"
+            src="/post-election/ReElectWeisburnForSheriff.png"
             width="0"
             height="0"
             sizes="100vw"

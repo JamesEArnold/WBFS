@@ -45,7 +45,7 @@ export const MainNav = () => {
         <Link href="/" legacyBehavior passHref>
           <Image
             priority
-            src="/ElectWeisburnForSheriffText.png"
+            src="/post-election/ReElectWeisburnForSheriffText.png"
             alt="Weisburn For Sheriff"
             height={50}
             width={150}
