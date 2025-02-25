@@ -46,7 +46,7 @@ export default function RootLayout({
       />
       <header className="sticky top-0 z-50 shadow-md">
         <MainNav />
-        <NotificationBanner />
+        {/* <NotificationBanner /> */}
         <ToastContainer
           position="top-center"
           autoClose={5000}
