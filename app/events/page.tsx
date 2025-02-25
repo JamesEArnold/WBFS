@@ -5,14 +5,15 @@ import { SwansonEvent } from "@/components/events/swanson-event"
 import { GoldFundraiserEvent } from "@/components/events/golf-fundraiser";
 import { JulyPicnicEvent } from "@/components/events/july-picnic";
 import { FalconesFundraiserEvent } from "@/components/events/falcones-fundraiser";
+import { GolfFundraiserEvent2 } from "@/components/events/golf-fundraiser-2";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
 const month = ["January","February","March","April","May","June","July","August","September","October","November","December"];
 
-const eventExpirations = [SwansonEvent.expirationTime, GoldFundraiserEvent.expirationTime, JulyPicnicEvent.expirationTime, FalconesFundraiserEvent.expirationTime];
-const events = [GoldFundraiserEvent, JulyPicnicEvent, FalconesFundraiserEvent]
+const eventExpirations = [SwansonEvent.expirationTime, GoldFundraiserEvent.expirationTime, JulyPicnicEvent.expirationTime, FalconesFundraiserEvent.expirationTime, GolfFundraiserEvent2.expirationTime];
+const events = [GoldFundraiserEvent, JulyPicnicEvent, FalconesFundraiserEvent, GolfFundraiserEvent2]
 
 export default function Home() {
   const [rightNow, setRightNow] = useState(new Date().valueOf());
@@ -58,16 +59,17 @@ export default function Home() {
       </div>
       <div className="flex flex-col mx-10 mt-20 text-justify md:mt-32">
         <section className="mt-10 md:mt-0">
-          <h1 className="text-4xl font-bold">{ month[new Date().getMonth()] } 2024</h1>
-          {/* <h1 className="text-4xl font-bold">September 2024</h1> */}
+        {/* <h1 className="text-4xl font-bold">{ month[new Date().getMonth()] } { new Date().getFullYear() }</h1> */}
+        <h1 className="text-4xl font-bold">July { new Date().getFullYear() }</h1>
           <hr className="w-3/4 mt-2 mb-4 border border-yellow-400" />
           {/* Place the event card here when there is some */}
-          {/* {(new Date().valueOf() < FalconesFundraiserEvent.expirationTime) && FalconesFundraiserEvent.eventCard} */}
+          {(new Date().valueOf() < FalconesFundraiserEvent.expirationTime) && FalconesFundraiserEvent.eventCard}
+          {(new Date().valueOf() < GolfFundraiserEvent2.expirationTime) && GolfFundraiserEvent2.eventCard}
           {/* { eventExpirations.every((expiration) => new Date().valueOf() > expiration) &&  */}
-          <div className="h-full p-12 my-auto mt-12 bg-slate-200">
+          {/* <div className="h-full p-12 my-auto mt-12 bg-slate-200">
       <h1 className="text-4xl font-bold text-center uppercase">No events scheduled</h1>
       <p className="text-3xl text-center uppercase">Check back soon</p>
-    </div>
+    </div> */}
           {/* } */}
         </section>
       </div>

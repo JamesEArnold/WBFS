@@ -31,7 +31,7 @@ export const EventCard = ({
   eventSubtitleLine4,
 }: EventProps) => {
   return <Link href={link} legacyBehavior passHref>
-            <div className="bg-[#FAF9F6] border rounded shadow-lg cursor-pointer border-gray-50 md:max-w-md">
+            <div className="bg-[#FAF9F6] border rounded shadow-lg cursor-pointer border-gray-50 md:max-w-xl">
               <div className="p-4">
                 <div className="relative max-h-[50rem] md:h-[20rem] w-full h-full overflow-hidden">
                     <Image
