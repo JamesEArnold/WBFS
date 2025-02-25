@@ -6,9 +6,9 @@ export const CallToActionTop = () => {
   return (
     <>
     <section className="p-3 md:hidden">
-      <div className="py-4 text-center bg-yellow-400" id="tempVolunteer">
+      {/* <div className="py-4 text-center bg-yellow-400" id="tempVolunteer">
         <Video />
-      </div>
+      </div> */}
     </section>
     <section className="p-3 min-h-[50vh] md:hidden">
       <div className="bg-yellow-400 min-h-[48vh] py-16 text-center" id="tempVolunteer">
