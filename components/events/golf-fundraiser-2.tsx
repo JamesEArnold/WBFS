@@ -1,7 +1,7 @@
 import { EventCard } from "@/components/ui/event-card";
 
 const GolfFundraiserEventCard2 = <EventCard 
-  link=""
+  link="/events/golf-fundraiser-2"
   imgSrc="/post-election/events/arrow-head-golf-outing.png"
   imgStyling="relative w-[100%] h-[100%] scale-[1] pt-2"
   time="July 25, 2025 - 8 AM"
