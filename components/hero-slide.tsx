@@ -1,6 +1,8 @@
 import Image from "next/image";
 import { EmailSignupForm } from "./ui/email-signup";
 import { Video } from "./ui/videos";
+import Link from "next/link";
+import { GolfFundraiserEvent2 } from "./events/golf-fundraiser-2";
 
 export const HeroSlide = () => {
   return (
@@ -45,6 +47,7 @@ export const HeroSlide = () => {
         {/* <div className="z-20 hidden w-full min-h-full mb-3 text-center border-[22px] border-yellow-400 md:block md:mx-auto" id="tempVolunteer">
           <Video />
         </div> */}
+        <div className="relative w-full h-full min-w-full p-6 overflow-hidden bg-black md:w-fit md:mx-auto md:mb-4">{GolfFundraiserEvent2.eventCard}</div>
         <div className="z-20 hidden w-full min-h-full py-16 mb-3 text-center border-[22px] border-yellow-400 md:block md:mx-auto" id="tempVolunteer">
           <div className="max-w-3xl mx-auto">
             {/* <h2 className="uppercase font-bold tracking-[0.2em] text-yellow-400">stay updated</h2> */}

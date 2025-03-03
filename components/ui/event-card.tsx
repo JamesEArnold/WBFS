@@ -15,6 +15,7 @@ interface EventProps {
   eventSubtitleLine2?: string;
   eventSubtitleLine3?: string;
   eventSubtitleLine4?: string;
+  overrideWidth?: boolean;
 }
 
 export const EventCard = ({ 
@@ -29,9 +30,10 @@ export const EventCard = ({
   eventSubtitleLine2,
   eventSubtitleLine3,
   eventSubtitleLine4,
+  overrideWidth = false,
 }: EventProps) => {
   return <Link href={link} legacyBehavior passHref>
-            <div className="bg-[#FAF9F6] border rounded shadow-lg cursor-pointer border-gray-50 md:max-w-xl">
+            <div className={`bg-[#FAF9F6] border rounded shadow-lg cursor-pointer border-gray-50 ${overrideWidth ? "" : "md:max-w-xl"}`}>
               <div className="p-4">
                 <div className="relative max-h-[50rem] md:h-[20rem] w-full h-full overflow-hidden">
                     <Image

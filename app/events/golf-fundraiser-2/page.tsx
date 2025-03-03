@@ -26,12 +26,12 @@ export default function Home() {
       <div className="flex justify-center w-full my-4">
         <div className="w-full max-w-[500px] md:ml-20">
           <iframe 
-            src="https://donorbox.org/embed/golf-outing-july-2025-2-2?" 
+            src="https://donorbox.org/embed/golf-outing-july-2025-2-2-2?" 
             name="donorbox" 
-            seamless={true}
-            frameBorder="0"
+            seamless
+            frameBorder="0" 
             scrolling="no" 
-            height="900px" 
+            height="1400px" 
             width="100%" 
             style={{maxWidth: "500px", minWidth: "250px", maxHeight: "none!important"}} 
             allow="payment"
