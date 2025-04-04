@@ -42,6 +42,11 @@ export default function Home() {
           <p className="mb-6 text-gray-700">
             <strong>Please Note:</strong> Teams are limited and spots are filled on a first-come, first-served basis. <br />After submitting your request, we will reach out to confirm your registration.
           </p>
+          <div className="p-4 mb-6 text-center border border-yellow-200 rounded-lg bg-yellow-50">
+            <h3 className="mb-2 text-xl font-bold text-gray-800">Donation Levels</h3>
+            <p className="text-gray-700">Per Golfer: $125</p>
+            <p className="text-gray-700">Full Team (4 Players): $500</p>
+          </div>
         </div>
         
         <button
