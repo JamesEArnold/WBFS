@@ -13,11 +13,11 @@ import {
 } from "@/components/ui/navigation-menu"
 import Image from "next/image"
 import Link from "next/link"
-import { ButtonContribution } from "./ui/button-contribution"
 import { MobileMenu } from "./ui/mobile-menu"
 import { useState } from "react"
 import { useDetectClickOutside } from 'react-detect-click-outside';
 import { usePathname } from 'next/navigation'
+import { ButtonContribution } from "./ui/button/button-contribution";
 
 const determineMenuHiglight = (activePath: string, pathToCheck: string) => {
   if (pathToCheck === 'home' && activePath === '/') {
@@ -96,7 +96,7 @@ export const MainNav = () => {
         </div>
         <div className="flex gap-2">
           <MobileMenu classNames="md:hidden" onClick={() => setIsMobileNavOpen(!isMobileNavOpen)} />
-          <ButtonContribution />
+          <ButtonContribution />  
         </div>
       </div>
       </div>
