@@ -122,17 +122,21 @@ This roadmap outlines the migration plan to convert the existing Next.js applica
     - Used the yellow/black color scheme from the Tailwind configuration
     - Added the rotation and shadow effect for the sheriff portrait to match Sheriff Central design
 
-- [ ] Implement Priorities section
-  - Location: `/components/main-accordion.tsx` → `/components/Priorities.tsx`
-  - Implementation: Replace accordion with priorities grid
+- [x] Implement Priorities section
+  - Location: `/components/main-accordion.tsx` → `/components/sections/PrioritiesSection.tsx`
+  - Implementation: Replaced accordion with priorities grid
   - Key features:
     - Three-column grid on desktop
     - Card-based design with yellow accent borders
+    - FontAwesome icons for each priority
+    - Interactive elements preserved with button links
   - Reference: Sheriff Central Home.tsx priorities section
   - Implementation Notes:
-    - Maintain existing priority content but convert from accordion to cards
-    - Use existing content descriptions with the new styling
-    - Section title should use new typography system (uppercase, bold)
+    - Replaced original content with Sheriff Central's priorities: Public Safety, Fiscal Responsibility, and Community Partnerships
+    - Used FontAwesome icons relevant to each priority
+    - Implemented proper section title with uppercase, bold styling
+    - Added "Learn More" buttons linking to the about page
+    - Used consistent yellow/black color scheme for buttons and accents
 
 - [ ] Implement Events Preview section
   - Location: New component `/components/EventsPreview.tsx`
@@ -412,7 +416,77 @@ This roadmap outlines the migration plan to convert the existing Next.js applica
     - Updated import in app/layout.tsx to use new component
     - Used yellow (#fcd34b) for accent colors to maintain consistency
 
+### Phase 2.3: Home Page Components
+- [x] Implement new Hero component
+  - Location: `/components/hero-slide.tsx`
+  - Implementation: Replaced current hero with new Sheriff Central design
+  - Key features:
+    - Two-column layout with yellow gradient background
+    - Sheriff portrait with stylized border and rotated black shadow effect
+    - Campaign buttons (Learn More and Support Our Campaign)
+    - RE-ELECT stars branding
+    - Proper column ordering for mobile (image first, then text)
+  - Reference: Sheriff Central Home.tsx hero section
+  - Implementation Notes:
+    - Preserved the event card functionality from the original hero section
+    - Used the SheriffStar icon component for branding
+    - Maintained the existing sheriff portrait image
+    - Added responsive styling for mobile and desktop views
+    - Used the yellow/black color scheme from the Tailwind configuration
+    - Added the rotation and shadow effect for the sheriff portrait to match Sheriff Central design
+
+- [x] Implement Priorities section
+  - Location: `/components/main-accordion.tsx` → `/components/sections/PrioritiesSection.tsx`
+  - Implementation: Replaced accordion with priorities grid
+  - Key features:
+    - Three-column grid on desktop
+    - Card-based design with yellow accent borders
+    - FontAwesome icons for each priority
+    - Interactive elements preserved with button links
+  - Reference: Sheriff Central Home.tsx priorities section
+  - Implementation Notes:
+    - Replaced original content with Sheriff Central's priorities: Public Safety, Fiscal Responsibility, and Community Partnerships
+    - Used FontAwesome icons relevant to each priority
+    - Implemented proper section title with uppercase, bold styling
+    - Added "Learn More" buttons linking to the about page
+    - Used consistent yellow/black color scheme for buttons and accents
+
+### Phase 3.2: CSS Global Styles (Partial)
+- [x] Update global CSS with Sheriff Central styles
+  - Location: `/app/globals.css`
+  - Implementation: Added utility classes for consistent styling
+  - Key features:
+    - Added section-title class for heading consistency
+    - Added campaign-button class for CTA buttons
+  - Reference: Sheriff Central index.css
+  - Implementation Notes:
+    ```css
+    @layer components {
+      .section-title {
+        @apply text-3xl font-bold mb-8 uppercase tracking-wide;
+      }
+      
+      .campaign-button {
+        @apply bg-black text-[#fcd34b] font-bold py-3 px-6 rounded-md hover:bg-gray-800 transition duration-200;
+      }
+    }
+    ```
+
 ### Additional Enhancements
+- [x] Create dedicated volunteer page
+  - Location: `/app/volunteer/page.tsx`
+  - Implementation: Created a dedicated volunteer signup page
+  - Key features:
+    - Consistent styling with yellow border accent
+    - Clean form layout with yellow focus states
+    - Reused volunteer form component
+  - Reference: Sheriff Central form styling
+  - Implementation Notes:
+    - Used the existing VolunteerForm component
+    - Added proper section title and introduction text
+    - Used card-style container with yellow border accent
+    - Created clear visual hierarchy for better user experience
+
 - [x] Implement Contribution Banner above footer
   - Location: `/components/sections/ContributeBanner.tsx`
   - Implementation: Created a new global contribution call-to-action banner

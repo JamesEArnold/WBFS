@@ -74,3 +74,13 @@
     @apply bg-background text-foreground;
   }
 }
+
+@layer components {
+  .section-title {
+    @apply text-3xl font-bold mb-8 uppercase tracking-wide;
+  }
+  
+  .campaign-button {
+    @apply bg-black text-[#fcd34b] font-bold py-3 px-6 rounded-md hover:bg-gray-800 transition duration-200;
+  }
+}

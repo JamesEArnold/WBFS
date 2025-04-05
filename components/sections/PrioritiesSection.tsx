@@ -1,57 +1,68 @@
 "use client";
 
 import React from 'react';
-import { Card, CardHeader, CardTitle, CardContent } from '../ui/card';
+import { Card, CardHeader, CardTitle, CardContent } from '../ui/card/index';
+import Link from 'next/link';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faShield, faHandHoldingDollar, faPeopleGroup } from '@fortawesome/free-solid-svg-icons';
 
-// This is a placeholder for the PrioritiesSection component that will be implemented in Phase 2.3
 const PrioritiesSection = () => {
-  // Example priorities - will be replaced with actual content from main-accordion.tsx
+  // Priorities based on Sheriff Central
   const priorities = [
     {
       id: 1,
-      title: 'Community Safety',
-      description: 'Implementing proactive policing strategies to ensure our neighborhoods remain safe and secure.'
+      title: 'Public Safety',
+      description: 'Committed to maintaining and improving the safety and security of all residents through proactive policing and community engagement.',
+      icon: faShield,
+      link: '/about'
     },
     {
       id: 2,
-      title: 'Department Innovation',
-      description: 'Modernizing equipment and training to keep our department at the forefront of law enforcement.'
+      title: 'Fiscal Responsibility',
+      description: 'Ensuring taxpayer dollars are used efficiently while maintaining the highest standards of service and protection.',
+      icon: faHandHoldingDollar,
+      link: '/about'
     },
     {
       id: 3,
-      title: 'Transparency',
-      description: 'Maintaining open communication with the community through regular reports and public meetings.'
-    },
-    {
-      id: 4,
-      title: 'Drug Prevention',
-      description: 'Combating drug trafficking and supporting rehabilitation programs to address addiction issues.'
-    },
-    {
-      id: 5,
-      title: 'Youth Outreach',
-      description: 'Creating programs that engage young people and build positive relationships with law enforcement.'
-    },
-    {
-      id: 6,
-      title: 'Fiscal Responsibility',
-      description: 'Managing department resources efficiently while maintaining high-quality service.'
+      title: 'Community Partnerships',
+      description: 'Building strong relationships between law enforcement and the community through transparency, accountability, and mutual respect.',
+      icon: faPeopleGroup,
+      link: '/about'
     }
   ];
 
   return (
     <section className="py-16 bg-gray-50">
       <div className="container mx-auto px-4">
-        <h2 className="text-3xl font-bold mb-12 uppercase text-center tracking-wide">Our Priorities</h2>
+        <h2 className="section-title text-center">PRIORITIES</h2>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {priorities.map((priority) => (
-            <Card key={priority.id} withYellowBorder withHoverEffect>
+            <Card 
+              key={priority.id} 
+              withYellowBorder 
+              withHoverEffect
+              className="flex flex-col"
+            >
               <CardHeader>
-                <CardTitle>{priority.title}</CardTitle>
+                <CardTitle className="flex items-center justify-center uppercase text-xl">
+                  <FontAwesomeIcon icon={priority.icon} className="mr-3" size="lg" />
+                  {priority.title}
+                </CardTitle>
               </CardHeader>
-              <CardContent>
-                <p>{priority.description}</p>
+              <CardContent className="flex-grow flex flex-col">
+                <p className="text-center mb-6 flex-grow">{priority.description}</p>
+                {priority.link && (
+                  <div className="mt-auto text-center">
+                    <Link 
+                      href={priority.link}
+                      className="campaign-button inline-block"
+                    >
+                      Learn More
+                    </Link>
+                  </div>
+                )}
               </CardContent>
             </Card>
           ))}

@@ -9,6 +9,7 @@ import { Carousel } from '@/components/carousel';
 import Head from 'next/head';
 import { Meta } from '@/components/seo/meta';
 import { globalMeta } from '@/components/seo/globalMeta';
+import PrioritiesSection from '@/components/sections/PrioritiesSection';
 
 const structuredSeo = JSON.stringify({
   "@context": globalMeta.siteUrl,
@@ -21,9 +22,9 @@ export default function Home() {
       {/* Hero section outside the main container for full-width display */}
       <HeroSlide />
       
-      <main className="relative flex flex-col max-w-full md:mx-auto md:max-w-5xl">
+      <main className="relative flex flex-col max-w-full md:mx-auto">
         <CallToActionTop />
-        <MainAccordion />
+        <PrioritiesSection />
         <AboutMe />
         <Carousel />
         <CallToActionBottom />
