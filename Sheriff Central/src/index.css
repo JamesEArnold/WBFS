@@ -1,0 +1,25 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --campaign-yellow: #fcd34b;
+  --campaign-dark: #111111;
+}
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.campaign-button {
+  @apply bg-black text-campaign-yellow font-bold py-3 px-6 rounded-md shadow-md hover:bg-gray-800 transition duration-200;
+}
+
+.section-title {
+  @apply text-3xl md:text-4xl font-bold mb-6 border-b-4 border-campaign-yellow inline-block pb-2;
+}
