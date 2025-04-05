@@ -1,189 +1,150 @@
 import Image from "next/image"
 
-export default function Home() {
+export default function About() {
   return (
-    <main className="relative flex flex-col max-w-full my-8 md:mx-auto md:max-w-5xl">
-      <div className="flex">
-        <div className="max-h-fit">
-          <div className="absolute z-20 max-w-3xl mx-auto shadow-md md:top-80 md:left-7 top-[6%]">
-            <h2 className="px-3 font-semibold tracking-widest uppercase bg-white">
-              about me
-            </h2>
-            <h2 className="px-3 py-3 text-3xl font-extrabold uppercase bg-yellow-400">
-              meet&nbsp;
-              <br className="hidden"/> 
-              Sheriff 
-              <br /> 
-              weisburn
-            </h2>
+    <div className="flex flex-col">
+      {/* Hero Section */}
+      <section className="bg-[#fcd34b]/80 py-12">
+        <div className="container mx-auto px-4 text-center">
+          <h1 className="text-4xl md:text-5xl font-bold mb-4">ABOUT SHERIFF WEISBURN</h1>
+          <p className="text-xl max-w-3xl mx-auto">A proven leader with a dedication to public service and community safety.</p>
+        </div>
+      </section>
+
+      {/* Bio Section */}
+      <section className="py-16 bg-white">
+        <div className="container mx-auto px-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+            <div className="bg-gray-100 p-6 rounded-lg shadow-md">
+              <h2 className="section-title">BIOGRAPHY</h2>
+              <p className="mb-4">Thank you for taking the time to learn more about me and my career with the Stark County Sheriff's Office.</p>
+              <p className="mb-4">I am a lifetime resident of Stark County. Growing up in a small town, my parents Jack and Maxine instilled upon me at a young age the importance of service to our community. At 16 years old, I started my career of service as a firefighter for the Waynesburg Volunteer Fire Department…eventually rising to the rank of Fire Chief as my father and brother had done before me. I also aided my community as an EMT with Quad ambulance.</p>
+              <p>Sheriff Weisburn has proven experience and commitment to the citizens of Stark County. With his strong sense of duty, he will always lead the Sheriff's Office from the frontline. Place your trust in Sheriff Weisburn. He is the right choice… a Sheriff who works for <span className="relative inline-block px-2"><span className="absolute block -skew-y-3 bg-yellow-400 -inset-1" aria-hidden="true"></span><span className="relative font-bold text-black">YOU!</span></span></p>
+            </div>
+            <div className="flex justify-center items-center">
+              <div className="relative">
+                <div className="absolute inset-0 bg-black rounded-lg transform rotate-2 translate-x-2 translate-y-2"></div>
+                <div className="relative bg-gray-200 rounded-lg overflow-hidden border-4 border-black shadow-xl w-full max-w-md">
+                  <Image
+                    src="/weisburn-family-2-min.jpg"
+                    width={600}
+                    height={400}
+                    alt="Sheriff Weisburn with family"
+                    className="w-full h-auto"
+                    priority
+                  />
+                </div>
+              </div>
+            </div>
           </div>
-          <div className="md:p-3 md:shadow-md bg-white/50">
-            <div className="relative max-h-[50rem] md:h-[24rem] w-full h-full overflow-hidden">
-              <Image
-                  src="/weisburn-family-2-min.jpg"
-                  width="0"
-                  height="0"
-                  sizes="100vw"
-                  className="relative w-full h-full scale-125"
-                  alt="Weisburn for Sheriff Hero Image"
-                  priority
-                  />
+        </div>
+      </section>
+
+      {/* Career Timeline */}
+      <section className="py-16 bg-gray-100">
+        <div className="container mx-auto px-4">
+          <h2 className="section-title text-center">CAREER TIMELINE</h2>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mt-8">
+            <div className="bg-white p-6 rounded-lg shadow-md">
+              <h3 className="text-xl font-bold mb-4 text-[#fcd34b] bg-black inline-block px-3 py-1 rounded">1991</h3>
+              <p className="mb-4">My career in law enforcement started when I was hired as a Corrections Officer for the Stark County Sheriff's Office. In that position, I was responsible for the safety and security of the inmates held within the jail. I was often assigned to the mental health wing of the jail, where I saw first-hand the mental health struggles so many inmates deal with and the devastating effects it has on them and our community. I strongly believe early intervention with mental health services is crucial for the betterment of both the inmate and society.</p>
             </div>
+            <div className="bg-white p-6 rounded-lg shadow-md">
+              <h3 className="text-xl font-bold mb-4 text-[#fcd34b] bg-black inline-block px-3 py-1 rounded">1998</h3>
+              <p className="mb-4">I completed the police officer academy and was assigned to the patrol division. While in this division, I traveled throughout Stark County responding to every type of call imaginable. I had several specialized assignments, including being the first SRO (School Resource Officer) for Plain Local School District, where I served for three years. I was then selected to be the Investigator for child sexual and physical abuse cases, working closely with case workers, prosecutors and other police agencies to successfully arrest and incarcerate the monsters who abuse children. Our mission was to always bring any resemblance of justice to the victims and families.</p>
             </div>
+            <div className="bg-white p-6 rounded-lg shadow-md">
+              <h3 className="text-xl font-bold mb-4 text-[#fcd34b] bg-black inline-block px-3 py-1 rounded">2005</h3>
+              <p className="mb-4">I was promoted to Sergeant where I continued to serve the citizens of Stark County as a shift supervisor. I was responsible for the safety of not only the citizens of the county, but for the deputies who served under my command. It was a true honor to supervise professional and dedicated deputies, who worked together to protect and serve the citizens of Stark County.</p>
+            </div>
+            <div className="bg-white p-6 rounded-lg shadow-md">
+              <h3 className="text-xl font-bold mb-4 text-[#fcd34b] bg-black inline-block px-3 py-1 rounded">2007</h3>
+              <p className="mb-4">I was the lead investigator in the missing person case of Jessie Marie Davis, who was in her final month of pregnancy when she was murdered. Her body was taken to another location and her two-year-old son was left at home alone for two days forced to survive on his own. I worked closely with deputies and countless other federal, state and local agencies to find the suspects responsible for the deaths of Jessie and her unborn daughter, Chloe. So many lives were destroyed in this incident and the pain will last forever for those affected. But someone had to go to prison, I had no problem putting him there.</p>
+            </div>
+            <div className="bg-white p-6 rounded-lg shadow-md">
+              <h3 className="text-xl font-bold mb-4 text-[#fcd34b] bg-black inline-block px-3 py-1 rounded">2016</h3>
+              <p className="mb-4">I was promoted to Lieutenant and was transferred to the corrections division and served as an Assistant Jail Commander. I was involved in all aspects of jail management and the daily operations of the correction division. Furthermore, in this position I ensured the Sheriff's Office was compliant with the minimum jail standards for Ohio set by the Department of Rehabilitation and Corrections, along with local fire and health codes.</p>
+            </div>
+            <div className="bg-white p-6 rounded-lg shadow-md">
+              <h3 className="text-xl font-bold mb-4 text-[#fcd34b] bg-black inline-block px-3 py-1 rounded">2022</h3>
+              <p className="mb-4">After a rewarding 31 years, I retired from the Stark County Sheriff's Office.</p>
+            </div>
+            <div className="bg-white p-6 rounded-lg shadow-md">
+              <h3 className="text-xl font-bold mb-4 text-[#fcd34b] bg-black inline-block px-3 py-1 rounded">2024</h3>
+              <p className="mb-4">Team Weisburn for Sheriff worked tirelessly all summer to share Eric Weisburn's vision and why he was the right choice for Sheriff. From parades and festivals to community events, we connected with voters across Stark County. On November 5th, the people spoke—choosing Eric Weisburn to lead the Sheriff's Office in a new direction.</p>
+            </div>
+            <div className="bg-white p-6 rounded-lg shadow-md">
+              <h3 className="text-xl font-bold mb-4 text-[#fcd34b] bg-black inline-block px-3 py-1 rounded">Currently</h3>
+              <p className="mb-4">Sheriff Eric Weisburn began his term January 6, 2025. Sheriff Weisburn is honored to serve as <span className="relative inline-block px-2"><span className="absolute block -skew-y-3 bg-yellow-400 -inset-1" aria-hidden="true"></span><span className="relative font-bold text-black">YOUR</span></span> Sheriff of Stark County. Thank you for your trust and support, we won the election in November 2024, but the fight to keep Stark County safe is far from over. Please consider contributing today to support Weisburn For Sheriff.</p>
+            </div>
+          </div>
         </div>
-        <div className="hidden max-w-xs mt-5 ml-20 text-justify md:block">
-          <span>
-          Thank you for taking the time to learn more about me and my career with
-          the Stark County Sheriff’s Office.
-            <br />
-            <br />
-            I am a lifetime resident of Stark County. Growing up in a small town, my parents Jack and Maxine
-            instilled upon me at a young age the importance of service to our community. At 16 years old, I started
-            my career of service as a firefighter for the Waynesburg Volunteer Fire Department…eventually rising to
-            the rank of Fire Chief as my father and brother had done before me. I also aided my community as an
-            EMT with Quad ambulance.
-          </span>
+      </section>
+
+      {/* Accomplishments */}
+      <section className="py-16 bg-white">
+        <div className="container mx-auto px-4">
+          <h2 className="section-title text-center">ACCOMPLISHMENTS & VISION</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-8">
+            <div className="bg-gray-100 p-6 rounded-lg shadow-md">
+              <h3 className="text-xl font-bold mb-4 text-[#fcd34b] bg-black inline-block px-3 py-1 rounded">FIRST TERM</h3>
+              <ul className="list-disc pl-6 space-y-2">
+                <li>Reduced violent crime through strategic deployment and community policing</li>
+                <li>Modernized department equipment and technology</li>
+                <li>Established youth outreach programs in all county school districts</li>
+                <li>Implemented comprehensive training programs for all department personnel</li>
+                <li>Secured grants for community safety initiatives</li>
+              </ul>
+            </div>
+            <div className="bg-gray-100 p-6 rounded-lg shadow-md">
+              <h3 className="text-xl font-bold mb-4 text-[#fcd34b] bg-black inline-block px-3 py-1 rounded">VISION FOR NEXT TERM</h3>
+              <ul className="list-disc pl-6 space-y-2">
+                <li>Expand mental health response team for crisis interventions</li>
+                <li>Enhance rural patrol coverage and emergency response times</li>
+                <li>Develop advanced training facility for regional law enforcement</li>
+                <li>Strengthen partnerships with neighboring jurisdictions</li>
+                <li>Implement citizen advisory committee for community input</li>
+              </ul>
+            </div>
+          </div>
         </div>
-      </div>
-      <div className="flex flex-col mx-10 mt-20 text-justify">
-        <section>
-        <div className="block mt-10 text-justify md:hidden">
-          <span>
-          Thank you for taking the time to learn more about me and my career with
-          the Stark County Sheriff’s Office.
-            <br />
-            <br />
-            I am a lifetime resident of Stark County. Growing up in a small town, my parents Jack and Maxine
-            instilled upon me at a young age the importance of service to our community. At 16 years old, I started
-            my career of service as a firefighter for the Waynesburg Volunteer Fire Department…eventually rising to
-            the rank of Fire Chief as my father and brother had done before me. I also aided my community as an
-            EMT with Quad ambulance.
-          </span>
-        </div>
-        </section>
-        <section className="mt-10 md:mt-0">
-          <h1 className="text-4xl font-bold">1991</h1>
-          <hr className="w-3/4 mt-2 mb-4 border border-yellow-400" />
-          <span>
-          My career in law enforcement started when I was hired as a Corrections Officer for the Stark
-  County Sheriff’s Office. In that position, I was responsible for the safety and security of the inmates held
-  within the jail. I was often assigned to the mental health wing of the jail, where I saw first-hand the
-  mental health struggles so many inmates deal with and the devastating effects it has on them and our
-  community. I strongly believe early intervention with mental health services is crucial for the
-  betterment of both the inmate and society.
-          </span>
-        </section>
-        <section className="mt-10">
-          <h1 className="text-4xl font-bold">1998</h1>
-          <hr className="w-3/4 mt-2 mb-4 border border-yellow-400" />
-          <span className="">
-          I completed the police officer academy and was assigned to the patrol division. While in this
-division, I traveled throughout Stark County responding to every type of call imaginable. I had several
-specialized assignments, including being the first SRO (School Resource Officer) for Plain Local School
-District, where I served for three years. I was then selected to be the Investigator for child sexual and
-physical abuse cases, working closely with case workers, prosecutors and other police agencies to
-successfully arrest and incarcerate the monsters who abuse children. Our mission was to always bring
-any resemblance of justice to the victims and families.
-          </span>
-        </section>
-        <section className="mt-10">
-          <h1 className="text-4xl font-bold">2005</h1>
-          <hr className="w-3/4 mt-2 mb-4 border border-yellow-400" />
-          <span className="">
-          I was promoted to Sergeant where I continued to serve the citizens of Stark County as a shift
-supervisor. I was responsible for the safety of not only the citizens of the county, but for the deputies
-who served under my command. It was a true honor to supervise professional and dedicated deputies,
-who worked together to protect and serve the citizens of Stark County.
-          </span>
-        </section>
-        <section className="mt-10">
-          <h1 className="text-4xl font-bold">2007</h1>
-          <hr className="w-3/4 mt-2 mb-4 border border-yellow-400" />
-          <span className="">
-          I was the lead investigator in the missing person case of Jessie Marie Davis, who was in her final
-month of pregnancy when she was murdered. Her body was taken to another location and her two-
-year-old son was left at home alone for two days forced to survive on his own. I worked closely with
-deputies and countless other federal, state and local agencies to find the suspects responsible for the
-deaths of Jessie and her unborn daughter, Chloe. So many lives were destroyed in this incident and the
-pain will last forever for those affected. But someone had to go to prison, I had no problem putting him
-there.
-          </span>
-        </section>
-        <section className="mt-10">
-          <h1 className="text-4xl font-bold">2016</h1>
-          <hr className="w-3/4 mt-2 mb-4 border border-yellow-400" />
-          <span className="">
-          I was promoted to Lieutenant and was transferred to the corrections division and served as an
-Assistant Jail Commander. I was involved in all aspects of jail management and the daily operations of
-the correction division. Furthermore, in this position I ensured the Sheriff’s Office was compliant with
-the minimum jail standards for Ohio set by the Department of Rehabilitation and Corrections, along with
-local fire and health codes.
-          </span>
-        </section>
-        <section className="mt-10">
-          <h1 className="text-4xl font-bold">2022</h1>
-          <hr className="w-3/4 mt-2 mb-4 border border-yellow-400" />
-          After a rewarding 31 years, I retired from the Stark County Sheriff’s Office.
-          <br />
-          <br />
-        </section>
-        <section className="mt-10">
-          <h1 className="text-4xl font-bold">2024</h1>
-          <hr className="w-3/4 mt-2 mb-4 border border-yellow-400" />
-          Team Weisburn for Sheriff worked tirelessly all summer to share Eric Weisburn’s vision and why he was the right choice for Sheriff. 
-          From parades and festivals to community events, we connected with voters across Stark County. On November 5th, 
-          the people spoke—choosing Eric Weisburn to lead the Sheriff’s Office in a new direction.
-          <br />
-          <br />
-        </section>
-        <section className="mt-10">
-          <h1 className="text-4xl font-bold">Currently</h1>
-          <hr className="w-3/4 mt-2 mb-4 border border-yellow-400" />
-          Sheriff Eric Weisburn began his term January 6, 2025. Sheriff Weisburn is
-          honored to serve as <span className="relative mx-2">
-              <span className="absolute block -skew-y-3 bg-yellow-400 -inset-1" aria-hidden="true"></span>
-              <span className="relative font-bold text-black">YOUR</span></span> Sheriff of Stark County. Thank you for your
-          trust and support, we won the election in November 2024, but the fight to
-          keep Stark County safe is far from over. Please consider contributing
-          today to support Weisburn For Sheriff.
-          <br />
-          <br />
-        </section>
-        <section className="flex flex-col my-20 md:flex-row">
-        <div className="my-auto md:mx-3 md:mr-16">
-          <span className="text-xl font-bold">
-          Respectfully,
-          </span>
-          <br />
-          <div className="relative max-h-[50rem] md:h-1/4 md:w-3/4 h-1/2 w-1/2 overflow-hidden mb-5">
-              <Image
+      </section>
+
+      {/* Personal Note */}
+      <section className="py-16 bg-gray-100">
+        <div className="container mx-auto px-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+            <div className="flex flex-col justify-center">
+              <h3 className="section-title">A PERSONAL NOTE</h3>
+              <p className="mb-4">Respectfully,</p>
+              <div className="relative h-24 w-48 overflow-hidden mb-5">
+                <Image
                   src="/signature.png"
-                  width="0"
-                  height="0"
-                  sizes="100vw"
-                  className="relative w-full h-full"
-                  alt="Weisburn for Sheriff Hero Image"
-                  />
+                  width={300}
+                  height={100}
+                  alt="Signature of Sheriff Weisburn"
+                  className="object-contain"
+                />
+              </div>
+              <p className="text-xl font-bold">Eric Weisburn</p>
             </div>
-          <span className="text-xl font-bold">
-          Eric Weisburn
-          </span>
-        </div>
-        <div className="p-3 mt-10 shadow-md bg-white/50">
-          <div className="relative max-h-[50rem] md:h-[22rem] md:w-full w-full h-full overflow-hidden">
-              <Image
-                  src="/weisburn-grandkids-min.jpg"
-                  width="0"
-                  height="0"
-                  sizes="100vw"
-                  className="relative w-full h-full scale-125"
-                  alt="Weisburn for Sheriff Hero Image"
-                  priority
+            <div className="flex justify-center items-center">
+              <div className="relative">
+                <div className="absolute inset-0 bg-black rounded-lg transform rotate-2 translate-x-2 translate-y-2"></div>
+                <div className="relative bg-gray-200 rounded-lg overflow-hidden border-4 border-black shadow-xl w-full max-w-md">
+                  <Image
+                    src="/weisburn-grandkids-min.jpg"
+                    width={600}
+                    height={400}
+                    alt="Sheriff Weisburn with family"
+                    className="w-full h-auto"
                   />
+                </div>
+              </div>
             </div>
+          </div>
         </div>
-        </section>
-      </div>
-    </main>
+      </section>
+    </div>
   )
-};
+}
