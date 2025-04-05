@@ -10,6 +10,7 @@ import Head from 'next/head';
 import { Meta } from '@/components/seo/meta';
 import { globalMeta } from '@/components/seo/globalMeta';
 import PrioritiesSection from '@/components/sections/PrioritiesSection';
+import EventsPreviewSection from '@/components/sections/EventsPreviewSection';
 
 const structuredSeo = JSON.stringify({
   "@context": globalMeta.siteUrl,
@@ -25,8 +26,9 @@ export default function Home() {
       <main className="relative flex flex-col max-w-full md:mx-auto">
         <CallToActionTop />
         <PrioritiesSection />
-        <AboutMe />
-        <Carousel />
+        <EventsPreviewSection />
+        {/* <AboutMe /> */}
+        {/* <Carousel /> */}
         <CallToActionBottom />
       </main>
     </>

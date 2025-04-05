@@ -60,12 +60,12 @@ export const HeroSlide = () => {
         </div>
       </section>
 
-      {/* Event card in a container matching the main content width */}
+      {/* Event card in a container matching the main content width
       <div className="max-w-5xl px-4 py-8 mx-auto">
         <div className="relative p-6 overflow-hidden bg-black md:w-fit md:mx-auto md:mb-4">
           {GolfFundraiserEvent2.eventCard}
         </div>
-      </div>
+      </div> */}
     </>
   );
 };

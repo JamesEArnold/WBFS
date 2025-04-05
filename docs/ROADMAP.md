@@ -138,17 +138,24 @@ This roadmap outlines the migration plan to convert the existing Next.js applica
     - Added "Learn More" buttons linking to the about page
     - Used consistent yellow/black color scheme for buttons and accents
 
-- [ ] Implement Events Preview section
-  - Location: New component `/components/EventsPreview.tsx`
-  - Implementation: Create new component for homepage events preview
+- [x] Implement Events Preview section
+  - Location: New component `/components/sections/EventsPreviewSection.tsx`
+  - Implementation: Created component for homepage events preview that uses actual event data
   - Key features:
-    - Date display with yellow background
-    - Event details with call-to-action
+    - Date display with yellow background featuring month, day, and year
+    - "SAVE THE DATE" flag for upcoming events
+    - Event details with location and time
+    - Call-to-action button for event details
+    - Responsive design that works on mobile and desktop
   - Reference: Sheriff Central Home.tsx events section
   - Implementation Notes:
-    - Pull data from existing events pages
-    - Format date display in the left yellow column with day, month, year
-    - Incorporate "SAVE THE DATE" tag as shown in Sheriff Central design
+    - Utilized existing event data structure from event components
+    - Implemented dynamic filtering to show only non-expired events
+    - Added date parsing to properly format event dates in the left yellow column
+    - Incorporated Calendar icon from Lucide for consistent styling
+    - Added fallback display for when no events are available
+    - Used consistent yellow/black color scheme for buttons and "SAVE THE DATE" tag
+    - Added proper shadow and spacing for improved visual hierarchy
 
 ### Phase 2.4: About Page Components
 - [ ] Update About page layout and styling
@@ -450,6 +457,27 @@ This roadmap outlines the migration plan to convert the existing Next.js applica
     - Implemented proper section title with uppercase, bold styling
     - Added "Learn More" buttons linking to the about page
     - Used consistent yellow/black color scheme for buttons and accents
+
+- [x] Implement Events Preview section
+  - Location: New component `/components/sections/EventsPreviewSection.tsx`
+  - Implementation: Created component for homepage events preview that uses actual event data
+  - Key features:
+    - Date display with yellow background featuring month, day, and year
+    - "SAVE THE DATE" flag for upcoming events
+    - Event details with location and time
+    - Call-to-action button for event details
+    - Responsive design that works on mobile and desktop
+  - Reference: Sheriff Central Home.tsx events section
+  - Implementation Notes:
+    - Utilized existing event data structure from event components
+    - Implemented dynamic filtering to show only non-expired events
+    - Added date parsing to properly format event dates in the left yellow column
+    - Incorporated Calendar icon from Lucide for consistent styling
+    - Added fallback display for when no events are available
+    - Used consistent yellow/black color scheme for buttons and "SAVE THE DATE" tag
+    - Added proper shadow and spacing for improved visual hierarchy
+
+### Phase 2.4: About Page Components
 
 ### Phase 3.2: CSS Global Styles (Partial)
 - [x] Update global CSS with Sheriff Central styles
