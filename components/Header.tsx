@@ -15,12 +15,12 @@ export const Header = () => {
   };
 
   return (
-    <header className="bg-[#fcd34b] text-black shadow-md sticky z-10 top-0">
-      <div className="container mx-auto px-4 py-4 flex flex-col md:flex-row items-center justify-between">
-        <div className="flex items-center flex-col md:flex-row">
+    <header className="bg-[#fcd34b] text-black sticky z-10 top-0">
+      <div className="container flex flex-col items-center justify-between px-4 py-4 mx-auto md:flex-row">
+        <div className="flex flex-col items-center md:flex-row">
           <Link href="/" className="mb-4 md:mb-0">
             <div className="flex flex-col items-center md:items-start">
-              <div className="text-sm flex items-center justify-center mb-1">
+              <div className="flex items-center justify-center mb-1 text-sm">
                 <span className="mx-1">★</span>
                 <span className="mx-1">★</span>
                 <span className="mx-1">★</span>
@@ -29,10 +29,10 @@ export const Header = () => {
                 <span className="mx-1">★</span>
                 <span className="mx-1">★</span>
               </div>
-              <div className="text-3xl md:text-4xl font-black tracking-wide">
+              <div className="text-3xl font-black tracking-wide md:text-4xl">
                 SHERIFF
               </div>
-              <div className="text-3xl md:text-4xl font-black tracking-wide">
+              <div className="text-3xl font-black tracking-wide md:text-4xl">
                 WEISBURN
               </div>
             </div>

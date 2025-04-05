@@ -104,26 +104,23 @@ This roadmap outlines the migration plan to convert the existing Next.js applica
     - Used yellow (#fcd34b) for accent colors to maintain consistency
 
 ### Phase 2.3: Home Page Components
-- [ ] Implement new Hero component
+- [x] Implement new Hero component
   - Location: `/components/hero-slide.tsx`
-  - Implementation: Replace current hero with new design
+  - Implementation: Replaced current hero with new Sheriff Central design
   - Key features:
-    - Two-column layout
-    - Sheriff portrait with stylized border
-    - Campaign buttons
+    - Two-column layout with yellow gradient background
+    - Sheriff portrait with stylized border and rotated black shadow effect
+    - Campaign buttons (Learn More and Support Our Campaign)
+    - RE-ELECT stars branding
+    - Proper column ordering for mobile (image first, then text)
   - Reference: Sheriff Central Home.tsx hero section
   - Implementation Notes:
-    ```tsx
-    // Key HTML structure
-    <section className="bg-gradient-to-b from-[#fcd34b] to-[#fcd34b]/70 py-16">
-      <div className="container mx-auto px-4">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-          {/* Text column */}
-          {/* Image column with stylized border */}
-        </div>
-      </div>
-    </section>
-    ```
+    - Preserved the event card functionality from the original hero section
+    - Used the SheriffStar icon component for branding
+    - Maintained the existing sheriff portrait image
+    - Added responsive styling for mobile and desktop views
+    - Used the yellow/black color scheme from the Tailwind configuration
+    - Added the rotation and shadow effect for the sheriff portrait to match Sheriff Central design
 
 - [ ] Implement Priorities section
   - Location: `/components/main-accordion.tsx` → `/components/Priorities.tsx`
