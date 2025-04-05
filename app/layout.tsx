@@ -10,10 +10,13 @@ import Head from 'next/head';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Analytics } from '@vercel/analytics/react';
-import { NotificationBanner } from '@/components/ui/notification-banner';
 import { SpeedInsights } from "@vercel/speed-insights/next"
 
-const inter = Inter({ subsets: ['latin'] })
+const inter = Inter({ 
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-inter',
+})
 
 export const metadata: Metadata = {
   title: 'Weisburn for Sheriff',
@@ -32,36 +35,38 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" suppressHydrationWarning className={inter.variable}>
       <Head>
         <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
         <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
         <link rel="icon" href="/favicon.ico" sizes="any" />
       </Head>
-      <body className={`${inter.className}`}>
-      <SpeedInsights />
-      <Meta 
-        ogType='website'
-        structuredData={structuredSeo}
-      />
-      <Header />
-      <ToastContainer
-        position="top-center"
-        autoClose={5000}
-        hideProgressBar={true}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="light"
-      />
-        {children}
+      <body className="min-h-screen flex flex-col antialiased">
+        <SpeedInsights />
+        <Meta 
+          ogType='website'
+          structuredData={structuredSeo}
+        />
+        <Header />
+        <ToastContainer
+          position="top-center"
+          autoClose={5000}
+          hideProgressBar={true}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="light"
+        />
+        <main className="flex-grow">
+          {children}
+        </main>
         <Analytics />
-      <ContributeBanner />
-      <Footer />
+        <ContributeBanner />
+        <Footer />
       </body>
     </html>
   )

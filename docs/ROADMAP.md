@@ -197,71 +197,57 @@ This roadmap outlines the migration plan to convert the existing Next.js applica
     - Created CTAs for subscribing to updates and volunteering
 
 ### Phase 2.6: Donate/Contribute Page
-- [ ] Update Donate page to match Contribute design
+- [x] Update Donate page to match Contribute design
   - Location: `/app/donate/page.tsx`
-  - Implementation: Implement contribution form with new styling
+  - Implementation: Implemented new contribution page design with existing Donorbox integration
   - Key features:
-    - Multi-step contribution process
-    - Form validation
-    - Payment integration
+    - Added hero section with campaign yellow background
+    - Styled Donorbox iframe for consistent appearance
+    - Added "Other Ways to Help" section with volunteer options
+    - Maintained necessary campaign finance compliance information
   - Reference: Sheriff Central Contribute.tsx
   - Implementation Notes:
-    - Preserve existing payment processor integration
-    - Implement multi-step form UI with progress indicator
-    - Use consistent form styling (input fields, buttons)
-    - Maintain campaign finance compliance disclaimers
+    - Preserved existing Donorbox payment processor integration
+    - Added clean container for the donation iframe
+    - Used campaign-card component for volunteer opportunities
+    - Maintained campaign finance disclaimers and mailing information
+    - Added consistent styling with campaign-button and section-title classes
 
 ## Phase 3: Layout and Routing
 
 ### Phase 3.1: Root Layout Update
-- [ ] Update Root Layout to incorporate new design system
+- [x] Update Root Layout to incorporate new design system
   - Location: `/app/layout.tsx`
-  - Implementation: Update layout structure while preserving metadata
+  - Implementation: Updated layout structure while preserving metadata and enhancing the overall structure
   - Key features:
-    - Consistent header/footer integration
-    - Maintain SEO metadata
-    - Analytics integration
+    - Added main tag to properly wrap content
+    - Applied flex-column layout for sticky footer
+    - Improved font configuration with variable fonts
+    - Maintained SEO metadata and analytics integration
+    - Preserved existing components (Header, Footer, ContributeBanner)
   - Reference: Sheriff Central App.tsx structure
   - Implementation Notes:
-    ```tsx
-    // Keep the following metadata intact:
-    export const metadata: Metadata = {
-      title: 'Weisburn for Sheriff',
-      description: 'The official site for the Stark County Republican Sheriff Representative Eric Weisburn.',
-      verification: { google: '9J5nLPwwmIYa-i-ryNRJ10p0pB0wFeXk9IFXk5Ff1Mw' }
-    }
-    
-    // Update layout with new header/footer components
-    // Maintain SpeedInsights and Analytics components
-    ```
+    - Updated the Inter font configuration to use variable fonts
+    - Added classNames for better responsiveness and layout structure
+    - Wrapped main content in a semantic main tag with flex-grow
+    - Maintained all existing SEO metadata and Vercel analytics
 
-### Phase 3.2: CSS Global Styles
-- [ ] Update global CSS with Sheriff Central styles
+### Phase 3.2: CSS Global Styles (Partial)
+- [x] Update global CSS with Sheriff Central styles
   - Location: `/app/globals.css`
-  - Implementation: Migrate base styles, utility classes
+  - Implementation: Completed typography system and added comprehensive utility classes
   - Key features:
-    - Typography system (partially implemented)
-    - Common button styles (implemented)
-    - Section title styling (implemented)
+    - Implemented complete typography scale with responsive sizing
+    - Added campaign-specific utility classes for consistent styling
+    - Enhanced base element styling for improved visual hierarchy
+    - Added form element styling for consistent user inputs
   - Reference: Sheriff Central index.css
   - Implementation Notes:
-    ```css
-    /* Add the following utility classes */
-    .section-title {
-      @apply text-3xl font-bold mb-8 uppercase tracking-wide;
-    }
-    
-    .campaign-button {
-      @apply bg-black text-[#fcd34b] font-bold py-3 px-6 rounded-md hover:bg-gray-800 transition duration-200;
-    }
-    
-    /* Update typography base styles */
-    h1, h2, h3, h4, h5, h6 {
-      @apply font-bold;
-    }
-    ```
-    - Some utility classes have been implemented in the "Completed Items" section
-    - Remaining work: Complete typography base styles
+    - Implemented responsive typography scale using Tailwind's responsive prefixes
+    - Added utility classes for campaign cards, containers, grids, and links
+    - Created consistent styling for form inputs with yellow focus states
+    - Added gradient background utility for hero sections
+    - Maintained existing color system while enhancing component styling
 
 ## Phase 4: API Integration and Form Handling
 
@@ -507,26 +493,56 @@ This roadmap outlines the migration plan to convert the existing Next.js applica
     - Organized content into clear, distinct sections for better user experience
     - Maintained the "YOU!" styling with the skewed yellow background accent
 
-### Phase 3.2: CSS Global Styles (Partial)
+### Phase 3.1: Root Layout Update
+- [x] Update Root Layout to incorporate new design system
+  - Location: `/app/layout.tsx`
+  - Implementation: Updated layout structure while preserving metadata and enhancing the overall structure
+  - Key features:
+    - Added main tag to properly wrap content
+    - Applied flex-column layout for sticky footer
+    - Improved font configuration with variable fonts
+    - Maintained SEO metadata and analytics integration
+    - Preserved existing components (Header, Footer, ContributeBanner)
+  - Reference: Sheriff Central App.tsx structure
+  - Implementation Notes:
+    - Updated the Inter font configuration to use variable fonts
+    - Added classNames for better responsiveness and layout structure
+    - Wrapped main content in a semantic main tag with flex-grow
+    - Maintained all existing SEO metadata and Vercel analytics
+
+### Phase 3.2: CSS Global Styles
 - [x] Update global CSS with Sheriff Central styles
   - Location: `/app/globals.css`
-  - Implementation: Added utility classes for consistent styling
+  - Implementation: Completed typography system and added comprehensive utility classes
   - Key features:
-    - Added section-title class for heading consistency
-    - Added campaign-button class for CTA buttons
+    - Implemented complete typography scale with responsive sizing
+    - Added campaign-specific utility classes for consistent styling
+    - Enhanced base element styling for improved visual hierarchy
+    - Added form element styling for consistent user inputs
   - Reference: Sheriff Central index.css
   - Implementation Notes:
-    ```css
-    @layer components {
-      .section-title {
-        @apply text-3xl font-bold mb-8 uppercase tracking-wide;
-      }
-      
-      .campaign-button {
-        @apply bg-black text-[#fcd34b] font-bold py-3 px-6 rounded-md hover:bg-gray-800 transition duration-200;
-      }
-    }
-    ```
+    - Implemented responsive typography scale using Tailwind's responsive prefixes
+    - Added utility classes for campaign cards, containers, grids, and links
+    - Created consistent styling for form inputs with yellow focus states
+    - Added gradient background utility for hero sections
+    - Maintained existing color system while enhancing component styling
+
+### Phase 2.6: Donate/Contribute Page
+- [x] Update Donate page to match Contribute design
+  - Location: `/app/donate/page.tsx`
+  - Implementation: Implemented new contribution page design with existing Donorbox integration
+  - Key features:
+    - Added hero section with campaign yellow background
+    - Styled Donorbox iframe for consistent appearance
+    - Added "Other Ways to Help" section with volunteer options
+    - Maintained necessary campaign finance compliance information
+  - Reference: Sheriff Central Contribute.tsx
+  - Implementation Notes:
+    - Preserved existing Donorbox payment processor integration
+    - Added clean container for the donation iframe
+    - Used campaign-card component for volunteer opportunities
+    - Maintained campaign finance disclaimers and mailing information
+    - Added consistent styling with campaign-button and section-title classes
 
 ### Additional Enhancements
 - [x] Create dedicated volunteer page

@@ -16,10 +16,10 @@ export const HeroSlide = () => {
             <div className="order-2 md:order-1">
               <div className="flex items-center mx-auto mb-4">
                 <SheriffStar size={28} color="#000000" />
-                <SheriffStar size={28} color="#000000" className="ml-2" />
-                <span className="ml-3 text-4xl italic font-bold">Re-Elect</span>
                 <SheriffStar size={28} color="#000000" />
-                <SheriffStar size={28} color="#000000" className="ml-2" />
+                <span className="ml-3 text-4xl italic font-bold">Re-Elect</span>
+                <SheriffStar size={28} color="#000000" className="ml-4" />
+                <SheriffStar size={28} color="#000000" />
               </div>
               <h1 className="mb-4 text-4xl font-bold md:text-5xl">SHERIFF WEISBURN</h1>
               <p className="mb-6 text-xl">Dedicated to protecting our community with integrity and experience.</p>
