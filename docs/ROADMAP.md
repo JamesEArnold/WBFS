@@ -87,18 +87,21 @@ This roadmap outlines the migration plan to convert the existing Next.js applica
       - Contribute (styled as CTA button) ('/donate')
 
 ### Phase 2.2: Footer Component
-- [ ] Replace existing Footer with Sheriff Central design
-  - Location: `/components/footer.tsx`
-  - Implementation: Update Footer with new design while preserving links
+- [x] Replace existing Footer with Sheriff Central design
+  - Location: `/components/footer.tsx` → `/components/layout/Footer.tsx`
+  - Implementation: Updated Footer with new design while preserving links and content
   - Key features:
-    - Consistent branding
-    - Social media links
-    - Campaign contact information
+    - Black background with yellow accents 
+    - Three-column layout with responsive design
+    - Social media links with yellow circular backgrounds
+    - Campaign logo display in yellow background
   - Reference: Sheriff Central Footer.tsx component
   - Implementation Notes:
-    - Preserve the current SEO metadata from existing footer
-    - Maintain "Paid for by" disclaimer text
-    - Footer color scheme: Black background with white text and yellow accents
+    - Preserved campaign address and email information
+    - Maintained social media links to Facebook and Instagram
+    - Added "Paid for by" disclaimer in the bottom section
+    - Updated import in app/layout.tsx to use new component
+    - Used yellow (#fcd34b) for accent colors to maintain consistency
 
 ### Phase 2.3: Home Page Components
 - [ ] Implement new Hero component
@@ -394,3 +397,36 @@ This roadmap outlines the migration plan to convert the existing Next.js applica
     - Added "Re-Elect" stars styling with the new branding
   - Reference: Adapted from Sheriff Central Header.tsx component
   - Additional Notes: Used Next.js Link components and usePathname for navigation instead of React Router
+
+### Phase 2.2: Footer Component
+- [x] Replace existing Footer with Sheriff Central design
+  - Location: `/components/footer.tsx` → `/components/layout/Footer.tsx`
+  - Implementation: Updated Footer with new design while preserving links and content
+  - Key features:
+    - Black background with yellow accents 
+    - Three-column layout with responsive design
+    - Social media links with yellow circular backgrounds
+    - Campaign logo display in yellow background
+  - Reference: Sheriff Central Footer.tsx component
+  - Implementation Notes:
+    - Preserved campaign address and email information
+    - Maintained social media links to Facebook and Instagram
+    - Added "Paid for by" disclaimer in the bottom section
+    - Updated import in app/layout.tsx to use new component
+    - Used yellow (#fcd34b) for accent colors to maintain consistency
+
+### Additional Enhancements
+- [x] Implement Contribution Banner above footer
+  - Location: `/components/sections/ContributeBanner.tsx`
+  - Implementation: Created a new global contribution call-to-action banner
+  - Key features:
+    - Black background with yellow CTA button
+    - Campaign donation message
+    - Responsive text sizing
+    - Appears on all pages above the footer
+  - Reference: Sheriff Central Home.tsx contribution section
+  - Implementation Notes:
+    - Added component to the root layout to appear on all pages
+    - Used the consistent yellow (#fcd34b) for the CTA button
+    - Linked to the existing donation page (/donate)
+    - Used responsive typography for better mobile experience

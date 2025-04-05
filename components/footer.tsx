@@ -14,14 +14,14 @@ export const Footer = () => {
     </div>
     {/* <hr className="w-8/12 h-px mx-auto my-8 bg-gray-800 border-0 opacity-25 dark:bg-gray-700"></hr> */}
     <div className="flex flex-col w-full h-full mx-auto mt-4">
-      <Image
+      {/* <Image
           priority
           src="/post-election/ReElectWeisburnForSheriff.png"
           alt="Weisburn For Sheriff"
           height={150}
           width={380}
           className="mx-auto bg-yellow-400"
-        />
+        /> */}
         <div className="flex w-8/12 max-w-sm mx-auto my-2 uppercase border-2 border-black rounded opacity-40">
           <span className="mx-auto py-3 text-[11px] opacity-100">Paid for by Weisburn for Sheriff</span>
         </div>

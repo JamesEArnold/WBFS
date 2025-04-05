@@ -4,7 +4,8 @@ import { Inter } from 'next/font/google'
 import { Meta } from '@/components/seo/meta';
 import { globalMeta } from '@/components/seo/globalMeta';
 import Header from '@/components/Header';
-import { Footer } from '@/components/footer';
+import Footer from '@/components/layout/Footer';
+import ContributeBanner from '@/components/sections/ContributeBanner';
 import Head from 'next/head';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -59,6 +60,7 @@ export default function RootLayout({
       />
         {children}
         <Analytics />
+      <ContributeBanner />
       <Footer />
       </body>
     </html>

@@ -6,7 +6,6 @@ import { CallToActionBottom, CallToActionTop } from '@/components/call-to-action
 import { MainAccordion } from '@/components/main-accordion';
 import { AboutMe } from '@/components/about-me';
 import { Carousel } from '@/components/carousel';
-import { Footer } from '@/components/footer';
 import Head from 'next/head';
 import { Meta } from '@/components/seo/meta';
 import { globalMeta } from '@/components/seo/globalMeta';
