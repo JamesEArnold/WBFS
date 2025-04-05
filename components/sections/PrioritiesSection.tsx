@@ -33,42 +33,25 @@ const PrioritiesSection = () => {
   ];
 
   return (
-    <section className="py-16 bg-white">
-      <div className="container px-4 mx-auto">
-        <h2 className="text-center section-title">PRIORITIES</h2>
-        
-        <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
-          {priorities.map((priority) => (
-            <Card 
-              key={priority.id} 
-              withYellowBorder 
-              withHoverEffect
-              className="flex flex-col"
-            >
-              <CardHeader className="bg-gray-100">
-                <CardTitle className="flex items-center justify-center text-xl uppercase bg-gray-100">
-                  <FontAwesomeIcon icon={priority.icon} className="mr-3" size="lg" />
-                  {priority.title}
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="flex flex-col flex-grow bg-gray-100">
-                <p className="flex-grow mb-6 text-center">{priority.description}</p>
-                {priority.link && (
-                  <div className="mt-auto text-center">
-                    <Link 
-                      href={priority.link}
-                      className="inline-block campaign-button"
-                    >
-                      Learn More
-                    </Link>
-                  </div>
-                )}
-              </CardContent>
-            </Card>
-          ))}
+      <section className="py-16 bg-white">
+        <div className="container px-4 mx-auto">
+          <h2 className="section-title">PRIORITIES</h2>
+          <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
+            <div className="p-6 bg-gray-100 border-l-4 rounded-lg shadow-md border-campaign-yellow">
+              <h3 className="mb-3 text-xl font-bold">Public Safety</h3>
+              <p>Committed to maintaining and improving the safety and security of all residents through proactive policing and community engagement.</p>
+            </div>
+            <div className="p-6 bg-gray-100 border-l-4 rounded-lg shadow-md border-campaign-yellow">
+              <h3 className="mb-3 text-xl font-bold">Fiscal Responsibility</h3>
+              <p>Ensuring taxpayer dollars are used efficiently while maintaining the highest standards of service and protection.</p>
+            </div>
+            <div className="p-6 bg-gray-100 border-l-4 rounded-lg shadow-md border-campaign-yellow">
+              <h3 className="mb-3 text-xl font-bold">Community Partnerships</h3>
+              <p>Building strong relationships between law enforcement and the community through transparency, accountability, and mutual respect.</p>
+            </div>
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
   );
 };
 

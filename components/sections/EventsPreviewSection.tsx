@@ -46,7 +46,7 @@ const EventsPreviewSection = () => {
   return (
     <section className="py-16 bg-gray-50">
       <div className="container px-4 mx-auto">
-        <div className="flex items-center justify-between mb-12">
+        <div className="flex flex-col items-center justify-between mb-12 md:flex-row">
           <h2 className="section-title">UPCOMING EVENTS</h2>
           <Link 
             href="/events"

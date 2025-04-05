@@ -32,21 +32,21 @@ export const Header = () => {
   };
 
   return (
-    <header className={`sticky top-0 z-50 bg-[#fcd34b] text-black transition-shadow duration-300 ${
-      scrolled ? 'shadow-md' : ''
+    <header className={`sticky top-0 z-50 bg-white text-black transition-shadow duration-300 ${
+      scrolled ? 'shadow-md' : 'border-b border-gray-200'
     }`}>
       <div className={`container mx-auto px-4 ${scrolled ? 'py-2' : 'py-4'} flex flex-col md:flex-row items-center justify-between transition-all duration-300`}>
         <div className="flex flex-col items-center md:flex-row">
           <Link href="/" className="mb-2 md:mb-0">
             <div className="flex flex-col items-center md:items-start">
               <div className={`text-sm flex items-center justify-center mb-1 ${scrolled ? 'text-xs' : 'text-sm'} transition-all duration-300`}>
-                <span className="mx-1">★</span>
-                <span className="mx-1">★</span>
-                <span className="mx-1">★</span>
+                <span className="mx-1 text-yellow-400">★</span>
+                <span className="mx-1 text-yellow-400">★</span>
+                <span className="mx-1 text-yellow-400">★</span>
                 <span className="italic font-bold">Re-Elect</span>
-                <span className="mx-1">★</span>
-                <span className="mx-1">★</span>
-                <span className="mx-1">★</span>
+                <span className="mx-1 text-yellow-400">★</span>
+                <span className="mx-1 text-yellow-400">★</span>
+                <span className="mx-1 text-yellow-400">★</span>
               </div>
               <div className={`transition-all duration-300 ease-in-out font-black tracking-wide ${
                 scrolled ? 'text-lg md:text-xl' : 'text-3xl md:text-4xl'
@@ -77,7 +77,7 @@ export const Header = () => {
             <li>
               <Link
                 href="/"
-                className={`block py-2 px-4 rounded-md ${isActive('/') ? 'bg-black text-[#fcd34b]' : 'hover:bg-black/10'}`}
+                className={`block py-2 px-4 rounded-md ${isActive('/') ? 'bg-black text-yellow-400' : 'hover:bg-gray-100'}`}
                 onClick={() => setMobileMenuOpen(false)}
               >
                 Home
@@ -86,7 +86,7 @@ export const Header = () => {
             <li>
               <Link
                 href="/about"
-                className={`block py-2 px-4 rounded-md ${isActive('/about') ? 'bg-black text-[#fcd34b]' : 'hover:bg-black/10'}`}
+                className={`block py-2 px-4 rounded-md ${isActive('/about') ? 'bg-black text-yellow-400' : 'hover:bg-gray-100'}`}
                 onClick={() => setMobileMenuOpen(false)}
               >
                 About
@@ -95,7 +95,7 @@ export const Header = () => {
             <li>
               <Link
                 href="/events"
-                className={`block py-2 px-4 rounded-md ${isActive('/events') ? 'bg-black text-[#fcd34b]' : 'hover:bg-black/10'}`}
+                className={`block py-2 px-4 rounded-md ${isActive('/events') ? 'bg-black text-yellow-400' : 'hover:bg-gray-100'}`}
                 onClick={() => setMobileMenuOpen(false)}
               >
                 Events
@@ -104,7 +104,7 @@ export const Header = () => {
             <li className="md:ml-4">
               <Link
                 href="/donate"
-                className="block py-2 px-6 bg-black text-[#fcd34b] rounded-md font-bold hover:bg-gray-800 transition"
+                className="block px-6 py-2 font-bold text-yellow-400 transition bg-black rounded-md hover:bg-gray-800"
                 onClick={() => setMobileMenuOpen(false)}
               >
                 CONTRIBUTE

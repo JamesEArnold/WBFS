@@ -71,7 +71,7 @@
     @apply border-border;
   }
   body {
-    @apply bg-background text-foreground font-sans;
+    @apply font-sans bg-background text-foreground;
   }
   h1, h2, h3, h4, h5, h6 {
     @apply font-bold tracking-tight;
@@ -104,11 +104,11 @@
 
 @layer components {
   .section-title {
-    @apply text-3xl font-bold mb-8 uppercase tracking-wide;
+    @apply inline-block pb-2 mb-6 text-3xl font-bold border-b-4 md:text-4xl border-campaign-yellow;
   }
   
   .campaign-button {
-    @apply bg-black text-[#fcd34b] font-bold py-3 px-6 rounded-md hover:bg-gray-800 transition duration-200;
+    @apply px-6 py-3 font-bold transition duration-200 bg-black rounded-md shadow-md text-campaign-yellow hover:bg-gray-800;
   }
 
   .campaign-card {
@@ -116,11 +116,11 @@
   }
   
   .campaign-container {
-    @apply container mx-auto px-4 py-12 md:py-16;
+    @apply container px-4 py-12 mx-auto md:py-16;
   }
   
   .campaign-grid {
-    @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6;
+    @apply grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3;
   }
   
   .campaign-link {
