@@ -9,7 +9,7 @@ export const HeroSlide = () => {
   return (
     <>
       {/* Full-width hero section with no external constraints */}
-      <section className="bg-gradient-to-b from-[#fcd34b] to-[#fcd34b]/70 py-16 w-full">
+      <section className="bg-gradient-to-b from-[#FFF] to-[#FFF]/70 py-16 w-full">
         <div className="px-4 mx-auto max-w-7xl">
           <div className="grid items-center grid-cols-1 gap-8 md:grid-cols-2">
             {/* Text column - order-2 on mobile, order-1 on desktop */}
@@ -32,7 +32,7 @@ export const HeroSlide = () => {
                 </Link>
                 <Link 
                   href="/donate" 
-                  className="bg-[#fcd34b] text-black border-2 border-black font-bold py-3 px-6 rounded-md hover:bg-[#f7c948] transition duration-200 text-center"
+                  className="bg-[#FFF] text-black border-2 border-black font-bold py-3 px-6 rounded-md hover:bg-[#f7c948] transition duration-200 text-center"
                 >
                   Support Our Campaign
                 </Link>
