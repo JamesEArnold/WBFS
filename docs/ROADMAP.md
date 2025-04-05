@@ -252,34 +252,39 @@ This roadmap outlines the migration plan to convert the existing Next.js applica
 ## Phase 4: API Integration and Form Handling
 
 ### Phase 4.1: Mailing List Integration
-- [ ] Update mailing list forms with new styling
-  - Location: `/app/mailingList/route.ts` and form components
-  - Implementation: Preserve backend logic while updating UI
+- [x] Update mailing list forms with new styling
+  - Location: `/components/ui/email-signup.tsx`
+  - Implementation: Preserved backend logic while updating UI with Sheriff Central styling
   - Key features:
-    - Styled form inputs
-    - Validation feedback
-    - Success/error states
+    - Applied consistent campaign-form-input styling for all form inputs
+    - Added validation feedback with text-red-500 styling
+    - Enhanced focus states with yellow ring focus effect
+    - Improved mobile responsiveness with w-full md:w-3/4 pattern
   - Reference: Sheriff Central form styles
   - Implementation Notes:
-    - Keep SendGrid API integration (`@sendgrid/mail`) intact
-    - Maintain form validation logic but update UI styling
-    - Preserve existing route handler implementation
-    - Form fields required: First Name, Last Name, Email, Phone (optional), Zip Code
+    - Maintained existing SendGrid API integration intact
+    - Preserved form validation logic with zod validation
+    - Added consistent yellow (#fcd34b) accents for interactive elements
+    - Improved form spacing and typography for better readability
 
 ### Phase 4.2: Volunteer Form Update
-- [ ] Update volunteer forms with new styling
-  - Location: `/app/volunteerList/route.ts` and form components
-  - Implementation: Preserve backend logic while updating UI
+- [x] Update volunteer forms with new styling
+  - Location: `/components/ui/volunteer-signup.tsx`
+  - Implementation: Preserved backend logic while updating UI with consistent Sheriff Central styling
   - Key features:
-    - Consistent form styling
-    - Improved mobile experience
-    - Clear call-to-action
+    - Consistent form styling with campaign-form-input class
+    - Improved mobile experience with responsive widths
+    - Clear call-to-action with campaign-button styling
+    - Interactive checkbox styling with hover effects
+    - Improved form organization and section headings
   - Reference: Sheriff Central form patterns
   - Implementation Notes:
-    - Maintain existing volunteer registration fields
-    - Update UI with new consistent form styling
-    - Keep the categorization of volunteer opportunities
-    - Preserve success/error notification system with updated styling
+    - Maintained existing volunteer registration fields and categorization
+    - Updated UI with yellow (#fcd34b) accents for branding consistency
+    - Enhanced form layout with better spacing and typography
+    - Improved validation message styling with text-red-500
+    - Preserved success/error notification system with updated styling
+    - Added textarea styling for the "Anything else" field
 
 ## Phase 5: Testing and Optimization
 
@@ -527,22 +532,40 @@ This roadmap outlines the migration plan to convert the existing Next.js applica
     - Added gradient background utility for hero sections
     - Maintained existing color system while enhancing component styling
 
-### Phase 2.6: Donate/Contribute Page
-- [x] Update Donate page to match Contribute design
-  - Location: `/app/donate/page.tsx`
-  - Implementation: Implemented new contribution page design with existing Donorbox integration
+### Phase 4.1: Mailing List Integration
+- [x] Update mailing list forms with new styling
+  - Location: `/components/ui/email-signup.tsx`
+  - Implementation: Preserved backend logic while updating UI with Sheriff Central styling
   - Key features:
-    - Added hero section with campaign yellow background
-    - Styled Donorbox iframe for consistent appearance
-    - Added "Other Ways to Help" section with volunteer options
-    - Maintained necessary campaign finance compliance information
-  - Reference: Sheriff Central Contribute.tsx
+    - Applied consistent campaign-form-input styling for all form inputs
+    - Added validation feedback with text-red-500 styling
+    - Enhanced focus states with yellow ring focus effect
+    - Improved mobile responsiveness with w-full md:w-3/4 pattern
+  - Reference: Sheriff Central form styles
   - Implementation Notes:
-    - Preserved existing Donorbox payment processor integration
-    - Added clean container for the donation iframe
-    - Used campaign-card component for volunteer opportunities
-    - Maintained campaign finance disclaimers and mailing information
-    - Added consistent styling with campaign-button and section-title classes
+    - Maintained existing SendGrid API integration intact
+    - Preserved form validation logic with zod validation
+    - Added consistent yellow (#fcd34b) accents for interactive elements
+    - Improved form spacing and typography for better readability
+
+### Phase 4.2: Volunteer Form Update
+- [x] Update volunteer forms with new styling
+  - Location: `/components/ui/volunteer-signup.tsx`
+  - Implementation: Preserved backend logic while updating UI with consistent Sheriff Central styling
+  - Key features:
+    - Consistent form styling with campaign-form-input class
+    - Improved mobile experience with responsive widths
+    - Clear call-to-action with campaign-button styling
+    - Interactive checkbox styling with hover effects
+    - Improved form organization and section headings
+  - Reference: Sheriff Central form patterns
+  - Implementation Notes:
+    - Maintained existing volunteer registration fields and categorization
+    - Updated UI with yellow (#fcd34b) accents for branding consistency
+    - Enhanced form layout with better spacing and typography
+    - Improved validation message styling with text-red-500
+    - Preserved success/error notification system with updated styling
+    - Added textarea styling for the "Anything else" field
 
 ### Additional Enhancements
 - [x] Create dedicated volunteer page

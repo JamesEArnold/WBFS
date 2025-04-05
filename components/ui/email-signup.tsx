@@ -76,17 +76,24 @@ export function EmailSignupForm() {
           render={({ field }) => (
             <FormItem>
               <FormControl>
-                <Input placeholder="Email address" {...field} className="w-3/4 m-auto mt-6 rounded-md h-10px drop-shadow-md" />
+                <Input 
+                  placeholder="Email address" 
+                  {...field} 
+                  className="campaign-form-input w-3/4 mx-auto mt-6 rounded-md border-gray-300 focus:ring-[#fcd34b]" 
+                />
               </FormControl>
-              <FormMessage />
+              <FormMessage className="text-red-500 text-sm mt-1" />
             </FormItem>
           )}
         />
-        <Button type="submit" className="w-56 max-w-[224px] p-8 text-lg font-bold uppercase bg-black rounded-md drop-shadow-md">
+        <Button 
+          type="submit" 
+          className="campaign-button w-56 max-w-[224px] py-4 px-6 text-lg font-bold uppercase bg-black text-[#fcd34b] rounded-md transition duration-200 hover:bg-gray-800"
+        >
           { emailSubmit === 'initial' && 'Get Involved' }
           { emailSubmit === 'pending' && 
             <PulseLoader
-              color={'#facc15'}
+              color={'#fcd34b'}
               size={25}
               aria-label="Loading Spinner"
               data-testid="loader"
@@ -100,7 +107,7 @@ export function EmailSignupForm() {
               width="50px"
               height="50px">
                 <g 
-                  fill="#facc15"
+                  fill="#fcd34b"
                   fill-rule="nonzero"
                   stroke="none"
                   stroke-width="1"

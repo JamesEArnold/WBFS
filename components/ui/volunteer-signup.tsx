@@ -122,16 +122,20 @@ export function VolunteerSignupForm() {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
       <FormField
           control={form.control}
           name="first_name"
           render={({ field }) => (
             <FormItem>
               <FormControl>
-                <Input placeholder="First Name" {...field} className="w-3/4 m-auto mt-6 rounded-md h-10px drop-shadow-md" />
+                <Input 
+                  placeholder="First Name" 
+                  {...field} 
+                  className="campaign-form-input w-full md:w-3/4 mx-auto mt-4 rounded-md border-gray-300" 
+                />
               </FormControl>
-              <FormMessage />
+              <FormMessage className="text-red-500 text-sm mt-1" />
             </FormItem>
           )}
         />
@@ -141,9 +145,13 @@ export function VolunteerSignupForm() {
           render={({ field }) => (
             <FormItem>
               <FormControl>
-                <Input placeholder="Last Name" {...field} className="w-3/4 m-auto mt-6 rounded-md h-10px drop-shadow-md" />
+                <Input 
+                  placeholder="Last Name" 
+                  {...field} 
+                  className="campaign-form-input w-full md:w-3/4 mx-auto mt-4 rounded-md border-gray-300" 
+                />
               </FormControl>
-              <FormMessage />
+              <FormMessage className="text-red-500 text-sm mt-1" />
             </FormItem>
           )}
         />
@@ -152,15 +160,20 @@ export function VolunteerSignupForm() {
           name="email"
           render={({ field }) => (
             <FormItem aria-required>
-              <div className="flex justify-start w-3/4 m-auto">
-                <FormLabel className="text-xs">
+              <div className="flex justify-start w-full md:w-3/4 mx-auto">
+                <FormLabel className="text-xs font-medium text-gray-600">
                   *Required
                 </FormLabel>
               </div>
               <FormControl>
-                <Input placeholder="Email address" {...field} className="w-3/4 mx-auto rounded-md h-10px drop-shadow-md" required={true} />
+                <Input 
+                  placeholder="Email address" 
+                  {...field} 
+                  className="campaign-form-input w-full md:w-3/4 mx-auto rounded-md border-gray-300" 
+                  required={true} 
+                />
               </FormControl>
-              <FormMessage />
+              <FormMessage className="text-red-500 text-sm mt-1" />
             </FormItem>
           )}
         />
@@ -169,35 +182,39 @@ export function VolunteerSignupForm() {
           name="phone_number"
           render={({ field }) => (
             <FormItem aria-required>
-              <div className="flex justify-start w-3/4 m-auto">
-                <FormLabel className="text-xs">
+              <div className="flex justify-start w-full md:w-3/4 mx-auto">
+                <FormLabel className="text-xs font-medium text-gray-600">
                   *Required
                 </FormLabel>
               </div>
               <FormControl>
-                <Input placeholder="Phone Number" {...field} className="w-3/4 mx-auto rounded-md h-10px drop-shadow-md" />
+                <Input 
+                  placeholder="Phone Number" 
+                  {...field} 
+                  className="campaign-form-input w-full md:w-3/4 mx-auto rounded-md border-gray-300" 
+                />
               </FormControl>
-              <FormMessage />
+              <FormMessage className="text-red-500 text-sm mt-1" />
             </FormItem>
           )}
         />
-        <div className="flex w-3/4 mx-auto">
-          <span className="border-b-2 border-black text-start">What are you interested in?</span>
+        <div className="flex w-full md:w-3/4 mx-auto mt-6">
+          <span className="border-b-2 border-[#fcd34b] text-start font-semibold">What are you interested in?</span>
         </div>
         <FormField
           control={form.control}
           name="campaignevents"
           render={({ field }) => (
-            <FormItem className="flex flex-row items-start w-3/4 p-3 mx-auto space-x-3 rounded-md text-start">
+            <FormItem className="flex flex-row items-start w-full md:w-3/4 p-3 mx-auto space-x-3 rounded-md text-start bg-gray-50 hover:bg-gray-100 transition duration-150">
               <FormControl className="align-middle">
                 <Checkbox
                   checked={Boolean(field.value)}
                   onCheckedChange={field.onChange}
-                  className="my-auto align-middle"
+                  className="my-auto align-middle border-2 border-gray-300 text-[#fcd34b]"
                 />
               </FormControl>
               <div className="flex my-auto space-y-1 leading-none">
-                <FormLabel className="align-middle">
+                <FormLabel className="align-middle font-medium">
                   I'd like to attend campaign events
                 </FormLabel>
               </div>
@@ -208,15 +225,16 @@ export function VolunteerSignupForm() {
           control={form.control}
           name="parade"
           render={({ field }) => (
-            <FormItem className="flex flex-row items-start w-3/4 p-3 m-auto space-x-3 space-y-0 rounded-md text-start">
+            <FormItem className="flex flex-row items-start w-full md:w-3/4 p-3 mx-auto space-x-3 space-y-0 rounded-md text-start bg-gray-50 hover:bg-gray-100 transition duration-150">
               <FormControl>
                 <Checkbox
                   checked={Boolean(field.value)}
                   onCheckedChange={field.onChange}
+                  className="border-2 border-gray-300 text-[#fcd34b]"
                 />
               </FormControl>
               <div className="space-y-1 leading-none">
-                <FormLabel>
+                <FormLabel className="font-medium">
                   I'd like to walk in a parade
                 </FormLabel>
               </div>
@@ -227,15 +245,16 @@ export function VolunteerSignupForm() {
           control={form.control}
           name="yardsign"
           render={({ field }) => (
-            <FormItem className="flex flex-row items-start w-3/4 p-3 m-auto space-x-3 space-y-0 rounded-md text-start">
+            <FormItem className="flex flex-row items-start w-full md:w-3/4 p-3 mx-auto space-x-3 space-y-0 rounded-md text-start bg-gray-50 hover:bg-gray-100 transition duration-150">
               <FormControl>
                 <Checkbox
                   checked={Boolean(field.value)}
                   onCheckedChange={(events) => { field.onChange(events); yardsign.current = !yardsign.current; }}
+                  className="border-2 border-gray-300 text-[#fcd34b]"
                 />
               </FormControl>
               <div className="space-y-1 leading-none">
-                <FormLabel>
+                <FormLabel className="font-medium">
                   I'd like a yard sign
                 </FormLabel>
               </div>
@@ -248,91 +267,125 @@ export function VolunteerSignupForm() {
             name="address_line_1"
             render={({ field }) => (
               <FormItem aria-required>
-                <div className="flex justify-start w-3/4 m-auto">
-                  <FormLabel className="text-xs">
-                    *Required
+                <div className="flex justify-start w-full md:w-3/4 mx-auto">
+                  <FormLabel className="text-xs font-medium text-gray-600">
+                    *Required for yard sign
                   </FormLabel>
                 </div>
                 <FormControl>
-                  <Input placeholder="Street Address" {...field} className="w-3/4 mx-auto rounded-md h-10px drop-shadow-md" required={true} />
+                  <Input 
+                    placeholder="Street Address" 
+                    {...field} 
+                    className="campaign-form-input w-full md:w-3/4 mx-auto rounded-md border-gray-300" 
+                  />
                 </FormControl>
-                <FormMessage />
+                <FormMessage className="text-red-500 text-sm mt-1" />
               </FormItem>
             )} /><FormField
-              control={form.control}
-              name="city"
-              render={({ field }) => (
-                <FormItem aria-required>
-                  <div className="flex justify-start w-3/4 m-auto">
-                    <FormLabel className="text-xs">
-                      *Required
-                    </FormLabel>
-                  </div>
-                  <FormControl>
-                    <Input placeholder="City" {...field} className="w-3/4 mx-auto rounded-md h-10px drop-shadow-md" required={true} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )} /><FormField
-              control={form.control}
-              name="postal_code"
-              render={({ field }) => (
-                <FormItem aria-required>
-                  <div className="flex justify-start w-3/4 m-auto">
-                    <FormLabel className="text-xs">
-                      *Required
-                    </FormLabel>
-                  </div>
-                  <FormControl>
-                    <Input placeholder="Zip Code" {...field} className="w-3/4 mx-auto rounded-md h-10px drop-shadow-md" required={true} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )} /></>
+            control={form.control}
+            name="city"
+            render={({ field }) => (
+              <FormItem aria-required>
+                <div className="flex justify-start w-full md:w-3/4 mx-auto">
+                  <FormLabel className="text-xs font-medium text-gray-600">
+                    *Required for yard sign
+                  </FormLabel>
+                </div>
+                <FormControl>
+                  <Input 
+                    placeholder="City" 
+                    {...field} 
+                    className="campaign-form-input w-full md:w-3/4 mx-auto rounded-md border-gray-300" 
+                  />
+                </FormControl>
+                <FormMessage className="text-red-500 text-sm mt-1" />
+              </FormItem>
+            )} /><FormField
+            control={form.control}
+            name="postal_code"
+            render={({ field }) => (
+              <FormItem aria-required>
+                <div className="flex justify-start w-full md:w-3/4 mx-auto">
+                  <FormLabel className="text-xs font-medium text-gray-600">
+                    *Required for yard sign
+                  </FormLabel>
+                </div>
+                <FormControl>
+                  <Input 
+                    placeholder="Zip Code" 
+                    {...field} 
+                    className="campaign-form-input w-full md:w-3/4 mx-auto rounded-md border-gray-300" 
+                  />
+                </FormControl>
+                <FormMessage className="text-red-500 text-sm mt-1" />
+              </FormItem>
+            )} /></>
         }
-        <FormField
-          control={form.control}
-          name="phonecalls"
-          render={({ field }) => (
-            <FormItem className="flex flex-row items-start w-3/4 p-3 m-auto space-x-3 space-y-0 rounded-md text-start">
-              <FormControl>
-                <Checkbox
-                  checked={Boolean(field.value)}
-                  onCheckedChange={field.onChange}
-                />
-              </FormControl>
-              <div className="space-y-1 leading-none">
-                <FormLabel>
-                  I'd like to make phone calls
-                </FormLabel>
-              </div>
-            </FormItem>
-          )}
-        />
         <FormField
           control={form.control}
           name="knockdoors"
           render={({ field }) => (
-            <FormItem className="flex flex-row items-start w-3/4 p-3 m-auto space-x-3 space-y-0 rounded-md text-start">
+            <FormItem className="flex flex-row items-start w-full md:w-3/4 p-3 mx-auto space-x-3 space-y-0 rounded-md text-start bg-gray-50 hover:bg-gray-100 transition duration-150">
               <FormControl>
                 <Checkbox
                   checked={Boolean(field.value)}
                   onCheckedChange={field.onChange}
+                  className="border-2 border-gray-300 text-[#fcd34b]"
                 />
               </FormControl>
               <div className="space-y-1 leading-none">
-                <FormLabel>
-                  I'd like to knock on doors
+                <FormLabel className="font-medium">
+                  I'd like to help knock on doors
                 </FormLabel>
               </div>
             </FormItem>
           )}
         />
-        <Button type="submit" className="w-56 max-w-[224px] p-8 text-lg font-bold uppercase bg-black rounded-md drop-shadow-md">
-          { emailSubmit === 'initial' && 'Sign Up' }
+        <FormField
+          control={form.control}
+          name="phonecalls"
+          render={({ field }) => (
+            <FormItem className="flex flex-row items-start w-full md:w-3/4 p-3 mx-auto space-x-3 space-y-0 rounded-md text-start bg-gray-50 hover:bg-gray-100 transition duration-150">
+              <FormControl>
+                <Checkbox
+                  checked={Boolean(field.value)}
+                  onCheckedChange={field.onChange}
+                  className="border-2 border-gray-300 text-[#fcd34b]"
+                />
+              </FormControl>
+              <div className="space-y-1 leading-none">
+                <FormLabel className="font-medium">
+                  I'd like to help make phone calls
+                </FormLabel>
+              </div>
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="about"
+          render={({ field }) => (
+            <FormItem>
+              <FormControl>
+                <textarea
+                  {...field}
+                  rows={4}
+                  placeholder="Anything else we should know? (Optional)"
+                  className="campaign-form-input w-full md:w-3/4 mx-auto mt-4 rounded-md border-gray-300 resize-none"
+                ></textarea>
+              </FormControl>
+              <FormMessage className="text-red-500 text-sm mt-1" />
+            </FormItem>
+          )}
+        />
+        <Button 
+          type="submit" 
+          className="campaign-button w-56 max-w-[224px] py-4 px-6 text-lg font-bold uppercase bg-black text-[#fcd34b] rounded-md transition duration-200 hover:bg-gray-800 mt-6"
+        >
+          { emailSubmit === 'initial' && 'Volunteer Today' }
           { emailSubmit === 'pending' && 
             <PulseLoader
-              color={'#facc15'}
+              color={'#fcd34b'}
               size={25}
               aria-label="Loading Spinner"
               data-testid="loader"
@@ -346,7 +399,7 @@ export function VolunteerSignupForm() {
               width="50px"
               height="50px">
                 <g 
-                  fill="#facc15"
+                  fill="#fcd34b"
                   fill-rule="nonzero"
                   stroke="none"
                   stroke-width="1"
@@ -364,4 +417,5 @@ export function VolunteerSignupForm() {
         </Button>
       </form>
     </Form>
-)};
+  );
+}
