@@ -82,14 +82,14 @@ export default function DonatePage() {
             <div className="campaign-card">
               <h3 className="mb-4 text-xl font-bold">Host an Event</h3>
               <p className="mb-4">Open your home or business for a campaign event or fundraiser to help spread Sheriff Weisburn's message.</p>
-              <Link href="/contact" className="inline-block campaign-button">
+              <Link href="/volunteer" className="inline-block campaign-button">
                 Contact Us
               </Link>
             </div>
             <div className="campaign-card">
               <h3 className="mb-4 text-xl font-bold">Spread the Word</h3>
               <p className="mb-4">Share Sheriff Weisburn's campaign with friends, family, and neighbors. Request yard signs or campaign materials.</p>
-              <Link href="/contact" className="inline-block campaign-button">
+              <Link href="/volunteer" className="inline-block campaign-button">
                 Get Materials
               </Link>
             </div>
