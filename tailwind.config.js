@@ -23,7 +23,8 @@ module.exports = {
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
         primary: {
-          DEFAULT: "hsl(var(--primary))",
+          DEFAULT: "#fcd34b",
+          dark: "#f7c948",
           foreground: "hsl(var(--primary-foreground))",
         },
         secondary: {
@@ -50,10 +51,14 @@ module.exports = {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
+        "campaign-yellow": "#fcd34b",
+      },
+      fontFamily: {
+        sans: ['Inter', 'sans-serif'],
       },
       borderRadius: {
         lg: "var(--radius)",
-        md: "calc(var(--radius) - 2px)",
+        md: "0.375rem",
         sm: "calc(var(--radius) - 4px)",
       },
       keyframes: {
