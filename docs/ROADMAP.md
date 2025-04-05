@@ -177,19 +177,24 @@ This roadmap outlines the migration plan to convert the existing Next.js applica
     - Maintained the "YOU!" styling with the skewed yellow background accent
 
 ### Phase 2.5: Events Page Components
-- [ ] Update Events page with new design
+- [x] Update Events page with new design
   - Location: `/app/events/page.tsx`
-  - Implementation: Implement new events layout
+  - Implementation: Implemented new events layout with calendar-style listings
   - Key features:
-    - Calendar-style event listings
-    - Event cards with date highlighting
-    - Event detail expansion
+    - Added hero section with yellow background and centered title
+    - Implemented featured event section with prominent display
+    - Created calendar-style event listings with date highlighting
+    - Added "SAVE THE DATE" tags for upcoming events
+    - Included CTA section for calendar subscriptions
   - Reference: Sheriff Central Events.tsx
   - Implementation Notes:
-    - Maintain data structure from existing events
-    - Convert to new card-based design with yellow date display
-    - Preserve event details (location, time, description) in new format
-    - Implement the "SAVE THE DATE" tag for upcoming events
+    - Maintained existing event data structure for compatibility
+    - Added date parsing functions to properly format event dates
+    - Created responsive design that works on mobile and desktop
+    - Implemented consistent yellow/black color scheme for buttons and date displays
+    - Added Calendar icon from Lucide for date indicators
+    - Included proper fallback display for when no events are available
+    - Created CTAs for subscribing to updates and volunteering
 
 ### Phase 2.6: Donate/Contribute Page
 - [ ] Update Donate page to match Contribute design
