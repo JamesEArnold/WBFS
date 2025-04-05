@@ -1,10 +1,11 @@
 export const About = () => {
   return (
     <div className="flex flex-col">
-      {/* Hero Section */}
-      <section className="bg-[#fcd34b]/80 py-12">
-        <div className="container mx-auto px-4 text-center">
-          <h1 className="text-4xl md:text-5xl font-bold mb-4">ABOUT SHERIFF WEISBURN</h1>
+      {/* Professional Page Header Section */}
+      <section className="relative py-16 bg-white">
+        <div className="container mx-auto px-4 text-center relative z-10">
+          <h1 className="text-4xl md:text-5xl font-bold mb-4 text-black uppercase tracking-wider">ABOUT SHERIFF WEISBURN</h1>
+          <div className="h-1 w-32 bg-[#fcd34b] mx-auto mb-4"></div>
           <p className="text-xl max-w-3xl mx-auto">A proven leader with a dedication to public service and community safety.</p>
         </div>
       </section>

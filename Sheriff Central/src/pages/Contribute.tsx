@@ -40,10 +40,11 @@ export const Contribute = () => {
 
   return (
     <div className="flex flex-col">
-      {/* Hero Section */}
-      <section className="bg-[#fcd34b]/80 py-12">
-        <div className="container mx-auto px-4 text-center">
-          <h1 className="text-4xl md:text-5xl font-bold mb-4">SUPPORT THE CAMPAIGN</h1>
+      {/* Professional Page Header Section */}
+      <section className="relative py-16 bg-white">
+        <div className="container mx-auto px-4 text-center relative z-10">
+          <h1 className="text-4xl md:text-5xl font-bold mb-4 text-black uppercase tracking-wider">SUPPORT THE CAMPAIGN</h1>
+          <div className="h-1 w-32 bg-[#fcd34b] mx-auto mb-4"></div>
           <p className="text-xl max-w-3xl mx-auto">Your contribution helps Sheriff Weisburn continue serving our community.</p>
         </div>
       </section>

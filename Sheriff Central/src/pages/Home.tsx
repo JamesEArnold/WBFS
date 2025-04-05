@@ -65,9 +65,9 @@ export const Home = () => {
             </Link>
           </div>
           
-          <div className="bg-white rounded-lg shadow-md overflow-hidden">
+          <div className="bg-white rounded-lg shadow-md overflow-hidden border-2 border-black">
             <div className="flex flex-col md:flex-row">
-              <div className="bg-[#fcd34b] text-center p-6 md:w-1/4">
+              <div className="bg-[#fcd34b] text-center p-6 md:w-1/4 border-b-2 md:border-b-0 md:border-r-2 border-black">
                 <div className="text-2xl font-bold">JUL</div>
                 <div className="text-5xl font-black">25</div>
                 <div className="text-xl">2025</div>

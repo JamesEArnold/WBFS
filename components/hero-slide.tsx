@@ -44,7 +44,7 @@ export const HeroSlide = () => {
               <div className="relative">
                 {/* Black background with rotation for styling effect */}
                 {/* <div className="absolute inset-0 transform translate-x-2 translate-y-2 bg-black rounded-lg rotate-3"></div> */}
-                <div className="relative overflow-hidden bg-white border-4 border-black rounded-lg shadow-xl w-72 h-100 md:w-[26rem] md:h-[32rem]">
+                <div className="relative overflow-hidden bg-white border-4 border-black rounded-lg shadow-xl w-72 h-96 md:w-[26rem] md:h-[32rem]">
                   <Image
                     src="/post-election/head-shot-with-hat.jpg"
                     fill

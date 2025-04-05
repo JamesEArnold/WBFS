@@ -213,6 +213,24 @@ This roadmap outlines the migration plan to convert the existing Next.js applica
     - Maintained campaign finance disclaimers and mailing information
     - Added consistent styling with campaign-button and section-title classes
 
+### Phase 2.7: Header Animation Enhancement
+- [x] Add scrolling animation effects to Header components
+  - Location: `components/Header.tsx`, `components/layout/Header.tsx`
+  - Implementation: Added scroll detection and responsive layout changes based on scroll position
+  - Key features:
+    - Dynamic resizing of header elements on scroll
+    - Shadow effect when scrolled for visual depth
+    - Smooth transitions between states with CSS duration controls
+    - Consistent implementation across both header components
+    - Improved mobile responsiveness with proper aria-labels
+  - Reference: Sheriff Central Header.tsx scroll animation implementation
+  - Implementation Notes:
+    - Used useState and useEffect hooks to track scroll position
+    - Applied conditional class names based on scroll state
+    - Added transition-all and duration-300 classes for smooth animations
+    - Reduced logo and text size when scrolled for more compact header
+    - Ensured consistent styling between both header implementations
+
 ## Phase 3: Layout and Routing
 
 ### Phase 3.1: Root Layout Update
