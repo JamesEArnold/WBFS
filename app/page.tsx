@@ -24,7 +24,6 @@ export default function Home() {
       <HeroSlide />
       
       <main className="relative flex flex-col max-w-full md:mx-auto">
-        <CallToActionTop />
         <PrioritiesSection />
         <EventsPreviewSection />
         {/* <AboutMe /> */}

@@ -45,12 +45,12 @@ const EventsPreviewSection = () => {
 
   return (
     <section className="py-16 bg-gray-50">
-      <div className="container mx-auto px-4">
-        <div className="flex justify-between items-center mb-12">
+      <div className="container px-4 mx-auto">
+        <div className="flex items-center justify-between mb-12">
           <h2 className="section-title">UPCOMING EVENTS</h2>
           <Link 
             href="/events"
-            className="text-black font-bold hover:text-gray-700 transition-colors duration-200"
+            className="font-bold text-black transition-colors duration-200 hover:text-gray-700"
           >
             View All Events →
           </Link>
@@ -72,19 +72,19 @@ const EventsPreviewSection = () => {
                     {/* Date column with yellow background */}
                     <div className="bg-[#fcd34b] p-6 flex flex-col items-center justify-center md:w-48 text-black">
                       <span className="text-lg font-semibold uppercase">{dateInfo.month}</span>
-                      <span className="text-4xl font-bold my-1">{dateInfo.day}</span>
+                      <span className="my-1 text-4xl font-bold">{dateInfo.day}</span>
                       <span className="text-lg">{dateInfo.year}</span>
                     </div>
                     
                     {/* Event details */}
                     <CardContent className="flex-1 p-6">
                       <div className="mb-2">
-                        <span className="inline-block px-2 py-1 bg-black text-[#fcd34b] text-xs font-bold rounded">
+                        <span className="inline-block px-2 py-1 bg-black text-[#fcd34b] text-xs font-bold rounded mt-4">
                           SAVE THE DATE
                         </span>
                       </div>
-                      <h3 className="text-2xl font-bold mb-2">{eventProps.eventName}</h3>
-                      <div className="flex items-center text-gray-600 mb-4">
+                      <h3 className="mb-2 text-2xl font-bold">{eventProps.eventName}</h3>
+                      <div className="flex items-center mb-4 text-gray-600">
                         <Calendar className="mr-2" size={16} />
                         <span>{eventProps.time.split(' - ')[1]} • {eventProps.addressLine1}</span>
                       </div>
@@ -104,8 +104,8 @@ const EventsPreviewSection = () => {
               );
             })
           ) : (
-            <div className="bg-white p-10 text-center rounded-lg shadow-md">
-              <h3 className="text-2xl font-bold mb-4">No Upcoming Events</h3>
+            <div className="p-10 text-center bg-white rounded-lg shadow-md">
+              <h3 className="mb-4 text-2xl font-bold">No Upcoming Events</h3>
               <p className="mb-6">Check back soon for new campaign events.</p>
               <Link 
                 href="/contact"

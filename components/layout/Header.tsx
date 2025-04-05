@@ -39,7 +39,7 @@ const Header = () => {
           <Link href="/" className="flex items-center">
             <SheriffStar size={scrolled ? 24 : 32} className="transition-all duration-300" />
             <span className={`ml-2 font-bold transition-all duration-300 ${
-              scrolled ? 'text-xl' : 'text-2xl'
+              scrolled ? 'text-lg' : 'text-2xl'
             }`}>Weisburn for Sheriff</span>
           </Link>
         </div>

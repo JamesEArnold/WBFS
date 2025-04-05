@@ -49,12 +49,12 @@ export const Header = () => {
                 <span className="mx-1">★</span>
               </div>
               <div className={`transition-all duration-300 ease-in-out font-black tracking-wide ${
-                scrolled ? 'text-2xl md:text-2xl' : 'text-3xl md:text-4xl'
+                scrolled ? 'text-lg md:text-xl' : 'text-3xl md:text-4xl'
               }`}>
                 SHERIFF
               </div>
               <div className={`transition-all duration-300 ease-in-out font-black tracking-wide ${
-                scrolled ? 'text-2xl md:text-2xl' : 'text-3xl md:text-4xl'
+                scrolled ? 'text-lg md:text-xl' : 'text-3xl md:text-4xl'
               }`}>
                 WEISBURN
               </div>

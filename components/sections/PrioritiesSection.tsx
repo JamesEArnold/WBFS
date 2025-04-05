@@ -33,11 +33,11 @@ const PrioritiesSection = () => {
   ];
 
   return (
-    <section className="py-16 bg-gray-50">
-      <div className="container mx-auto px-4">
-        <h2 className="section-title text-center">PRIORITIES</h2>
+    <section className="py-16 bg-white">
+      <div className="container px-4 mx-auto">
+        <h2 className="text-center section-title">PRIORITIES</h2>
         
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
           {priorities.map((priority) => (
             <Card 
               key={priority.id} 
@@ -45,19 +45,19 @@ const PrioritiesSection = () => {
               withHoverEffect
               className="flex flex-col"
             >
-              <CardHeader>
-                <CardTitle className="flex items-center justify-center uppercase text-xl">
+              <CardHeader className="bg-gray-100">
+                <CardTitle className="flex items-center justify-center text-xl uppercase bg-gray-100">
                   <FontAwesomeIcon icon={priority.icon} className="mr-3" size="lg" />
                   {priority.title}
                 </CardTitle>
               </CardHeader>
-              <CardContent className="flex-grow flex flex-col">
-                <p className="text-center mb-6 flex-grow">{priority.description}</p>
+              <CardContent className="flex flex-col flex-grow bg-gray-100">
+                <p className="flex-grow mb-6 text-center">{priority.description}</p>
                 {priority.link && (
                   <div className="mt-auto text-center">
                     <Link 
                       href={priority.link}
-                      className="campaign-button inline-block"
+                      className="inline-block campaign-button"
                     >
                       Learn More
                     </Link>

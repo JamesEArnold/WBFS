@@ -231,6 +231,22 @@ This roadmap outlines the migration plan to convert the existing Next.js applica
     - Reduced logo and text size when scrolled for more compact header
     - Ensured consistent styling between both header implementations
 
+### Phase 2.7.1: Header Text Size Update
+- [x] Update header text sizes for better responsive display
+  - Location: `components/Header.tsx`, `components/layout/Header.tsx`
+  - Implementation: Updated text sizing for scrolled state to match Sheriff Central design
+  - Key features:
+    - Reduced text size when scrolled for more compact header
+    - Updated from 'text-2xl' to 'text-lg'/'text-xl' for better proportions
+    - Maintained consistent transition animations
+    - Preserved responsive design across mobile and desktop
+  - Reference: Sheriff Central Header.tsx updated text sizes
+  - Implementation Notes:
+    - Applied smaller text sizes for scrolled state (text-lg/text-xl)
+    - Kept larger sizes for non-scrolled state (text-3xl/text-4xl)
+    - Ensured smooth transitions with duration-300 class
+    - Applied consistent styling across both header components
+
 ## Phase 3: Layout and Routing
 
 ### Phase 3.1: Root Layout Update
@@ -614,3 +630,37 @@ This roadmap outlines the migration plan to convert the existing Next.js applica
     - Used the consistent yellow (#fcd34b) for the CTA button
     - Linked to the existing donation page (/donate)
     - Used responsive typography for better mobile experience
+
+### Phase 2.7: Header Animation Enhancement
+- [x] Add scrolling animation effects to Header components
+  - Location: `components/Header.tsx`, `components/layout/Header.tsx`
+  - Implementation: Added scroll detection and responsive layout changes based on scroll position
+  - Key features:
+    - Dynamic resizing of header elements on scroll
+    - Shadow effect when scrolled for visual depth
+    - Smooth transitions between states with CSS duration controls
+    - Consistent implementation across both header components
+    - Improved mobile responsiveness with proper aria-labels
+  - Reference: Sheriff Central Header.tsx scroll animation implementation
+  - Implementation Notes:
+    - Used useState and useEffect hooks to track scroll position
+    - Applied conditional class names based on scroll state
+    - Added transition-all and duration-300 classes for smooth animations
+    - Reduced logo and text size when scrolled for more compact header
+    - Ensured consistent styling between both header implementations
+
+### Phase 2.7.1: Header Text Size Update
+- [x] Update header text sizes for better responsive display
+  - Location: `components/Header.tsx`, `components/layout/Header.tsx`
+  - Implementation: Updated text sizing for scrolled state to match Sheriff Central design
+  - Key features:
+    - Reduced text size when scrolled for more compact header
+    - Updated from 'text-2xl' to 'text-lg'/'text-xl' for better proportions
+    - Maintained consistent transition animations
+    - Preserved responsive design across mobile and desktop
+  - Reference: Sheriff Central Header.tsx updated text sizes
+  - Implementation Notes:
+    - Applied smaller text sizes for scrolled state (text-lg/text-xl)
+    - Kept larger sizes for non-scrolled state (text-3xl/text-4xl)
+    - Ensured smooth transitions with duration-300 class
+    - Applied consistent styling across both header components
