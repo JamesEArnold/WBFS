@@ -3,7 +3,7 @@ import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import { Meta } from '@/components/seo/meta';
 import { globalMeta } from '@/components/seo/globalMeta';
-import { MainNav } from '@/components/main-nav';
+import Header from '@/components/Header';
 import { Footer } from '@/components/footer';
 import Head from 'next/head';
 import { ToastContainer } from 'react-toastify';
@@ -44,22 +44,19 @@ export default function RootLayout({
         ogType='website'
         structuredData={structuredSeo}
       />
-      <header className="sticky top-0 z-50 shadow-md">
-        <MainNav />
-        {/* <NotificationBanner /> */}
-        <ToastContainer
-          position="top-center"
-          autoClose={5000}
-          hideProgressBar={true}
-          newestOnTop={false}
-          closeOnClick
-          rtl={false}
-          pauseOnFocusLoss
-          draggable
-          pauseOnHover
-          theme="light"
-        />
-      </header>
+      <Header />
+      <ToastContainer
+        position="top-center"
+        autoClose={5000}
+        hideProgressBar={true}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
         {children}
         <Analytics />
       <Footer />

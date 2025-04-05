@@ -37,23 +37,24 @@ This roadmap outlines the migration plan to convert the existing Next.js applica
   - Additional Notes: Maintained existing animation and keyframe configurations while updating the color scheme and typography
 
 ### Phase 1.3: Add Required Dependencies
-- [ ] Add any missing dependencies from Sheriff Central
+- [x] Add any missing dependencies from Sheriff Central
   - Location: `/package.json`
-  - Implementation: Update package.json with required dependencies
+  - Implementation: Updated package.json with required dependencies
   - Key features:
-    - Ensure all UI libraries are consistent
-    - Match versions for compatible functionality
+    - Ensured all UI libraries are consistent
+    - Matched versions for compatible functionality
+    - Upgraded lucide-react to latest version for new icon components
+    - Updated @radix-ui/react-icons to latest version
   - Reference: Sheriff Central package.json
-  - Implementation Notes:
+  - Implementation Notes: Upgraded existing dependencies and added missing ones:
     ```bash
-    # Example additions needed
-    npm install lucide-react @radix-ui/react-icons 
+    npm install @radix-ui/react-icons@latest lucide-react@latest 
     ```
 
 ## Phase 2: Component Migration
 
 ### Phase 2.1: Header/Navigation Component
-- [ ] Replace MainNav with new Header component
+- [x] Replace MainNav with new Header component
   - Location: `/components/main-nav.tsx` → `/components/Header.tsx`
   - Implementation: Implement Sheriff Central Header with Next.js routing
   - Key features:
@@ -370,3 +371,26 @@ This roadmap outlines the migration plan to convert the existing Next.js applica
     - Updated font family to Inter for improved typography
     - Updated borderRadius for consistent component styling
   - Reference: Sheriff Central tailwind.config.js
+
+### Phase 1.3: Add Required Dependencies
+- [x] Add any missing dependencies from Sheriff Central
+  - Location: `/package.json`
+  - Implementation: Updated package.json with required dependencies
+  - Key features:
+    - Ensured all UI libraries are consistent
+    - Matched versions for compatible functionality
+    - Upgraded lucide-react to latest version for new icon components
+    - Updated @radix-ui/react-icons to latest version
+  - Reference: Sheriff Central package.json
+
+### Phase 2.1: Header/Navigation Component
+- [x] Replace MainNav with new Header component
+  - Location: `/components/Header.tsx`
+  - Implementation: Implemented Sheriff Central Header with Next.js routing
+  - Key features:
+    - Added mobile-responsive hamburger menu with Lucide icons
+    - Used yellow background (#fcd34b) with black text
+    - Implemented active link highlighting based on current path
+    - Added "Re-Elect" stars styling with the new branding
+  - Reference: Adapted from Sheriff Central Header.tsx component
+  - Additional Notes: Used Next.js Link components and usePathname for navigation instead of React Router
