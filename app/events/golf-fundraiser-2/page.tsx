@@ -33,7 +33,7 @@ export default function Home() {
         Register Your Team Below!
       </span> */}
 
-      <Image src="/golf-flyer-page-2-2025.jpg" alt="Golf Fundraiser Flyer" width="0" height="0" sizes="50vw" className="w-full md:w-[50%] mx-auto" priority />
+      <Image src="/golf-flyer-page-2-20251.jpg" alt="Golf Fundraiser Flyer" width="0" height="0" sizes="50vw" className="w-full md:w-[50%] mx-auto" priority />
 
       
       <div className="flex flex-col items-center w-full max-w-3xl p-6 mx-auto my-8 bg-white border-2 border-yellow-400 rounded-lg shadow-md">

@@ -54,7 +54,7 @@ export const HeroSlide = () => {
             <FontAwesomeIcon icon={faGolfBallTee} className="w-4 ml-2" />
             Register Now!
           </a>
-          <Image src="/golf-flyer-page-2025.jpg" alt="Golf Fundraiser Flyer" width="0" height="0" sizes="50vw" className="w-full md:w-[50%] mx-auto" priority />
+          <Image src="/golf-flyer-page-20251.jpg" alt="Golf Fundraiser Flyer" width="0" height="0" sizes="50vw" className="w-full md:w-[50%] mx-auto" priority />
         </div>
         <div className="z-20 hidden w-full min-h-full py-16 mb-3 text-center border-[22px] border-yellow-400 md:block md:mx-auto" id="tempVolunteer">
           <div className="max-w-3xl mx-auto">
