@@ -3,6 +3,8 @@ import { EmailSignupForm } from "./ui/email-signup";
 import { Video } from "./ui/videos";
 import Link from "next/link";
 import { GolfFundraiserEvent2 } from "./events/golf-fundraiser-2";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faGolfBallTee } from "@fortawesome/free-solid-svg-icons";
 
 export const HeroSlide = () => {
   return (
@@ -47,7 +49,13 @@ export const HeroSlide = () => {
         {/* <div className="z-20 hidden w-full min-h-full mb-3 text-center border-[22px] border-yellow-400 md:block md:mx-auto" id="tempVolunteer">
           <Video />
         </div> */}
-        <div className="relative w-full h-full min-w-full p-6 overflow-hidden bg-black md:w-fit md:mx-auto md:mb-4">{GolfFundraiserEvent2.eventCard}</div>
+        <div className="relative w-full h-full min-w-full p-6 overflow-hidden md:w-fit md:mx-auto md:mb-4">
+          <a className="flex justify-center w-full gap-4 py-3 mx-auto my-4 text-lg font-bold text-center text-yellow-400 bg-black rounded-md cursor-pointer drop-shadow-lg md:w-72" href="/events/golf-fundraiser-2">
+            <FontAwesomeIcon icon={faGolfBallTee} className="w-4 ml-2" />
+            Register Now!
+          </a>
+          <Image src="/golf-flyer-page-2025.jpg" alt="Golf Fundraiser Flyer" width="0" height="0" sizes="50vw" className="w-full md:w-[50%] mx-auto" priority />
+        </div>
         <div className="z-20 hidden w-full min-h-full py-16 mb-3 text-center border-[22px] border-yellow-400 md:block md:mx-auto" id="tempVolunteer">
           <div className="max-w-3xl mx-auto">
             {/* <h2 className="uppercase font-bold tracking-[0.2em] text-yellow-400">stay updated</h2> */}
