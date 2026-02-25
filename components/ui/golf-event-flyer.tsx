@@ -18,7 +18,7 @@ const GoldDivider = () => (
 export const GolfEventFlyer = ({ mode }: GolfEventFlyerProps) => {
   return (
     <div
-      className="relative w-full max-w-[540px] mx-auto overflow-hidden rounded-lg shadow-2xl select-none"
+      className="relative w-full max-w-[540px] mx-auto overflow-hidden rounded-lg shadow-md select-none"
       style={{
         aspectRatio: "540 / 756",
         background: "linear-gradient(180deg, #1a3c2a 0%, #0d2618 100%)",
