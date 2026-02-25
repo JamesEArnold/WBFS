@@ -15,6 +15,9 @@ module.exports = {
         "2xl": "1400px",
       },
     },
+    fontFamily: {
+        serif: ['var(--font-playfair)', 'Georgia', 'serif'],
+      },
     extend: {
       colors: {
         border: "hsl(var(--border))",

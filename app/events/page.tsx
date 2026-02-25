@@ -65,12 +65,10 @@ export default function Home() {
           {/* Place the event card here when there is some */}
           {(new Date().valueOf() < FalconesFundraiserEvent.expirationTime) && FalconesFundraiserEvent.eventCard}
           {(new Date().valueOf() < GolfFundraiserEvent2.expirationTime) && GolfFundraiserEvent2.eventCard}
-          {/* { eventExpirations.every((expiration) => new Date().valueOf() > expiration) &&  */}
-          {/* <div className="h-full p-12 my-auto mt-12 bg-slate-200">
-      <h1 className="text-4xl font-bold text-center uppercase">No events scheduled</h1>
-      <p className="text-3xl text-center uppercase">Check back soon</p>
-    </div> */}
-          {/* } */}
+          <div className="h-full p-12 my-auto mt-12 bg-slate-200">
+            <h1 className="text-4xl font-bold text-center uppercase">More events coming soon</h1>
+            <p className="text-3xl text-center uppercase">Check back soon</p>
+          </div>
         </section>
       </div>
       {/* <div className="flex mt-24">

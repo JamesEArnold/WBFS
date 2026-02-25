@@ -5,6 +5,7 @@ import Link from "next/link";
 import { GolfFundraiserEvent2 } from "./events/golf-fundraiser-2";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGolfBallTee } from "@fortawesome/free-solid-svg-icons";
+import { GolfEventFlyer } from "./ui/golf-event-flyer";
 
 export const HeroSlide = () => {
   return (
@@ -50,11 +51,13 @@ export const HeroSlide = () => {
           <Video />
         </div> */}
         <div className="relative w-full h-full min-w-full p-6 overflow-hidden md:w-fit md:mx-auto md:mb-4">
-          <a className="flex justify-center w-full gap-4 py-3 mx-auto my-4 text-lg font-bold text-center text-yellow-400 bg-black rounded-md cursor-pointer drop-shadow-lg md:w-72" href="/events/golf-fundraiser-2">
+          <a className="flex justify-center w-full gap-4 py-3 mx-auto my-4 text-lg font-bold text-center text-yellow-400 bg-black rounded-md cursor-pointer drop-shadow-lg md:w-72" href="/events/golf-fundraiser-3">
             <FontAwesomeIcon icon={faGolfBallTee} className="w-4 ml-2" />
-            Register Now!
+            Save The Date!
           </a>
-          <Image src="/golf-flyer-page-20251.jpg" alt="Golf Fundraiser Flyer" width="0" height="0" sizes="50vw" className="w-full md:w-[50%] mx-auto" priority />
+          <div className="w-full md:w-[60%] mx-auto">
+            <GolfEventFlyer mode="save-the-date" />
+          </div>
         </div>
         <div className="z-20 hidden w-full min-h-full py-16 mb-3 text-center border-[22px] border-yellow-400 md:block md:mx-auto" id="tempVolunteer">
           <div className="max-w-3xl mx-auto">

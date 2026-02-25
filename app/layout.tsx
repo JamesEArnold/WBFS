@@ -1,6 +1,6 @@
 import './globals.css'
 import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
+import { Inter, Playfair_Display } from 'next/font/google'
 import { Meta } from '@/components/seo/meta';
 import { globalMeta } from '@/components/seo/globalMeta';
 import { MainNav } from '@/components/main-nav';
@@ -13,6 +13,7 @@ import { NotificationBanner } from '@/components/ui/notification-banner';
 import { SpeedInsights } from "@vercel/speed-insights/next"
 
 const inter = Inter({ subsets: ['latin'] })
+const playfair = Playfair_Display({ subsets: ['latin'], variable: '--font-playfair' })
 
 export const metadata: Metadata = {
   title: 'Weisburn for Sheriff',
@@ -38,7 +39,7 @@ export default function RootLayout({
         <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
         <link rel="icon" href="/favicon.ico" sizes="any" />
       </Head>
-      <body className={`${inter.className}`}>
+      <body className={`${inter.className} ${playfair.variable}`}>
       <SpeedInsights />
       <Meta 
         ogType='website'
