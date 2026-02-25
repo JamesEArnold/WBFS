@@ -3,8 +3,6 @@ import { EmailSignupForm } from "./ui/email-signup";
 import { Video } from "./ui/videos";
 import Link from "next/link";
 import { GolfFundraiserEvent2 } from "./events/golf-fundraiser-2";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faGolfBallTee } from "@fortawesome/free-solid-svg-icons";
 import { GolfEventFlyer } from "./ui/golf-event-flyer";
 
 export const HeroSlide = () => {
@@ -51,11 +49,19 @@ export const HeroSlide = () => {
           <Video />
         </div> */}
         <div className="relative w-full h-full min-w-full p-6 overflow-hidden md:w-fit md:mx-auto md:mb-4">
-          <a className="flex justify-center w-full gap-4 py-3 mx-auto my-4 text-lg font-bold text-center text-yellow-400 bg-black rounded-md cursor-pointer drop-shadow-lg md:w-72" href="/events/golf-fundraiser-3">
-            <FontAwesomeIcon icon={faGolfBallTee} className="w-4 ml-2" />
-            Save The Date!
-          </a>
-          <div className="w-full md:w-[60%] mx-auto">
+          <div className="relative w-full md:w-[60%] mx-auto">
+            {/* Ribbon button wrapping the top of the flyer */}
+            <Link
+              href="/events/golf-fundraiser-3"
+              className="relative z-10 flex items-center justify-center w-[85%] mx-auto py-3 rounded-t-lg font-serif font-bold uppercase tracking-[0.15em] text-white transition-all duration-200 ease-out hover:brightness-110 active:scale-[0.98]"
+              style={{
+                fontSize: "clamp(0.85rem, 2.5vw, 1.1rem)",
+                background: "linear-gradient(135deg, #facc15, #eab308, #facc15)",
+                boxShadow: "0 4px 16px rgba(250,204,21,0.3)",
+              }}
+            >
+              View Event Details &rarr;
+            </Link>
             <GolfEventFlyer mode="save-the-date" />
           </div>
         </div>
