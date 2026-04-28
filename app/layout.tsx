@@ -3,8 +3,7 @@ import type { Metadata } from 'next'
 import { Inter, Playfair_Display } from 'next/font/google'
 import { Meta } from '@/components/seo/meta';
 import { globalMeta } from '@/components/seo/globalMeta';
-import { MainNav } from '@/components/main-nav';
-import { Footer } from '@/components/footer';
+import { SiteHeader, SiteFooter } from '@/components/site-chrome';
 import Head from 'next/head';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -46,7 +45,7 @@ export default function RootLayout({
         structuredData={structuredSeo}
       />
       <header className="sticky top-0 z-50 shadow-md">
-        <MainNav />
+        <SiteHeader />
         {/* <NotificationBanner /> */}
         <ToastContainer
           position="top-center"
@@ -63,7 +62,7 @@ export default function RootLayout({
       </header>
         {children}
         <Analytics />
-      <Footer />
+      <SiteFooter />
       </body>
     </html>
   )

@@ -26,7 +26,7 @@ export const Footer = () => {
           <span className="mx-auto py-3 text-[11px] opacity-100">Paid for by Weisburn for Sheriff</span>
         </div>
         <div className="flex flex-col w-8/12 mx-auto mt-4 text-sm opacity-60">
-          <span className="mx-auto">1102 Park Village Louisville, OH 44641</span>
+          <span className="mx-auto">4849 Tree Line Circle NW, North Canton, OH 44720</span>
           <span className="mx-auto">weisburnforsheriff@gmail.com</span>
         </div>
         <div className="flex justify-center mt-4 mb-10 flex-center">

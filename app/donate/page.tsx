@@ -37,11 +37,11 @@ export default function Home() {
           <span>Checks are accepted and can be made payable to:</span>
           <br />
           <blockquote className="font-bold">
-            Weisburn For Sheriff 
+            Weisburn For Sheriff
             <br />
-            1102 Park Village
+            4849 Tree Line Circle NW
             <br />
-            Louisville, OH 44641
+            North Canton, OH 44720
             <br />
             <span className="text-xs font-normal">*Can not accept corporate checks</span>
           </blockquote>
