@@ -41,11 +41,21 @@ export const LawmanFooter = () => (
           Contribute
         </Link>
         <div className="flex gap-3 mt-4">
-          <a href="https://www.facebook.com/profile.php?id=61552050077933" aria-label="Facebook">
-            <Image src="/icon-facebook.svg" width={36} height={36} alt="Facebook" />
+          <a
+            href="https://www.facebook.com/profile.php?id=61552050077933"
+            aria-label="Facebook"
+            className="flex items-center justify-center w-10 h-10 rounded-full transition-colors hover:opacity-90"
+            style={{ background: GOLD_BRIGHT }}
+          >
+            <Image src="/icon-facebook.svg" width={22} height={22} alt="Facebook" />
           </a>
-          <a href="https://instagram.com/weisburnforsheriff" aria-label="Instagram">
-            <Image src="/icon-instagram.svg" width={34} height={34} alt="Instagram" className="mt-[1px]" />
+          <a
+            href="https://instagram.com/weisburnforsheriff"
+            aria-label="Instagram"
+            className="flex items-center justify-center w-10 h-10 rounded-full transition-colors hover:opacity-90"
+            style={{ background: GOLD_BRIGHT }}
+          >
+            <Image src="/icon-instagram.svg" width={20} height={20} alt="Instagram" />
           </a>
         </div>
       </div>

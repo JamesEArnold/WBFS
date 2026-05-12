@@ -69,20 +69,20 @@ export function EmailSignupForm() {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
         <FormField
           control={form.control}
           name="email"
           render={({ field }) => (
             <FormItem>
               <FormControl>
-                <Input placeholder="Email address" {...field} className="w-3/4 m-auto mt-6 rounded-md h-10px drop-shadow-md" />
+                <Input placeholder="Email address" {...field} className="w-3/4 mx-auto rounded-md h-10px drop-shadow-md" />
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
-        <Button type="submit" className="w-56 max-w-[224px] p-8 text-lg font-bold uppercase bg-black rounded-md drop-shadow-md">
+        <Button type="submit" className="block w-56 max-w-[224px] px-8 py-4 mx-auto text-xs font-bold tracking-[0.3em] uppercase text-black bg-[#c89b3c] hover:bg-[#e6c673] drop-shadow-md rounded-none">
           { emailSubmit === 'initial' && 'Get Involved' }
           { emailSubmit === 'pending' && 
             <PulseLoader

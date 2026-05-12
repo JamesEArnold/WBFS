@@ -445,11 +445,21 @@ const GetInvolved = () => (
         <EmailSignupForm />
       </div>
       <div className="flex justify-center gap-3 mt-8">
-        <a href="https://www.facebook.com/profile.php?id=61552050077933" aria-label="Facebook">
-          <Image src="/icon-facebook.svg" width={40} height={40} alt="Facebook" />
+        <a
+          href="https://www.facebook.com/profile.php?id=61552050077933"
+          aria-label="Facebook"
+          className="flex items-center justify-center w-11 h-11 rounded-full transition-colors hover:opacity-90"
+          style={{ background: GOLD_BRIGHT }}
+        >
+          <Image src="/icon-facebook.svg" width={26} height={26} alt="Facebook" />
         </a>
-        <a href="https://instagram.com/weisburnforsheriff" aria-label="Instagram">
-          <Image src="/icon-instagram.svg" width={38} height={38} alt="Instagram" className="mt-[1px]" />
+        <a
+          href="https://instagram.com/weisburnforsheriff"
+          aria-label="Instagram"
+          className="flex items-center justify-center w-11 h-11 rounded-full transition-colors hover:opacity-90"
+          style={{ background: GOLD_BRIGHT }}
+        >
+          <Image src="/icon-instagram.svg" width={24} height={24} alt="Instagram" />
         </a>
       </div>
     </div>
