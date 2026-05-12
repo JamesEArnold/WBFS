@@ -331,8 +331,12 @@ export function VolunteerSignupForm() {
             </FormItem>
           )}
         />
-        <Button type="submit" className="flex w-56 max-w-[224px] h-auto px-8 py-4 mx-auto mt-4 text-lg font-bold uppercase bg-black rounded-md drop-shadow-md">
-          { emailSubmit === 'initial' && 'Sign Up' }
+        <Button
+          type="submit"
+          className="flex items-center justify-center w-fit min-h-[3rem] h-auto px-10 mx-auto mt-6 text-xs font-bold tracking-[0.3em] uppercase rounded-none drop-shadow-md"
+          style={{ background: '#0a0a0a', color: '#e6c673' }}
+        >
+          { emailSubmit === 'initial' && '★ Sign Up ★' }
           { emailSubmit === 'pending' && 
             <PulseLoader
               color={'#facc15'}
