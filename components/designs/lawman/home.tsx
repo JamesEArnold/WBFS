@@ -5,19 +5,17 @@ import Link from 'next/link';
 import { EmailSignupForm } from '@/components/ui/email-signup';
 import { VolunteerSignupForm } from '@/components/ui/volunteer-signup';
 import { LAWMAN } from './theme';
-import { WeisburnStar } from '../weisburn-star';
 
 const { BLACK, NEAR_BLACK, COAL, COAL_LIFT, GOLD, GOLD_BRIGHT, CREAM, BODY } = LAWMAN;
 
-const SheriffBadge = ({ size = 200 }: { size?: number }) => (
-  <WeisburnStar
-    size={size}
-    goldDeep={GOLD}
-    goldBright={GOLD_BRIGHT}
-    goldShadow="#7a5818"
-    cream={CREAM}
-    ink={BLACK}
-    outline="#1a1208"
+const SheriffBadge = ({ size = 200, priority = false }: { size?: number; priority?: boolean }) => (
+  <Image
+    src="/sheriff-weisburn-start.png"
+    alt="Sheriff Eric Weisburn campaign badge"
+    width={size}
+    height={Math.round((size * 432) / 442)}
+    priority={priority}
+    style={{ width: size, height: 'auto' }}
   />
 );
 
@@ -84,7 +82,7 @@ const Hero = () => (
       </div>
       <div className="relative md:col-span-5">
         <div className="relative mx-auto" style={{ width: 'min(100%, 360px)' }}>
-          <SheriffBadge size={360} />
+          <SheriffBadge size={360} priority />
         </div>
       </div>
     </div>

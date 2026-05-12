@@ -2,7 +2,6 @@
 
 import Image from 'next/image';
 import { LAWMAN } from '@/components/designs/lawman/theme';
-import { WeisburnStar } from '@/components/designs/weisburn-star';
 
 const { BLACK, NEAR_BLACK, COAL, COAL_LIFT, GOLD, GOLD_BRIGHT, GOLD_LIGHT, CREAM, BODY } = LAWMAN;
 
@@ -20,14 +19,12 @@ export default function Donate() {
         />
         <div className="relative max-w-3xl px-5 py-16 mx-auto text-center md:py-20">
           <div className="flex justify-center">
-            <WeisburnStar
-              size={140}
-              goldDeep={GOLD}
-              goldBright={GOLD_BRIGHT}
-              goldShadow="#7a5818"
-              cream={CREAM}
-              ink={BLACK}
-              outline="#1a1208"
+            <Image
+              src="/sheriff-weisburn-start.png"
+              alt="Sheriff Eric Weisburn campaign badge"
+              width={140}
+              height={Math.round((140 * 432) / 442)}
+              priority
             />
           </div>
           <p className="mt-5 text-[11px] font-bold tracking-[0.4em] uppercase" style={{ color: GOLD_BRIGHT }}>

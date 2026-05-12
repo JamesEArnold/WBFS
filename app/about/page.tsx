@@ -1,7 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { LAWMAN } from '@/components/designs/lawman/theme';
-import { WeisburnStar } from '@/components/designs/weisburn-star';
 
 const { BLACK, NEAR_BLACK, COAL, COAL_LIFT, GOLD, GOLD_BRIGHT, GOLD_LIGHT, CREAM, BODY } = LAWMAN;
 
