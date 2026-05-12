@@ -82,7 +82,7 @@ export function EmailSignupForm() {
             </FormItem>
           )}
         />
-        <Button type="submit" className="block w-56 max-w-[224px] px-8 py-4 mx-auto text-xs font-bold tracking-[0.3em] uppercase text-black bg-[#c89b3c] hover:bg-[#e6c673] drop-shadow-md rounded-none">
+        <Button type="submit" className="flex w-56 max-w-[224px] h-auto px-8 py-4 mx-auto text-xs font-bold tracking-[0.3em] uppercase text-black bg-[#c89b3c] hover:bg-[#e6c673] drop-shadow-md rounded-none">
           { emailSubmit === 'initial' && 'Get Involved' }
           { emailSubmit === 'pending' && 
             <PulseLoader
