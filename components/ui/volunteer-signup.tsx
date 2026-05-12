@@ -122,14 +122,14 @@ export function VolunteerSignupForm() {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-3">
       <FormField
           control={form.control}
           name="first_name"
           render={({ field }) => (
             <FormItem>
               <FormControl>
-                <Input placeholder="First Name" {...field} className="w-3/4 m-auto mt-6 rounded-md h-10px drop-shadow-md" />
+                <Input placeholder="First Name" {...field} className="w-3/4 mx-auto rounded-md h-10px drop-shadow-md" />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -141,7 +141,7 @@ export function VolunteerSignupForm() {
           render={({ field }) => (
             <FormItem>
               <FormControl>
-                <Input placeholder="Last Name" {...field} className="w-3/4 m-auto mt-6 rounded-md h-10px drop-shadow-md" />
+                <Input placeholder="Last Name" {...field} className="w-3/4 mx-auto rounded-md h-10px drop-shadow-md" />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -152,7 +152,7 @@ export function VolunteerSignupForm() {
           name="email"
           render={({ field }) => (
             <FormItem aria-required>
-              <div className="flex justify-start w-3/4 m-auto">
+              <div className="w-3/4 mx-auto">
                 <FormLabel className="text-xs">
                   *Required
                 </FormLabel>
@@ -169,7 +169,7 @@ export function VolunteerSignupForm() {
           name="phone_number"
           render={({ field }) => (
             <FormItem aria-required>
-              <div className="flex justify-start w-3/4 m-auto">
+              <div className="w-3/4 mx-auto">
                 <FormLabel className="text-xs">
                   *Required
                 </FormLabel>
@@ -181,23 +181,22 @@ export function VolunteerSignupForm() {
             </FormItem>
           )}
         />
-        <div className="flex w-3/4 mx-auto">
-          <span className="border-b-2 border-black text-start">What are you interested in?</span>
+        <div className="w-3/4 mx-auto pt-3">
+          <span className="text-sm font-semibold border-b-2 border-black">What are you interested in?</span>
         </div>
         <FormField
           control={form.control}
           name="campaignevents"
           render={({ field }) => (
-            <FormItem className="flex flex-row items-start w-3/4 p-3 mx-auto space-x-3 rounded-md text-start">
-              <FormControl className="align-middle">
+            <FormItem className="flex flex-row items-center w-3/4 mx-auto space-x-3 space-y-0 text-start">
+              <FormControl>
                 <Checkbox
                   checked={Boolean(field.value)}
                   onCheckedChange={field.onChange}
-                  className="my-auto align-middle"
                 />
               </FormControl>
-              <div className="flex my-auto space-y-1 leading-none">
-                <FormLabel className="align-middle">
+              <div className="leading-none">
+                <FormLabel>
                   I'd like to attend campaign events
                 </FormLabel>
               </div>
@@ -208,7 +207,7 @@ export function VolunteerSignupForm() {
           control={form.control}
           name="parade"
           render={({ field }) => (
-            <FormItem className="flex flex-row items-start w-3/4 p-3 m-auto space-x-3 space-y-0 rounded-md text-start">
+            <FormItem className="flex flex-row items-center w-3/4 mx-auto space-x-3 space-y-0 text-start">
               <FormControl>
                 <Checkbox
                   checked={Boolean(field.value)}
@@ -227,7 +226,7 @@ export function VolunteerSignupForm() {
           control={form.control}
           name="yardsign"
           render={({ field }) => (
-            <FormItem className="flex flex-row items-start w-3/4 p-3 m-auto space-x-3 space-y-0 rounded-md text-start">
+            <FormItem className="flex flex-row items-center w-3/4 mx-auto space-x-3 space-y-0 text-start">
               <FormControl>
                 <Checkbox
                   checked={Boolean(field.value)}
@@ -248,7 +247,7 @@ export function VolunteerSignupForm() {
             name="address_line_1"
             render={({ field }) => (
               <FormItem aria-required>
-                <div className="flex justify-start w-3/4 m-auto">
+                <div className="w-3/4 mx-auto">
                   <FormLabel className="text-xs">
                     *Required
                   </FormLabel>
@@ -294,7 +293,7 @@ export function VolunteerSignupForm() {
           control={form.control}
           name="phonecalls"
           render={({ field }) => (
-            <FormItem className="flex flex-row items-start w-3/4 p-3 m-auto space-x-3 space-y-0 rounded-md text-start">
+            <FormItem className="flex flex-row items-center w-3/4 mx-auto space-x-3 space-y-0 text-start">
               <FormControl>
                 <Checkbox
                   checked={Boolean(field.value)}
@@ -313,7 +312,7 @@ export function VolunteerSignupForm() {
           control={form.control}
           name="knockdoors"
           render={({ field }) => (
-            <FormItem className="flex flex-row items-start w-3/4 p-3 m-auto space-x-3 space-y-0 rounded-md text-start">
+            <FormItem className="flex flex-row items-center w-3/4 mx-auto space-x-3 space-y-0 text-start">
               <FormControl>
                 <Checkbox
                   checked={Boolean(field.value)}
@@ -328,7 +327,7 @@ export function VolunteerSignupForm() {
             </FormItem>
           )}
         />
-        <Button type="submit" className="w-56 max-w-[224px] p-8 text-lg font-bold uppercase bg-black rounded-md drop-shadow-md">
+        <Button type="submit" className="w-56 max-w-[224px] px-8 py-4 mt-4 text-lg font-bold uppercase bg-black rounded-md drop-shadow-md">
           { emailSubmit === 'initial' && 'Sign Up' }
           { emailSubmit === 'pending' && 
             <PulseLoader

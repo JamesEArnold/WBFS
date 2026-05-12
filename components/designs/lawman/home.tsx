@@ -376,7 +376,7 @@ const VolunteerSection = () => (
       <div className="md:col-span-7">
         <div
           className="p-6 md:p-10"
-          style={{ background: CREAM, borderTop: `4px solid ${GOLD}` }}
+          style={{ background: CREAM, color: BLACK, borderTop: `4px solid ${GOLD}` }}
         >
           <VolunteerSignupForm />
         </div>
