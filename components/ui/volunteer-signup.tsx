@@ -181,8 +181,12 @@ export function VolunteerSignupForm() {
             </FormItem>
           )}
         />
-        <div className="w-3/4 mx-auto pt-3">
-          <span className="text-sm font-semibold border-b-2 border-black">What are you interested in?</span>
+        <div className="flex items-center w-3/4 gap-3 mx-auto pt-4">
+          <span aria-hidden className="flex-1 h-px bg-[#c89b3c]" />
+          <p className="text-[10px] font-bold tracking-[0.3em] uppercase text-[#8a6a25] whitespace-nowrap">
+            ★ Take Your Post ★
+          </p>
+          <span aria-hidden className="flex-1 h-px bg-[#c89b3c]" />
         </div>
         <FormField
           control={form.control}

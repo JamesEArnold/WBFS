@@ -375,10 +375,39 @@ const VolunteerSection = () => (
       </div>
       <div className="md:col-span-7">
         <div
-          className="p-6 md:p-10"
-          style={{ background: CREAM, color: BLACK, borderTop: `4px solid ${GOLD}` }}
+          className="relative p-3 md:p-4"
+          style={{
+            background: CREAM,
+            color: BLACK,
+            borderTop: `4px solid ${GOLD}`,
+            backgroundImage: `radial-gradient(circle at 100% 0%, rgba(200,155,60,0.18) 0%, transparent 45%)`,
+          }}
         >
-          <VolunteerSignupForm />
+          <div
+            className="relative px-5 py-7 md:px-8 md:py-9"
+            style={{ border: `1px solid ${GOLD}` }}
+          >
+            <div className="mb-6 text-center">
+              <p
+                className="text-[10px] font-bold tracking-[0.4em] uppercase"
+                style={{ color: GOLD }}
+              >
+                ★ Enlist Here ★
+              </p>
+              <h3
+                className="mt-2 font-serif text-2xl font-black uppercase md:text-3xl"
+                style={{ color: BLACK, letterSpacing: '0.04em' }}
+              >
+                Volunteer Sign-Up
+              </h3>
+              <div
+                aria-hidden
+                className="w-16 mx-auto mt-3"
+                style={{ borderTop: `2px solid ${GOLD}` }}
+              />
+            </div>
+            <VolunteerSignupForm />
+          </div>
         </div>
       </div>
     </div>
