@@ -6,110 +6,166 @@ import { GoldFundraiserEvent } from "@/components/events/golf-fundraiser";
 import { JulyPicnicEvent } from "@/components/events/july-picnic";
 import { FalconesFundraiserEvent } from "@/components/events/falcones-fundraiser";
 import { GolfFundraiserEvent2 } from "@/components/events/golf-fundraiser-2";
-import Slider from "react-slick";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
+import { LAWMAN } from "@/components/designs/lawman/theme";
+import Link from "next/link";
+
+const { BLACK, NEAR_BLACK, COAL, COAL_LIFT, GOLD, GOLD_BRIGHT, GOLD_LIGHT, CREAM, BODY } = LAWMAN;
 
 const month = ["January","February","March","April","May","June","July","August","September","October","November","December"];
 
 const eventExpirations = [SwansonEvent.expirationTime, GoldFundraiserEvent.expirationTime, JulyPicnicEvent.expirationTime, FalconesFundraiserEvent.expirationTime, GolfFundraiserEvent2.expirationTime];
 const events = [GoldFundraiserEvent, JulyPicnicEvent, FalconesFundraiserEvent, GolfFundraiserEvent2]
 
-export default function Home() {
-  const [rightNow, setRightNow] = useState(new Date().valueOf());
-  const [expiration, setExpiration] = useState(SwansonEvent.expirationTime);
-  console.log('right now: ', rightNow);
-  console.log('expiration: ', expiration);
+export default function EventsPage() {
+  const [rightNow] = useState(new Date().valueOf());
 
-  var settings = {
-    dots: true,
-    infinite: true,
-    speed: 500,
-    slidesToShow: 1,
-    slidesToScroll: 1,
-    centerMode: true,
-  };
+  const currentMonth = month[new Date().getMonth()];
+  const currentYear = new Date().getFullYear();
+
+  const activeEvents: Array<{ key: string; component: React.ReactNode }> = [];
+  if (rightNow < FalconesFundraiserEvent.expirationTime) {
+    activeEvents.push({ key: 'falcones', component: FalconesFundraiserEvent.eventCard });
+  }
+  if (rightNow < GolfFundraiserEvent2.expirationTime) {
+    activeEvents.push({ key: 'golf-2', component: GolfFundraiserEvent2.eventCard });
+  }
 
   return (
-    <><main className="relative flex flex-col max-w-full my-8 md:mx-auto md:max-w-5xl min-h-[50vh] mb-20">
-      <div className="flex">
-        <div className="max-h-fit">
-          <div className="absolute z-20 max-w-3xl mx-auto shadow-md md:left-7">
-            <h2 className="px-3 font-semibold tracking-widest uppercase bg-[#FAF9F6]">
-              Support our
-            </h2>
-            <h2 className="px-3 py-3 text-3xl font-extrabold uppercase bg-yellow-400">
-              UPCOMING EVENTS
-            </h2>
+    <main style={{ background: BLACK, color: CREAM }}>
+      {/* Hero */}
+      <section className="relative overflow-hidden" style={{ background: NEAR_BLACK }}>
+        <div
+          aria-hidden
+          className="absolute inset-0"
+          style={{
+            backgroundImage: `radial-gradient(circle at 50% 30%, rgba(200,155,60,0.15) 0%, transparent 55%)`,
+          }}
+        />
+        <div className="relative max-w-5xl px-5 py-16 mx-auto md:py-20">
+          <div className="flex items-center gap-3">
+            <span className="block w-10 h-px" style={{ background: GOLD_BRIGHT }} />
+            <p className="text-[11px] font-bold tracking-[0.4em] uppercase" style={{ color: GOLD_BRIGHT }}>
+              Support The Campaign
+            </p>
           </div>
-          {/* <div className="md:p-3 md:shadow-md bg-white/50">
-      <div className="relative max-h-[50rem] md:h-[24rem] w-full h-full overflow-hidden">
-        <Image
-            src="/weisburn-family-2-min.jpg"
-            width="0"
-            height="0"
-            sizes="100vw"
-            className="relative w-full h-full scale-125"
-            alt="Weisburn for Sheriff Hero Image"
-            priority
-            />
-      </div>
-    </div> */}
+          <h1
+            className="mt-6 font-serif font-black uppercase"
+            style={{
+              color: CREAM,
+              fontSize: 'clamp(2.75rem, 8vw, 5rem)',
+              lineHeight: 0.95,
+              letterSpacing: '0.01em',
+            }}
+          >
+            Upcoming
+            <span
+              className="block"
+              style={{
+                color: GOLD_BRIGHT,
+                WebkitTextStroke: `1px ${GOLD}`,
+              }}
+            >
+              Events
+            </span>
+          </h1>
+          <p className="max-w-xl mt-6 text-base leading-relaxed md:text-lg" style={{ color: BODY }}>
+            Parades, fundraisers, and community gatherings across Stark County. Join the team — every appearance moves the campaign forward.
+          </p>
         </div>
-      </div>
-      <div className="flex flex-col mx-10 mt-20 text-justify md:mt-32">
-        <section className="mt-10 md:mt-0">
-        {/* <h1 className="text-4xl font-bold">{ month[new Date().getMonth()] } { new Date().getFullYear() }</h1> */}
-        <h1 className="text-4xl font-bold">July { new Date().getFullYear() }</h1>
-          <hr className="w-3/4 mt-2 mb-4 border border-yellow-400" />
-          {/* Place the event card here when there is some */}
-          {(new Date().valueOf() < FalconesFundraiserEvent.expirationTime) && FalconesFundraiserEvent.eventCard}
-          {(new Date().valueOf() < GolfFundraiserEvent2.expirationTime) && GolfFundraiserEvent2.eventCard}
-          <div className="h-full p-12 my-auto mt-12 bg-slate-200">
-            <h1 className="text-4xl font-bold text-center uppercase">More events coming soon</h1>
-            <p className="text-3xl text-center uppercase">Check back soon</p>
+      </section>
+
+      {/* Active events */}
+      <section className="px-5 py-16" style={{ background: BLACK }}>
+        <div className="max-w-5xl mx-auto">
+          <div className="flex items-end justify-between mb-10">
+            <div>
+              <p className="text-[11px] font-bold tracking-[0.4em] uppercase" style={{ color: GOLD_BRIGHT }}>
+                ★ {currentMonth} {currentYear} ★
+              </p>
+              <h2
+                className="mt-2 font-serif font-black uppercase"
+                style={{
+                  color: CREAM,
+                  fontSize: 'clamp(2rem, 5vw, 3rem)',
+                }}
+              >
+                On The Calendar
+              </h2>
+            </div>
           </div>
-        </section>
-      </div>
-      {/* <div className="flex mt-24">
-        <div className="max-h-fit">
-          <div className="absolute z-20 max-w-3xl mx-auto shadow-md md:left-7">
-            <h2 className="px-3 font-semibold tracking-widest uppercase bg-[#FAF9F6]">
-              View our
-            </h2>
-            <h2 className="px-3 py-3 text-3xl font-extrabold uppercase bg-yellow-400">
-              PAST EVENTS
-            </h2>
-          </div>
+          <div
+            aria-hidden
+            className="w-full mb-12"
+            style={{
+              borderTop: `1px solid ${COAL_LIFT}`,
+              boxShadow: `0 1px 0 ${GOLD}`,
+            }}
+          />
+          {activeEvents.length > 0 ? (
+            <div className="space-y-12">
+              {activeEvents.map((e) => (
+                <div
+                  key={e.key}
+                  className="p-2"
+                  style={{
+                    background: COAL,
+                    border: `1px solid ${COAL_LIFT}`,
+                    borderTop: `3px solid ${GOLD}`,
+                  }}
+                >
+                  {e.component}
+                </div>
+              ))}
+            </div>
+          ) : (
+            <div
+              className="px-6 py-16 text-center"
+              style={{
+                background: COAL,
+                border: `1px solid ${COAL_LIFT}`,
+                borderTop: `3px solid ${GOLD}`,
+              }}
+            >
+              <p
+                className="text-[11px] font-bold tracking-[0.4em] uppercase"
+                style={{ color: GOLD_BRIGHT }}
+              >
+                ★ Stand By ★
+              </p>
+              <h3
+                className="mt-3 font-serif font-black uppercase"
+                style={{
+                  color: CREAM,
+                  fontSize: 'clamp(1.75rem, 4.5vw, 2.5rem)',
+                  lineHeight: 1.05,
+                }}
+              >
+                More events coming soon
+              </h3>
+              <p className="max-w-xl mx-auto mt-4 text-base" style={{ color: BODY }}>
+                We&rsquo;re scheduling appearances across Stark County. Check
+                back soon, or sign up for updates from the campaign trail.
+              </p>
+              <div className="flex flex-col items-center gap-3 mt-7 sm:flex-row sm:justify-center">
+                <Link
+                  href="/donate"
+                  className="px-7 py-3 text-xs font-bold tracking-[0.3em] uppercase"
+                  style={{ background: GOLD, color: BLACK }}
+                >
+                  Contribute
+                </Link>
+                <Link
+                  href="/about"
+                  className="px-7 py-3 text-xs font-bold tracking-[0.3em] uppercase border-2"
+                  style={{ borderColor: GOLD, color: GOLD_BRIGHT }}
+                >
+                  Service Record
+                </Link>
+              </div>
+            </div>
+          )}
         </div>
-      </div>
-      <div className="flex flex-col mx-10 mt-20 text-justify md:mt-32">
-        <section className="mt-10 md:mt-0">
-          <div className="slider-container">
-            <Slider {...settings} centerMode centerPadding>
-              <div className="relative flex justify-center mx-auto text-center left-5">
-                <img src="/past-events/golf-1.jpg" className="max-w-lg" />
-              </div>
-              <div>
-                <h3>2</h3>
-              </div>
-              <div>
-                <h3>3</h3>
-              </div>
-              <div>
-                <h3>4</h3>
-              </div>
-              <div>
-                <h3>5</h3>
-              </div>
-              <div>
-                <h3>6</h3>
-              </div>
-            </Slider>
-          </div>
-        </section>
-      </div> */}
-    </main>                   
-    </>
-  )
-};
+      </section>
+    </main>
+  );
+}

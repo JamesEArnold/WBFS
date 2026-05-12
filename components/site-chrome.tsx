@@ -1,17 +1,5 @@
-'use client';
+import { LawmanHeader } from './designs/lawman/header';
+import { LawmanFooter } from './designs/lawman/footer';
 
-import { usePathname } from 'next/navigation';
-import { MainNav } from './main-nav';
-import { Footer } from './footer';
-
-export const SiteHeader = () => {
-  const pathname = usePathname();
-  if (pathname === '/') return null;
-  return <MainNav />;
-};
-
-export const SiteFooter = () => {
-  const pathname = usePathname();
-  if (pathname === '/') return null;
-  return <Footer />;
-};
+export const SiteHeader = () => <LawmanHeader />;
+export const SiteFooter = () => <LawmanFooter />;
