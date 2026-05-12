@@ -331,7 +331,7 @@ export function VolunteerSignupForm() {
             </FormItem>
           )}
         />
-        <Button type="submit" className="w-56 max-w-[224px] px-8 py-4 mt-4 text-lg font-bold uppercase bg-black rounded-md drop-shadow-md">
+        <Button type="submit" className="block w-56 max-w-[224px] px-8 py-4 mx-auto mt-4 text-lg font-bold uppercase bg-black rounded-md drop-shadow-md">
           { emailSubmit === 'initial' && 'Sign Up' }
           { emailSubmit === 'pending' && 
             <PulseLoader
