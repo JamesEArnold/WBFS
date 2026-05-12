@@ -1,34 +1,16 @@
-'use client';
-
-import { useState } from "react";
-import { SwansonEvent } from "@/components/events/swanson-event"
-import { GoldFundraiserEvent } from "@/components/events/golf-fundraiser";
-import { JulyPicnicEvent } from "@/components/events/july-picnic";
-import { FalconesFundraiserEvent } from "@/components/events/falcones-fundraiser";
-import { GolfFundraiserEvent2 } from "@/components/events/golf-fundraiser-2";
 import { LAWMAN } from "@/components/designs/lawman/theme";
 import Link from "next/link";
 
-const { BLACK, NEAR_BLACK, COAL, COAL_LIFT, GOLD, GOLD_BRIGHT, GOLD_LIGHT, CREAM, BODY } = LAWMAN;
+const { BLACK, NEAR_BLACK, COAL, COAL_LIFT, GOLD, GOLD_BRIGHT, CREAM, BODY } = LAWMAN;
 
 const month = ["January","February","March","April","May","June","July","August","September","October","November","December"];
 
-const eventExpirations = [SwansonEvent.expirationTime, GoldFundraiserEvent.expirationTime, JulyPicnicEvent.expirationTime, FalconesFundraiserEvent.expirationTime, GolfFundraiserEvent2.expirationTime];
-const events = [GoldFundraiserEvent, JulyPicnicEvent, FalconesFundraiserEvent, GolfFundraiserEvent2]
-
 export default function EventsPage() {
-  const [rightNow] = useState(new Date().valueOf());
-
-  const currentMonth = month[new Date().getMonth()];
-  const currentYear = new Date().getFullYear();
+  const now = new Date();
+  const currentMonth = month[now.getMonth()];
+  const currentYear = now.getFullYear();
 
   const activeEvents: Array<{ key: string; component: React.ReactNode }> = [];
-  if (rightNow < FalconesFundraiserEvent.expirationTime) {
-    activeEvents.push({ key: 'falcones', component: FalconesFundraiserEvent.eventCard });
-  }
-  if (rightNow < GolfFundraiserEvent2.expirationTime) {
-    activeEvents.push({ key: 'golf-2', component: GolfFundraiserEvent2.eventCard });
-  }
 
   return (
     <main style={{ background: BLACK, color: CREAM }}>
