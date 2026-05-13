@@ -148,43 +148,68 @@ const PortraitBlock = () => (
 );
 
 const GolfBanner = () => (
-  <Link
-    href="/events/golf-fundraiser-3"
-    className="block transition-colors group"
-  >
-    <section className="px-5 py-12" style={{ background: BLACK }}>
-      <div
-        className="flex flex-col items-start justify-between max-w-6xl gap-5 px-6 py-7 mx-auto md:flex-row md:items-center"
-        style={{
-          background: COAL,
-          borderTop: `2px solid ${GOLD}`,
-          borderBottom: `2px solid ${GOLD}`,
-        }}
-      >
-        <div className="flex items-center gap-4">
-          <SheriffBadge size={56} />
-          <div>
-            <p className="text-[10px] font-bold tracking-[0.4em] uppercase" style={{ color: GOLD_BRIGHT }}>
-              Save The Date
-            </p>
-            <h3
-              className="mt-1 font-serif text-2xl font-bold md:text-3xl"
-              style={{ color: CREAM }}
-            >
-              Annual Golf Fundraiser
-            </h3>
-            <p className="text-sm" style={{ color: BODY }}>Friday, September 18, 2026 · Sable Creek Golf Course</p>
-          </div>
-        </div>
-        <span
-          className="inline-flex items-center gap-3 text-xs font-bold tracking-[0.3em] uppercase group-hover:gap-4 transition-all"
+  <section className="px-5 py-20" style={{ background: BLACK }}>
+    <div className="max-w-6xl mx-auto">
+      <div className="text-center">
+        <p
+          className="text-[11px] font-bold tracking-[0.4em] uppercase"
           style={{ color: GOLD_BRIGHT }}
         >
-          View Details &rarr;
-        </span>
+          ★ Upcoming Events ★
+        </p>
+        <h2
+          className="mt-3 font-serif font-black"
+          style={{
+            color: CREAM,
+            fontSize: 'clamp(2.25rem, 5vw, 3.75rem)',
+            lineHeight: 1,
+          }}
+        >
+          On The Calendar.
+        </h2>
+        <div
+          aria-hidden
+          className="w-16 mx-auto mt-5"
+          style={{ borderTop: `2px solid ${GOLD}` }}
+        />
       </div>
-    </section>
-  </Link>
+      <Link
+        href="/events/golf-fundraiser-3"
+        className="block mt-12 transition-colors group"
+      >
+        <div
+          className="flex flex-col items-start justify-between gap-5 px-6 py-7 md:flex-row md:items-center md:px-10 md:py-8"
+          style={{
+            background: COAL,
+            borderTop: `2px solid ${GOLD}`,
+            borderBottom: `2px solid ${GOLD}`,
+          }}
+        >
+          <div className="flex items-center gap-5">
+            <SheriffBadge size={64} />
+            <div>
+              <p className="text-[10px] font-bold tracking-[0.4em] uppercase" style={{ color: GOLD_BRIGHT }}>
+                Save The Date
+              </p>
+              <h3
+                className="mt-1 font-serif text-2xl font-bold md:text-3xl"
+                style={{ color: CREAM }}
+              >
+                Annual Golf Fundraiser
+              </h3>
+              <p className="text-sm" style={{ color: BODY }}>Friday, September 18, 2026 · Sable Creek Golf Course</p>
+            </div>
+          </div>
+          <span
+            className="inline-flex items-center gap-3 text-xs font-bold tracking-[0.3em] uppercase group-hover:gap-4 transition-all"
+            style={{ color: GOLD_BRIGHT }}
+          >
+            View Details &rarr;
+          </span>
+        </div>
+      </Link>
+    </div>
+  </section>
 );
 
 const Pillars = () => {
