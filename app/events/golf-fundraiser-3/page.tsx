@@ -1,7 +1,9 @@
-import { GolfEventFlyer } from "@/components/ui/golf-event-flyer";
+import Image from "next/image";
 import { LAWMAN } from "@/components/designs/lawman/theme";
 
-const { BLACK, NEAR_BLACK, COAL, COAL_LIFT, GOLD, GOLD_BRIGHT, CREAM, BODY } = LAWMAN;
+const { BLACK, NEAR_BLACK, COAL_LIFT, GOLD, GOLD_BRIGHT, CREAM, BODY } = LAWMAN;
+
+const FLYER_PDF = "/250-SheriffWeisburn_GolfOuting_TriFold.pdf";
 
 export default function GolfFundraiser3Page() {
   return (
@@ -22,7 +24,7 @@ export default function GolfFundraiser3Page() {
               className="text-[11px] font-bold tracking-[0.4em] uppercase"
               style={{ color: GOLD_BRIGHT }}
             >
-              Save The Date · 2026
+              Friday · September 18, 2026
             </p>
           </div>
           <h1
@@ -49,60 +51,74 @@ export default function GolfFundraiser3Page() {
             className="max-w-xl mt-6 text-base leading-relaxed md:text-lg"
             style={{ color: BODY }}
           >
-            Mark your calendars for Friday, September 18th. Registration,
-            sponsorship details, and pricing to follow.
+            Sable Creek Golf Course · 9:00 a.m. shotgun start · $500 per team.
+            Sponsorship opportunities, $10,000 hole-in-one, donuts, lunch and
+            dinner provided.
           </p>
+          <div className="flex flex-wrap items-center gap-3 mt-8">
+            <a
+              href={FLYER_PDF}
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex items-center px-7 py-4 text-xs font-bold tracking-[0.3em] uppercase"
+              style={{ background: GOLD, color: BLACK, boxShadow: `0 4px 0 ${COAL_LIFT}` }}
+            >
+              View / Print Flyer
+            </a>
+            <a
+              href="mailto:weisburnforsheriff@gmail.com?subject=2026%20Golf%20Outing%20Registration"
+              className="inline-flex items-center px-7 py-4 text-xs font-bold tracking-[0.3em] uppercase border-2"
+              style={{ borderColor: GOLD, color: GOLD_BRIGHT }}
+            >
+              Email To Register
+            </a>
+          </div>
         </div>
       </section>
 
-      {/* Flyer */}
-      <section className="px-5 py-12" style={{ background: BLACK }}>
-        <div className="flex flex-col items-center justify-center">
-          <GolfEventFlyer mode="save-the-date" />
-        </div>
-      </section>
-
-      {/* Details + Contact */}
-      <section className="px-5 pb-20" style={{ background: BLACK }}>
-        <div
-          className="max-w-2xl mx-auto p-8 md:p-10"
-          style={{
-            background: COAL,
-            border: `1px solid ${COAL_LIFT}`,
-            borderTop: `3px solid ${GOLD}`,
-          }}
-        >
+      {/* Trifold flyer pages */}
+      <section className="px-5 py-12 md:py-16" style={{ background: BLACK }}>
+        <div className="max-w-5xl mx-auto space-y-8">
+          <a
+            href={FLYER_PDF}
+            target="_blank"
+            rel="noreferrer"
+            aria-label="Open the printable golf outing flyer PDF — outside"
+            className="block transition-opacity hover:opacity-95"
+            style={{ border: `1px solid ${COAL_LIFT}` }}
+          >
+            <Image
+              src="/golf-trifold-outside.jpg"
+              alt="Sheriff Weisburn Golf Outing flyer — cover, sponsor thank-you, and registration form"
+              width={2250}
+              height={1750}
+              sizes="(max-width: 768px) 100vw, 1100px"
+              className="w-full h-auto"
+              priority
+            />
+          </a>
+          <a
+            href={FLYER_PDF}
+            target="_blank"
+            rel="noreferrer"
+            aria-label="Open the printable golf outing flyer PDF — inside"
+            className="block transition-opacity hover:opacity-95"
+            style={{ border: `1px solid ${COAL_LIFT}` }}
+          >
+            <Image
+              src="/golf-trifold-inside.jpg"
+              alt="Sheriff Weisburn Golf Outing flyer — sponsorship tiers, $10,000 hole-in-one, and registration form details"
+              width={2250}
+              height={1750}
+              sizes="(max-width: 768px) 100vw, 1100px"
+              className="w-full h-auto"
+            />
+          </a>
           <p
-            className="text-[11px] font-bold tracking-[0.4em] uppercase"
+            className="text-center text-[11px] font-bold tracking-[0.35em] uppercase"
             style={{ color: GOLD_BRIGHT }}
           >
-            ★ More Details Coming Soon ★
-          </p>
-          <h2
-            className="mt-3 font-serif font-black uppercase"
-            style={{
-              color: CREAM,
-              fontSize: "clamp(1.75rem, 4.5vw, 2.5rem)",
-              lineHeight: 1.05,
-            }}
-          >
-            2026 Golf Fundraiser
-          </h2>
-          <p className="mt-5 text-base leading-relaxed" style={{ color: BODY }}>
-            We&rsquo;re excited to announce the 2026 Sheriff Weisburn Golf
-            Fundraiser. Stay tuned for registration details, pricing, and
-            sponsorship opportunities.
-          </p>
-          <p className="mt-5 text-base leading-relaxed" style={{ color: BODY }}>
-            Questions in the meantime? Reach out at{" "}
-            <a
-              href="mailto:weisburnforsheriff@gmail.com"
-              className="font-semibold underline"
-              style={{ color: GOLD_BRIGHT }}
-            >
-              weisburnforsheriff@gmail.com
-            </a>
-            .
+            Tap either page to open the printable PDF
           </p>
         </div>
       </section>

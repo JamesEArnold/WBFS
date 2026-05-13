@@ -173,7 +173,7 @@ const GolfBanner = () => (
             >
               Annual Golf Fundraiser
             </h3>
-            <p className="text-sm" style={{ color: BODY }}>Friday, September 18th</p>
+            <p className="text-sm" style={{ color: BODY }}>Friday, September 18, 2026 · Sable Creek Golf Course</p>
           </div>
         </div>
         <span
