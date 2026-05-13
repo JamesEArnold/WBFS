@@ -1,16 +1,43 @@
-import { LAWMAN } from "@/components/designs/lawman/theme";
+import Image from "next/image";
 import Link from "next/link";
+import { LAWMAN } from "@/components/designs/lawman/theme";
 
 const { BLACK, NEAR_BLACK, COAL, COAL_LIFT, GOLD, GOLD_BRIGHT, CREAM, BODY } = LAWMAN;
 
 const month = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+
+type UpcomingEvent = {
+  key: string;
+  overline: string;
+  title: string;
+  subtitle: string;
+  facts: string[];
+  href: string;
+  cta: string;
+};
+
+const upcomingEvents: UpcomingEvent[] = [
+  {
+    key: "golf-2026",
+    overline: "Save The Date",
+    title: "Annual Golf Fundraiser",
+    subtitle: "Friday, September 18, 2026 · Sable Creek Golf Course",
+    facts: [
+      "9:00 a.m. shotgun start · $500 per team",
+      "Donuts, lunch & dinner provided",
+      "$10,000 hole-in-one · sponsorships available",
+    ],
+    href: "/events/golf-fundraiser-3",
+    cta: "View The Flyer",
+  },
+];
 
 export default function EventsPage() {
   const now = new Date();
   const currentMonth = month[now.getMonth()];
   const currentYear = now.getFullYear();
 
-  const activeEvents: Array<{ key: string; component: React.ReactNode }> = [];
+  const activeEvents = upcomingEvents;
 
   return (
     <main style={{ background: BLACK, color: CREAM }}>
@@ -84,19 +111,65 @@ export default function EventsPage() {
             }}
           />
           {activeEvents.length > 0 ? (
-            <div className="space-y-12">
+            <div className="space-y-10">
               {activeEvents.map((e) => (
-                <div
+                <Link
                   key={e.key}
-                  className="p-2"
-                  style={{
-                    background: COAL,
-                    border: `1px solid ${COAL_LIFT}`,
-                    borderTop: `3px solid ${GOLD}`,
-                  }}
+                  href={e.href}
+                  className="block transition-transform group hover:-translate-y-0.5"
+                  aria-label={`${e.title} — ${e.subtitle}`}
                 >
-                  {e.component}
-                </div>
+                  <article
+                    className="grid items-stretch grid-cols-1 md:grid-cols-12"
+                    style={{
+                      background: COAL,
+                      border: `1px solid ${COAL_LIFT}`,
+                      borderTop: `3px solid ${GOLD}`,
+                    }}
+                  >
+                    <div className="flex items-center justify-center px-6 py-8 md:col-span-3 md:py-10" style={{ background: NEAR_BLACK }}>
+                      <Image
+                        src="/SheriffStar.PNG"
+                        alt=""
+                        width={120}
+                        height={120}
+                        className="block w-24 h-auto md:w-32"
+                      />
+                    </div>
+                    <div className="flex flex-col justify-center px-6 py-8 md:col-span-9 md:px-10 md:py-10">
+                      <p className="text-[10px] font-bold tracking-[0.4em] uppercase" style={{ color: GOLD_BRIGHT }}>
+                        {e.overline}
+                      </p>
+                      <h3
+                        className="mt-2 font-serif font-bold"
+                        style={{
+                          color: CREAM,
+                          fontSize: 'clamp(1.75rem, 3.5vw, 2.5rem)',
+                          lineHeight: 1.05,
+                        }}
+                      >
+                        {e.title}
+                      </h3>
+                      <p className="mt-2 text-sm md:text-base" style={{ color: BODY }}>
+                        {e.subtitle}
+                      </p>
+                      <ul className="mt-5 space-y-1.5 text-sm md:text-base" style={{ color: CREAM }}>
+                        {e.facts.map((f) => (
+                          <li key={f} className="flex items-start gap-3">
+                            <span style={{ color: GOLD_BRIGHT }}>★</span>
+                            {f}
+                          </li>
+                        ))}
+                      </ul>
+                      <span
+                        className="inline-flex items-center self-start gap-3 mt-7 text-xs font-bold tracking-[0.3em] uppercase group-hover:gap-4 transition-all"
+                        style={{ color: GOLD_BRIGHT, borderBottom: `2px solid ${GOLD}`, paddingBottom: 4 }}
+                      >
+                        {e.cta} &rarr;
+                      </span>
+                    </div>
+                  </article>
+                </Link>
               ))}
             </div>
           ) : (
