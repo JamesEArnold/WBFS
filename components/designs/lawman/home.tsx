@@ -15,6 +15,7 @@ const SheriffBadge = ({ size = 200, priority = false }: { size?: number; priorit
     width={size}
     height={size}
     priority={priority}
+    className="block mx-auto"
     style={{ width: size, height: 'auto' }}
   />
 );
@@ -272,9 +273,8 @@ const Pillars = () => {
 const Quote = () => (
   <section className="px-5 py-20" style={{ background: CREAM }}>
     <div className="max-w-3xl mx-auto text-center">
-      <SheriffBadge size={64} />
       <p
-        className="mt-6 font-serif font-bold italic"
+        className="font-serif font-bold italic"
         style={{
           color: BLACK,
           fontSize: 'clamp(1.75rem, 5vw, 3rem)',
@@ -289,6 +289,9 @@ const Quote = () => (
           Sheriff Eric Weisburn
         </p>
         <span className="block w-12 h-px" style={{ background: BLACK }} />
+      </div>
+      <div className="mt-10">
+        <SheriffBadge size={160} />
       </div>
     </div>
   </section>
@@ -422,7 +425,7 @@ const GetInvolved = () => (
       }}
     />
     <div className="relative max-w-2xl mx-auto text-center">
-      <SheriffBadge size={80} />
+      <SheriffBadge size={140} />
       <p className="mt-4 text-[11px] font-bold tracking-[0.4em] uppercase" style={{ color: GOLD_BRIGHT }}>
         ★ Stay Updated ★
       </p>

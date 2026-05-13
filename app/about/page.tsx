@@ -253,13 +253,7 @@ export default function About() {
         <div className="grid items-center max-w-5xl gap-12 mx-auto md:grid-cols-12">
           <div className="md:col-span-7">
             <p
-              className="text-[11px] font-bold tracking-[0.4em] uppercase"
-              style={{ color: GOLD_BRIGHT }}
-            >
-              ★ With Respect ★
-            </p>
-            <p
-              className="mt-3 font-serif text-2xl md:text-3xl"
+              className="font-serif text-2xl md:text-3xl"
               style={{ color: CREAM, fontWeight: 700 }}
             >
               Respectfully,
