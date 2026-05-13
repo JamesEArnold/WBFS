@@ -20,10 +20,10 @@ export default function Donate() {
         <div className="relative max-w-3xl px-5 py-16 mx-auto text-center md:py-20">
           <div className="flex justify-center">
             <Image
-              src="/sheriff-weisburn-start.png"
+              src="/SheriffStar.PNG"
               alt="Sheriff Eric Weisburn campaign badge"
               width={140}
-              height={Math.round((140 * 432) / 442)}
+              height={140}
               priority
             />
           </div>

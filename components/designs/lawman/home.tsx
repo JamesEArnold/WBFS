@@ -10,10 +10,10 @@ const { BLACK, NEAR_BLACK, COAL, COAL_LIFT, GOLD, GOLD_BRIGHT, CREAM, BODY } = L
 
 const SheriffBadge = ({ size = 200, priority = false }: { size?: number; priority?: boolean }) => (
   <Image
-    src="/sheriff-weisburn-start.png"
+    src="/SheriffStar.PNG"
     alt="Sheriff Eric Weisburn campaign badge"
     width={size}
-    height={Math.round((size * 432) / 442)}
+    height={size}
     priority={priority}
     style={{ width: size, height: 'auto' }}
   />
