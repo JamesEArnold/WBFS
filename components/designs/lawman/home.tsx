@@ -342,7 +342,7 @@ const Gallery = () => (
       <div className="grid gap-3 md:grid-cols-2">
         {[
           { src: '/photos/parade-group-2.jpg', cap: 'Stark County Parade' },
-          { src: '/flag.jpg', cap: 'Service & Country' },
+          { src: '/honor-guard.jpg', cap: 'Service & Country' },
         ].map((p) => (
           <figure key={p.src} className="relative" style={{ border: `1px solid ${GOLD}` }}>
             <div
