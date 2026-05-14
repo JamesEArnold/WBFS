@@ -26,6 +26,7 @@ export const LawmanHeader = () => (
       >
         <Link href="/" className="hover:text-white">Home</Link>
         <Link href="/about" className="hover:text-white">About</Link>
+        <Link href="/time-in-office" className="hover:text-white">In Office</Link>
         <Link href="/events" className="hover:text-white">Events</Link>
         <Link href="/donate" className="hover:text-white">Contribute</Link>
       </nav>
@@ -41,6 +42,7 @@ export const LawmanHeader = () => (
           items={[
             { href: '/', label: 'Home' },
             { href: '/about', label: 'About' },
+            { href: '/time-in-office', label: 'In Office' },
             { href: '/events', label: 'Events' },
             { href: '/donate', label: 'Contribute' },
           ]}

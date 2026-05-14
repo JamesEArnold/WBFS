@@ -62,7 +62,7 @@ const Hero = () => (
           className="max-w-xl mt-6 text-base leading-[1.7] md:text-lg"
           style={{ color: BODY }}
         >
-          Thirty-one years of service. A Sheriff's Office led from the frontline. Sworn to protect every citizen of Stark County.
+          With over 30 years of service, Sheriff Weisburn leads from the frontline. Sworn to protect every citizen of Stark County.
         </p>
         <div className="flex flex-col items-center gap-3 mt-8 sm:flex-row md:justify-start">
           <Link
@@ -133,7 +133,7 @@ const PortraitBlock = () => (
           A Sheriff sworn to serve Stark County.
         </h2>
         <p className="mt-5 text-base leading-relaxed" style={{ color: BODY }}>
-          From Corrections Officer in 1991 to Sheriff in 2025. Thirty-one years on the job — patrol, investigations, command. The fight to keep Stark County safe is far from over.
+          From Corrections Officer in 1991 to Sheriff in 2025. With over 30 years on the job — patrol, investigations, command. The fight to keep Stark County safe is far from over.
         </p>
         <Link
           href="/about"
