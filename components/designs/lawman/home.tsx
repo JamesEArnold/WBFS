@@ -331,10 +331,14 @@ const Gallery = () => (
       </div>
       <div className="grid gap-3 md:grid-cols-2">
         {[
-          { src: '/new-may-2026/Sheriff_Weisburn_High_Fiving_Child.jpg', cap: 'Stark County Parade' },
-          { src: '/honor-guard.jpg', cap: 'Service & Country' },
-          { src: '/new-may-2026/Sheriff_Weisburn_OVI_Taskforce_trailer.JPG', cap: 'OVI Taskforce' },
-          { src: '/new-may-2026/Operation_Spring_Cleaning.JPG', cap: 'Operation Spring Cleaning' },
+          {
+            src: '/new-may-2026/Sheriff_Weisburn_High_Fiving_Child.jpg',
+            cap: 'Stark County Parade',
+            cls: 'object-center md:object-[center_38%]',
+          },
+          { src: '/honor-guard.jpg', cap: 'Service & Country', cls: 'object-center' },
+          { src: '/new-may-2026/Sheriff_Weisburn_OVI_Taskforce_trailer.JPG', cap: 'OVI Taskforce', cls: 'object-center' },
+          { src: '/new-may-2026/Operation_Spring_Cleaning.JPG', cap: 'Operation Spring Cleaning', cls: 'object-center' },
         ].map((p) => (
           <figure key={p.src} className="relative" style={{ border: `1px solid ${GOLD}` }}>
             <div
@@ -346,7 +350,7 @@ const Gallery = () => (
                 alt={p.cap}
                 fill
                 sizes="(max-width: 768px) 100vw, 600px"
-                className="object-cover"
+                className={`object-cover ${p.cls}`}
               />
             </div>
             <figcaption
