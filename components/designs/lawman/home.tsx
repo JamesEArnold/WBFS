@@ -331,7 +331,7 @@ const Gallery = () => (
       </div>
       <div className="grid gap-3 md:grid-cols-2">
         {[
-          { src: '/photos/parade-group-2.jpg', cap: 'Stark County Parade' },
+          { src: '/new-may-2026/Sheriff_Weisburn_High_Fiving_Child.jpg', cap: 'Stark County Parade' },
           { src: '/honor-guard.jpg', cap: 'Service & Country' },
           { src: '/new-may-2026/Sheriff_Weisburn_OVI_Taskforce_trailer.JPG', cap: 'OVI Taskforce' },
           { src: '/new-may-2026/Operation_Spring_Cleaning.JPG', cap: 'Operation Spring Cleaning' },
