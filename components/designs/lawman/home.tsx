@@ -244,16 +244,6 @@ const Pillars = () => {
           <p className="text-[11px] font-bold tracking-[0.4em] uppercase" style={{ color: GOLD_BRIGHT }}>
             ★ Three Ways To Stand With The Sheriff ★
           </p>
-          <h2
-            className="mt-3 font-serif font-black"
-            style={{
-              color: CREAM,
-              fontSize: 'clamp(2.25rem, 5vw, 3.75rem)',
-              lineHeight: 1,
-            }}
-          >
-            Take Your Post.
-          </h2>
         </div>
         <div className="grid gap-5 mt-12 md:grid-cols-3">
           {items.map((it) => (
@@ -343,6 +333,8 @@ const Gallery = () => (
         {[
           { src: '/photos/parade-group-2.jpg', cap: 'Stark County Parade' },
           { src: '/honor-guard.jpg', cap: 'Service & Country' },
+          { src: '/new-may-2026/Sheriff_Weisburn_OVI_Taskforce_trailer.JPG', cap: 'OVI Taskforce' },
+          { src: '/new-may-2026/Operation_Spring_Cleaning.JPG', cap: 'Operation Spring Cleaning' },
         ].map((p) => (
           <figure key={p.src} className="relative" style={{ border: `1px solid ${GOLD}` }}>
             <div

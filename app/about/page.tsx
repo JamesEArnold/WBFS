@@ -90,26 +90,26 @@ export default function About() {
               Thank you for taking the time to learn more about me and my career
               with the Stark County Sheriff&rsquo;s Office. A career built on
               service to my community — from the firehouse, to the patrol car,
-              to the badge.
+              to serve as YOUR Sheriff.
             </p>
           </div>
           <div className="relative md:col-span-5">
             <div className="relative" style={{ border: `4px solid ${GOLD}` }}>
               <Image
-                src="/weisburn-family-2-min.jpg"
+                src="/new-may-2026/Sheriff_Weisburn_First_to_Serve_Star1.JPG"
                 width={900}
                 height={1100}
                 sizes="(max-width: 768px) 100vw, 480px"
                 className="w-full h-[24rem] md:h-[28rem] object-cover object-center"
                 style={{ filter: 'contrast(1.05) brightness(0.95)' }}
-                alt="Sheriff Weisburn and family"
+                alt="Sheriff Eric Weisburn beside the Stark County sheriff star"
                 priority
               />
               <div
                 className="absolute bottom-0 left-0 right-0 px-4 py-2 text-[11px] font-bold tracking-[0.35em] uppercase"
                 style={{ background: 'rgba(10,10,10,0.85)', color: GOLD_BRIGHT, borderTop: `1px solid ${GOLD}` }}
               >
-                ★ The Weisburn Family ★
+                ★ First To Serve — Stark County ★
               </div>
             </div>
           </div>
@@ -302,20 +302,20 @@ export default function About() {
               style={{ background: COAL, border: `1px solid ${GOLD}` }}
             >
               <Image
-                src="/weisburn-grandkids-min.jpg"
+                src="/new-may-2026/2025_Greek_Festival.jpg"
                 width={800}
                 height={1000}
                 sizes="(max-width: 768px) 100vw, 420px"
                 className="w-full h-auto object-cover"
                 style={{ filter: 'contrast(1.05) brightness(0.95)' }}
-                alt="Sheriff Weisburn with grandkids"
+                alt="Sheriff Weisburn serving at the Stark County Greek Festival"
               />
             </div>
             <p
               className="mt-3 text-[10px] tracking-[0.3em] text-center uppercase"
               style={{ color: BODY }}
             >
-              ★ Family — Stark County ★
+              ★ Serving The Community ★
             </p>
           </div>
         </div>
