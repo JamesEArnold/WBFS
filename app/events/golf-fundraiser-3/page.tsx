@@ -8,6 +8,21 @@ const FLYER_PDF = "/250-SheriffWeisburn_GolfOuting_TriFold.pdf";
 export default function GolfFundraiser3Page() {
   return (
     <main style={{ background: BLACK, color: CREAM }}>
+      {/* Sold Out full-width sticky banner */}
+      <div className="w-full py-5 text-center sticky top-0 z-50" style={{ background: GOLD }}>
+        <p
+          className="font-black uppercase tracking-[0.25em]"
+          style={{ color: BLACK, fontSize: "clamp(1.1rem, 3vw, 1.5rem)" }}
+        >
+          Golf Spots — Sold Out
+        </p>
+        <p className="max-w-2xl mx-auto mt-2 text-sm font-medium leading-relaxed px-5" style={{ color: BLACK, opacity: 0.8 }}>
+          Thank you to everyone who registered — we&apos;re excited for a great event. If you
+          didn&apos;t secure a golf spot, there are still meaningful ways to support: become an
+          event sponsor, a meal sponsor, or join us for the post-outing meal and silent auction.
+        </p>
+      </div>
+
       {/* Hero */}
       <section className="relative overflow-hidden" style={{ background: NEAR_BLACK }}>
         <div
@@ -55,7 +70,8 @@ export default function GolfFundraiser3Page() {
             Sponsorship opportunities, $10,000 hole-in-one, donuts, lunch and
             dinner provided.
           </p>
-          <div className="flex flex-wrap items-center gap-3 mt-8">
+
+          <div className="flex flex-wrap items-center gap-3 mt-6">
             <a
               href={FLYER_PDF}
               target="_blank"
@@ -66,11 +82,11 @@ export default function GolfFundraiser3Page() {
               View / Print Flyer
             </a>
             <a
-              href="mailto:weisburnforsheriff@gmail.com?subject=2026%20Golf%20Outing%20Registration"
+              href="mailto:weisburnforsheriff@gmail.com?subject=2026%20Golf%20Outing%20Sponsorship"
               className="inline-flex items-center px-7 py-4 text-xs font-bold tracking-[0.3em] uppercase border-2"
               style={{ borderColor: GOLD, color: GOLD_BRIGHT }}
             >
-              Email To Register
+              Inquire About Sponsorship
             </a>
           </div>
         </div>
