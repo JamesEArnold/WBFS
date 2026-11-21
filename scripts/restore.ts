@@ -15,6 +15,7 @@ import pg from 'pg';
 import { assertEnv } from './lib/env';
 import { LOCAL_MEDIA_DIR, type Manifest, sha256 } from './lib/media-files';
 import { pgRestore } from './lib/pg-docker';
+import { blobToken } from '../lib/blob-token';
 
 const appEnv = assertEnv();
 const from = process.env.RESTORE_FROM ? path.resolve(process.env.RESTORE_FROM) : '';
@@ -23,7 +24,7 @@ if (!from || !fs.existsSync(path.join(from, 'COMPLETE'))) {
   process.exit(1);
 }
 const manifest = JSON.parse(fs.readFileSync(path.join(from, 'manifest.json'), 'utf8')) as Manifest;
-const token = process.env.BLOB_READ_WRITE_TOKEN;
+const token = blobToken();
 const mediaDir = process.env.RESTORE_MEDIA_DIR ? path.resolve(process.env.RESTORE_MEDIA_DIR) : LOCAL_MEDIA_DIR;
 
 // 1. Targets must be empty — restore never overwrites live data.

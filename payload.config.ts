@@ -5,6 +5,7 @@ import path from 'path';
 import { buildConfig } from 'payload';
 import sharp from 'sharp';
 import { fileURLToPath } from 'url';
+import { blobToken as getBlobToken } from './lib/blob-token';
 
 import { Events } from './cms/collections/Events';
 import { Media } from './cms/collections/Media';
@@ -14,7 +15,7 @@ import { SiteSettings } from './cms/globals/SiteSettings';
 
 const dirname = path.dirname(fileURLToPath(import.meta.url));
 
-const blobToken = process.env.BLOB_READ_WRITE_TOKEN;
+const blobToken = getBlobToken();
 
 export default buildConfig({
   serverURL: process.env.NEXT_PUBLIC_SERVER_URL || '',

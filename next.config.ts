@@ -2,6 +2,7 @@ import { withPayload } from '@payloadcms/next/withPayload';
 import type { NextConfig } from 'next';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import { blobToken } from './lib/blob-token';
 
 const dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -10,7 +11,7 @@ const dirname = path.dirname(fileURLToPath(import.meta.url));
  * same way Payload's Blob adapter does (vercel_blob_rw_<storeId>_<random>).
  * Absent locally, where uploads are stored on disk.
  */
-const blobStoreId = process.env.BLOB_READ_WRITE_TOKEN?.match(/^vercel_blob_rw_([a-z\d]+)_[a-z\d]+$/i)?.[1]?.toLowerCase();
+const blobStoreId = blobToken()?.match(/^vercel_blob_rw_([a-z\d]+)_[a-z\d]+$/i)?.[1]?.toLowerCase();
 const blobHost = blobStoreId ? `${blobStoreId}.public.blob.vercel-storage.com` : undefined;
 
 const nextConfig: NextConfig = {

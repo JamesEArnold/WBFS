@@ -15,6 +15,7 @@ import type { Media } from '@/payload-types';
 import { assertEnv, describeDbTarget } from './lib/env';
 import { blobPathname, LOCAL_MEDIA_DIR, type Manifest, mediaFiles, sha256 } from './lib/media-files';
 import { pgDump } from './lib/pg-docker';
+import { blobToken } from '../lib/blob-token';
 
 const KEEP = 8;
 const appEnv = assertEnv();
@@ -33,7 +34,7 @@ const stamp = new Date().toISOString().replace(/[:.]/g, '-');
 const dir = path.join(backupRoot, `${appEnv}-${stamp}`);
 fs.mkdirSync(path.join(dir, 'files'), { recursive: true });
 
-const usingBlob = Boolean(process.env.BLOB_READ_WRITE_TOKEN);
+const usingBlob = Boolean(blobToken());
 console.log(`[backup] ${appEnv} → ${dir}`);
 
 // 1. Database.
