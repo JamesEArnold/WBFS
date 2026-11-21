@@ -27,7 +27,7 @@ const token = process.env.BLOB_READ_WRITE_TOKEN;
 const mediaDir = process.env.RESTORE_MEDIA_DIR ? path.resolve(process.env.RESTORE_MEDIA_DIR) : LOCAL_MEDIA_DIR;
 
 // 1. Targets must be empty — restore never overwrites live data.
-const db = new pg.Client({ connectionString: process.env.DATABASE_URI });
+const db = new pg.Client({ connectionString: process.env.DATABASE_URL });
 await db.connect();
 const tables = await db.query("select count(*)::int as n from information_schema.tables where table_schema = 'public'");
 await db.end();
@@ -48,7 +48,7 @@ if (token) {
 
 // 2. Database.
 console.log(`[restore] ${from} → ${appEnv}`);
-await pgRestore(process.env.DATABASE_URI!, path.join(from, 'db.dump'));
+await pgRestore(process.env.DATABASE_URL!, path.join(from, 'db.dump'));
 console.log('[restore] database restored');
 
 // 3. Files, at their original paths, verified against the manifest.

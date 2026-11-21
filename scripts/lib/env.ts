@@ -1,7 +1,7 @@
 /**
  * Refuses to run data scripts (migrate, seed, bootstrap, backup) against the
  * wrong database. Each environment declares APP_ENV plus EXPECTED_DB_ENDPOINT
- * (local: "127.0.0.1:54329"; Neon: the "ep-…" endpoint id), and DATABASE_URI
+ * (local: "127.0.0.1:54329"; Neon: the "ep-…" endpoint id), and DATABASE_URL
  * must point at that endpoint.
  *
  * Used by scripts/env-guard.ts and every data script.
@@ -16,7 +16,7 @@ export function describeDbTarget(databaseUri: string): string {
     const url = new URL(databaseUri);
     return url.port ? `${url.hostname}:${url.port}` : url.hostname;
   } catch {
-    return '<unparseable DATABASE_URI>';
+    return '<unparseable DATABASE_URL>';
   }
 }
 
@@ -27,13 +27,13 @@ export function checkEnv(env: Record<string, string | undefined>): { ok: true; a
   }
   const expected = env.EXPECTED_DB_ENDPOINT?.trim();
   if (!expected) return { ok: false, error: 'EXPECTED_DB_ENDPOINT is not set.' };
-  const uri = env.DATABASE_URI;
-  if (!uri) return { ok: false, error: 'DATABASE_URI is not set.' };
+  const uri = env.DATABASE_URL;
+  if (!uri) return { ok: false, error: 'DATABASE_URL is not set.' };
   const target = describeDbTarget(uri);
   if (!target.includes(expected)) {
     return {
       ok: false,
-      error: `DATABASE_URI points at "${target}", but APP_ENV=${appEnv} expects "${expected}". Refusing to continue.`,
+      error: `DATABASE_URL points at "${target}", but APP_ENV=${appEnv} expects "${expected}". Refusing to continue.`,
     };
   }
   return { ok: true, appEnv, target };

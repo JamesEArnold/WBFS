@@ -21,7 +21,7 @@ Architecture, decisions and progress: `docs/cms/PLAN.md`.
 
 Variables are set per Vercel environment. Names and meanings are in `.env.example`; values are mirrored in 1Password.
 
-- **Env guard:** every data script checks that `DATABASE_URI` points at `EXPECTED_DB_ENDPOINT` for the current `APP_ENV`, and refuses otherwise. For Neon, `EXPECTED_DB_ENDPOINT` is the branch's `ep-…` id.
+- **Env guard:** every data script checks that `DATABASE_URL` points at `EXPECTED_DB_ENDPOINT` for the current `APP_ENV`, and refuses otherwise. For Neon, `EXPECTED_DB_ENDPOINT` is the branch's `ep-…` id.
 - Local values that aren't secrets live in `.env.development` (committed). Real secrets never go in git.
 
 ## 3. Day-to-day commands (always via npm scripts)
@@ -88,7 +88,7 @@ Files are restored at their original paths, so Payload's URLs work for the new s
 1. In Vercel/Neon, create a new Neon branch and a new Blob store.
 2. With env vars pointing at them (`APP_ENV=production`, `EXPECTED_DB_ENDPOINT` = new `ep-…` id), run `npm run restore` from the latest complete backup.
 3. Deploy a preview pointed at the restored resources and run the smoke tests against it (`PLAYWRIGHT_BASE_URL=<url> npm run test:e2e`).
-4. Switch the Production env vars (`DATABASE_URI`, `EXPECTED_DB_ENDPOINT`, `BLOB_READ_WRITE_TOKEN`, `BLOB_PUBLIC_HOST`) to the restored resources and redeploy production.
+4. Switch the Production env vars (`DATABASE_URL`, `EXPECTED_DB_ENDPOINT`, `BLOB_READ_WRITE_TOKEN`, `BLOB_PUBLIC_HOST`) to the restored resources and redeploy production.
 5. Record what happened in PLAN.md §10.
 
 ## 7. Rollback (code)

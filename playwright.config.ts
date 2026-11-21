@@ -21,11 +21,11 @@ if (!externalBaseURL) nextEnv.loadEnvConfig(process.cwd(), true);
 export const SETUP_LINK_FILE = 'tests/e2e/.state/admin-setup.json';
 export const TEST_ADMIN = { name: 'Test Admin', email: 'admin@e2e.test' };
 
-const testDbUri = (process.env.DATABASE_URI ?? '').replace(/\/[^/?]+(\?|$)/, '/wbfs_e2e$1');
+const testDbUri = (process.env.DATABASE_URL ?? '').replace(/\/[^/?]+(\?|$)/, '/wbfs_e2e$1');
 const serverEnv: Record<string, string> = {
   ...(process.env as Record<string, string>),
   APP_ENV: 'preview',
-  DATABASE_URI: testDbUri,
+  DATABASE_URL: testDbUri,
   NEXT_PUBLIC_SERVER_URL: baseURL,
   SETUP_LINK_FILE,
   ADMIN_NAME: TEST_ADMIN.name,

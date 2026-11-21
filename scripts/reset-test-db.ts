@@ -3,13 +3,13 @@
  * "_test"), creating it first if needed. Used by the Playwright test server
  * before migrating + seeding. Refuses to touch anything else.
  *
- * Run: npm run db:reset:test   (with DATABASE_URI pointing at the test DB)
+ * Run: npm run db:reset:test   (with DATABASE_URL pointing at the test DB)
  */
 import pg from 'pg';
 import { assertEnv } from './lib/env';
 
 const appEnv = assertEnv({ refuseProduction: true });
-const uri = new URL(process.env.DATABASE_URI!);
+const uri = new URL(process.env.DATABASE_URL!);
 const dbName = uri.pathname.replace(/^\//, '');
 
 if (!/_(e2e|test)$/.test(dbName)) {

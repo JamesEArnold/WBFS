@@ -37,7 +37,7 @@ const usingBlob = Boolean(process.env.BLOB_READ_WRITE_TOKEN);
 console.log(`[backup] ${appEnv} → ${dir}`);
 
 // 1. Database.
-await pgDump(process.env.DATABASE_URI!, path.join(dir, 'db.dump'));
+await pgDump(process.env.DATABASE_URL!, path.join(dir, 'db.dump'));
 console.log('[backup] database dumped');
 
 // 2. Files referenced by Media documents.
@@ -46,7 +46,7 @@ const media = await payload.find({ collection: 'media', limit: 10_000, paginatio
 const manifest: Manifest = {
   createdAt: new Date().toISOString(),
   appEnv,
-  database: describeDbTarget(process.env.DATABASE_URI!),
+  database: describeDbTarget(process.env.DATABASE_URL!),
   storage: usingBlob ? 'blob' : 'local',
   files: [],
 };

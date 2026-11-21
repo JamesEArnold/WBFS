@@ -33,7 +33,7 @@ export default buildConfig({
     outputFile: path.resolve(dirname, 'payload-types.ts'),
   },
   db: postgresAdapter({
-    pool: { connectionString: process.env.DATABASE_URI || '' },
+    pool: { connectionString: process.env.DATABASE_URL || '' },
     // Schema changes only through committed migrations, in every environment.
     push: false,
     migrationDir: path.resolve(dirname, 'migrations'),
