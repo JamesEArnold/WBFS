@@ -65,6 +65,19 @@ test('public signup and self-serve password reset are closed', async () => {
   expect(await forgot.text()).toContain('Ask a site admin for a reset link');
 });
 
+test('sitemap and robots come from live content; the CMS is not indexed', async () => {
+  const sitemap = await pageText('/sitemap.xml');
+  expect(sitemap.status).toBe(200);
+  for (const path of ['/about', '/time-in-office', '/events', '/donate', '/events/golf-fundraiser-3']) {
+    expect(sitemap.text).toContain(`https://weisburnforsheriff.com${path}<`);
+  }
+  const robots = await pageText('/robots.txt');
+  expect(robots.text).toContain('Disallow: /admin');
+  expect(robots.text).toContain('Sitemap: https://weisburnforsheriff.com/sitemap.xml');
+  const adminLogin = await anon.get('/admin/login');
+  expect(adminLogin.headers()['x-robots-tag']).toContain('noindex');
+});
+
 test('anonymous visitors cannot read or write anything through the API', async () => {
   for (const path of [
     '/api/events',
@@ -173,6 +186,7 @@ test('a draft event is private, previewable by editors, and goes live when publi
     return status === 200 && text.includes('Bring the family.');
   });
   await eventually(async () => (await pageText('/events')).text.includes('E2E Summer Picnic'));
+  await eventually(async () => (await pageText('/sitemap.xml')).text.includes('/events/e2e-summer-picnic'));
 
   // A newer unpublished draft doesn't leak: visitors keep seeing the published version.
   const draftEdit = await editor.patch(`/api/events/${eventId}?draft=true`, {
@@ -221,6 +235,7 @@ test('hiding or unpublishing removes the event from the public site', async () =
 
   expect((await editor.patch(`/api/events/${eventId}`, { data: { _status: 'draft' } })).status()).toBe(200);
   await eventually(async () => (await pageText('/events/e2e-summer-picnic')).status === 404);
+  await eventually(async () => !(await pageText('/sitemap.xml')).text.includes('/events/e2e-summer-picnic'));
 
   expect((await editor.delete(`/api/events/${eventId}`)).status()).toBe(200);
 });

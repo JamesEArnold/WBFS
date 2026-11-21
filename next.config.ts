@@ -18,6 +18,15 @@ const nextConfig: NextConfig = {
     ],
     remotePatterns: blobHost ? [{ protocol: 'https', hostname: blobHost, pathname: '/**' }] : [],
   },
+  // Keep the CMS and API out of search engines.
+  async headers() {
+    const noindex = [{ key: 'X-Robots-Tag', value: 'noindex, nofollow' }];
+    return [
+      { source: '/admin/:path*', headers: noindex },
+      { source: '/api/:path*', headers: noindex },
+      { source: '/preview/:path*', headers: noindex },
+    ];
+  },
   turbopack: {
     root: path.resolve(dirname),
   },

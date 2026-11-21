@@ -20,7 +20,7 @@ export default buildConfig({
   serverURL: process.env.NEXT_PUBLIC_SERVER_URL || '',
   admin: {
     user: Users.slug,
-    meta: { titleSuffix: ' — Weisburn for Sheriff CMS' },
+    meta: { titleSuffix: ' — Weisburn for Sheriff CMS', robots: 'noindex, nofollow' },
     importMap: { baseDir: path.resolve(dirname) },
   },
   collections: [Events, Media, Users],
