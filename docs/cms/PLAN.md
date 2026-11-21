@@ -399,7 +399,7 @@ These came up over 7 rounds of Codex review on 2026-11-21. The owner directed th
 
 ## 10. Progress log
 - [x] Phase 0 — Gate, version pin, safety (2026-11-21)
-- [ ] Phase 1 — Cleanup + framework upgrade
+- [x] Phase 1 — Cleanup + framework upgrade (2026-11-21; preview-deploy check pending, see notes)
 - [ ] Phase 2 — Payload foundation (owner prototype sign-off)
 - [ ] Phase 3 — Convert pages (In Office / Donate / About / Home)
 - [ ] Phase 4 — Blocks + Pages + sitemap
@@ -424,5 +424,6 @@ Record as you go: Q1 evidence/decision · pinned versions + cache API · traffic
 5. Before ending: update this log (what was done, decisions, blockers, numbers) and commit.
 
 Session notes (newest first):
+- 2026-11-21 — **Phase 1 done** locally: removed stale proxy (`app/api/route.js`, `vercel.json`), dead components/hooks/CSS and 20 unused deps (incl. `@sendgrid/mail`, never imported). Upgraded to Next 16.4.6 / React 19.3.1 / TS 5.9.3 / eslint 9 (flat `eslint.config.mjs`; old `.eslintrc.js` never ran — its plugin wasn't installed — so the old style-only ruleset was not carried over). `next/head` tags were silently ignored in the App Router → moved icons/OG/canonical into the Metadata API (`components/seo/meta.tsx` removed). Fixed React-19 lint errors: volunteer form's yard-sign toggle used a ref during render → `useState`; route handlers had a bogus 2nd param. Added `.nvmrc` (24) + `engines` (`>=24.22.3 <25`); local Node 24.22.3 installed via nvm (**nvm default is still 24.7.0 — run `nvm use` in this repo**). New `tests/e2e/forms.spec.ts` (SendGrid stubbed). Build/typecheck/lint (0 errors, 11 warnings) clean; smoke+forms+text 17/17, visual 12/12 with **no baseline changes**. Branch pushed for a Vercel preview deploy.
 - 2026-11-21 — **Phase 0 done** on `cms-payload` (branched from `golf-flyer-redesign`). `.env` untracked + gitignored; `.env.example` and `.env.op` (op:// refs — vault paths are placeholders, adjust to the real vault) added. Vitest + Playwright set up; baselines captured on the pre-CMS site; smoke/text/visual all green on re-run. Next: Phase 1.
 - 2026-11-21 — Plan created. Options explored with the owner, and Payload chosen under the constraints in §0.2. Plan cross-reviewed by Codex for 7 rounds. The owner then directed a proportionate scope; the edge cases are deferred in §9. Q1–Q5 answered (see §0.8): Hobby is fine per owner, Production branch = `golf-flyer-redesign`, roles = admin + editor, manual nav list, first editor decided at go-live. No code changes yet. Next: Phase 0.

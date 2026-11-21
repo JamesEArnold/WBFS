@@ -17,7 +17,7 @@ import {
 import { Input } from "@/components/ui/input"
 import axios from "axios";
 import { toast } from "react-toastify";
-import { startTransition, useRef, useState } from "react"
+import { startTransition, useState } from "react"
 import PulseLoader from "react-spinners/PulseLoader";
 import { Checkbox } from "./checkbox"
 import { Label } from "./label"
@@ -40,7 +40,7 @@ const zipCodeRegex = new RegExp(
 
 export function VolunteerSignupForm() {
   const [emailSubmit, setEmailSubmit] = useState<'initial' | 'pending' | 'complete'>('initial');
-  const yardsign = useRef(false);
+  const [yardsign, setYardsign] = useState(false);
   // 1. Define your form.
 
   const formSchema = z.object({
@@ -54,9 +54,9 @@ export function VolunteerSignupForm() {
     knockdoors: z.boolean(),
     phonecalls: z.boolean(),
     about: z.string(),
-    address_line_1: yardsign.current ? z.string().regex(streetAddressRegex, 'Please provide a valid street address.') : z.string(),
-    city: yardsign.current ? z.string().regex(cityRegex, 'Please provide a valid city name') : z.string(),
-    postal_code: yardsign.current ? z.string().regex(zipCodeRegex, 'Please provide a valid US zip code') : z.string()
+    address_line_1: yardsign ? z.string().regex(streetAddressRegex, 'Please provide a valid street address.') : z.string(),
+    city: yardsign ? z.string().regex(cityRegex, 'Please provide a valid city name') : z.string(),
+    postal_code: yardsign ? z.string().regex(zipCodeRegex, 'Please provide a valid US zip code') : z.string()
   })
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -198,7 +198,7 @@ export function VolunteerSignupForm() {
               </FormControl>
               <div className="leading-none">
                 <FormLabel>
-                  I'd like to attend campaign events
+                  I&apos;d like to attend campaign events
                 </FormLabel>
               </div>
             </FormItem>
@@ -217,7 +217,7 @@ export function VolunteerSignupForm() {
               </FormControl>
               <div className="space-y-1 leading-none">
                 <FormLabel>
-                  I'd like to walk in a parade
+                  I&apos;d like to walk in a parade
                 </FormLabel>
               </div>
             </FormItem>
@@ -231,18 +231,18 @@ export function VolunteerSignupForm() {
               <FormControl>
                 <Checkbox
                   checked={Boolean(field.value)}
-                  onCheckedChange={(events) => { field.onChange(events); yardsign.current = !yardsign.current; }}
+                  onCheckedChange={(events) => { field.onChange(events); setYardsign(Boolean(events)); }}
                 />
               </FormControl>
               <div className="space-y-1 leading-none">
                 <FormLabel>
-                  I'd like a yard sign
+                  I&apos;d like a yard sign
                 </FormLabel>
               </div>
             </FormItem>
           )}
         />
-        { yardsign.current &&
+        { yardsign &&
           <><FormField
             control={form.control}
             name="address_line_1"
@@ -303,7 +303,7 @@ export function VolunteerSignupForm() {
               </FormControl>
               <div className="space-y-1 leading-none">
                 <FormLabel>
-                  I'd like to make phone calls
+                  I&apos;d like to make phone calls
                 </FormLabel>
               </div>
             </FormItem>
@@ -322,7 +322,7 @@ export function VolunteerSignupForm() {
               </FormControl>
               <div className="space-y-1 leading-none">
                 <FormLabel>
-                  I'd like to knock on doors
+                  I&apos;d like to knock on doors
                 </FormLabel>
               </div>
             </FormItem>

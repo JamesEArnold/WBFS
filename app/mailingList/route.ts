@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
  
-export async function PUT(request: NextRequest, res: NextResponse) {
+export async function PUT(request: NextRequest) {
   const req = await request.json();
   try {
     await fetch("https://api.sendgrid.com/v3/marketing/contacts", {

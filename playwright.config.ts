@@ -40,7 +40,7 @@ export default defineConfig({
     },
   },
   projects: [
-    { name: 'smoke', testMatch: /smoke\.spec\.ts/, use: desktop },
+    { name: 'smoke', testMatch: /(smoke|forms)\.spec\.ts/, use: desktop },
     { name: 'text', testMatch: /text\.spec\.ts/, use: desktop },
     { name: 'visual-desktop', testMatch: /visual\.spec\.ts/, use: desktop },
     { name: 'visual-mobile', testMatch: /visual\.spec\.ts/, use: mobile },
@@ -51,6 +51,6 @@ export default defineConfig({
         command: `npm run build && npm run start -- -p ${PORT}`,
         url: baseURL,
         timeout: 300_000,
-        reuseExistingServer: !process.env.CI,
+        reuseExistingServer: false,
       },
 });

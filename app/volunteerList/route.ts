@@ -1,6 +1,24 @@
 import { NextRequest, NextResponse } from "next/server";
 
-const buildCustomFields = (request: any) => {
+// Request body sent by components/ui/volunteer-signup.tsx (validated client-side by zod).
+type VolunteerRequest = {
+  mail: string;
+  first_name: string;
+  last_name: string;
+  phone_number: string;
+  about: string;
+  address_line_1: string;
+  city: string;
+  postal_code: string;
+  tshirt?: boolean;
+  campaignevents: boolean;
+  parade: boolean;
+  yardsign: boolean;
+  knockdoors: boolean;
+  phonecalls: boolean;
+};
+
+const buildCustomFields = (request: VolunteerRequest) => {
   const result: Record<string, string> = {};
 
   if (request['tshirt']) {
@@ -34,7 +52,7 @@ const buildCustomFields = (request: any) => {
   return result;
   };
 
-  const buildNonCustomFields = (request: any) => {
+  const buildNonCustomFields = (request: VolunteerRequest) => {
     const result: Record<string, string> = {};
 
     if (request['first_name'] !== '') {
@@ -65,7 +83,7 @@ const buildCustomFields = (request: any) => {
 
   };
  
-export async function PUT(request: NextRequest, res: NextResponse) {
+export async function PUT(request: NextRequest) {
   const req = await request.json();
   const customFields = buildCustomFields(req);
   const nonCustomFields = buildNonCustomFields(req);

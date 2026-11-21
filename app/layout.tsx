@@ -1,12 +1,9 @@
 import './globals.css'
 import type { Metadata } from 'next'
 import { Inter, Playfair_Display } from 'next/font/google'
-import { Meta } from '@/components/seo/meta';
 import { globalMeta } from '@/components/seo/globalMeta';
 import { SiteHeader, SiteFooter } from '@/components/site-chrome';
-import Head from 'next/head';
 import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 import { Analytics } from '@vercel/analytics/react';
 import { NotificationBanner } from '@/components/ui/notification-banner';
 import { SpeedInsights } from "@vercel/speed-insights/next"
@@ -15,15 +12,27 @@ const inter = Inter({ subsets: ['latin'] })
 const playfair = Playfair_Display({ subsets: ['latin'], variable: '--font-playfair' })
 
 export const metadata: Metadata = {
+  metadataBase: new URL(globalMeta.siteUrl),
   title: 'Weisburn for Sheriff',
   description: 'The official site for the Stark County Republican Sheriff Representative Eric Weisburn.',
-  verification: { google: '9J5nLPwwmIYa-i-ryNRJ10p0pB0wFeXk9IFXk5Ff1Mw' }
+  verification: { google: '9J5nLPwwmIYa-i-ryNRJ10p0pB0wFeXk9IFXk5Ff1Mw' },
+  alternates: { canonical: '/' },
+  icons: {
+    icon: [
+      { url: '/favicon.ico', sizes: 'any' },
+      { url: '/favicon-32x32.png', type: 'image/png', sizes: '32x32' },
+      { url: '/favicon-16x16.png', type: 'image/png', sizes: '16x16' },
+    ],
+    apple: { url: '/apple-touch-icon.png', sizes: '180x180' },
+  },
+  openGraph: {
+    type: 'website',
+    locale: 'en_US',
+    siteName: globalMeta.siteName,
+    url: globalMeta.siteUrl,
+    description: globalMeta.description,
+  },
 }
-
-const structuredSeo = JSON.stringify({
-  "@context": globalMeta.siteUrl,
-  "description": "The Website of Stark County Sheriff Representative Eric Weisburn."
-});
 
 export default function RootLayout({
   children,
@@ -32,18 +41,8 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <Head>
-        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
-        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
-        <link rel="icon" href="/favicon.ico" sizes="any" />
-      </Head>
       <body className={`${inter.className} ${playfair.variable}`}>
       <SpeedInsights />
-      <Meta 
-        ogType='website'
-        structuredData={structuredSeo}
-      />
       <header className="sticky top-0 z-50 shadow-md">
         <SiteHeader />
         {/* <NotificationBanner /> */}
