@@ -76,7 +76,7 @@ BACKUP_DIR=/path/outside/repo npm run backup     # with the target env's variabl
 - Writes `db.dump`, every uploaded file and a checksummed `manifest.json`.
 - Marks the folder `COMPLETE` only after verifying the files.
 - Keeps the newest 8 backups per environment.
-- Needs Docker running (pg_dump runs in `postgres:17-alpine`).
+- Needs Docker running (pg_dump runs in `postgres:18-alpine`).
 
 **Restore** only ever goes into an **empty** database and an **empty** file store:
 ```

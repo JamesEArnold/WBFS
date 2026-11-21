@@ -1,11 +1,12 @@
 /**
- * Runs Postgres 17 client tools (pg_dump / pg_restore) via Docker, so no local
+ * Runs Postgres 18 client tools (pg_dump / pg_restore) via Docker, so no local
  * Postgres install is needed. Requires Docker Desktop to be running.
  */
 import { spawn } from 'node:child_process';
 import fs from 'node:fs';
 
-const IMAGE = 'postgres:17-alpine';
+// Client tools must be >= the server version (Neon runs Postgres 18; local Docker DB is 17).
+const IMAGE = 'postgres:18-alpine';
 
 /** Inside a container, the host's localhost is host.docker.internal. */
 export function dockerReachableUri(databaseUri: string): string {
