@@ -43,6 +43,9 @@ export default buildConfig({
     vercelBlobStorage({
       // Local development stores uploads on disk; deployed envs use Vercel Blob.
       enabled: Boolean(blobToken),
+      // Add the storage columns even when disabled (local dev), so the database
+      // schema — and therefore the migrations — are identical in every environment.
+      alwaysInsertFields: true,
       token: blobToken,
       // Unique object names per upload, so a replaced file never serves stale cached bytes.
       addRandomSuffix: true,
