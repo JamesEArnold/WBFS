@@ -241,7 +241,7 @@ Each phase: commits on `cms-payload`, a Vercel preview deploy, exit criteria met
 ### Phase 1 — Cleanup + framework upgrade (no visible change)
 1. Delete `app/api/route.js` and the `vercel.json` routes, plus dead components and deps (grep-verify each).
 2. Upgrade Next/React to the pinned versions using the official codemods (via npm script). Replace `next/head` in layout with Metadata API icons; fix async `params`.
-3. Upgrade live deps for React 19. Set Node 22.x on Vercel and in `engines`.
+3. Upgrade live deps for React 19. Set Node 24.x on Vercel and `engines` (`>=24.22.3`), add `.nvmrc`; upgrade local Node via nvm.
 4. Exit: build/lint/typecheck clean; Phase 0 visual + text + smoke tests pass **without updating baselines**; preview serves every route; signup forms work.
 
 ### Phase 2 — Payload foundation (prototype gate)
@@ -398,7 +398,7 @@ These came up over 7 rounds of Codex review on 2026-11-21. The owner directed th
 ---
 
 ## 10. Progress log
-- [ ] Phase 0 — Gate, version pin, safety
+- [x] Phase 0 — Gate, version pin, safety (2026-11-21)
 - [ ] Phase 1 — Cleanup + framework upgrade
 - [ ] Phase 2 — Payload foundation (owner prototype sign-off)
 - [ ] Phase 3 — Convert pages (In Office / Donate / About / Home)
@@ -409,6 +409,13 @@ These came up over 7 rounds of Codex review on 2026-11-21. The owner directed th
 
 Record as you go: Q1 evidence/decision · pinned versions + cache API · traffic baseline · upload strategy · usage projection · pre-CMS rollback deployment ID · 1-week actual usage.
 
+**Recorded values**
+- **Q1:** owner decision 2026-11-21 — Hobby plan is fine; proceed.
+- **Version pin (2026-11-21):** `payload` + all `@payloadcms/*` = **3.94.1**; `next` = **16.4.6** (Payload peer range `>=16.4.5 <17`); `react`/`react-dom` = **19.3.1**; Node = **24.x, ≥24.22.3** (Payload engines `^22.23.5 || ^24.22.3`). Local Node is 24.7.0 via nvm → must upgrade before Phase 2 (done in Phase 1).
+- **Cache API:** `unstable_cache` (no `cacheComponents`), tag `cms`; invalidation `revalidateTag('cms', { expire: 0 })` from Payload hooks (Next 16 requires the second arg; `{ expire: 0 }` = immediate). Confirm in Phase 2 rendering proofs.
+- **Traffic baseline:** _pending — owner to read Vercel Analytics (monthly visitors/page views, bandwidth, image optimizations); needed by Phase 5, not blocking._
+- **Test tooling notes:** Vitest 5.1.1 needs `@rolldown/binding-darwin-arm64` (pinned as an optionalDependency because npm skipped it); `@types/node` bumped 20.4.7 → 22.20.5 (types only). Playwright 1.65.1; baselines in `tests/e2e/__snapshots__/` (text, visual-mobile 390×844, visual-desktop 1440×900; `/events` month line and Donorbox iframe masked).
+
 ### How to resume in a new session
 1. Read §0 and this section.
 2. `git checkout cms-payload && git pull`.
@@ -417,4 +424,5 @@ Record as you go: Q1 evidence/decision · pinned versions + cache API · traffic
 5. Before ending: update this log (what was done, decisions, blockers, numbers) and commit.
 
 Session notes (newest first):
+- 2026-11-21 — **Phase 0 done** on `cms-payload` (branched from `golf-flyer-redesign`). `.env` untracked + gitignored; `.env.example` and `.env.op` (op:// refs — vault paths are placeholders, adjust to the real vault) added. Vitest + Playwright set up; baselines captured on the pre-CMS site; smoke/text/visual all green on re-run. Next: Phase 1.
 - 2026-11-21 — Plan created. Options explored with the owner, and Payload chosen under the constraints in §0.2. Plan cross-reviewed by Codex for 7 rounds. The owner then directed a proportionate scope; the edge cases are deferred in §9. Q1–Q5 answered (see §0.8): Hobby is fine per owner, Production branch = `golf-flyer-redesign`, roles = admin + editor, manual nav list, first editor decided at go-live. No code changes yet. Next: Phase 0.
