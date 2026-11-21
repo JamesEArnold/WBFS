@@ -11,7 +11,12 @@ import type { Payload } from 'payload';
 import { fileURLToPath } from 'url';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..', '..');
-const context = { disableInvalidate: true };
+/**
+ * A fresh context object per operation: Payload's cloud-storage plugin stashes the
+ * uploaded file on `req.context` (only if absent), so sharing one object across
+ * creates makes later uploads reuse the first file's data and never reach Blob.
+ */
+const ctx = () => ({ disableInvalidate: true });
 
 type Seeded = { created: string[]; skipped: string[] };
 
@@ -31,7 +36,7 @@ async function seedMedia(payload: Payload, log: Seeded, importKey: string, file:
     data: { alt, importKey },
     filePath: path.join(root, 'public', file),
     overrideAccess: true,
-    context,
+    context: ctx(),
   });
   log.created.push(importKey);
   return doc.id;
@@ -46,7 +51,7 @@ async function seedSiteSettings(payload: Payload, log: Seeded) {
   await payload.updateGlobal({
     slug: 'siteSettings',
     overrideAccess: true,
-    context,
+    context: ctx(),
     data: {
       banner: { enabled: false },
       tagline: 'SWORN TO PROTECT — STARK COUNTY, OHIO',
@@ -83,7 +88,7 @@ async function seedEventsPage(payload: Payload, log: Seeded) {
   await payload.updateGlobal({
     slug: 'eventsPage',
     overrideAccess: true,
-    context,
+    context: ctx(),
     data: {
       _status: 'published',
       overline: 'Support The Campaign',
@@ -145,7 +150,7 @@ async function seedGolfEvent(payload: Payload, log: Seeded) {
   await payload.create({
     collection: 'events',
     overrideAccess: true,
-    context,
+    context: ctx(),
     data: {
       _status: 'published',
       importKey,
