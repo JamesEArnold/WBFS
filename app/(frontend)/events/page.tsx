@@ -1,43 +1,21 @@
 import Image from "next/image";
 import Link from "next/link";
+import { notFound } from "next/navigation";
 import { LAWMAN } from "@/components/designs/lawman/theme";
+import { CmsButton } from "@/components/ui/cms-button";
+import { loadEventsPage, loadListedEvents } from "@/lib/cms/content";
 
 const { BLACK, NEAR_BLACK, COAL, COAL_LIFT, GOLD, GOLD_BRIGHT, CREAM, BODY } = LAWMAN;
 
 const month = ["January","February","March","April","May","June","July","August","September","October","November","December"];
 
-type UpcomingEvent = {
-  key: string;
-  overline: string;
-  title: string;
-  subtitle: string;
-  facts: string[];
-  href: string;
-  cta: string;
-};
+export default async function EventsPage() {
+  const [page, activeEvents] = await Promise.all([loadEventsPage(), loadListedEvents()]);
+  if (!page) notFound();
 
-const upcomingEvents: UpcomingEvent[] = [
-  {
-    key: "golf-2026",
-    overline: "Save The Date",
-    title: "Annual Golf Fundraiser",
-    subtitle: "Friday, September 18, 2026 · Sable Creek Golf Course",
-    facts: [
-      "9:00 a.m. shotgun start · $500 per team",
-      "Donuts, lunch & dinner provided",
-      "$10,000 hole-in-one · sponsorships available",
-    ],
-    href: "/events/golf-fundraiser-3",
-    cta: "View The Flyer",
-  },
-];
-
-export default function EventsPage() {
   const now = new Date();
   const currentMonth = month[now.getMonth()];
   const currentYear = now.getFullYear();
-
-  const activeEvents = upcomingEvents;
 
   return (
     <main style={{ background: BLACK, color: CREAM }}>
@@ -54,7 +32,7 @@ export default function EventsPage() {
           <div className="flex items-center gap-3">
             <span className="block w-10 h-px" style={{ background: GOLD_BRIGHT }} />
             <p className="text-[11px] font-bold tracking-[0.4em] uppercase" style={{ color: GOLD_BRIGHT }}>
-              Support The Campaign
+              {page.overline}
             </p>
           </div>
           <h1
@@ -66,20 +44,24 @@ export default function EventsPage() {
               letterSpacing: '0.01em',
             }}
           >
-            Upcoming
-            <span
-              className="block"
-              style={{
-                color: GOLD_BRIGHT,
-                WebkitTextStroke: `1px ${GOLD}`,
-              }}
-            >
-              Events
-            </span>
+            {page.heading}
+            {page.headingAccent && (
+              <span
+                className="block"
+                style={{
+                  color: GOLD_BRIGHT,
+                  WebkitTextStroke: `1px ${GOLD}`,
+                }}
+              >
+                {page.headingAccent}
+              </span>
+            )}
           </h1>
-          <p className="max-w-xl mt-6 text-base leading-relaxed md:text-lg" style={{ color: BODY }}>
-            Parades, fundraisers, and community gatherings across Stark County. Join the team — every appearance moves the campaign forward.
-          </p>
+          {page.intro && (
+            <p className="max-w-xl mt-6 text-base leading-relaxed md:text-lg" style={{ color: BODY }}>
+              {page.intro}
+            </p>
+          )}
         </div>
       </section>
 
@@ -98,7 +80,7 @@ export default function EventsPage() {
                   fontSize: 'clamp(2rem, 5vw, 3rem)',
                 }}
               >
-                On The Calendar
+                {page.listHeading}
               </h2>
             </div>
           </div>
@@ -114,8 +96,8 @@ export default function EventsPage() {
             <div className="space-y-10">
               {activeEvents.map((e) => (
                 <Link
-                  key={e.key}
-                  href={e.href}
+                  key={e.id}
+                  href={`/events/${e.slug}`}
                   className="block transition-transform group hover:-translate-y-0.5"
                   aria-label={`${e.title} — ${e.subtitle}`}
                 >
@@ -154,10 +136,10 @@ export default function EventsPage() {
                         {e.subtitle}
                       </p>
                       <ul className="mt-5 space-y-1.5 text-sm md:text-base" style={{ color: CREAM }}>
-                        {e.facts.map((f) => (
-                          <li key={f} className="flex items-start gap-3">
+                        {(e.facts ?? []).map((f) => (
+                          <li key={f.id ?? f.text} className="flex items-start gap-3">
                             <span style={{ color: GOLD_BRIGHT }}>★</span>
-                            {f}
+                            {f.text}
                           </li>
                         ))}
                       </ul>
@@ -165,7 +147,7 @@ export default function EventsPage() {
                         className="inline-flex items-center self-start gap-3 mt-7 text-xs font-bold tracking-[0.3em] uppercase group-hover:gap-4 transition-all"
                         style={{ color: GOLD_BRIGHT, borderBottom: `2px solid ${GOLD}`, paddingBottom: 4 }}
                       >
-                        {e.cta} &rarr;
+                        {e.listingCtaLabel} &rarr;
                       </span>
                     </div>
                   </article>
@@ -185,7 +167,7 @@ export default function EventsPage() {
                 className="text-[11px] font-bold tracking-[0.4em] uppercase"
                 style={{ color: GOLD_BRIGHT }}
               >
-                ★ Stand By ★
+                ★ {page.emptyState.overline} ★
               </p>
               <h3
                 className="mt-3 font-serif font-black uppercase"
@@ -195,27 +177,17 @@ export default function EventsPage() {
                   lineHeight: 1.05,
                 }}
               >
-                More events coming soon
+                {page.emptyState.heading}
               </h3>
-              <p className="max-w-xl mx-auto mt-4 text-base" style={{ color: BODY }}>
-                We&rsquo;re scheduling appearances across Stark County. Check
-                back soon, or sign up for updates from the campaign trail.
-              </p>
+              {page.emptyState.body && (
+                <p className="max-w-xl mx-auto mt-4 text-base" style={{ color: BODY }}>
+                  {page.emptyState.body}
+                </p>
+              )}
               <div className="flex flex-col items-center gap-3 mt-7 sm:flex-row sm:justify-center">
-                <Link
-                  href="/donate"
-                  className="px-7 py-3 text-xs font-bold tracking-[0.3em] uppercase"
-                  style={{ background: GOLD, color: BLACK }}
-                >
-                  Contribute
-                </Link>
-                <Link
-                  href="/about"
-                  className="px-7 py-3 text-xs font-bold tracking-[0.3em] uppercase border-2"
-                  style={{ borderColor: GOLD, color: GOLD_BRIGHT }}
-                >
-                  Service Record
-                </Link>
+                {(page.emptyState.buttons ?? []).map((button) => (
+                  <CmsButton key={button.id ?? button.label} button={button} size="compact" />
+                ))}
               </div>
             </div>
           )}

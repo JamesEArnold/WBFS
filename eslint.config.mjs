@@ -10,11 +10,30 @@ const config = [
   ...nextCoreWebVitals,
   ...nextTypescript,
   {
-    files: ['*.config.js'],
+    // Only lib/cms/payload.ts (and CLI scripts) may obtain a Payload instance.
+    files: ['**/*.{ts,tsx}'],
+    ignores: ['lib/cms/payload.ts', 'scripts/**', 'tests/**'],
+    rules: {
+      'no-restricted-imports': [
+        'error',
+        {
+          paths: [
+            {
+              name: 'payload',
+              importNames: ['getPayload', 'BasePayload', 'default'],
+              message: 'Use getPayloadClient() from lib/cms/payload.ts.',
+            },
+          ],
+        },
+      ],
+    },
+  },
+  {
+    files: ['*.config.cjs'],
     rules: { '@typescript-eslint/no-require-imports': 'off' },
   },
   {
-    ignores: ['.next/**', 'node_modules/**', '_archive/**', 'test-results/**', 'playwright-report/**', 'next-env.d.ts'],
+    ignores: ['.next/**', 'node_modules/**', '_archive/**', 'test-results/**', 'playwright-report/**', 'next-env.d.ts', 'payload-types.ts', 'migrations/**', 'app/(payload)/**', 'media/**'],
   },
 ];
 

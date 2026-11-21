@@ -1,0 +1,16 @@
+# Local-only Postgres for Payload development and tests (npm run db:local:up).
+# Credentials here are for a throwaway local container, not secrets.
+services:
+  postgres:
+    image: postgres:17-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: wbfs
+      POSTGRES_PASSWORD: wbfs
+      POSTGRES_DB: wbfs
+    ports:
+      - '54329:5432'
+    volumes:
+      - wbfs-pg:/var/lib/postgresql/data
+volumes:
+  wbfs-pg:

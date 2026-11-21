@@ -2,10 +2,12 @@ import './globals.css'
 import type { Metadata } from 'next'
 import { Inter, Playfair_Display } from 'next/font/google'
 import { globalMeta } from '@/components/seo/globalMeta';
-import { SiteHeader, SiteFooter } from '@/components/site-chrome';
+import { draftMode } from 'next/headers';
+import { SiteAnnouncement, SiteFooter, SiteHeader } from '@/components/site-chrome';
+import { PreviewBar } from '@/components/ui/preview-bar';
+import { getSiteSettings } from '@/lib/cms/public';
 import { ToastContainer } from 'react-toastify';
 import { Analytics } from '@vercel/analytics/react';
-import { NotificationBanner } from '@/components/ui/notification-banner';
 import { SpeedInsights } from "@vercel/speed-insights/next"
 
 const inter = Inter({ subsets: ['latin'] })
@@ -34,18 +36,20 @@ export const metadata: Metadata = {
   },
 }
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
+  const settings = await getSiteSettings();
+  const preview = (await draftMode()).isEnabled;
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`${inter.className} ${playfair.variable}`}>
       <SpeedInsights />
       <header className="sticky top-0 z-50 shadow-md">
-        <SiteHeader />
-        {/* <NotificationBanner /> */}
+        <SiteHeader settings={settings} />
+        <SiteAnnouncement settings={settings} />
         <ToastContainer
           position="top-center"
           autoClose={5000}
@@ -61,7 +65,8 @@ export default function RootLayout({
       </header>
         {children}
         <Analytics />
-      <SiteFooter />
+      <SiteFooter settings={settings} />
+      {preview && <PreviewBar />}
       </body>
     </html>
   )

@@ -7,7 +7,29 @@ import { LAWMAN } from './theme';
 
 const { BLACK, NEAR_BLACK, GOLD, GOLD_BRIGHT, CREAM, BODY } = LAWMAN;
 
-export const LawmanFooter = () => (
+export type LawmanFooterProps = {
+  blurb: string;
+  hqHeading: string;
+  addressLines: string[];
+  email?: string | null;
+  actionHeading: string;
+  cta: { label: string; href: string };
+  facebookUrl?: string | null;
+  instagramUrl?: string | null;
+  disclaimer: string;
+};
+
+export const LawmanFooter = ({
+  blurb,
+  hqHeading,
+  addressLines,
+  email,
+  actionHeading,
+  cta,
+  facebookUrl,
+  instagramUrl,
+  disclaimer,
+}: LawmanFooterProps) => (
   <footer style={{ background: BLACK }}>
     <div
       aria-hidden
@@ -18,45 +40,52 @@ export const LawmanFooter = () => (
       <div className="md:col-span-5">
         <Logo height={84} variant="stacked" primary={CREAM} accent={GOLD_BRIGHT} />
         <p className="max-w-sm mt-5 text-sm leading-relaxed" style={{ color: BODY }}>
-          A proven Sheriff. A career in service. Sworn to protect Stark County.
+          {blurb}
         </p>
       </div>
       <div className="md:col-span-3 text-sm" style={{ color: CREAM }}>
         <p className="text-[11px] font-bold tracking-[0.35em] uppercase" style={{ color: GOLD_BRIGHT }}>
-          Headquarters
+          {hqHeading}
         </p>
-        <p className="mt-2">4849 Tree Line Circle NW</p>
-        <p>North Canton, OH 44720</p>
-        <p className="mt-3">weisburnforsheriff@gmail.com</p>
+        {addressLines.map((line, i) => (
+          <p key={line} className={i === 0 ? 'mt-2' : undefined}>
+            {line}
+          </p>
+        ))}
+        {email && <p className="mt-3">{email}</p>}
       </div>
       <div className="md:col-span-4">
         <p className="text-[11px] font-bold tracking-[0.35em] uppercase" style={{ color: GOLD_BRIGHT }}>
-          Take Action
+          {actionHeading}
         </p>
         <Link
-          href="/donate"
+          href={cta.href}
           className="block px-5 py-3 mt-3 text-xs font-bold tracking-[0.3em] text-center uppercase"
           style={{ background: GOLD, color: BLACK }}
         >
-          Contribute
+          {cta.label}
         </Link>
         <div className="flex gap-3 mt-4">
+          {facebookUrl && (
           <a
-            href="https://www.facebook.com/profile.php?id=61552050077933"
+            href={facebookUrl}
             aria-label="Facebook"
             className="flex items-center justify-center w-10 h-10 rounded-full transition-colors hover:opacity-90"
             style={{ background: GOLD_BRIGHT }}
           >
             <Image src="/icon-facebook.svg" width={22} height={22} alt="Facebook" />
           </a>
+          )}
+          {instagramUrl && (
           <a
-            href="https://instagram.com/weisburnforsheriff"
+            href={instagramUrl}
             aria-label="Instagram"
             className="flex items-center justify-center w-10 h-10 rounded-full transition-colors hover:opacity-90"
             style={{ background: GOLD_BRIGHT }}
           >
             <Image src="/icon-instagram.svg" width={20} height={20} alt="Instagram" />
           </a>
+          )}
         </div>
       </div>
     </div>
@@ -64,7 +93,7 @@ export const LawmanFooter = () => (
       className="px-5 py-3 text-[10px] font-bold text-center tracking-[0.4em] uppercase"
       style={{ background: NEAR_BLACK, color: GOLD_BRIGHT }}
     >
-      ★ Paid for by Weisburn for Sheriff ★
+      ★ {disclaimer} ★
     </div>
   </footer>
 );

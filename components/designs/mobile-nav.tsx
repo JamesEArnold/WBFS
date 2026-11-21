@@ -17,6 +17,7 @@ interface ThemedMobileNavProps {
   ctaFg: string;
   buttonBg?: string;
   buttonFg?: string;
+  cta?: NavItem;
 }
 
 export const ThemedMobileNav = ({
@@ -28,6 +29,7 @@ export const ThemedMobileNav = ({
   ctaFg,
   buttonBg = 'transparent',
   buttonFg,
+  cta = { href: '/donate', label: 'Contribute' },
 }: ThemedMobileNavProps) => {
   const [open, setOpen] = useState(false);
 
@@ -91,12 +93,12 @@ export const ThemedMobileNav = ({
           </nav>
           <div className="px-7 mt-6">
             <Link
-              href="/donate"
+              href={cta.href}
               onClick={() => setOpen(false)}
               className="block w-full px-6 py-4 text-center text-sm font-bold tracking-[0.3em] uppercase rounded-md"
               style={{ background: ctaBg, color: ctaFg }}
             >
-              Contribute
+              {cta.label}
             </Link>
           </div>
         </div>

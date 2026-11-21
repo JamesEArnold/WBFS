@@ -400,7 +400,7 @@ These came up over 7 rounds of Codex review on 2026-11-21. The owner directed th
 ## 10. Progress log
 - [x] Phase 0 — Gate, version pin, safety (2026-11-21)
 - [x] Phase 1 — Cleanup + framework upgrade (2026-11-21; preview-deploy check pending, see notes)
-- [ ] Phase 2 — Payload foundation (owner prototype sign-off)
+- [ ] Phase 2 — Payload foundation (owner prototype sign-off) — **local build done; blocked on owner: Vercel/Neon/Blob provisioning → preview deploy → upload spike → prototype gate**
 - [ ] Phase 3 — Convert pages (In Office / Donate / About / Home)
 - [ ] Phase 4 — Blocks + Pages + sitemap
 - [ ] Phase 5 — Hardening
@@ -416,6 +416,15 @@ Record as you go: Q1 evidence/decision · pinned versions + cache API · traffic
 - **Traffic baseline:** _pending — owner to read Vercel Analytics (monthly visitors/page views, bandwidth, image optimizations); needed by Phase 5, not blocking._
 - **Test tooling notes:** Vitest 5.1.1 needs `@rolldown/binding-darwin-arm64` (pinned as an optionalDependency because npm skipped it); `@types/node` bumped 20.4.7 → 22.20.5 (types only). Playwright 1.65.1; baselines in `tests/e2e/__snapshots__/` (text, visual-mobile 390×844, visual-desktop 1440×900; `/events` month line and Donorbox iframe masked).
 
+### Phase 2 provisioning checklist (owner — in the Vercel dashboard)
+1. **Storage → Create → Neon Postgres** (free) connected to the `wbfs` project. Create two branches: `main` (Production) and `preview` (Preview). Note each branch's `ep-…` endpoint id.
+2. **Storage → Create → Blob** twice: `wbfs-prod` (Production env) and `wbfs-preview` (Preview env).
+3. **Settings → Environment Variables**, per environment (Production / Preview):
+   `APP_ENV` (production / preview), `DATABASE_URI` (that env's Neon branch, pooled URL), `EXPECTED_DB_ENDPOINT` (its `ep-…` id), `PAYLOAD_SECRET` (new random 48+ chars each), `NEXT_PUBLIC_SERVER_URL` (prod: `https://weisburnforsheriff.com`; preview: `https://wbfs-git-cms-payload-hackhackhacks-projects.vercel.app`), `BLOB_READ_WRITE_TOKEN` (that env's store), `BLOB_PUBLIC_HOST` (store host, e.g. `xyz.public.blob.vercel-storage.com`). Keep the SendGrid vars.
+4. Mirror the values in 1Password (vault used by `.env.op`).
+5. Tell the agent the setup is done → it redeploys preview, runs the upload spike + rendering proofs on preview, bootstraps a preview admin, and hands you the prototype-gate walkthrough.
+- Note: until step 3 is done, **preview builds of `cms-payload` fail** (no database). Production (`golf-flyer-redesign`) is unaffected.
+
 ### How to resume in a new session
 1. Read §0 and this section.
 2. `git checkout cms-payload && git pull`.
@@ -424,6 +433,9 @@ Record as you go: Q1 evidence/decision · pinned versions + cache API · traffic
 5. Before ending: update this log (what was done, decisions, blockers, numbers) and commit.
 
 Session notes (newest first):
+- 2026-11-21 — **Phase 2 (local) done**, not yet deployed. Payload 3.94.1 embedded: site moved to `app/(frontend)/`, admin at `app/(payload)/`; `payload.config.ts` (Postgres adapter, `push: false`, GraphQL off, Vercel Blob adapter enabled only when `BLOB_READ_WRITE_TOKEN` is set — local uploads go to `./media`). Collections `users` (roles, invite + setup-link endpoints, admin UI buttons, first-user + forgot-password closed via `beforeOperation` + `proxy.ts`), `media` (alt required, in-use delete blocked), `events` (drafts, slug lock, status upcoming/soldOut/past/hidden); globals `siteSettings` (no drafts) and `eventsPage`. Header/footer/banner, `/events`, `/events/[slug]` (replaces the golf page file) read from CMS via `lib/cms/{public,preview,content}.ts`; whole-site invalidation `revalidateTag('cms', { expire: 0 })`. Insert-only `npm run seed` (verbatim content + golf assets), `users:bootstrap-admin`, env guard, `vercel-build` (preview auto-migrates; production fails on pending migrations). Local Postgres via `docker compose` (`npm run db:local:up`); `.env.development` holds local-only values. Tests: unit 17/17; e2e 42/42 (smoke, forms, text + visual parity **unchanged**, and 12 CMS behaviour tests on a reset `wbfs_e2e` DB with production-like guards). Build output: all public routes still static (○/●).
+  - **Decisions/deviations:** (1) Media records are publicly readable (files are public anyway; needed for local `/api/media/file`); all other collections/globals have no anonymous API reads. (2) Sold-out banner shows when status = "Sold out" (no separate checkbox). (3) `package.json` is now `"type": "module"` (Payload CLI needs it) → `tailwind/postcss/next-sitemap` configs renamed `.cjs`. (4) Next 16 uses `proxy.ts` (not `middleware.ts`). (5) Payload honours cookie logins only from its own Origin (CSRF) — API clients/tests must send `Origin`. (6) Local media URLs are made relative in `lib/cms/content.ts` (Payload prefixes `serverURL`); Blob URLs served directly (`disablePayloadAccessControl`). (7) `sharp` pinned to 0.35.5 to match Next (avoids two libvips copies).
+  - **Owner actions needed to continue Phase 2:** see "Phase 2 provisioning checklist" below.
 - 2026-11-21 — **Phase 1 done** locally: removed stale proxy (`app/api/route.js`, `vercel.json`), dead components/hooks/CSS and 20 unused deps (incl. `@sendgrid/mail`, never imported). Upgraded to Next 16.4.6 / React 19.3.1 / TS 5.9.3 / eslint 9 (flat `eslint.config.mjs`; old `.eslintrc.js` never ran — its plugin wasn't installed — so the old style-only ruleset was not carried over). `next/head` tags were silently ignored in the App Router → moved icons/OG/canonical into the Metadata API (`components/seo/meta.tsx` removed). Fixed React-19 lint errors: volunteer form's yard-sign toggle used a ref during render → `useState`; route handlers had a bogus 2nd param. Added `.nvmrc` (24) + `engines` (`>=24.22.3 <25`); local Node 24.22.3 installed via nvm (**nvm default is still 24.7.0 — run `nvm use` in this repo**). New `tests/e2e/forms.spec.ts` (SendGrid stubbed). Build/typecheck/lint (0 errors, 11 warnings) clean; smoke+forms+text 17/17, visual 12/12 with **no baseline changes**. Branch pushed for a Vercel preview deploy.
 - 2026-11-21 — **Phase 0 done** on `cms-payload` (branched from `golf-flyer-redesign`). `.env` untracked + gitignored; `.env.example` and `.env.op` (op:// refs — vault paths are placeholders, adjust to the real vault) added. Vitest + Playwright set up; baselines captured on the pre-CMS site; smoke/text/visual all green on re-run. Next: Phase 1.
 - 2026-11-21 — Plan created. Options explored with the owner, and Payload chosen under the constraints in §0.2. Plan cross-reviewed by Codex for 7 rounds. The owner then directed a proportionate scope; the edge cases are deferred in §9. Q1–Q5 answered (see §0.8): Hobby is fine per owner, Production branch = `golf-flyer-redesign`, roles = admin + editor, manual nav list, first editor decided at go-live. No code changes yet. Next: Phase 0.

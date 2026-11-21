@@ -46,3 +46,8 @@ public/sitemap*
 # playwright
 /test-results/
 /playwright-report/
+!.env.development
+
+# payload local uploads (deployed envs use Vercel Blob)
+/media/
+/tests/e2e/.state/
