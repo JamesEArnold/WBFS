@@ -5,8 +5,13 @@ import { fileURLToPath } from 'url';
 
 const dirname = path.dirname(fileURLToPath(import.meta.url));
 
-/** Vercel Blob public host for this environment (set per Vercel environment; absent locally). */
-const blobHost = process.env.BLOB_PUBLIC_HOST;
+/**
+ * Vercel Blob public host for this environment, derived from the store token the
+ * same way Payload's Blob adapter does (vercel_blob_rw_<storeId>_<random>).
+ * Absent locally, where uploads are stored on disk.
+ */
+const blobStoreId = process.env.BLOB_READ_WRITE_TOKEN?.match(/^vercel_blob_rw_([a-z\d]+)_[a-z\d]+$/i)?.[1]?.toLowerCase();
+const blobHost = blobStoreId ? `${blobStoreId}.public.blob.vercel-storage.com` : undefined;
 
 const nextConfig: NextConfig = {
   images: {

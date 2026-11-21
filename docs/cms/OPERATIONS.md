@@ -88,7 +88,7 @@ Files are restored at their original paths, so Payload's URLs work for the new s
 1. In Vercel/Neon, create a new Neon branch and a new Blob store.
 2. With env vars pointing at them (`APP_ENV=production`, `EXPECTED_DB_ENDPOINT` = new `ep-…` id), run `npm run restore` from the latest complete backup.
 3. Deploy a preview pointed at the restored resources and run the smoke tests against it (`PLAYWRIGHT_BASE_URL=<url> npm run test:e2e`).
-4. Switch the Production env vars (`DATABASE_URL`, `EXPECTED_DB_ENDPOINT`, `BLOB_READ_WRITE_TOKEN`, `BLOB_PUBLIC_HOST`) to the restored resources and redeploy production.
+4. Switch the Production env vars (`DATABASE_URL`, `EXPECTED_DB_ENDPOINT`, `BLOB_READ_WRITE_TOKEN`) to the restored resources and redeploy production.
 5. Record what happened in PLAN.md §10.
 
 ## 7. Rollback (code)

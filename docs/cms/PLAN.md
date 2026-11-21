@@ -420,7 +420,7 @@ Record as you go: Q1 evidence/decision · pinned versions + cache API · traffic
 1. **Storage → Create → Neon Postgres** (free) connected to the `wbfs` project. Create two branches: `main` (Production) and `preview` (Preview). Note each branch's `ep-…` endpoint id.
 2. **Storage → Create → Blob** twice: `wbfs-prod` (Production env) and `wbfs-preview` (Preview env).
 3. **Settings → Environment Variables**, per environment (Production / Preview):
-   `APP_ENV` (production / preview), `DATABASE_URL` (that env's Neon branch, pooled URL), `EXPECTED_DB_ENDPOINT` (its `ep-…` id), `PAYLOAD_SECRET` (new random 48+ chars each), `NEXT_PUBLIC_SERVER_URL` (prod: `https://weisburnforsheriff.com`; preview: `https://wbfs-git-cms-payload-hackhackhacks-projects.vercel.app`), `BLOB_READ_WRITE_TOKEN` (that env's store), `BLOB_PUBLIC_HOST` (store host, e.g. `xyz.public.blob.vercel-storage.com`). Keep the SendGrid vars.
+   `APP_ENV` (production / preview), `DATABASE_URL` (that env's Neon branch, pooled URL), `EXPECTED_DB_ENDPOINT` (its `ep-…` id), `PAYLOAD_SECRET` (new random 48+ chars each), `NEXT_PUBLIC_SERVER_URL` (prod: `https://weisburnforsheriff.com`; preview: `https://wbfs-git-cms-payload-hackhackhacks-projects.vercel.app`), `BLOB_READ_WRITE_TOKEN` (that env's store). Keep the SendGrid vars.
 4. Mirror the values in 1Password (vault used by `.env.op`).
 5. Tell the agent the setup is done → it redeploys preview, runs the upload spike + rendering proofs on preview, bootstraps a preview admin, and hands you the prototype-gate walkthrough.
 - Note: until step 3 is done, **preview builds of `cms-payload` fail** (no database). Production (`golf-flyer-redesign`) is unaffected.
