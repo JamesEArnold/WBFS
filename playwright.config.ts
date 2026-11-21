@@ -65,6 +65,8 @@ export default defineConfig({
     { name: 'text', testMatch: /text\.spec\.ts/, use: desktop },
     { name: 'visual-desktop', testMatch: /visual\.spec\.ts/, use: desktop },
     { name: 'visual-mobile', testMatch: /visual\.spec\.ts/, use: mobile },
+    // One-off check against a deployed preview (see tests/e2e/manual/upload-check.spec.ts).
+    { name: 'upload-check', testMatch: /manual\/upload-check\.spec\.ts/, use: desktop },
     // CMS behaviour tests change content, so they run after the parity checks.
     {
       name: 'cms',

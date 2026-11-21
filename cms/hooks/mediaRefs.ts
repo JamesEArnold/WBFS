@@ -26,7 +26,9 @@ export async function findMediaUsage(req: PayloadRequest, mediaId: number | stri
         depth: 0,
         limit: 50,
         pagination: false,
-        overrideAccess: false,
+        // Integrity check: must see every document regardless of who is deleting
+        // (also works for scripts, which have no logged-in user).
+        overrideAccess: true,
         req,
       });
       for (const doc of result.docs) {

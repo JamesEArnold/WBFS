@@ -34,7 +34,8 @@
     "vercel-build": "payload run scripts/vercel-prebuild.ts && npm run build",
     "backup": "payload run scripts/backup.ts",
     "restore": "payload run scripts/restore.ts",
-    "db:preview:reset": "payload run scripts/reset-preview.ts"
+    "db:preview:reset": "payload run scripts/reset-preview.ts",
+    "test:upload-check": "playwright test --project=upload-check"
   },
   "dependencies": {
     "@hookform/resolvers": "3.10.0",
