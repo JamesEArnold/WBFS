@@ -115,3 +115,22 @@ Files are restored at their original paths, so Payload's URLs work for the new s
 - **`PAYLOAD_SECRET`:** generate a new value in 1Password, update it in Vercel (per environment), redeploy. Everyone is logged out.
 - **Neon password / Blob token:** rotate in the Vercel Storage tab, update the env vars and 1Password, redeploy.
 - **SendGrid key:** rotate in SendGrid, then update Vercel + 1Password.
+
+## 10. Go-live runbook (one time)
+Production is untouched until step 5. The pre-CMS production deployment doesn't use the database, so it's always a safe rollback target.
+Production credentials are injected per command (1Password `op run`, or a one-time secret file). They are never stored in the repo.
+
+1. **Rehearse on preview from empty** (preview credentials):
+   `npm run db:preview:reset` → `npm run cms:verify` → `PLAYWRIGHT_BASE_URL=<preview url> npm run test:e2e` and `npm run test:visual`.
+2. **Record the rollback target:** Vercel → Deployments → the current Production deployment. Copy its URL/ID into PLAN.md §10.
+3. **Prepare production data** (production credentials, `APP_ENV=production`, `EXPECTED_DB_ENDPOINT=ep-super-math-bcor7o8w`):
+   `npm run payload:migrate` → `npm run seed` → `ADMIN_NAME=… ADMIN_EMAIL=… npm run users:bootstrap-admin` (once per admin) → `npm run cms:verify` (must say *ready*).
+4. **Stage the deploy:** Vercel → Settings → Environments → Production → turn **off** "Auto-assign Custom Production Domains". The next production build gets its own URL but not the domain.
+5. **Merge** `cms-payload` into the production branch (`golf-flyer-redesign`) and push. The production build checks that no migrations are pending.
+6. **Test the staged build** at its deployment URL: `PLAYWRIGHT_BASE_URL=<that url> npm run test:e2e` and `npm run test:visual`. Public pages only: the CMS login works on the real domain only (allowed origins).
+7. **Promote:** Vercel → Deployments → that deployment → ⋯ → **Promote**. Smoke-test the domain (`PLAYWRIGHT_BASE_URL=https://weisburnforsheriff.com npm run test:e2e`), then turn auto-assign back **on**.
+8. **First production backup:** `BACKUP_DIR=<folder outside the repo> npm run backup` (production credentials).
+9. **Owner UAT** on https://weisburnforsheriff.com/admin, then invite the first editor (Users → Invite a user).
+10. After a week: record actual usage (Vercel → Usage, Storage) in PLAN.md §10. Remove the old `ORIGIN`, `USERNAME` and `PASSWORD` Vercel variables (the stale proxy is gone).
+
+**Rollback:** Vercel → Deployments → the recorded pre-CMS deployment → **Instant Rollback**. Content in the database is unaffected and returns when you roll forward.

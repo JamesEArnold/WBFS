@@ -29,6 +29,7 @@
     "payload:migrate": "payload run scripts/env-guard.ts && payload migrate",
     "seed": "payload run scripts/seed.ts",
     "users:bootstrap-admin": "payload run scripts/bootstrap-admin.ts",
+    "cms:verify": "payload run scripts/cms-verify.ts",
     "db:reset:test": "payload run scripts/reset-test-db.ts && npm run payload:migrate && npm run seed",
     "test:cms": "playwright test --project=cms",
     "vercel-build": "payload run scripts/vercel-prebuild.ts && npm run build",
