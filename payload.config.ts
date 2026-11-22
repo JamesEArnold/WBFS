@@ -8,7 +8,7 @@ import { fileURLToPath } from 'url';
 import { blobToken as getBlobToken } from './lib/blob-token';
 
 import { Events } from './cms/collections/Events';
-import { Media } from './cms/collections/Media';
+import { MAX_UPLOAD_MB, Media } from './cms/collections/Media';
 import { Pages } from './cms/collections/Pages';
 import { Users } from './cms/collections/Users';
 import { About } from './cms/globals/About';
@@ -22,8 +22,16 @@ const dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const blobToken = getBlobToken();
 
+const serverURL = (process.env.NEXT_PUBLIC_SERVER_URL || '').replace(/\/$/, '');
+/** The only origins allowed to use a CMS login cookie or call the API from a browser. */
+const siteOrigins = [...new Set([serverURL, 'https://weisburnforsheriff.com', 'https://www.weisburnforsheriff.com'].filter(Boolean))];
+
+
 export default buildConfig({
-  serverURL: process.env.NEXT_PUBLIC_SERVER_URL || '',
+  serverURL,
+  cors: siteOrigins,
+  csrf: siteOrigins,
+  upload: { limits: { fileSize: MAX_UPLOAD_MB * 1024 * 1024 } },
   admin: {
     user: Users.slug,
     meta: { titleSuffix: ' — Weisburn for Sheriff CMS', robots: 'noindex, nofollow' },

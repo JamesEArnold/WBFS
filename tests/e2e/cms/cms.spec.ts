@@ -493,7 +493,23 @@ test('media in use cannot be deleted; uploads require alt text', async () => {
   });
   expect(ok.status()).toBe(201);
   const id = (await ok.json()).doc.id as number;
+
   expect((await editor.delete(`/api/media/${id}`)).status()).toBe(200);
+
+  // Over the 25 MB limit is refused (the server cuts the upload off, so use a separate session).
+  const uploader = await login(EDITOR.email, EDITOR.password);
+  const huge = await uploader
+    .post('/api/media', {
+      multipart: {
+        file: { name: 'huge.pdf', mimeType: 'application/pdf', buffer: Buffer.alloc(26 * 1024 * 1024, 0x20) },
+        _payload: JSON.stringify({ alt: 'E2E too big' }),
+      },
+    })
+    .catch(() => null);
+  expect(huge?.ok() ?? false).toBe(false);
+  await uploader.dispose();
+  const saved = (await (await editor.get('/api/media?where[alt][equals]=E2E too big')).json()) as { totalDocs: number };
+  expect(saved.totalDocs).toBe(0);
 });
 
 test('accounts lock after 5 failed logins', async () => {

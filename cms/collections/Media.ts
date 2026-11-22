@@ -1,7 +1,29 @@
-import type { CollectionConfig } from 'payload';
+import type { CollectionBeforeValidateHook, CollectionConfig } from 'payload';
+import { ValidationError } from 'payload';
 import { anyone, isStaff } from '../access/roles';
 import { invalidateAfterChange, invalidateAfterDelete } from '../hooks/invalidate';
 import { preventDeletingUsedMedia } from '../hooks/mediaRefs';
+
+export const MAX_UPLOAD_MB = 25;
+
+/**
+ * Browser uploads go straight to Vercel Blob (no server body limit), so the
+ * size cap is checked when the Media record is saved.
+ */
+export const limitFileSize: CollectionBeforeValidateHook = ({ data }) => {
+  const size = Number(data?.filesize ?? 0);
+  if (size > MAX_UPLOAD_MB * 1024 * 1024) {
+    throw new ValidationError({
+      errors: [
+        {
+          path: 'file',
+          message: `This file is ${(size / 1024 / 1024).toFixed(1)} MB. The limit is ${MAX_UPLOAD_MB} MB: resize the photo or compress the PDF and try again.`,
+        },
+      ],
+    });
+  }
+  return data;
+};
 
 /**
  * Uploaded images and PDFs. Files are public (served from Vercel Blob in
@@ -21,6 +43,7 @@ export const Media: CollectionConfig = {
     delete: isStaff,
   },
   hooks: {
+    beforeValidate: [limitFileSize],
     beforeDelete: [preventDeletingUsedMedia],
     afterChange: [invalidateAfterChange],
     afterDelete: [invalidateAfterDelete],
