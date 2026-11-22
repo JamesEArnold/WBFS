@@ -1,4 +1,4 @@
-import type { CollectionBeforeDeleteHook, PayloadRequest, Where } from 'payload';
+import type { CollectionBeforeDeleteHook, GlobalSlug, PayloadRequest, Where } from 'payload';
 import { ValidationError } from 'payload';
 
 /**
@@ -12,6 +12,22 @@ export const MEDIA_REFERENCES: { collection: 'events'; label: string; paths: str
     paths: ['flyerPdf', 'flyerImages.image', 'buttons.file'],
   },
 ];
+
+/** Page globals that can reference Media, with the field paths (arrays are walked). */
+export const GLOBAL_MEDIA_REFERENCES: { global: GlobalSlug; label: string; paths: string[] }[] = [
+  { global: 'inOffice', label: 'In Office page', paths: ['ctaButtons.file'] },
+];
+
+/** Values at a dotted path, walking into arrays/groups: "flyerImages.image" → every image id. */
+export function valuesAtPath(value: unknown, path: string[]): unknown[] {
+  if (path.length === 0) return [value];
+  if (Array.isArray(value)) return value.flatMap((item) => valuesAtPath(item, path));
+  if (!value || typeof value !== 'object') return [];
+  return valuesAtPath((value as Record<string, unknown>)[path[0]], path.slice(1));
+}
+
+const sameId = (value: unknown, id: number | string) =>
+  value != null && String(typeof value === 'object' ? (value as { id?: unknown }).id : value) === String(id);
 
 export async function findMediaUsage(req: PayloadRequest, mediaId: number | string): Promise<string[]> {
   const usedIn = new Set<string>();
@@ -33,6 +49,14 @@ export async function findMediaUsage(req: PayloadRequest, mediaId: number | stri
       });
       for (const doc of result.docs) {
         usedIn.add(`${ref.label}: ${(doc as { title?: string }).title ?? doc.id}`);
+      }
+    }
+  }
+  for (const ref of GLOBAL_MEDIA_REFERENCES) {
+    for (const draft of [false, true]) {
+      const doc = await req.payload.findGlobal({ slug: ref.global, draft, depth: 0, overrideAccess: true, req });
+      if (ref.paths.some((path) => valuesAtPath(doc, path.split('.')).some((v) => sameId(v, mediaId)))) {
+        usedIn.add(ref.label);
       }
     }
   }

@@ -91,10 +91,12 @@ export interface Config {
   fallbackLocale: null;
   globals: {
     siteSettings: SiteSetting;
+    inOffice: InOffice;
     eventsPage: EventsPage;
   };
   globalsSelect: {
     siteSettings: SiteSettingsSelect<false> | SiteSettingsSelect<true>;
+    inOffice: InOfficeSelect<false> | InOfficeSelect<true>;
     eventsPage: EventsPageSelect<false> | EventsPageSelect<true>;
   };
   locale: null;
@@ -610,6 +612,80 @@ export interface SiteSetting {
   createdAt?: string | null;
 }
 /**
+ * The "My Time In Office" page (/time-in-office).
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "inOffice".
+ */
+export interface InOffice {
+  id: number;
+  /**
+   * Small gold line above the headline.
+   */
+  overline: string;
+  heading: string;
+  /**
+   * Optional second line shown in gold.
+   */
+  headingAccent?: string | null;
+  intro?: string | null;
+  /**
+   * Small gold line. Stars are added automatically.
+   */
+  timelineOverline?: string | null;
+  timelineHeading: string;
+  /**
+   * Small heading above each year’s second list.
+   */
+  outreachHeading: string;
+  /**
+   * Newest year first.
+   */
+  years?:
+    | {
+        year: string;
+        events?:
+          | {
+              text: string;
+              id?: string | null;
+            }[]
+          | null;
+        outreach?:
+          | {
+              text: string;
+              id?: string | null;
+            }[]
+          | null;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Small gold line. Stars are added automatically.
+   */
+  ctaOverline?: string | null;
+  ctaHeading: string;
+  ctaBody?: string | null;
+  ctaButtons?:
+    | {
+        label: string;
+        linkType?: ('url' | 'file') | null;
+        /**
+         * e.g. /donate, https://…, or mailto:someone@example.com
+         */
+        url?: string | null;
+        file?: (number | null) | Media;
+        style?: ('primary' | 'secondary') | null;
+        newTab?: boolean | null;
+        id?: string | null;
+      }[]
+    | null;
+  _status?: ('draft' | 'published') | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * The words around the list of events on /events. The events themselves are under Events.
+ *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "eventsPage".
  */
@@ -703,6 +779,55 @@ export interface SiteSettingsSelect<T extends boolean = true> {
   facebookUrl?: T;
   instagramUrl?: T;
   disclaimer?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "inOffice_select".
+ */
+export interface InOfficeSelect<T extends boolean = true> {
+  overline?: T;
+  heading?: T;
+  headingAccent?: T;
+  intro?: T;
+  timelineOverline?: T;
+  timelineHeading?: T;
+  outreachHeading?: T;
+  years?:
+    | T
+    | {
+        year?: T;
+        events?:
+          | T
+          | {
+              text?: T;
+              id?: T;
+            };
+        outreach?:
+          | T
+          | {
+              text?: T;
+              id?: T;
+            };
+        id?: T;
+      };
+  ctaOverline?: T;
+  ctaHeading?: T;
+  ctaBody?: T;
+  ctaButtons?:
+    | T
+    | {
+        label?: T;
+        linkType?: T;
+        url?: T;
+        file?: T;
+        style?: T;
+        newTab?: T;
+        id?: T;
+      };
+  _status?: T;
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;

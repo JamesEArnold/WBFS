@@ -1,16 +1,22 @@
-import Link from 'next/link';
+import { notFound } from 'next/navigation';
 import { LAWMAN } from '@/components/designs/lawman/theme';
+import { CmsButton } from '@/components/ui/cms-button';
+import { loadPageGlobal } from '@/lib/cms/content';
 
 const { BLACK, NEAR_BLACK, COAL_LIFT, GOLD, GOLD_BRIGHT, CREAM, BODY } = LAWMAN;
+
+type Line = { id?: string | null; text: string };
 
 const YearEntry = ({
   year,
   events,
   outreach,
+  outreachHeading,
 }: {
   year: string;
-  events: string[];
-  outreach: string[];
+  events: Line[];
+  outreach: Line[];
+  outreachHeading: string;
 }) => (
   <section
     className="relative pl-6 pt-10 md:pl-10"
@@ -33,10 +39,10 @@ const YearEntry = ({
       style={{ borderTop: `2px solid ${GOLD}` }}
     />
     <ul className="space-y-2 text-base leading-[1.65] md:text-lg" style={{ color: CREAM }}>
-      {events.map((item) => (
-        <li key={item} className="flex items-start gap-3">
+      {events.map((item, i) => (
+        <li key={item.id ?? i} className="flex items-start gap-3">
           <span className="mt-2 inline-block w-1.5 h-1.5 flex-shrink-0" style={{ background: GOLD_BRIGHT }} aria-hidden />
-          <span>{item}</span>
+          <span>{item.text}</span>
         </li>
       ))}
     </ul>
@@ -44,86 +50,23 @@ const YearEntry = ({
       className="mt-8 text-[11px] font-bold tracking-[0.35em] uppercase"
       style={{ color: GOLD_BRIGHT }}
     >
-      Supporting Non-Profit Organizations and Community Outreach
+      {outreachHeading}
     </h4>
     <ul className="mt-4 space-y-2 text-base leading-[1.65] md:text-lg" style={{ color: CREAM }}>
-      {outreach.map((item) => (
-        <li key={item} className="flex items-start gap-3">
+      {outreach.map((item, i) => (
+        <li key={item.id ?? i} className="flex items-start gap-3">
           <span className="mt-2 inline-block w-1.5 h-1.5 flex-shrink-0" style={{ background: GOLD }} aria-hidden />
-          <span>{item}</span>
+          <span>{item.text}</span>
         </li>
       ))}
     </ul>
   </section>
 );
 
-const ENTRIES = [
-  {
-    year: '2026',
-    events: [
-      'Presenter at Ohio Traffic Safety Summit',
-      'Hosted Annual Peace Officers Memorial Day Ceremony',
-      'Citizens Academy – class graduation',
-      'Stark County Motorcycle Ohio Training Site – Collaborative Endeavor with KSU Stark and Motorcycle Ohio',
-      'OOCIC Human Trafficking Task Force',
-      'Leadership Training at National Sheriffs’ Institute in Quantico, Virginia',
-      'Stark County Citizen’s Connect App',
-      'National Sheriffs’ Association – Washington, D.C.',
-      'Ohio Counterterrorism & Homeland Security Conference',
-    ],
-    outreach: [
-      '“Recovery & Resilience” – Annual Symposium',
-      'Red Cross Blood Drive',
-      'Eyes Forward Distracted Driving',
-      '“Wear Blue” National Child Abuse Prevention Month',
-      'Student Sobriety',
-      'COMPASS Sexual Assault and Prevention',
-      'Seatbelt Safety Awareness',
-    ],
-  },
-  {
-    year: '2025',
-    events: [
-      'Rededication McDonald Garden at Stark County Sheriff’s Office',
-      'Buckeye State Sheriffs’ Association – Annual Meeting',
-      'Honor Court Graduation',
-      'U.S. Marshal Awards – Cleveland',
-      'Tour of State House',
-      'Stark County Fair',
-      'New Jail Groundbreaking Ceremony',
-      'Crypto Task Force established',
-      'Dog Warden No Kill Award',
-      'FBI National Conference',
-      'Attorney General Press Conference – Cold Case Solved – Anthony Gulley',
-      'Sheriff’s Mounted Division',
-      'National Child Safety Campaign',
-      'Ohio Attorney General’s Office',
-    ],
-    outreach: [
-      'Hannah House',
-      'Greek Hellenic Organization',
-      'Patriot Project',
-      'Sheriff’s Truck or Treat',
-      'Heartland Behavioral Health',
-      '48th Annual Victim/Witness Dinner',
-      'Keep Seniors Driving',
-      'Habitat for Humanity – Sheriff’s Office House Build',
-      'Ohio Heros',
-      'Legacy of Honor Gala',
-      'Greater Stark County Urban League',
-      'National Night Out',
-      'HOF Events',
-      'Italian American Festival Breakfast',
-      'Honor Home Food Drive',
-      'St. Haralabos Greek Festival',
-      'Domestic Violence Project',
-      'Veterans Service Commission',
-      'Crime Prevention Breakfast',
-    ],
-  },
-];
+export default async function TimeInOffice() {
+  const page = await loadPageGlobal('inOffice');
+  if (!page) notFound();
 
-export default function TimeInOffice() {
   return (
     <main style={{ background: BLACK, color: CREAM }}>
       {/* Hero */}
@@ -145,7 +88,7 @@ export default function TimeInOffice() {
               className="text-[11px] font-bold tracking-[0.4em] uppercase"
               style={{ color: GOLD_BRIGHT }}
             >
-              On Duty &middot; In The Community
+              {page.overline}
             </p>
           </div>
           <h1
@@ -157,21 +100,24 @@ export default function TimeInOffice() {
               letterSpacing: '0.01em',
             }}
           >
-            My Time
-            <span
-              className="block"
-              style={{
-                color: GOLD_BRIGHT,
-                WebkitTextStroke: `1px ${GOLD}`,
-              }}
-            >
-              In Office
-            </span>
+            {page.heading}
+            {page.headingAccent && (
+              <span
+                className="block"
+                style={{
+                  color: GOLD_BRIGHT,
+                  WebkitTextStroke: `1px ${GOLD}`,
+                }}
+              >
+                {page.headingAccent}
+              </span>
+            )}
           </h1>
-          <p className="max-w-xl mt-6 text-base leading-relaxed md:text-lg" style={{ color: BODY }}>
-            A record of events, training, and community engagement since Sheriff
-            Weisburn was sworn in on January 6, 2025.
-          </p>
+          {page.intro && (
+            <p className="max-w-xl mt-6 text-base leading-relaxed md:text-lg" style={{ color: BODY }}>
+              {page.intro}
+            </p>
+          )}
         </div>
       </section>
 
@@ -183,7 +129,7 @@ export default function TimeInOffice() {
               className="text-[11px] font-bold tracking-[0.4em] uppercase"
               style={{ color: GOLD_BRIGHT }}
             >
-              &#9733; By The Year &#9733;
+              &#9733; {page.timelineOverline} &#9733;
             </p>
             <h2
               className="mt-3 font-serif font-black uppercase"
@@ -193,16 +139,17 @@ export default function TimeInOffice() {
                 lineHeight: 1,
               }}
             >
-              In Office.
+              {page.timelineHeading}
             </h2>
           </div>
           <div className="relative">
-            {ENTRIES.map((entry) => (
+            {(page.years ?? []).map((entry, i) => (
               <YearEntry
-                key={entry.year}
+                key={entry.id ?? i}
                 year={entry.year}
-                events={entry.events}
-                outreach={entry.outreach}
+                events={entry.events ?? []}
+                outreach={entry.outreach ?? []}
+                outreachHeading={page.outreachHeading}
               />
             ))}
           </div>
@@ -216,7 +163,7 @@ export default function TimeInOffice() {
             className="text-[11px] font-bold tracking-[0.4em] uppercase"
             style={{ color: GOLD_BRIGHT }}
           >
-            &#9733; The Fight Continues &#9733;
+            &#9733; {page.ctaOverline} &#9733;
           </p>
           <h2
             className="mt-3 font-serif font-black"
@@ -226,27 +173,17 @@ export default function TimeInOffice() {
               lineHeight: 1,
             }}
           >
-            Stand with the Sheriff.
+            {page.ctaHeading}
           </h2>
-          <p className="mt-5 text-base leading-relaxed" style={{ color: BODY }}>
-            The fight to keep Stark County safe is far from over. Your support
-            keeps this work moving forward.
-          </p>
+          {page.ctaBody && (
+            <p className="mt-5 text-base leading-relaxed" style={{ color: BODY }}>
+              {page.ctaBody}
+            </p>
+          )}
           <div className="flex flex-col items-center justify-center gap-3 mt-8 sm:flex-row">
-            <Link
-              href="/donate"
-              className="px-7 py-4 text-xs font-bold tracking-[0.3em] uppercase"
-              style={{ background: GOLD, color: BLACK }}
-            >
-              Contribute
-            </Link>
-            <Link
-              href="/about"
-              className="px-7 py-4 text-xs font-bold tracking-[0.3em] uppercase border-2"
-              style={{ borderColor: GOLD, color: GOLD_BRIGHT }}
-            >
-              Service Record
-            </Link>
+            {(page.ctaButtons ?? []).map((button, i) => (
+              <CmsButton key={button.id ?? i} button={button} size="cta" />
+            ))}
           </div>
         </div>
       </section>

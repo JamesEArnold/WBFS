@@ -1,6 +1,6 @@
 import 'server-only';
 import { unstable_cache } from 'next/cache';
-import type { Event, EventsPage, SiteSetting } from '@/payload-types';
+import type { Config, Event, SiteSetting } from '@/payload-types';
 import { CMS_TAG } from '@/cms/hooks/invalidate';
 import { getPayloadClient } from './payload';
 
@@ -30,11 +30,20 @@ export const getSiteSettings = cached(async (): Promise<SiteSetting | null> => {
   }
 }, 'siteSettings');
 
-export const getEventsPage = cached(async (): Promise<EventsPage | null> => {
+/** Globals that are pages of the site (drafts + publish): every global except Site Settings. */
+export type PageGlobalSlug = Exclude<keyof Config['globals'], 'siteSettings'>;
+export type PageGlobal<S extends PageGlobalSlug> = Config['globals'][S];
+
+const publishedPageGlobal = cached(async (slug: PageGlobalSlug) => {
   const payload = await getPayloadClient();
-  const doc = await payload.findGlobal({ slug: 'eventsPage', depth: 1, draft: false, overrideAccess: true });
+  const doc = await payload.findGlobal({ slug, depth: 1, draft: false, overrideAccess: true });
+  // Never published (or unpublished) → the page 404s.
   return doc?._status === 'published' ? doc : null;
-}, 'eventsPage');
+}, 'pageGlobal');
+
+/** The published version of a page global, or null if it isn't published. */
+export const getPageGlobal = <S extends PageGlobalSlug>(slug: S) =>
+  publishedPageGlobal(slug) as Promise<PageGlobal<S> | null>;
 
 /** Published events shown on /events (upcoming + sold out), soonest first. */
 export const listListedEvents = cached(async (): Promise<Event[]> => {

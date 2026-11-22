@@ -3,14 +3,14 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { LAWMAN } from "@/components/designs/lawman/theme";
 import { CmsButton } from "@/components/ui/cms-button";
-import { loadEventsPage, loadListedEvents } from "@/lib/cms/content";
+import { loadListedEvents, loadPageGlobal } from "@/lib/cms/content";
 
 const { BLACK, NEAR_BLACK, COAL, COAL_LIFT, GOLD, GOLD_BRIGHT, CREAM, BODY } = LAWMAN;
 
 const month = ["January","February","March","April","May","June","July","August","September","October","November","December"];
 
 export default async function EventsPage() {
-  const [page, activeEvents] = await Promise.all([loadEventsPage(), loadListedEvents()]);
+  const [page, activeEvents] = await Promise.all([loadPageGlobal('eventsPage'), loadListedEvents()]);
   if (!page) notFound();
 
   const now = new Date();

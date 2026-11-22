@@ -1,7 +1,8 @@
 import 'server-only';
 import { headers } from 'next/headers';
-import type { Event, EventsPage } from '@/payload-types';
+import type { Event } from '@/payload-types';
 import { getPayloadClient } from './payload';
+import type { PageGlobal, PageGlobalSlug } from './public';
 
 /**
  * Uncached draft reads for logged-in editors in Next draft mode. Access control
@@ -14,10 +15,10 @@ async function currentUser() {
   return { payload, user };
 }
 
-export async function previewEventsPage(): Promise<EventsPage | null> {
+export async function previewPageGlobal<S extends PageGlobalSlug>(slug: S): Promise<PageGlobal<S> | null> {
   const { payload, user } = await currentUser();
   if (!user) return null;
-  return payload.findGlobal({ slug: 'eventsPage', depth: 1, draft: true, overrideAccess: false, user });
+  return (await payload.findGlobal({ slug, depth: 1, draft: true, overrideAccess: false, user })) as PageGlobal<S>;
 }
 
 export async function previewEventBySlug(slug: string): Promise<Event | null> {

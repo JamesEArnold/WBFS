@@ -8,6 +8,7 @@
  */
 import path from 'path';
 import type { Payload } from 'payload';
+import type { PageGlobalSlug } from '../../lib/cms/public';
 import { fileURLToPath } from 'url';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..', '..');
@@ -111,6 +112,116 @@ async function seedEventsPage(payload: Payload, log: Seeded) {
   log.created.push('global:eventsPage');
 }
 
+/** Insert-only: a page global that has never been saved gets its original content, published. */
+async function seedPageGlobal(
+  payload: Payload,
+  log: Seeded,
+  slug: PageGlobalSlug,
+  data: Record<string, unknown>,
+) {
+  const current = await payload.findGlobal({ slug, draft: true, overrideAccess: true });
+  if (current?.updatedAt) {
+    log.skipped.push(`global:${slug}`);
+    return;
+  }
+  await payload.updateGlobal({
+    slug,
+    overrideAccess: true,
+    context: ctx(),
+    data: { _status: 'published', ...data } as never,
+  });
+  log.created.push(`global:${slug}`);
+}
+
+const button = (label: string, url: string, style: 'primary' | 'secondary' = 'primary') => ({
+  label,
+  linkType: 'url' as const,
+  url,
+  style,
+  newTab: false,
+});
+const lines = (items: string[]) => items.map((text) => ({ text }));
+
+const seedInOffice = (payload: Payload, log: Seeded) =>
+  seedPageGlobal(payload, log, 'inOffice', {
+    overline: 'On Duty · In The Community',
+    heading: 'My Time',
+    headingAccent: 'In Office',
+    intro: 'A record of events, training, and community engagement since Sheriff Weisburn was sworn in on January 6, 2025.',
+    timelineOverline: 'By The Year',
+    timelineHeading: 'In Office.',
+    outreachHeading: 'Supporting Non-Profit Organizations and Community Outreach',
+    years: [
+      {
+        year: '2026',
+        events: lines([
+          'Presenter at Ohio Traffic Safety Summit',
+          'Hosted Annual Peace Officers Memorial Day Ceremony',
+          'Citizens Academy – class graduation',
+          'Stark County Motorcycle Ohio Training Site – Collaborative Endeavor with KSU Stark and Motorcycle Ohio',
+          'OOCIC Human Trafficking Task Force',
+          'Leadership Training at National Sheriffs’ Institute in Quantico, Virginia',
+          'Stark County Citizen’s Connect App',
+          'National Sheriffs’ Association – Washington, D.C.',
+          'Ohio Counterterrorism & Homeland Security Conference',
+        ]),
+        outreach: lines([
+          '“Recovery & Resilience” – Annual Symposium',
+          'Red Cross Blood Drive',
+          'Eyes Forward Distracted Driving',
+          '“Wear Blue” National Child Abuse Prevention Month',
+          'Student Sobriety',
+          'COMPASS Sexual Assault and Prevention',
+          'Seatbelt Safety Awareness',
+        ]),
+      },
+      {
+        year: '2025',
+        events: lines([
+          'Rededication McDonald Garden at Stark County Sheriff’s Office',
+          'Buckeye State Sheriffs’ Association – Annual Meeting',
+          'Honor Court Graduation',
+          'U.S. Marshal Awards – Cleveland',
+          'Tour of State House',
+          'Stark County Fair',
+          'New Jail Groundbreaking Ceremony',
+          'Crypto Task Force established',
+          'Dog Warden No Kill Award',
+          'FBI National Conference',
+          'Attorney General Press Conference – Cold Case Solved – Anthony Gulley',
+          'Sheriff’s Mounted Division',
+          'National Child Safety Campaign',
+          'Ohio Attorney General’s Office',
+        ]),
+        outreach: lines([
+          'Hannah House',
+          'Greek Hellenic Organization',
+          'Patriot Project',
+          'Sheriff’s Truck or Treat',
+          'Heartland Behavioral Health',
+          '48th Annual Victim/Witness Dinner',
+          'Keep Seniors Driving',
+          'Habitat for Humanity – Sheriff’s Office House Build',
+          'Ohio Heros',
+          'Legacy of Honor Gala',
+          'Greater Stark County Urban League',
+          'National Night Out',
+          'HOF Events',
+          'Italian American Festival Breakfast',
+          'Honor Home Food Drive',
+          'St. Haralabos Greek Festival',
+          'Domestic Violence Project',
+          'Veterans Service Commission',
+          'Crime Prevention Breakfast',
+        ]),
+      },
+    ],
+    ctaOverline: 'The Fight Continues',
+    ctaHeading: 'Stand with the Sheriff.',
+    ctaBody: 'The fight to keep Stark County safe is far from over. Your support keeps this work moving forward.',
+    ctaButtons: [button('Contribute', '/donate'), button('Service Record', '/about', 'secondary')],
+  });
+
 async function seedGolfEvent(payload: Payload, log: Seeded) {
   const importKey = 'event:golf-2026';
   const existing = await payload.find({
@@ -200,6 +311,7 @@ export async function seed(payload: Payload): Promise<Seeded> {
   const log: Seeded = { created: [], skipped: [] };
   await seedSiteSettings(payload, log);
   await seedEventsPage(payload, log);
+  await seedInOffice(payload, log);
   await seedGolfEvent(payload, log);
   return log;
 }

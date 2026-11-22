@@ -8,8 +8,9 @@ const { BLACK, COAL_LIFT, GOLD, GOLD_BRIGHT } = LAWMAN;
  * Renders a CMS button with the site's two existing button styles.
  * - `hero`: event-page hero buttons (inline-flex, taller, shadowed primary)
  * - `compact`: empty-state / card buttons
+ * - `cta`: closing call-to-action buttons on the content pages
  */
-export function CmsButton({ button, size = 'hero' }: { button: Button; size?: 'hero' | 'compact' }) {
+export function CmsButton({ button, size = 'hero' }: { button: Button; size?: 'hero' | 'compact' | 'cta' }) {
   const href = buttonHref(button);
   if (!href) return null;
 
@@ -17,7 +18,7 @@ export function CmsButton({ button, size = 'hero' }: { button: Button; size?: 'h
   const className =
     size === 'hero'
       ? `inline-flex items-center px-7 py-4 text-xs font-bold tracking-[0.3em] uppercase${secondary ? ' border-2' : ''}`
-      : `px-7 py-3 text-xs font-bold tracking-[0.3em] uppercase${secondary ? ' border-2' : ''}`;
+      : `px-7 ${size === 'cta' ? 'py-4' : 'py-3'} text-xs font-bold tracking-[0.3em] uppercase${secondary ? ' border-2' : ''}`;
   const style = secondary
     ? { borderColor: GOLD, color: GOLD_BRIGHT }
     : size === 'hero'

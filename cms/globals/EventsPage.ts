@@ -1,26 +1,12 @@
-import type { GlobalConfig } from 'payload';
-import { isStaff } from '../access/roles';
 import { buttonsField, headingFields } from '../fields/link';
-import { invalidateGlobalAfterChange } from '../hooks/invalidate';
-import { livePreviewUrl, previewPath } from '../livePreview';
+import { pageGlobal } from './pageGlobal';
 
 /** Copy on the /events page around the list of events. */
-export const EventsPage: GlobalConfig = {
+export const EventsPage = pageGlobal({
   slug: 'eventsPage',
   label: 'Events Page',
-  versions: { drafts: { autosave: { interval: 500 } }, max: 20 },
-  access: {
-    read: isStaff,
-    update: isStaff,
-    readVersions: isStaff,
-  },
-  admin: {
-    preview: () => previewPath('/events'),
-    livePreview: { url: () => livePreviewUrl('/events') },
-  },
-  hooks: {
-    afterChange: [invalidateGlobalAfterChange],
-  },
+  path: '/events',
+  description: 'The words around the list of events on /events. The events themselves are under Events.',
   fields: [
     {
       type: 'collapsible',
@@ -44,4 +30,4 @@ export const EventsPage: GlobalConfig = {
       ],
     },
   ],
-};
+});

@@ -11,6 +11,7 @@ import { Events } from './cms/collections/Events';
 import { Media } from './cms/collections/Media';
 import { Users } from './cms/collections/Users';
 import { EventsPage } from './cms/globals/EventsPage';
+import { InOffice } from './cms/globals/InOffice';
 import { SiteSettings } from './cms/globals/SiteSettings';
 
 const dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -33,7 +34,7 @@ export default buildConfig({
     },
   },
   collections: [Events, Media, Users],
-  globals: [SiteSettings, EventsPage],
+  globals: [SiteSettings, InOffice, EventsPage],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
   // Public site reads through the Local API only; GraphQL is unused.

@@ -1,7 +1,7 @@
 import { draftMode } from 'next/headers';
-import type { Event, EventsPage, Media } from '@/payload-types';
-import { previewEventBySlug, previewEventsPage, previewListedEvents } from './preview';
-import { getEventBySlug, getEventsPage, listListedEvents } from './public';
+import type { Event, Media } from '@/payload-types';
+import { previewEventBySlug, previewListedEvents, previewPageGlobal } from './preview';
+import { getEventBySlug, getPageGlobal, listListedEvents, type PageGlobal, type PageGlobalSlug } from './public';
 
 /**
  * Page-facing data access: published content normally, drafts when an editor
@@ -11,8 +11,9 @@ async function isPreview(): Promise<boolean> {
   return (await draftMode()).isEnabled;
 }
 
-export async function loadEventsPage(): Promise<EventsPage | null> {
-  return (await isPreview()) ? previewEventsPage() : getEventsPage();
+/** A page global: the published version, or the latest draft while previewing. */
+export async function loadPageGlobal<S extends PageGlobalSlug>(slug: S): Promise<PageGlobal<S> | null> {
+  return (await isPreview()) ? previewPageGlobal(slug) : getPageGlobal(slug);
 }
 
 export async function loadListedEvents(): Promise<Event[]> {

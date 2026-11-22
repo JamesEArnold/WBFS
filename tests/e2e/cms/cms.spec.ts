@@ -43,6 +43,35 @@ async function eventually(fn: () => Promise<boolean>, timeout = FRESHNESS_MS): P
   expect(await fn(), `condition not met within ${timeout}ms`).toBe(true);
 }
 
+type Doc = Record<string, any>; // eslint-disable-line @typescript-eslint/no-explicit-any
+
+/**
+ * Edit a page global as the editor, publish, check the change is live on the
+ * page, then put the original back and check it is gone again.
+ * `edit` mutates a copy of the published content and returns strings the page HTML must now contain.
+ */
+async function editAndRestoreGlobal(slug: string, path: string, edit: (doc: Doc) => string[]): Promise<void> {
+  const original = (await (await editor.get(`/api/globals/${slug}?depth=0`)).json()) as Doc;
+  const changed = structuredClone(original);
+  const expected = edit(changed);
+  const publish = async (data: Doc) => {
+    const res = await editor.post(`/api/globals/${slug}`, { data: { ...data, _status: 'published' } });
+    expect(res.status(), await res.text()).toBe(200);
+  };
+
+  await publish(changed);
+  await eventually(async () => {
+    const { text } = await pageText(path);
+    return expected.every((s) => text.includes(s));
+  });
+
+  await publish(original);
+  await eventually(async () => {
+    const { text } = await pageText(path);
+    return expected.every((s) => !text.includes(s));
+  });
+}
+
 async function pageText(path: string): Promise<{ status: number; text: string }> {
   const res = await anon.get(path, { headers: { 'cache-control': 'no-cache' } });
   return { status: res.status(), text: await res.text() };
@@ -86,6 +115,7 @@ test('anonymous visitors cannot read or write anything through the API', async (
     '/api/users',
     '/api/globals/siteSettings',
     '/api/globals/eventsPage?draft=true',
+    '/api/globals/inOffice',
   ]) {
     expect((await anon.get(path)).status(), path).toBe(403);
   }
@@ -275,6 +305,15 @@ test('the announcement banner can be turned on and off from Site Settings', asyn
 
   await editor.post('/api/globals/siteSettings', { data: { banner: { enabled: false } } });
   await eventually(async () => !(await pageText('/about')).text.includes('E2E Rally Saturday'));
+});
+
+test('In Office: text and links are editable and go live', async () => {
+  await editAndRestoreGlobal('inOffice', '/time-in-office', (doc) => {
+    doc.ctaHeading = 'E2E Stand Together';
+    doc.years[0].events[0].text = 'E2E Timeline Entry';
+    doc.ctaButtons[0].url = '/e2e-in-office-link';
+    return ['E2E Stand Together', 'E2E Timeline Entry', 'href="/e2e-in-office-link"'];
+  });
 });
 
 test('media in use cannot be deleted; uploads require alt text', async () => {
