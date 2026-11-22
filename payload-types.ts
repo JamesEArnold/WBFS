@@ -487,6 +487,10 @@ export interface Event {
    */
   date: string;
   /**
+   * Optional. The event stays on the Events list (and the Home page strip) through this day, then drops off automatically. Its own page stays up for anyone with the link; set Status to "Hidden" to remove it completely.
+   */
+  expiresAt?: string | null;
+  /**
    * Small gold text above the title, e.g. "Save The Date".
    */
   overline?: string | null;
@@ -1102,6 +1106,7 @@ export interface EventsSelect<T extends boolean = true> {
   firstPublishedAt?: T;
   status?: T;
   date?: T;
+  expiresAt?: T;
   overline?: T;
   subtitle?: T;
   facts?:

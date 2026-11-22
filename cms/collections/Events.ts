@@ -17,7 +17,7 @@ export const Events: CollectionConfig = {
   slug: 'events',
   admin: {
     useAsTitle: 'title',
-    defaultColumns: ['title', 'status', 'date', '_status', 'updatedAt'],
+    defaultColumns: ['title', 'status', 'date', 'expiresAt', '_status', 'updatedAt'],
     description: 'Fundraisers, parades and other appearances. Publish to put an event on the site.',
     preview: (doc) => (doc?.slug ? previewPath(`/events/${doc.slug}`) : null),
     livePreview: {
@@ -70,6 +70,17 @@ export const Events: CollectionConfig = {
       type: 'date',
       required: true,
       admin: { position: 'sidebar', description: 'Used to sort the Events list.' },
+    },
+    {
+      name: 'expiresAt',
+      label: 'Remove from listings after',
+      type: 'date',
+      admin: {
+        position: 'sidebar',
+        date: { pickerAppearance: 'dayOnly', displayFormat: 'MMM d, yyyy' },
+        description:
+          'Optional. The event stays on the Events list (and the Home page strip) through this day, then drops off automatically. Its own page stays up for anyone with the link; set Status to "Hidden" to remove it completely.',
+      },
     },
     {
       type: 'collapsible',

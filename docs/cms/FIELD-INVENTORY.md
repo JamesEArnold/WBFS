@@ -70,4 +70,4 @@ Where every piece of previously hardcoded content now lives in the CMS. Content 
 |---|---|
 | Listing card (/events, and the Home featured strip) | `title`, `overline`, `subtitle`, `facts[]`, `listingCtaLabel` |
 | Event page | `soldOutBanner { heading, body }` (shown when `status` = Sold out), `dateLabel`, `heading`, `headingAccent`, `heroBlurb`, `buttons[]`, `flyerPdf`, `flyerImages[] { image, linkLabel }`, `flyerCaption` |
-| Behaviour | `status` (upcoming / sold out / past / hidden), `date` (list order), `slug` (locked after first publish) |
+| Behaviour | `status` (upcoming / sold out / past / hidden), `date` (list order), `expiresAt` ("Remove from listings after": off the Events list and Home strip after that day, Eastern time; page stays up), `slug` (locked after first publish) |

@@ -6,6 +6,7 @@ import { EmailSignupForm } from '@/components/ui/email-signup';
 import { Highlighted } from '@/components/ui/highlighted';
 import { VolunteerSignupForm } from '@/components/ui/volunteer-signup';
 import { asMedia } from '@/lib/cms/content';
+import { isExpired } from '@/lib/cms/expiry';
 import type { Event, Home } from '@/payload-types';
 import { LAWMAN } from './theme';
 
@@ -156,11 +157,11 @@ const PortraitBlock = ({ page }: Props) => {
   );
 };
 
-/** The featured event, when one is chosen and it is published and not hidden. */
+/** The featured event, when one is chosen, published, not hidden and not past its listing expiry. */
 function featuredEvent(page: Home): Event | null {
   const event = page.featuredEvent;
   if (!event || typeof event !== 'object') return null;
-  return event._status === 'published' && event.status !== 'hidden' ? event : null;
+  return event._status === 'published' && event.status !== 'hidden' && !isExpired(event.expiresAt) ? event : null;
 }
 
 const FeaturedEvent = ({ page, event }: Props & { event: Event }) => (

@@ -291,6 +291,46 @@ test('past events keep their page but leave the Events list', async () => {
   expect((await pageText('/events/e2e-summer-picnic')).status).toBe(200);
 });
 
+test('an event drops off the Events list and the Home strip after its "remove from listings" date', async () => {
+  const day = 24 * 60 * 60 * 1000;
+  const lastWeek = new Date(Date.now() - 7 * day).toISOString();
+  const nextWeek = new Date(Date.now() + 7 * day).toISOString();
+  const create = await editor.post('/api/events', {
+    data: {
+      _status: 'published',
+      title: 'E2E Expiring Rally',
+      date: nextWeek,
+      status: 'upcoming',
+      overline: 'Rally',
+      subtitle: 'E2E expiring subtitle',
+      heading: 'Expiring',
+      expiresAt: nextWeek,
+    },
+  });
+  expect(create.status(), await create.text()).toBe(201);
+  const { id } = (await create.json()).doc as { id: number };
+
+  // Before its date: listed.
+  await eventually(async () => (await pageText('/events')).text.includes('E2E Expiring Rally'));
+
+  // Feature it on Home.
+  const home = (await (await editor.get('/api/globals/home?depth=0')).json()) as Doc;
+  const publishHome = (data: Doc) => editor.post('/api/globals/home', { data: { ...data, _status: 'published' } });
+  expect((await publishHome({ ...home, featuredEvent: id })).status()).toBe(200);
+  await eventually(async () => (await pageText('/')).text.includes('E2E expiring subtitle'));
+
+  // After its date: gone from the list and Home, but its own page stays up.
+  expect((await editor.patch(`/api/events/${id}`, { data: { expiresAt: lastWeek, _status: 'published' } })).status()).toBe(200);
+  await eventually(async () => !(await pageText('/events')).text.includes('E2E Expiring Rally'));
+  await eventually(async () => !(await pageText('/')).text.includes('E2E expiring subtitle'));
+  expect((await pageText('/events/e2e-expiring-rally')).status).toBe(200);
+
+  // Clean up.
+  expect((await publishHome(home)).status()).toBe(200);
+  expect((await editor.delete(`/api/events/${id}`)).status()).toBe(200);
+  await eventually(async () => (await pageText('/')).text.includes('href="/events/golf-fundraiser-3"'));
+});
+
 test('hiding or unpublishing removes the event from the public site', async () => {
   expect((await editor.patch(`/api/events/${eventId}`, { data: { _status: 'published', status: 'hidden' } })).status()).toBe(200);
   await eventually(async () => (await pageText('/events/e2e-summer-picnic')).status === 404);

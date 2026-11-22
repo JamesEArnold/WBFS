@@ -10,6 +10,10 @@ const { BLACK, NEAR_BLACK, COAL, COAL_LIFT, GOLD, GOLD_BRIGHT, CREAM, BODY } = L
 
 const month = ["January","February","March","April","May","June","July","August","September","October","November","December"];
 
+// Re-render hourly so events drop off after their listing expiry date and the
+// month line stays current (publishing still refreshes immediately).
+export const revalidate = 3600;
+
 export default async function EventsPage() {
   const [page, activeEvents] = await Promise.all([loadPageGlobal('eventsPage'), loadListedEvents()]);
   if (!page) notFound();

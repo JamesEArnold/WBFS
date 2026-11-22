@@ -1,5 +1,6 @@
 import { draftMode } from 'next/headers';
 import type { Event, Media, Page } from '@/payload-types';
+import { withoutExpired } from './expiry';
 import { previewEventBySlug, previewListedEvents, previewPageBySlug, previewPageGlobal } from './preview';
 import { getEventBySlug, getPageBySlug, getPageGlobal, listListedEvents, type PageGlobal, type PageGlobalSlug } from './public';
 
@@ -16,8 +17,9 @@ export async function loadPageGlobal<S extends PageGlobalSlug>(slug: S): Promise
   return (await isPreview()) ? previewPageGlobal(slug) : getPageGlobal(slug);
 }
 
+/** Events on the /events list: listed statuses, minus any whose listing has expired (checked at render time). */
 export async function loadListedEvents(): Promise<Event[]> {
-  return (await isPreview()) ? previewListedEvents() : listListedEvents();
+  return withoutExpired((await isPreview()) ? await previewListedEvents() : await listListedEvents());
 }
 
 export async function loadEvent(slug: string): Promise<Event | null> {

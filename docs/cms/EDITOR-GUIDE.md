@@ -45,6 +45,7 @@ Go to **Events** in the left menu.
      - **Past:** the page stays up for people with the link, but it's removed from the Events list.
      - **Hidden:** the page is taken off the site.
    - **Date:** used to put events in order on the Events list.
+   - **Remove from listings after** (optional): the event stays on the Events list and the Home page strip through this day, then drops off on its own (Stark County time, within about an hour after midnight). Its own page stays up for anyone with the link. To take the page down too, set Status to **Hidden**.
    - **URL slug:** leave it blank and it's filled in from the title, e.g. `summer-picnic` → weisburnforsheriff.com/events/summer-picnic.
      - Once an event has been published, its address **can't be changed** (so links people shared keep working). Ask an admin if it really must change.
 3. **Events list card:** the small gold line above the title, the subtitle (date and place), the starred fact lines, and the link text.
