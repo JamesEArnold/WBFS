@@ -1,34 +1,31 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Weisburn for Sheriff — website
 
-## Getting Started
+Campaign site for Sheriff Eric Weisburn ([weisburnforsheriff.com](https://weisburnforsheriff.com)): **Next.js 16** with **Payload CMS 3** embedded, deployed on **Vercel** with a Vercel-provisioned **Neon** Postgres database and **Vercel Blob** for uploads.
 
-First, run the development server:
+- **Editors:** log in at `/admin`. See [docs/cms/EDITOR-GUIDE.md](docs/cms/EDITOR-GUIDE.md).
+- **Developers / operations:** [docs/cms/OPERATIONS.md](docs/cms/OPERATIONS.md) covers environments, scripts, migrations, backups, recovery and secrets.
+- **Where each piece of content lives:** [docs/cms/FIELD-INVENTORY.md](docs/cms/FIELD-INVENTORY.md).
+- **Plan, decisions and progress log:** [docs/cms/PLAN.md](docs/cms/PLAN.md).
 
+## Local development
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
+nvm use                 # Node 24 (>= 24.22.3)
+npm install
+npm run db:local:up     # Postgres in Docker (Docker Desktop must be running)
+npm run payload:migrate # apply migrations to the local DB
+npm run seed            # copy the site's content into the empty CMS (insert-only)
+ADMIN_NAME="Your Name" ADMIN_EMAIL=you@example.com npm run users:bootstrap-admin   # prints a setup link
+npm run dev             # http://localhost:3000, CMS at /admin
 ```
+Secrets (SendGrid, deployed databases, Blob tokens) are never committed. They live in 1Password and Vercel. Use `npm run dev:op` to inject them via `op run`.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Tests
+| Command | What it checks |
+|---|---|
+| `npm run test` | Unit tests (validators, env guard, content helpers, upload limit) |
+| `npm run test:e2e` | Smoke, sign-up forms and text parity against the pre-CMS baselines |
+| `npm run test:visual` | Visual regression at 390 px and 1440 px against the pre-CMS baselines |
+| `npm run test:cms` | All of the above plus CMS behaviour, on a freshly reset `wbfs_e2e` database |
+| `npm run lint`, `npm run typecheck` | Static checks |
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+Set `PLAYWRIGHT_BASE_URL=<deployment url>` to run `test:e2e` or `test:visual` against a Vercel deployment.

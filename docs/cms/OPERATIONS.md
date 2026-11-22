@@ -10,7 +10,13 @@ Architecture, decisions and progress: `docs/cms/PLAN.md`.
 - **Uploads:** Vercel Blob (one store per environment). Locally, files go to `./media/`.
 - **Public pages are static and cached.**
   - Publishing anything in the CMS invalidates the whole site cache (tag `cms`), so changes show within ~10 s with no redeploy.
-  - Public reads: `lib/cms/public.ts` (published content only). Draft preview: `lib/cms/preview.ts`.
+  - Public reads: `lib/cms/public.ts` (published content only). Draft preview: `lib/cms/preview.ts`. Pages pick between them with `lib/cms/content.ts`.
+- **Content model** (field-by-field map in `FIELD-INVENTORY.md`):
+  - Globals: `siteSettings` (no drafts), and page globals `home`, `about`, `donate`, `inOffice`, `eventsPage`. These are built with `cms/globals/pageGlobal.ts`, which provides drafts, 0.5 s autosave, live preview and an **Extra sections** field.
+  - Collections: `events` (`/events/<slug>`), `pages` (`/<slug>`, built from sections), `media`, `users`.
+  - Section blocks: `cms/blocks/index.ts`, rendered by `components/blocks/render-blocks.tsx` with the site's own markup. Style options are limited to the Lawman design.
+  - **Live preview:** the admin shows `/preview/enter?path=…` beside the form, and `RefreshOnSave` (draft mode only) re-renders after each autosave.
+- **Security:** `cors`/`csrf` are limited to `NEXT_PUBLIC_SERVER_URL` plus the production domains (`payload.config.ts`). API reads need a login, except Media files, which are public. Uploads: images/PDF only, **25 MB max**. Browser uploads go straight to Blob, so the cap is checked when the Media record is saved.
 
 ## 2. Environments
 | | Database | Blob store | Where |
@@ -52,7 +58,11 @@ Never update visual or text baselines to make a test pass: those baselines are t
    op run --env-file=<production env file> -- npm run payload:migrate
    ```
    then merge/deploy.
-7. If the field references uploads (`relationTo: 'media'`), add it to `MEDIA_REFERENCES` in `cms/hooks/mediaRefs.ts`. Otherwise in-use files could be deleted.
+7. If the field references uploads (`relationTo: 'media'`), add its path to `MEDIA_REFERENCES` (collections) or `GLOBAL_MEDIA_REFERENCES` (globals) in `cms/hooks/mediaRefs.ts`. Otherwise in-use files could be deleted. Block paths are added automatically from `BLOCK_MEDIA_PATHS` in `cms/blocks/index.ts`, so update that when a block gains an upload field.
+
+**Adding a section block:** add the `Block` to `cms/blocks/index.ts` (and to `SECTION_BLOCKS`), add a case to `renderBlock` in `components/blocks/render-blocks.tsx`, then generate types, the import map and a migration as above. Extend the "every section type" e2e in `tests/e2e/cms/cms.spec.ts`.
+
+**Adding a new page global:** create it with `pageGlobal({...})`, register it in `payload.config.ts`, render `<RenderBlocks blocks={page.extraSections} />` at the end of the page, add a `seedPageGlobal` entry, and add its slug to `RESERVED_SLUGS` in `cms/fields/validators.ts`.
 
 ## 5. Seeding and accounts
 - `npm run seed` copies the original site content into an empty CMS.
