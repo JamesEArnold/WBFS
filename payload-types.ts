@@ -91,11 +91,13 @@ export interface Config {
   fallbackLocale: null;
   globals: {
     siteSettings: SiteSetting;
+    donate: Donate;
     inOffice: InOffice;
     eventsPage: EventsPage;
   };
   globalsSelect: {
     siteSettings: SiteSettingsSelect<false> | SiteSettingsSelect<true>;
+    donate: DonateSelect<false> | DonateSelect<true>;
     inOffice: InOfficeSelect<false> | InOfficeSelect<true>;
     eventsPage: EventsPageSelect<false> | EventsPageSelect<true>;
   };
@@ -612,6 +614,63 @@ export interface SiteSetting {
   createdAt?: string | null;
 }
 /**
+ * The Contribute page (/donate).
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "donate".
+ */
+export interface Donate {
+  id: number;
+  /**
+   * Small gold line. Stars are added automatically.
+   */
+  overline?: string | null;
+  heading: string;
+  /**
+   * Optional second line shown in gold.
+   */
+  headingAccent?: string | null;
+  intro?: string | null;
+  /**
+   * The Donorbox embed address, e.g. https://donorbox.org/embed/weisburn-for-sheriff
+   */
+  donorboxUrl: string;
+  /**
+   * Small gold line. Stars are added automatically.
+   */
+  mailOverline?: string | null;
+  mailHeading: string;
+  /**
+   * Wrap words in **double stars** to make them stand out.
+   */
+  mailBody?: string | null;
+  mailToLabel?: string | null;
+  mailToName: string;
+  mailToLine1?: string | null;
+  mailToLine2?: string | null;
+  /**
+   * Small print under the address.
+   */
+  mailNote?: string | null;
+  /**
+   * Up to three short facts shown under the address (e.g. "31" / "Years Service").
+   */
+  stats?:
+    | {
+        value: string;
+        label: string;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Legal small print at the bottom of the page.
+   */
+  disclaimer: string;
+  _status?: ('draft' | 'published') | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
  * The "My Time In Office" page (/time-in-office).
  *
  * This interface was referenced by `Config`'s JSON-Schema
@@ -779,6 +838,37 @@ export interface SiteSettingsSelect<T extends boolean = true> {
   facebookUrl?: T;
   instagramUrl?: T;
   disclaimer?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "donate_select".
+ */
+export interface DonateSelect<T extends boolean = true> {
+  overline?: T;
+  heading?: T;
+  headingAccent?: T;
+  intro?: T;
+  donorboxUrl?: T;
+  mailOverline?: T;
+  mailHeading?: T;
+  mailBody?: T;
+  mailToLabel?: T;
+  mailToName?: T;
+  mailToLine1?: T;
+  mailToLine2?: T;
+  mailNote?: T;
+  stats?:
+    | T
+    | {
+        value?: T;
+        label?: T;
+        id?: T;
+      };
+  disclaimer?: T;
+  _status?: T;
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;

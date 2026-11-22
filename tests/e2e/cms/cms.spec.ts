@@ -116,6 +116,7 @@ test('anonymous visitors cannot read or write anything through the API', async (
     '/api/globals/siteSettings',
     '/api/globals/eventsPage?draft=true',
     '/api/globals/inOffice',
+    '/api/globals/donate',
   ]) {
     expect((await anon.get(path)).status(), path).toBe(403);
   }
@@ -314,6 +315,17 @@ test('In Office: text and links are editable and go live', async () => {
     doc.ctaButtons[0].url = '/e2e-in-office-link';
     return ['E2E Stand Together', 'E2E Timeline Entry', 'href="/e2e-in-office-link"'];
   });
+});
+
+test('Donate: text and the Donorbox form are editable; only Donorbox can be embedded', async () => {
+  await editAndRestoreGlobal('donate', '/donate', (doc) => {
+    doc.mailHeading = 'E2E Pay By Check';
+    doc.mailBody = 'Payable to **E2E Payee** please.';
+    doc.donorboxUrl = 'https://donorbox.org/embed/e2e-form';
+    return ['E2E Pay By Check', '>E2E Payee</span>', 'src="https://donorbox.org/embed/e2e-form"'];
+  });
+  const bad = await editor.post('/api/globals/donate', { data: { donorboxUrl: 'https://evil.example/embed' } });
+  expect(bad.status()).toBe(400);
 });
 
 test('media in use cannot be deleted; uploads require alt text', async () => {

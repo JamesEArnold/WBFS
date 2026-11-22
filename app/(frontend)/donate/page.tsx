@@ -1,11 +1,15 @@
-'use client';
-
 import Image from 'next/image';
+import { notFound } from 'next/navigation';
 import { LAWMAN } from '@/components/designs/lawman/theme';
+import { Highlighted } from '@/components/ui/highlighted';
+import { loadPageGlobal } from '@/lib/cms/content';
 
 const { BLACK, NEAR_BLACK, COAL, COAL_LIFT, GOLD, GOLD_BRIGHT, GOLD_LIGHT, CREAM, BODY } = LAWMAN;
 
-export default function Donate() {
+export default async function Donate() {
+  const page = await loadPageGlobal('donate');
+  if (!page) notFound();
+
   return (
     <main style={{ background: BLACK, color: CREAM }}>
       {/* Hero */}
@@ -28,7 +32,7 @@ export default function Donate() {
             />
           </div>
           <p className="mt-5 text-[11px] font-bold tracking-[0.4em] uppercase" style={{ color: GOLD_BRIGHT }}>
-            ★ Fund The Mission ★
+            ★ {page.overline} ★
           </p>
           <h1
             className="mt-3 font-serif font-black uppercase"
@@ -38,21 +42,24 @@ export default function Donate() {
               lineHeight: 0.95,
             }}
           >
-            Contribute to
-            <span
-              className="block"
-              style={{
-                color: GOLD_BRIGHT,
-                WebkitTextStroke: `1px ${GOLD}`,
-              }}
-            >
-              Sheriff Weisburn
-            </span>
+            {page.heading}
+            {page.headingAccent && (
+              <span
+                className="block"
+                style={{
+                  color: GOLD_BRIGHT,
+                  WebkitTextStroke: `1px ${GOLD}`,
+                }}
+              >
+                {page.headingAccent}
+              </span>
+            )}
           </h1>
-          <p className="max-w-xl mx-auto mt-6 text-base leading-relaxed md:text-lg" style={{ color: BODY }}>
-            Your donation will make a huge impact. The fight to keep Stark
-            County safe is far from over. Thank you for your support.
-          </p>
+          {page.intro && (
+            <p className="max-w-xl mx-auto mt-6 text-base leading-relaxed md:text-lg" style={{ color: BODY }}>
+              {page.intro}
+            </p>
+          )}
         </div>
       </section>
 
@@ -65,7 +72,7 @@ export default function Donate() {
               style={{ background: CREAM, border: `4px solid ${GOLD}` }}
             >
               <iframe
-                src="https://donorbox.org/embed/weisburn-for-sheriff"
+                src={page.donorboxUrl}
                 name="donorbox"
                 data-allowpaymentrequest="allowpaymentrequest"
                 data-seamless="seamless"
@@ -82,7 +89,7 @@ export default function Donate() {
               className="text-[11px] font-bold tracking-[0.4em] uppercase"
               style={{ color: GOLD_BRIGHT }}
             >
-              ★ Mail-in Contributions ★
+              ★ {page.mailOverline} ★
             </p>
             <h2
               className="mt-3 font-serif font-black uppercase"
@@ -92,13 +99,13 @@ export default function Donate() {
                 lineHeight: 1,
               }}
             >
-              Prefer to pay by check?
+              {page.mailHeading}
             </h2>
-            <p className="mt-4 text-sm leading-relaxed" style={{ color: BODY }}>
-              Checks are accepted. Please make payable to{' '}
-              <span style={{ color: CREAM }}>Weisburn For Sheriff</span> and
-              mail to the campaign headquarters listed below.
-            </p>
+            {page.mailBody && (
+              <p className="mt-4 text-sm leading-relaxed" style={{ color: BODY }}>
+                <Highlighted text={page.mailBody} color={CREAM} />
+              </p>
+            )}
             <div
               className="p-6 mt-6"
               style={{
@@ -111,35 +118,34 @@ export default function Donate() {
                 className="text-[10px] font-bold tracking-[0.35em] uppercase"
                 style={{ color: GOLD_BRIGHT }}
               >
-                Mail To
+                {page.mailToLabel}
               </p>
               <p className="mt-3 font-serif text-xl font-bold" style={{ color: CREAM }}>
-                Weisburn For Sheriff
+                {page.mailToName}
               </p>
-              <p className="mt-1" style={{ color: CREAM }}>
-                4849 Tree Line Circle NW
-              </p>
-              <p style={{ color: CREAM }}>
-                North Canton, OH 44720
-              </p>
-              <p
-                className="mt-4 text-[11px] tracking-[0.15em]"
-                style={{ color: BODY }}
-              >
-                * Cannot accept corporate checks
-              </p>
+              {page.mailToLine1 && (
+                <p className="mt-1" style={{ color: CREAM }}>
+                  {page.mailToLine1}
+                </p>
+              )}
+              {page.mailToLine2 && <p style={{ color: CREAM }}>{page.mailToLine2}</p>}
+              {page.mailNote && (
+                <p
+                  className="mt-4 text-[11px] tracking-[0.15em]"
+                  style={{ color: BODY }}
+                >
+                  {page.mailNote}
+                </p>
+              )}
             </div>
+            {(page.stats ?? []).length > 0 && (
             <div
               className="grid grid-cols-3 gap-px mt-6"
               style={{ background: COAL_LIFT }}
             >
-              {[
-                { k: '31', v: 'Years Service' },
-                { k: '01.06.25', v: 'Sworn In' },
-                { k: 'Stark Co.', v: 'Sheriff' },
-              ].map((s) => (
+              {(page.stats ?? []).map((s, i) => (
                 <div
-                  key={s.v}
+                  key={s.id ?? i}
                   className="px-2 py-4 text-center"
                   style={{ background: COAL }}
                 >
@@ -147,17 +153,18 @@ export default function Donate() {
                     className="font-serif text-base font-black sm:text-xl"
                     style={{ color: GOLD_BRIGHT }}
                   >
-                    {s.k}
+                    {s.value}
                   </p>
                   <p
                     className="mt-1 text-[9px] font-bold tracking-[0.25em] uppercase"
                     style={{ color: BODY }}
                   >
-                    {s.v}
+                    {s.label}
                   </p>
                 </div>
               ))}
             </div>
+            )}
           </div>
         </div>
       </section>
@@ -168,10 +175,7 @@ export default function Donate() {
           className="max-w-3xl mx-auto text-xs leading-relaxed text-center"
           style={{ color: BODY }}
         >
-          Contributions or gifts to Weisburn for Sheriff are not tax
-          deductible. The maximum amount an individual may contribute is
-          governed by Ohio campaign finance law. Federal law prohibits
-          contributions from foreign nationals and from any corporation.
+          {page.disclaimer}
         </p>
       </section>
     </main>

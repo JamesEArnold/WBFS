@@ -222,6 +222,31 @@ const seedInOffice = (payload: Payload, log: Seeded) =>
     ctaButtons: [button('Contribute', '/donate'), button('Service Record', '/about', 'secondary')],
   });
 
+const seedDonate = (payload: Payload, log: Seeded) =>
+  seedPageGlobal(payload, log, 'donate', {
+    overline: 'Fund The Mission',
+    heading: 'Contribute to',
+    headingAccent: 'Sheriff Weisburn',
+    intro: 'Your donation will make a huge impact. The fight to keep Stark County safe is far from over. Thank you for your support.',
+    donorboxUrl: 'https://donorbox.org/embed/weisburn-for-sheriff',
+    mailOverline: 'Mail-in Contributions',
+    mailHeading: 'Prefer to pay by check?',
+    mailBody:
+      'Checks are accepted. Please make payable to **Weisburn For Sheriff** and mail to the campaign headquarters listed below.',
+    mailToLabel: 'Mail To',
+    mailToName: 'Weisburn For Sheriff',
+    mailToLine1: '4849 Tree Line Circle NW',
+    mailToLine2: 'North Canton, OH 44720',
+    mailNote: '* Cannot accept corporate checks',
+    stats: [
+      { value: '31', label: 'Years Service' },
+      { value: '01.06.25', label: 'Sworn In' },
+      { value: 'Stark Co.', label: 'Sheriff' },
+    ],
+    disclaimer:
+      'Contributions or gifts to Weisburn for Sheriff are not tax deductible. The maximum amount an individual may contribute is governed by Ohio campaign finance law. Federal law prohibits contributions from foreign nationals and from any corporation.',
+  });
+
 async function seedGolfEvent(payload: Payload, log: Seeded) {
   const importKey = 'event:golf-2026';
   const existing = await payload.find({
@@ -312,6 +337,7 @@ export async function seed(payload: Payload): Promise<Seeded> {
   await seedSiteSettings(payload, log);
   await seedEventsPage(payload, log);
   await seedInOffice(payload, log);
+  await seedDonate(payload, log);
   await seedGolfEvent(payload, log);
   return log;
 }
