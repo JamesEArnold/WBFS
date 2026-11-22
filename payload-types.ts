@@ -91,12 +91,14 @@ export interface Config {
   fallbackLocale: null;
   globals: {
     siteSettings: SiteSetting;
+    about: About;
     donate: Donate;
     inOffice: InOffice;
     eventsPage: EventsPage;
   };
   globalsSelect: {
     siteSettings: SiteSettingsSelect<false> | SiteSettingsSelect<true>;
+    about: AboutSelect<false> | AboutSelect<true>;
     donate: DonateSelect<false> | DonateSelect<true>;
     inOffice: InOfficeSelect<false> | InOfficeSelect<true>;
     eventsPage: EventsPageSelect<false> | EventsPageSelect<true>;
@@ -614,6 +616,81 @@ export interface SiteSetting {
   createdAt?: string | null;
 }
 /**
+ * The About page (/about).
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "about".
+ */
+export interface About {
+  id: number;
+  /**
+   * Small gold line above the headline.
+   */
+  overline: string;
+  heading: string;
+  /**
+   * Optional second line shown in gold.
+   */
+  headingAccent?: string | null;
+  intro?: string | null;
+  heroImage: number | Media;
+  /**
+   * Gold strip across the bottom of the photo. Stars are added automatically.
+   */
+  heroImageCaption?: string | null;
+  /**
+   * Small gold line. Stars are added automatically.
+   */
+  originsOverline?: string | null;
+  originsBody?: string | null;
+  /**
+   * Small gold line. Stars are added automatically.
+   */
+  timelineOverline?: string | null;
+  timelineHeading: string;
+  /**
+   * Oldest first.
+   */
+  timeline?:
+    | {
+        /**
+         * e.g. "1991" or "Currently".
+         */
+        year: string;
+        /**
+         * Wrap words in **double stars** to highlight them.
+         */
+        text: string;
+        id?: string | null;
+      }[]
+    | null;
+  signOffGreeting?: string | null;
+  signature?: (number | null) | Media;
+  signOffName: string;
+  signOffButtons?:
+    | {
+        label: string;
+        linkType?: ('url' | 'file') | null;
+        /**
+         * e.g. /donate, https://…, or mailto:someone@example.com
+         */
+        url?: string | null;
+        file?: (number | null) | Media;
+        style?: ('primary' | 'secondary') | null;
+        newTab?: boolean | null;
+        id?: string | null;
+      }[]
+    | null;
+  signOffImage?: (number | null) | Media;
+  /**
+   * Small line under the photo. Stars are added automatically.
+   */
+  signOffImageCaption?: string | null;
+  _status?: ('draft' | 'published') | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
  * The Contribute page (/donate).
  *
  * This interface was referenced by `Config`'s JSON-Schema
@@ -838,6 +915,49 @@ export interface SiteSettingsSelect<T extends boolean = true> {
   facebookUrl?: T;
   instagramUrl?: T;
   disclaimer?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "about_select".
+ */
+export interface AboutSelect<T extends boolean = true> {
+  overline?: T;
+  heading?: T;
+  headingAccent?: T;
+  intro?: T;
+  heroImage?: T;
+  heroImageCaption?: T;
+  originsOverline?: T;
+  originsBody?: T;
+  timelineOverline?: T;
+  timelineHeading?: T;
+  timeline?:
+    | T
+    | {
+        year?: T;
+        text?: T;
+        id?: T;
+      };
+  signOffGreeting?: T;
+  signature?: T;
+  signOffName?: T;
+  signOffButtons?:
+    | T
+    | {
+        label?: T;
+        linkType?: T;
+        url?: T;
+        file?: T;
+        style?: T;
+        newTab?: T;
+        id?: T;
+      };
+  signOffImage?: T;
+  signOffImageCaption?: T;
+  _status?: T;
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;

@@ -5,23 +5,29 @@ import { buttonHref, type Button } from '@/lib/cms/content';
 const { BLACK, COAL_LIFT, GOLD, GOLD_BRIGHT } = LAWMAN;
 
 /**
- * Renders a CMS button with the site's two existing button styles.
- * - `hero`: event-page hero buttons (inline-flex, taller, shadowed primary)
+ * The site's existing button variants, by where they appear:
+ * - `hero`: event-page hero buttons (inline-flex, shadowed primary)
  * - `compact`: empty-state / card buttons
- * - `cta`: closing call-to-action buttons on the content pages
+ * - `cta`: closing call-to-action buttons on content pages
+ * - `signoff`: About page sign-off buttons (centred text, shadowed primary)
  */
-export function CmsButton({ button, size = 'hero' }: { button: Button; size?: 'hero' | 'compact' | 'cta' }) {
+const SIZES = {
+  hero: { className: 'inline-flex items-center px-7 py-4 text-xs font-bold tracking-[0.3em] uppercase', shadow: true },
+  compact: { className: 'px-7 py-3 text-xs font-bold tracking-[0.3em] uppercase', shadow: false },
+  cta: { className: 'px-7 py-4 text-xs font-bold tracking-[0.3em] uppercase', shadow: false },
+  signoff: { className: 'px-7 py-4 text-xs font-bold tracking-[0.3em] text-center uppercase', shadow: true },
+} as const;
+
+export function CmsButton({ button, size = 'hero' }: { button: Button; size?: keyof typeof SIZES }) {
   const href = buttonHref(button);
   if (!href) return null;
 
+  const variant = SIZES[size];
   const secondary = button.style === 'secondary';
-  const className =
-    size === 'hero'
-      ? `inline-flex items-center px-7 py-4 text-xs font-bold tracking-[0.3em] uppercase${secondary ? ' border-2' : ''}`
-      : `px-7 ${size === 'cta' ? 'py-4' : 'py-3'} text-xs font-bold tracking-[0.3em] uppercase${secondary ? ' border-2' : ''}`;
+  const className = `${variant.className}${secondary ? ' border-2' : ''}`;
   const style = secondary
     ? { borderColor: GOLD, color: GOLD_BRIGHT }
-    : size === 'hero'
+    : variant.shadow
       ? { background: GOLD, color: BLACK, boxShadow: `0 4px 0 ${COAL_LIFT}` }
       : { background: GOLD, color: BLACK };
 

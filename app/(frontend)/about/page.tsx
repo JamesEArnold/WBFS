@@ -1,6 +1,9 @@
 import Image from 'next/image';
-import Link from 'next/link';
+import { notFound } from 'next/navigation';
 import { LAWMAN } from '@/components/designs/lawman/theme';
+import { CmsButton } from '@/components/ui/cms-button';
+import { Highlighted } from '@/components/ui/highlighted';
+import { asMedia, loadPageGlobal } from '@/lib/cms/content';
 
 const { BLACK, NEAR_BLACK, COAL, COAL_LIFT, GOLD, GOLD_BRIGHT, GOLD_LIGHT, CREAM, BODY } = LAWMAN;
 
@@ -40,7 +43,13 @@ const TimelineEntry = ({
   </section>
 );
 
-export default function About() {
+export default async function About() {
+  const page = await loadPageGlobal('about');
+  if (!page) notFound();
+  const heroImage = asMedia(page.heroImage);
+  const signature = asMedia(page.signature);
+  const signOffImage = asMedia(page.signOffImage);
+
   return (
     <main style={{ background: BLACK, color: CREAM }}>
       {/* Hero */}
@@ -63,7 +72,7 @@ export default function About() {
                 className="text-[11px] font-bold tracking-[0.4em] uppercase"
                 style={{ color: GOLD_BRIGHT }}
               >
-                On Oath · Service Record
+                {page.overline}
               </p>
             </div>
             <h1
@@ -75,42 +84,47 @@ export default function About() {
                 letterSpacing: '0.01em',
               }}
             >
-              Meet Sheriff
-              <span
-                className="block"
-                style={{
-                  color: GOLD_BRIGHT,
-                  WebkitTextStroke: `1px ${GOLD}`,
-                }}
-              >
-                Eric Weisburn
-              </span>
+              {page.heading}
+              {page.headingAccent && (
+                <span
+                  className="block"
+                  style={{
+                    color: GOLD_BRIGHT,
+                    WebkitTextStroke: `1px ${GOLD}`,
+                  }}
+                >
+                  {page.headingAccent}
+                </span>
+              )}
             </h1>
-            <p className="max-w-xl mt-6 text-base leading-relaxed md:text-lg" style={{ color: BODY }}>
-              Thank you for taking the time to learn more about me and my career
-              with the Stark County Sheriff&rsquo;s Office. A career built on
-              service to my community — from the firehouse, to the patrol car,
-              to serve as YOUR Sheriff.
-            </p>
+            {page.intro && (
+              <p className="max-w-xl mt-6 text-base leading-relaxed md:text-lg" style={{ color: BODY }}>
+                {page.intro}
+              </p>
+            )}
           </div>
           <div className="relative md:col-span-5">
             <div className="relative" style={{ border: `4px solid ${GOLD}` }}>
+              {heroImage?.url && (
               <Image
-                src="/new-may-2026/Sheriff_Weisburn_First_to_Serve_Star1.JPG"
+                src={heroImage.url}
                 width={900}
                 height={1100}
                 sizes="(max-width: 768px) 100vw, 480px"
                 className="w-full h-[24rem] md:h-[28rem] object-cover object-center"
                 style={{ filter: 'contrast(1.05) brightness(0.95)' }}
-                alt="Sheriff Eric Weisburn beside the Stark County sheriff star"
+                alt={heroImage.alt}
                 priority
               />
+              )}
+              {page.heroImageCaption && (
               <div
                 className="absolute bottom-0 left-0 right-0 px-4 py-2 text-[11px] font-bold tracking-[0.35em] uppercase"
                 style={{ background: 'rgba(10,10,10,0.85)', color: GOLD_BRIGHT, borderTop: `1px solid ${GOLD}` }}
               >
-                ★ First To Serve — Stark County ★
+                ★ {page.heroImageCaption} ★
               </div>
+              )}
             </div>
           </div>
         </div>
@@ -123,20 +137,16 @@ export default function About() {
             className="text-[11px] font-bold tracking-[0.4em] uppercase"
             style={{ color: GOLD_BRIGHT }}
           >
-            ★ Origins ★
+            ★ {page.originsOverline} ★
           </p>
-          <p
-            className="mt-4 text-base leading-[1.85] md:text-lg"
-            style={{ color: CREAM }}
-          >
-            I am a lifetime resident of Stark County. Growing up in a small
-            town, my parents Jack and Maxine instilled upon me at a young age
-            the importance of service to our community. At 16 years old, I
-            started my career of service as a firefighter for the Waynesburg
-            Volunteer Fire Department&hellip;eventually rising to the rank of
-            Fire Chief as my father and brother had done before me. I also
-            aided my community as an EMT with Quad ambulance.
-          </p>
+          {page.originsBody && (
+            <p
+              className="mt-4 text-base leading-[1.85] md:text-lg"
+              style={{ color: CREAM }}
+            >
+              {page.originsBody}
+            </p>
+          )}
         </div>
       </section>
 
@@ -148,7 +158,7 @@ export default function About() {
               className="text-[11px] font-bold tracking-[0.4em] uppercase"
               style={{ color: GOLD_BRIGHT }}
             >
-              ★ Career In Service ★
+              ★ {page.timelineOverline} ★
             </p>
             <h2
               className="mt-3 font-serif font-black uppercase"
@@ -158,92 +168,19 @@ export default function About() {
                 lineHeight: 1,
               }}
             >
-              Service Record.
+              {page.timelineHeading}
             </h2>
           </div>
           <div className="relative">
-            <TimelineEntry year="1991">
-              My career in law enforcement started when I was hired as a
-              Corrections Officer for the Stark County Sheriff&rsquo;s Office.
-              In that position, I was responsible for the safety and security
-              of the inmates held within the jail. I was often assigned to the
-              mental health wing of the jail, where I saw first-hand the
-              mental health struggles so many inmates deal with and the
-              devastating effects it has on them and our community. I strongly
-              believe early intervention with mental health services is
-              crucial for the betterment of both the inmate and society.
-            </TimelineEntry>
-            <TimelineEntry year="1998">
-              I completed the police officer academy and was assigned to the
-              patrol division. While in this division, I traveled throughout
-              Stark County responding to every type of call imaginable. I had
-              several specialized assignments, including being the first SRO
-              (School Resource Officer) for Plain Local School District,
-              where I served for three years. I was then selected to be the
-              Investigator for child sexual and physical abuse cases, working
-              closely with case workers, prosecutors and other police
-              agencies to successfully arrest and incarcerate the monsters
-              who abuse children. Our mission was to always bring any
-              resemblance of justice to the victims and families.
-            </TimelineEntry>
-            <TimelineEntry year="2005">
-              I was promoted to Sergeant where I continued to serve the
-              citizens of Stark County as a shift supervisor. I was
-              responsible for the safety of not only the citizens of the
-              county, but for the deputies who served under my command. It
-              was a true honor to supervise professional and dedicated
-              deputies, who worked together to protect and serve the citizens
-              of Stark County.
-            </TimelineEntry>
-            <TimelineEntry year="2007">
-              I was the lead investigator in the missing person case of
-              Jessie Marie Davis, who was in her final month of pregnancy
-              when she was murdered. Her body was taken to another location
-              and her two-year-old son was left at home alone for two days
-              forced to survive on his own. I worked closely with deputies
-              and countless other federal, state and local agencies to find
-              the suspects responsible for the deaths of Jessie and her
-              unborn daughter, Chloe. So many lives were destroyed in this
-              incident and the pain will last forever for those affected.
-              But someone had to go to prison, I had no problem putting him
-              there.
-            </TimelineEntry>
-            <TimelineEntry year="2016">
-              I was promoted to Lieutenant and was transferred to the
-              corrections division and served as an Assistant Jail Commander.
-              I was involved in all aspects of jail management and the daily
-              operations of the correction division. Furthermore, in this
-              position I ensured the Sheriff&rsquo;s Office was compliant
-              with the minimum jail standards for Ohio set by the Department
-              of Rehabilitation and Corrections, along with local fire and
-              health codes.
-            </TimelineEntry>
-            <TimelineEntry year="2022">
-              After a rewarding 31 years, I retired from the Stark County
-              Sheriff&rsquo;s Office.
-            </TimelineEntry>
-            <TimelineEntry year="2024">
-              Team Weisburn for Sheriff worked tirelessly all summer to share
-              Eric Weisburn&rsquo;s vision and why he was the right choice
-              for Sheriff. From parades and festivals to community events, we
-              connected with voters across Stark County. On November 5th,
-              the people spoke — choosing Eric Weisburn to lead the
-              Sheriff&rsquo;s Office in a new direction.
-            </TimelineEntry>
-            <TimelineEntry year="Currently">
-              Sheriff Eric Weisburn began his term January 6, 2025. Sheriff
-              Weisburn is honored to serve as{' '}
-              <span
-                className="px-1.5 font-bold"
-                style={{ background: GOLD, color: BLACK }}
-              >
-                YOUR
-              </span>{' '}
-              Sheriff of Stark County. Thank you for your trust and support.
-              We won the election in November 2024, but the fight to keep
-              Stark County safe is far from over. Please consider
-              contributing today to support Weisburn For Sheriff.
-            </TimelineEntry>
+            {(page.timeline ?? []).map((entry, i) => (
+              <TimelineEntry key={entry.id ?? i} year={entry.year}>
+                <Highlighted
+                  text={entry.text}
+                  className="px-1.5 font-bold"
+                  style={{ background: GOLD, color: BLACK }}
+                />
+              </TimelineEntry>
+            ))}
           </div>
         </div>
       </section>
@@ -256,67 +193,58 @@ export default function About() {
               className="font-serif text-2xl md:text-3xl"
               style={{ color: CREAM, fontWeight: 700 }}
             >
-              Respectfully,
+              {page.signOffGreeting}
             </p>
+            {signature?.url && (
             <div className="relative w-48 mt-2 overflow-hidden">
               <Image
-                src="/signature.png"
+                src={signature.url}
                 width={300}
                 height={120}
                 sizes="240px"
                 className="w-full h-auto"
                 style={{ filter: 'invert(1) brightness(1.4)' }}
-                alt="Eric Weisburn signature"
+                alt={signature.alt}
               />
             </div>
+            )}
             <p
               className="mt-4 font-serif text-2xl font-bold"
               style={{ color: GOLD_BRIGHT }}
             >
-              Sheriff Eric Weisburn
+              {page.signOffName}
             </p>
             <div className="flex flex-col gap-3 mt-8 sm:flex-row">
-              <Link
-                href="/donate"
-                className="px-7 py-4 text-xs font-bold tracking-[0.3em] text-center uppercase"
-                style={{
-                  background: GOLD,
-                  color: BLACK,
-                  boxShadow: `0 4px 0 ${COAL_LIFT}`,
-                }}
-              >
-                Contribute
-              </Link>
-              <Link
-                href="/events"
-                className="px-7 py-4 text-xs font-bold tracking-[0.3em] text-center uppercase border-2"
-                style={{ borderColor: GOLD, color: GOLD_BRIGHT }}
-              >
-                Upcoming Events
-              </Link>
+              {(page.signOffButtons ?? []).map((button, i) => (
+                <CmsButton key={button.id ?? i} button={button} size="signoff" />
+              ))}
             </div>
           </div>
           <div className="md:col-span-5">
+            {signOffImage?.url && (
             <div
               className="relative p-2"
               style={{ background: COAL, border: `1px solid ${GOLD}` }}
             >
               <Image
-                src="/new-may-2026/2025_Greek_Festival.jpg"
+                src={signOffImage.url}
                 width={800}
                 height={1000}
                 sizes="(max-width: 768px) 100vw, 420px"
                 className="w-full h-auto object-cover"
                 style={{ filter: 'contrast(1.05) brightness(0.95)' }}
-                alt="Sheriff Weisburn serving at the Stark County Greek Festival"
+                alt={signOffImage.alt}
               />
             </div>
+            )}
+            {page.signOffImageCaption && (
             <p
               className="mt-3 text-[10px] tracking-[0.3em] text-center uppercase"
               style={{ color: BODY }}
             >
-              ★ Serving The Community ★
+              ★ {page.signOffImageCaption} ★
             </p>
+            )}
           </div>
         </div>
       </section>

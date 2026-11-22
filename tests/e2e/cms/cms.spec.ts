@@ -43,6 +43,11 @@ async function eventually(fn: () => Promise<boolean>, timeout = FRESHNESS_MS): P
   expect(await fn(), `condition not met within ${timeout}ms`).toBe(true);
 }
 
+const DOT_PNG = Buffer.from(
+  'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg==',
+  'base64',
+);
+
 type Doc = Record<string, any>; // eslint-disable-line @typescript-eslint/no-explicit-any
 
 /**
@@ -117,6 +122,7 @@ test('anonymous visitors cannot read or write anything through the API', async (
     '/api/globals/eventsPage?draft=true',
     '/api/globals/inOffice',
     '/api/globals/donate',
+    '/api/globals/about',
   ]) {
     expect((await anon.get(path)).status(), path).toBe(403);
   }
@@ -328,6 +334,34 @@ test('Donate: text and the Donorbox form are editable; only Donorbox can be embe
   expect(bad.status()).toBe(400);
 });
 
+test('About: text, photo and links are editable; a photo in use cannot be deleted', async () => {
+  const upload = await editor.post('/api/media', {
+    multipart: {
+      file: { name: 'e2e-photo.png', mimeType: 'image/png', buffer: DOT_PNG },
+      _payload: JSON.stringify({ alt: 'E2E replacement photo' }),
+    },
+  });
+  expect(upload.status()).toBe(201);
+  const photoId = (await upload.json()).doc.id as number;
+
+  await editAndRestoreGlobal('about', '/about', (doc) => {
+    doc.heading = 'E2E Meet The Sheriff';
+    doc.timeline[0].text = 'E2E served with **PRIDE** daily.';
+    doc.heroImage = photoId;
+    doc.signOffButtons[1].url = '/e2e-about-link';
+    return ['E2E Meet The Sheriff', '>PRIDE</span>', 'alt="E2E replacement photo"', 'href="/e2e-about-link"'];
+  });
+
+  // The original hero photo is in use by the About page, so it can't be deleted.
+  const about = (await (await editor.get('/api/globals/about?depth=0')).json()) as Doc;
+  const inUse = await editor.delete(`/api/media/${about.heroImage}`);
+  expect(inUse.ok()).toBe(false);
+  expect(await inUse.text()).toContain('About page');
+
+  // The replacement is no longer used after the restore, so it can be.
+  expect((await editor.delete(`/api/media/${photoId}`)).status()).toBe(200);
+});
+
 test('media in use cannot be deleted; uploads require alt text', async () => {
   const pdfs = (await (
     await editor.get('/api/media?where[importKey][equals]=asset:/250-SheriffWeisburn_GolfOuting_TriFold.pdf')
@@ -336,10 +370,7 @@ test('media in use cannot be deleted; uploads require alt text', async () => {
   expect(del.ok()).toBe(false);
   expect(await del.text()).toContain('still used');
 
-  const png = Buffer.from(
-    'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg==',
-    'base64',
-  );
+  const png = DOT_PNG;
   const noAlt = await editor.post('/api/media', {
     multipart: { file: { name: 'dot.png', mimeType: 'image/png', buffer: png } },
   });

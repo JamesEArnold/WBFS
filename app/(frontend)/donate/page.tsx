@@ -103,7 +103,7 @@ export default async function Donate() {
             </h2>
             {page.mailBody && (
               <p className="mt-4 text-sm leading-relaxed" style={{ color: BODY }}>
-                <Highlighted text={page.mailBody} color={CREAM} />
+                <Highlighted text={page.mailBody} style={{ color: CREAM }} />
               </p>
             )}
             <div

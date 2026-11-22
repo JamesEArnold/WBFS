@@ -10,6 +10,7 @@ import { blobToken as getBlobToken } from './lib/blob-token';
 import { Events } from './cms/collections/Events';
 import { Media } from './cms/collections/Media';
 import { Users } from './cms/collections/Users';
+import { About } from './cms/globals/About';
 import { Donate } from './cms/globals/Donate';
 import { EventsPage } from './cms/globals/EventsPage';
 import { InOffice } from './cms/globals/InOffice';
@@ -35,7 +36,7 @@ export default buildConfig({
     },
   },
   collections: [Events, Media, Users],
-  globals: [SiteSettings, Donate, InOffice, EventsPage],
+  globals: [SiteSettings, About, Donate, InOffice, EventsPage],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
   // Public site reads through the Local API only; GraphQL is unused.

@@ -247,6 +247,52 @@ const seedDonate = (payload: Payload, log: Seeded) =>
       'Contributions or gifts to Weisburn for Sheriff are not tax deductible. The maximum amount an individual may contribute is governed by Ohio campaign finance law. Federal law prohibits contributions from foreign nationals and from any corporation.',
   });
 
+const seedAbout = async (payload: Payload, log: Seeded) => {
+  const heroImage = await seedMedia(
+    payload,
+    log,
+    'asset:/new-may-2026/Sheriff_Weisburn_First_to_Serve_Star1.JPG',
+    'new-may-2026/Sheriff_Weisburn_First_to_Serve_Star1.JPG',
+    'Sheriff Eric Weisburn beside the Stark County sheriff star',
+  );
+  const signature = await seedMedia(payload, log, 'asset:/signature.png', 'signature.png', 'Eric Weisburn signature');
+  const signOffImage = await seedMedia(
+    payload,
+    log,
+    'asset:/new-may-2026/2025_Greek_Festival.jpg',
+    'new-may-2026/2025_Greek_Festival.jpg',
+    'Sheriff Weisburn serving at the Stark County Greek Festival',
+  );
+  await seedPageGlobal(payload, log, 'about', {
+    overline: 'On Oath · Service Record',
+    heading: 'Meet Sheriff',
+    headingAccent: 'Eric Weisburn',
+    intro: "Thank you for taking the time to learn more about me and my career with the Stark County Sheriff’s Office. A career built on service to my community — from the firehouse, to the patrol car, to serve as YOUR Sheriff.",
+    heroImage,
+    heroImageCaption: 'First To Serve — Stark County',
+    originsOverline: 'Origins',
+    originsBody: "I am a lifetime resident of Stark County. Growing up in a small town, my parents Jack and Maxine instilled upon me at a young age the importance of service to our community. At 16 years old, I started my career of service as a firefighter for the Waynesburg Volunteer Fire Department…eventually rising to the rank of Fire Chief as my father and brother had done before me. I also aided my community as an EMT with Quad ambulance.",
+    timelineOverline: 'Career In Service',
+    timelineHeading: 'Service Record.',
+    timeline: [
+      { year: "1991", text: "My career in law enforcement started when I was hired as a Corrections Officer for the Stark County Sheriff’s Office. In that position, I was responsible for the safety and security of the inmates held within the jail. I was often assigned to the mental health wing of the jail, where I saw first-hand the mental health struggles so many inmates deal with and the devastating effects it has on them and our community. I strongly believe early intervention with mental health services is crucial for the betterment of both the inmate and society." },
+      { year: "1998", text: "I completed the police officer academy and was assigned to the patrol division. While in this division, I traveled throughout Stark County responding to every type of call imaginable. I had several specialized assignments, including being the first SRO (School Resource Officer) for Plain Local School District, where I served for three years. I was then selected to be the Investigator for child sexual and physical abuse cases, working closely with case workers, prosecutors and other police agencies to successfully arrest and incarcerate the monsters who abuse children. Our mission was to always bring any resemblance of justice to the victims and families." },
+      { year: "2005", text: "I was promoted to Sergeant where I continued to serve the citizens of Stark County as a shift supervisor. I was responsible for the safety of not only the citizens of the county, but for the deputies who served under my command. It was a true honor to supervise professional and dedicated deputies, who worked together to protect and serve the citizens of Stark County." },
+      { year: "2007", text: "I was the lead investigator in the missing person case of Jessie Marie Davis, who was in her final month of pregnancy when she was murdered. Her body was taken to another location and her two-year-old son was left at home alone for two days forced to survive on his own. I worked closely with deputies and countless other federal, state and local agencies to find the suspects responsible for the deaths of Jessie and her unborn daughter, Chloe. So many lives were destroyed in this incident and the pain will last forever for those affected. But someone had to go to prison, I had no problem putting him there." },
+      { year: "2016", text: "I was promoted to Lieutenant and was transferred to the corrections division and served as an Assistant Jail Commander. I was involved in all aspects of jail management and the daily operations of the correction division. Furthermore, in this position I ensured the Sheriff’s Office was compliant with the minimum jail standards for Ohio set by the Department of Rehabilitation and Corrections, along with local fire and health codes." },
+      { year: "2022", text: "After a rewarding 31 years, I retired from the Stark County Sheriff’s Office." },
+      { year: "2024", text: "Team Weisburn for Sheriff worked tirelessly all summer to share Eric Weisburn’s vision and why he was the right choice for Sheriff. From parades and festivals to community events, we connected with voters across Stark County. On November 5th, the people spoke — choosing Eric Weisburn to lead the Sheriff’s Office in a new direction." },
+      { year: "Currently", text: "Sheriff Eric Weisburn began his term January 6, 2025. Sheriff Weisburn is honored to serve as **YOUR** Sheriff of Stark County. Thank you for your trust and support. We won the election in November 2024, but the fight to keep Stark County safe is far from over. Please consider contributing today to support Weisburn For Sheriff." },
+    ],
+    signOffGreeting: 'Respectfully,',
+    signature,
+    signOffName: 'Sheriff Eric Weisburn',
+    signOffButtons: [button('Contribute', '/donate'), button('Upcoming Events', '/events', 'secondary')],
+    signOffImage,
+    signOffImageCaption: 'Serving The Community',
+  });
+};
+
 async function seedGolfEvent(payload: Payload, log: Seeded) {
   const importKey = 'event:golf-2026';
   const existing = await payload.find({
@@ -338,6 +384,7 @@ export async function seed(payload: Payload): Promise<Seeded> {
   await seedEventsPage(payload, log);
   await seedInOffice(payload, log);
   await seedDonate(payload, log);
+  await seedAbout(payload, log);
   await seedGolfEvent(payload, log);
   return log;
 }
