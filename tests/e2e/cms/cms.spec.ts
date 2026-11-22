@@ -9,7 +9,7 @@ import { SETUP_LINK_FILE, TEST_ADMIN } from '../../../playwright.config';
  */
 test.describe.configure({ mode: 'serial' });
 
-const ADMIN_PASSWORD = 'Admin-e2e-password-1!';
+const ADMIN_PASSWORD = TEST_ADMIN.password;
 const EDITOR = { name: 'Test Editor', email: 'editor@e2e.test', password: 'Editor-e2e-password-1!' };
 const FRESHNESS_MS = 10_000;
 

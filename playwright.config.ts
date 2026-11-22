@@ -19,7 +19,7 @@ const baseURL = externalBaseURL ?? `http://localhost:${PORT}`;
 if (!externalBaseURL) nextEnv.loadEnvConfig(process.cwd(), true);
 
 export const SETUP_LINK_FILE = 'tests/e2e/.state/admin-setup.json';
-export const TEST_ADMIN = { name: 'Test Admin', email: 'admin@e2e.test' };
+export const TEST_ADMIN = { name: 'Test Admin', email: 'admin@e2e.test', password: 'Admin-e2e-password-1!' };
 
 const testDbUri = (process.env.DATABASE_URL ?? '').replace(/\/[^/?]+(\?|$)/, '/wbfs_e2e$1');
 const serverEnv: Record<string, string> = {
@@ -74,6 +74,13 @@ export default defineConfig({
       use: desktop,
       dependencies: ['smoke', 'text', 'visual-desktop', 'visual-mobile'],
       fullyParallel: false,
+    },
+    // Editor-guide screenshots (docs/cms/screenshots), taken after the CMS tests set up the admin.
+    {
+      name: 'docs-screenshots',
+      testMatch: /manual\/screenshots\.spec\.ts/,
+      use: { ...desktop, colorScheme: 'light' },
+      dependencies: ['cms'],
     },
   ],
   webServer: externalBaseURL
