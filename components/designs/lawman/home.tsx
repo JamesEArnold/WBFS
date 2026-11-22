@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import { RenderBlocks } from '@/components/blocks/render-blocks';
 import Link from 'next/link';
 import { CmsButton } from '@/components/ui/cms-button';
 import { EmailSignupForm } from '@/components/ui/email-signup';
@@ -504,6 +505,7 @@ export const LawmanHome = ({ page, social }: Props & { social: Social }) => {
       <Gallery page={page} />
       <VolunteerSection page={page} />
       <GetInvolved page={page} social={social} />
+      <RenderBlocks blocks={page.extraSections} />
     </main>
   );
 };

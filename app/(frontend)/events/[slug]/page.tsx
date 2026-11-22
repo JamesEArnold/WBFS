@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { RenderBlocks } from "@/components/blocks/render-blocks";
 import { notFound } from "next/navigation";
 import { LAWMAN } from "@/components/designs/lawman/theme";
 import { CmsButton } from "@/components/ui/cms-button";
@@ -148,6 +149,7 @@ export default async function EventPage({ params }: { params: Promise<{ slug: st
           </div>
         </section>
       )}
+      <RenderBlocks blocks={event.extraSections} />
     </main>
   );
 }

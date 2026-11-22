@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import { RenderBlocks } from '@/components/blocks/render-blocks';
 import { notFound } from 'next/navigation';
 import { LAWMAN } from '@/components/designs/lawman/theme';
 import { Highlighted } from '@/components/ui/highlighted';
@@ -178,6 +179,7 @@ export default async function Donate() {
           {page.disclaimer}
         </p>
       </section>
+      <RenderBlocks blocks={page.extraSections} />
     </main>
   );
 }

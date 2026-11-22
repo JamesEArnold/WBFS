@@ -1,5 +1,6 @@
 import type { CollectionConfig } from 'payload';
 import { isStaff } from '../access/roles';
+import { extraSectionsField } from '../blocks';
 import { buttonsField, headingFields } from '../fields/link';
 import { lockSlugAfterPublish, slugFields } from '../fields/slug';
 import { invalidateAfterChange, invalidateAfterDelete } from '../hooks/invalidate';
@@ -121,6 +122,7 @@ export const Events: CollectionConfig = {
         { name: 'flyerCaption', type: 'text', admin: { description: 'e.g. "Tap either page to open the printable PDF".' } },
       ],
     },
+    extraSectionsField(),
     { name: 'importKey', type: 'text', unique: true, index: true, admin: { hidden: true } },
   ],
 };

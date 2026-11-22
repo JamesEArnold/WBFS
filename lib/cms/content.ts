@@ -1,7 +1,7 @@
 import { draftMode } from 'next/headers';
-import type { Event, Media } from '@/payload-types';
-import { previewEventBySlug, previewListedEvents, previewPageGlobal } from './preview';
-import { getEventBySlug, getPageGlobal, listListedEvents, type PageGlobal, type PageGlobalSlug } from './public';
+import type { Event, Media, Page } from '@/payload-types';
+import { previewEventBySlug, previewListedEvents, previewPageBySlug, previewPageGlobal } from './preview';
+import { getEventBySlug, getPageBySlug, getPageGlobal, listListedEvents, type PageGlobal, type PageGlobalSlug } from './public';
 
 /**
  * Page-facing data access: published content normally, drafts when an editor
@@ -22,6 +22,10 @@ export async function loadListedEvents(): Promise<Event[]> {
 
 export async function loadEvent(slug: string): Promise<Event | null> {
   return (await isPreview()) ? previewEventBySlug(slug) : getEventBySlug(slug);
+}
+
+export async function loadPage(slug: string): Promise<Page | null> {
+  return (await isPreview()) ? previewPageBySlug(slug) : getPageBySlug(slug);
 }
 
 /**

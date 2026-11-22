@@ -1,23 +1,33 @@
-import type { CollectionBeforeDeleteHook, GlobalSlug, PayloadRequest, Where } from 'payload';
+import type { CollectionBeforeDeleteHook, CollectionSlug, GlobalSlug, PayloadRequest } from 'payload';
 import { ValidationError } from 'payload';
+import { BLOCK_MEDIA_PATHS } from '../blocks';
+
+const blockPaths = (field: string) => BLOCK_MEDIA_PATHS.map((path) => `${field}.${path}`);
 
 /**
  * Where Media can be referenced. Keep this in sync when adding upload/relationship
- * fields that point at `media` (tests/integration/media.test.ts covers each entry).
+ * fields that point at `media` (exercised by the media tests in tests/e2e/cms).
  */
-export const MEDIA_REFERENCES: { collection: 'events'; label: string; paths: string[] }[] = [
+export const MEDIA_REFERENCES: { collection: CollectionSlug; label: string; paths: string[] }[] = [
   {
     collection: 'events',
     label: 'Event',
-    paths: ['flyerPdf', 'flyerImages.image', 'buttons.file'],
+    paths: ['flyerPdf', 'flyerImages.image', 'buttons.file', ...blockPaths('extraSections')],
   },
+  { collection: 'pages', label: 'Page', paths: blockPaths('sections') },
 ];
 
 /** Page globals that can reference Media, with the field paths (arrays are walked). */
 export const GLOBAL_MEDIA_REFERENCES: { global: GlobalSlug; label: string; paths: string[] }[] = [
-  { global: 'home', label: 'Home page', paths: ['heroButtons.file', 'portraitImage', 'gallery.image'] },
-  { global: 'about', label: 'About page', paths: ['heroImage', 'signature', 'signOffImage', 'signOffButtons.file'] },
-  { global: 'inOffice', label: 'In Office page', paths: ['ctaButtons.file'] },
+  { global: 'home', label: 'Home page', paths: ['heroButtons.file', 'portraitImage', 'gallery.image', ...blockPaths('extraSections')] },
+  {
+    global: 'about',
+    label: 'About page',
+    paths: ['heroImage', 'signature', 'signOffImage', 'signOffButtons.file', ...blockPaths('extraSections')],
+  },
+  { global: 'donate', label: 'Donate page', paths: blockPaths('extraSections') },
+  { global: 'inOffice', label: 'In Office page', paths: ['ctaButtons.file', ...blockPaths('extraSections')] },
+  { global: 'eventsPage', label: 'Events page', paths: ['emptyState.buttons.file', ...blockPaths('extraSections')] },
 ];
 
 /** Values at a dotted path, walking into arrays/groups: "flyerImages.image" → every image id. */
@@ -34,15 +44,14 @@ const sameId = (value: unknown, id: number | string) =>
 export async function findMediaUsage(req: PayloadRequest, mediaId: number | string): Promise<string[]> {
   const usedIn = new Set<string>();
   for (const ref of MEDIA_REFERENCES) {
-    const where: Where = { or: ref.paths.map((path) => ({ [path]: { equals: mediaId } })) };
     // Check both the published and the latest draft version of every document.
+    // Small site: scanning every document is simpler than querying inside blocks.
     for (const draft of [false, true]) {
       const result = await req.payload.find({
         collection: ref.collection,
-        where,
         draft,
         depth: 0,
-        limit: 50,
+        limit: 0,
         pagination: false,
         // Integrity check: must see every document regardless of who is deleting
         // (also works for scripts, which have no logged-in user).
@@ -50,7 +59,9 @@ export async function findMediaUsage(req: PayloadRequest, mediaId: number | stri
         req,
       });
       for (const doc of result.docs) {
-        usedIn.add(`${ref.label}: ${(doc as { title?: string }).title ?? doc.id}`);
+        if (ref.paths.some((path) => valuesAtPath(doc, path.split('.')).some((v) => sameId(v, mediaId)))) {
+          usedIn.add(`${ref.label}: ${(doc as { title?: string }).title ?? doc.id}`);
+        }
       }
     }
   }

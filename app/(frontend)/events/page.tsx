@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { RenderBlocks } from "@/components/blocks/render-blocks";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { LAWMAN } from "@/components/designs/lawman/theme";
@@ -193,6 +194,7 @@ export default async function EventsPage() {
           )}
         </div>
       </section>
+      <RenderBlocks blocks={page.extraSections} />
     </main>
   );
 }

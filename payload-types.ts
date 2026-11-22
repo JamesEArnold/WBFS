@@ -67,6 +67,7 @@ export interface Config {
   };
   blocks: {};
   collections: {
+    pages: Page;
     events: Event;
     media: Media;
     users: User;
@@ -77,6 +78,7 @@ export interface Config {
   };
   collectionsJoins: {};
   collectionsSelect: {
+    pages: PagesSelect<false> | PagesSelect<true>;
     events: EventsSelect<false> | EventsSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
@@ -131,6 +133,335 @@ export interface UserAuthOperations {
   unlock: {
     email: string;
     password: string;
+  };
+}
+/**
+ * New pages built from sections. Publish to put a page on the site at weisburnforsheriff.com/<address>.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "pages".
+ */
+export interface Page {
+  id: number;
+  /**
+   * Shown in the browser tab and search results.
+   */
+  title: string;
+  /**
+   * The page address, e.g. "summer-picnic" → /events/summer-picnic. Leave blank to fill in from the title. Can’t be changed after first publish.
+   */
+  slug: string;
+  firstPublishedAt?: string | null;
+  /**
+   * One or two sentences for search results and link previews.
+   */
+  description?: string | null;
+  /**
+   * Build the page top to bottom. Start with a "Page heading" section; it becomes the page title on the site.
+   */
+  sections?:
+    | (
+        | {
+            /**
+             * Small gold line. Stars are added automatically.
+             */
+            overline?: string | null;
+            heading: string;
+            /**
+             * Optional second line shown in gold.
+             */
+            headingAccent?: string | null;
+            intro?: string | null;
+            /**
+             * Optional photo beside the heading.
+             */
+            image?: (number | null) | Media;
+            /**
+             * Gold strip across the bottom of the photo.
+             */
+            imageCaption?: string | null;
+            buttons?:
+              | {
+                  label: string;
+                  linkType?: ('url' | 'file') | null;
+                  /**
+                   * e.g. /donate, https://…, or mailto:someone@example.com
+                   */
+                  url?: string | null;
+                  file?: (number | null) | Media;
+                  style?: ('primary' | 'secondary') | null;
+                  newTab?: boolean | null;
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'heroBanner';
+          }
+        | {
+            /**
+             * Small gold line. Stars are added automatically.
+             */
+            overline?: string | null;
+            heading?: string | null;
+            body: {
+              root: {
+                type: string;
+                children: {
+                  type: any;
+                  version: number;
+                  [k: string]: unknown;
+                }[];
+                direction: ('ltr' | 'rtl') | null;
+                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                indent: number;
+                version: number;
+              };
+              [k: string]: unknown;
+            };
+            /**
+             * Alternate backgrounds between sections to separate them.
+             */
+            background?: ('black' | 'nearBlack') | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'richText';
+          }
+        | {
+            image: number | Media;
+            /**
+             * Gold strip across the bottom of the photo.
+             */
+            imageCaption?: string | null;
+            imagePosition?: ('left' | 'right') | null;
+            /**
+             * Small gold line. Stars are added automatically.
+             */
+            overline?: string | null;
+            heading: string;
+            /**
+             * Wrap words in **double stars** to highlight them.
+             */
+            body?: string | null;
+            buttons?:
+              | {
+                  label: string;
+                  linkType?: ('url' | 'file') | null;
+                  /**
+                   * e.g. /donate, https://…, or mailto:someone@example.com
+                   */
+                  url?: string | null;
+                  file?: (number | null) | Media;
+                  style?: ('primary' | 'secondary') | null;
+                  newTab?: boolean | null;
+                  id?: string | null;
+                }[]
+              | null;
+            /**
+             * Alternate backgrounds between sections to separate them.
+             */
+            background?: ('black' | 'nearBlack') | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'imageWithText';
+          }
+        | {
+            /**
+             * Small gold line. Stars are added automatically.
+             */
+            overline?: string | null;
+            heading?: string | null;
+            photos?:
+              | {
+                  image: number | Media;
+                  caption?: string | null;
+                  id?: string | null;
+                }[]
+              | null;
+            /**
+             * Alternate backgrounds between sections to separate them.
+             */
+            background?: ('black' | 'nearBlack') | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'photoGallery';
+          }
+        | {
+            /**
+             * Small gold line. Stars are added automatically.
+             */
+            overline?: string | null;
+            heading?: string | null;
+            items?:
+              | {
+                  text: string;
+                  id?: string | null;
+                }[]
+              | null;
+            /**
+             * Alternate backgrounds between sections to separate them.
+             */
+            background?: ('black' | 'nearBlack') | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'factsList';
+          }
+        | {
+            /**
+             * Small gold line. Stars are added automatically.
+             */
+            overline?: string | null;
+            heading: string;
+            body?: string | null;
+            buttons?:
+              | {
+                  label: string;
+                  linkType?: ('url' | 'file') | null;
+                  /**
+                   * e.g. /donate, https://…, or mailto:someone@example.com
+                   */
+                  url?: string | null;
+                  file?: (number | null) | Media;
+                  style?: ('primary' | 'secondary') | null;
+                  newTab?: boolean | null;
+                  id?: string | null;
+                }[]
+              | null;
+            /**
+             * Alternate backgrounds between sections to separate them.
+             */
+            background?: ('black' | 'nearBlack') | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'ctaButtons';
+          }
+        | {
+            /**
+             * Small gold line. Stars are added automatically.
+             */
+            overline?: string | null;
+            heading?: string | null;
+            entries?:
+              | {
+                  /**
+                   * e.g. a year: "2025".
+                   */
+                  label: string;
+                  /**
+                   * Wrap words in **double stars** to highlight them.
+                   */
+                  text: string;
+                  id?: string | null;
+                }[]
+              | null;
+            /**
+             * Alternate backgrounds between sections to separate them.
+             */
+            background?: ('black' | 'nearBlack') | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'timeline';
+          }
+        | {
+            /**
+             * Shown in italics on a cream band.
+             */
+            quote: string;
+            attribution?: string | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'quoteBand';
+          }
+        | {
+            /**
+             * Small gold line. Stars are added automatically.
+             */
+            overline?: string | null;
+            heading?: string | null;
+            /**
+             * The embed address from Donorbox, YouTube (…/embed/…) or Facebook.
+             */
+            url: string;
+            /**
+             * Describes the embed for screen readers.
+             */
+            title: string;
+            /**
+             * Height in pixels.
+             */
+            height?: number | null;
+            /**
+             * Alternate backgrounds between sections to separate them.
+             */
+            background?: ('black' | 'nearBlack') | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'embed';
+          }
+        | {
+            heading: string;
+            body?: string | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'soldOutBanner';
+          }
+      )[]
+    | null;
+  importKey?: string | null;
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "media".
+ */
+export interface Media {
+  id: number;
+  /**
+   * Describe the image for people using screen readers, e.g. "Sheriff Weisburn at the 2025 parade". For PDFs, describe the document.
+   */
+  alt: string;
+  caption?: string | null;
+  importKey?: string | null;
+  prefix?: string | null;
+  _objectKey?: string | null;
+  updatedAt: string;
+  createdAt: string;
+  url?: string | null;
+  thumbnailURL?: string | null;
+  filename?: string | null;
+  mimeType?: string | null;
+  filesize?: number | null;
+  width?: number | null;
+  height?: number | null;
+  focalX?: number | null;
+  focalY?: number | null;
+  sizes?: {
+    small?: {
+      url?: string | null;
+      width?: number | null;
+      height?: number | null;
+      mimeType?: string | null;
+      filesize?: number | null;
+      filename?: string | null;
+    };
+    medium?: {
+      url?: string | null;
+      width?: number | null;
+      height?: number | null;
+      mimeType?: string | null;
+      filesize?: number | null;
+      filename?: string | null;
+    };
+    large?: {
+      url?: string | null;
+      width?: number | null;
+      height?: number | null;
+      mimeType?: string | null;
+      filesize?: number | null;
+      filename?: string | null;
+    };
   };
 }
 /**
@@ -225,62 +556,261 @@ export interface Event {
    * e.g. "Tap either page to open the printable PDF".
    */
   flyerCaption?: string | null;
+  /**
+   * Optional sections added at the bottom of the page, before the footer.
+   */
+  extraSections?:
+    | (
+        | {
+            /**
+             * Small gold line. Stars are added automatically.
+             */
+            overline?: string | null;
+            heading: string;
+            /**
+             * Optional second line shown in gold.
+             */
+            headingAccent?: string | null;
+            intro?: string | null;
+            /**
+             * Optional photo beside the heading.
+             */
+            image?: (number | null) | Media;
+            /**
+             * Gold strip across the bottom of the photo.
+             */
+            imageCaption?: string | null;
+            buttons?:
+              | {
+                  label: string;
+                  linkType?: ('url' | 'file') | null;
+                  /**
+                   * e.g. /donate, https://…, or mailto:someone@example.com
+                   */
+                  url?: string | null;
+                  file?: (number | null) | Media;
+                  style?: ('primary' | 'secondary') | null;
+                  newTab?: boolean | null;
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'heroBanner';
+          }
+        | {
+            /**
+             * Small gold line. Stars are added automatically.
+             */
+            overline?: string | null;
+            heading?: string | null;
+            body: {
+              root: {
+                type: string;
+                children: {
+                  type: any;
+                  version: number;
+                  [k: string]: unknown;
+                }[];
+                direction: ('ltr' | 'rtl') | null;
+                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                indent: number;
+                version: number;
+              };
+              [k: string]: unknown;
+            };
+            /**
+             * Alternate backgrounds between sections to separate them.
+             */
+            background?: ('black' | 'nearBlack') | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'richText';
+          }
+        | {
+            image: number | Media;
+            /**
+             * Gold strip across the bottom of the photo.
+             */
+            imageCaption?: string | null;
+            imagePosition?: ('left' | 'right') | null;
+            /**
+             * Small gold line. Stars are added automatically.
+             */
+            overline?: string | null;
+            heading: string;
+            /**
+             * Wrap words in **double stars** to highlight them.
+             */
+            body?: string | null;
+            buttons?:
+              | {
+                  label: string;
+                  linkType?: ('url' | 'file') | null;
+                  /**
+                   * e.g. /donate, https://…, or mailto:someone@example.com
+                   */
+                  url?: string | null;
+                  file?: (number | null) | Media;
+                  style?: ('primary' | 'secondary') | null;
+                  newTab?: boolean | null;
+                  id?: string | null;
+                }[]
+              | null;
+            /**
+             * Alternate backgrounds between sections to separate them.
+             */
+            background?: ('black' | 'nearBlack') | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'imageWithText';
+          }
+        | {
+            /**
+             * Small gold line. Stars are added automatically.
+             */
+            overline?: string | null;
+            heading?: string | null;
+            photos?:
+              | {
+                  image: number | Media;
+                  caption?: string | null;
+                  id?: string | null;
+                }[]
+              | null;
+            /**
+             * Alternate backgrounds between sections to separate them.
+             */
+            background?: ('black' | 'nearBlack') | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'photoGallery';
+          }
+        | {
+            /**
+             * Small gold line. Stars are added automatically.
+             */
+            overline?: string | null;
+            heading?: string | null;
+            items?:
+              | {
+                  text: string;
+                  id?: string | null;
+                }[]
+              | null;
+            /**
+             * Alternate backgrounds between sections to separate them.
+             */
+            background?: ('black' | 'nearBlack') | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'factsList';
+          }
+        | {
+            /**
+             * Small gold line. Stars are added automatically.
+             */
+            overline?: string | null;
+            heading: string;
+            body?: string | null;
+            buttons?:
+              | {
+                  label: string;
+                  linkType?: ('url' | 'file') | null;
+                  /**
+                   * e.g. /donate, https://…, or mailto:someone@example.com
+                   */
+                  url?: string | null;
+                  file?: (number | null) | Media;
+                  style?: ('primary' | 'secondary') | null;
+                  newTab?: boolean | null;
+                  id?: string | null;
+                }[]
+              | null;
+            /**
+             * Alternate backgrounds between sections to separate them.
+             */
+            background?: ('black' | 'nearBlack') | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'ctaButtons';
+          }
+        | {
+            /**
+             * Small gold line. Stars are added automatically.
+             */
+            overline?: string | null;
+            heading?: string | null;
+            entries?:
+              | {
+                  /**
+                   * e.g. a year: "2025".
+                   */
+                  label: string;
+                  /**
+                   * Wrap words in **double stars** to highlight them.
+                   */
+                  text: string;
+                  id?: string | null;
+                }[]
+              | null;
+            /**
+             * Alternate backgrounds between sections to separate them.
+             */
+            background?: ('black' | 'nearBlack') | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'timeline';
+          }
+        | {
+            /**
+             * Shown in italics on a cream band.
+             */
+            quote: string;
+            attribution?: string | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'quoteBand';
+          }
+        | {
+            /**
+             * Small gold line. Stars are added automatically.
+             */
+            overline?: string | null;
+            heading?: string | null;
+            /**
+             * The embed address from Donorbox, YouTube (…/embed/…) or Facebook.
+             */
+            url: string;
+            /**
+             * Describes the embed for screen readers.
+             */
+            title: string;
+            /**
+             * Height in pixels.
+             */
+            height?: number | null;
+            /**
+             * Alternate backgrounds between sections to separate them.
+             */
+            background?: ('black' | 'nearBlack') | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'embed';
+          }
+        | {
+            heading: string;
+            body?: string | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'soldOutBanner';
+          }
+      )[]
+    | null;
   importKey?: string | null;
   updatedAt: string;
   createdAt: string;
   _status?: ('draft' | 'published') | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "media".
- */
-export interface Media {
-  id: number;
-  /**
-   * Describe the image for people using screen readers, e.g. "Sheriff Weisburn at the 2025 parade". For PDFs, describe the document.
-   */
-  alt: string;
-  caption?: string | null;
-  importKey?: string | null;
-  prefix?: string | null;
-  _objectKey?: string | null;
-  updatedAt: string;
-  createdAt: string;
-  url?: string | null;
-  thumbnailURL?: string | null;
-  filename?: string | null;
-  mimeType?: string | null;
-  filesize?: number | null;
-  width?: number | null;
-  height?: number | null;
-  focalX?: number | null;
-  focalY?: number | null;
-  sizes?: {
-    small?: {
-      url?: string | null;
-      width?: number | null;
-      height?: number | null;
-      mimeType?: string | null;
-      filesize?: number | null;
-      filename?: string | null;
-    };
-    medium?: {
-      url?: string | null;
-      width?: number | null;
-      height?: number | null;
-      mimeType?: string | null;
-      filesize?: number | null;
-      filename?: string | null;
-    };
-    large?: {
-      url?: string | null;
-      width?: number | null;
-      height?: number | null;
-      mimeType?: string | null;
-      filesize?: number | null;
-      filename?: string | null;
-    };
-  };
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -333,6 +863,10 @@ export interface PayloadKv {
 export interface PayloadLockedDocument {
   id: number;
   document?:
+    | ({
+        relationTo: 'pages';
+        value: number | Page;
+      } | null)
     | ({
         relationTo: 'events';
         value: number | Event;
@@ -389,6 +923,177 @@ export interface PayloadMigration {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "pages_select".
+ */
+export interface PagesSelect<T extends boolean = true> {
+  title?: T;
+  slug?: T;
+  firstPublishedAt?: T;
+  description?: T;
+  sections?:
+    | T
+    | {
+        heroBanner?:
+          | T
+          | {
+              overline?: T;
+              heading?: T;
+              headingAccent?: T;
+              intro?: T;
+              image?: T;
+              imageCaption?: T;
+              buttons?:
+                | T
+                | {
+                    label?: T;
+                    linkType?: T;
+                    url?: T;
+                    file?: T;
+                    style?: T;
+                    newTab?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        richText?:
+          | T
+          | {
+              overline?: T;
+              heading?: T;
+              body?: T;
+              background?: T;
+              id?: T;
+              blockName?: T;
+            };
+        imageWithText?:
+          | T
+          | {
+              image?: T;
+              imageCaption?: T;
+              imagePosition?: T;
+              overline?: T;
+              heading?: T;
+              body?: T;
+              buttons?:
+                | T
+                | {
+                    label?: T;
+                    linkType?: T;
+                    url?: T;
+                    file?: T;
+                    style?: T;
+                    newTab?: T;
+                    id?: T;
+                  };
+              background?: T;
+              id?: T;
+              blockName?: T;
+            };
+        photoGallery?:
+          | T
+          | {
+              overline?: T;
+              heading?: T;
+              photos?:
+                | T
+                | {
+                    image?: T;
+                    caption?: T;
+                    id?: T;
+                  };
+              background?: T;
+              id?: T;
+              blockName?: T;
+            };
+        factsList?:
+          | T
+          | {
+              overline?: T;
+              heading?: T;
+              items?:
+                | T
+                | {
+                    text?: T;
+                    id?: T;
+                  };
+              background?: T;
+              id?: T;
+              blockName?: T;
+            };
+        ctaButtons?:
+          | T
+          | {
+              overline?: T;
+              heading?: T;
+              body?: T;
+              buttons?:
+                | T
+                | {
+                    label?: T;
+                    linkType?: T;
+                    url?: T;
+                    file?: T;
+                    style?: T;
+                    newTab?: T;
+                    id?: T;
+                  };
+              background?: T;
+              id?: T;
+              blockName?: T;
+            };
+        timeline?:
+          | T
+          | {
+              overline?: T;
+              heading?: T;
+              entries?:
+                | T
+                | {
+                    label?: T;
+                    text?: T;
+                    id?: T;
+                  };
+              background?: T;
+              id?: T;
+              blockName?: T;
+            };
+        quoteBand?:
+          | T
+          | {
+              quote?: T;
+              attribution?: T;
+              id?: T;
+              blockName?: T;
+            };
+        embed?:
+          | T
+          | {
+              overline?: T;
+              heading?: T;
+              url?: T;
+              title?: T;
+              height?: T;
+              background?: T;
+              id?: T;
+              blockName?: T;
+            };
+        soldOutBanner?:
+          | T
+          | {
+              heading?: T;
+              body?: T;
+              id?: T;
+              blockName?: T;
+            };
+      };
+  importKey?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "events_select".
  */
 export interface EventsSelect<T extends boolean = true> {
@@ -436,6 +1141,163 @@ export interface EventsSelect<T extends boolean = true> {
         id?: T;
       };
   flyerCaption?: T;
+  extraSections?:
+    | T
+    | {
+        heroBanner?:
+          | T
+          | {
+              overline?: T;
+              heading?: T;
+              headingAccent?: T;
+              intro?: T;
+              image?: T;
+              imageCaption?: T;
+              buttons?:
+                | T
+                | {
+                    label?: T;
+                    linkType?: T;
+                    url?: T;
+                    file?: T;
+                    style?: T;
+                    newTab?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        richText?:
+          | T
+          | {
+              overline?: T;
+              heading?: T;
+              body?: T;
+              background?: T;
+              id?: T;
+              blockName?: T;
+            };
+        imageWithText?:
+          | T
+          | {
+              image?: T;
+              imageCaption?: T;
+              imagePosition?: T;
+              overline?: T;
+              heading?: T;
+              body?: T;
+              buttons?:
+                | T
+                | {
+                    label?: T;
+                    linkType?: T;
+                    url?: T;
+                    file?: T;
+                    style?: T;
+                    newTab?: T;
+                    id?: T;
+                  };
+              background?: T;
+              id?: T;
+              blockName?: T;
+            };
+        photoGallery?:
+          | T
+          | {
+              overline?: T;
+              heading?: T;
+              photos?:
+                | T
+                | {
+                    image?: T;
+                    caption?: T;
+                    id?: T;
+                  };
+              background?: T;
+              id?: T;
+              blockName?: T;
+            };
+        factsList?:
+          | T
+          | {
+              overline?: T;
+              heading?: T;
+              items?:
+                | T
+                | {
+                    text?: T;
+                    id?: T;
+                  };
+              background?: T;
+              id?: T;
+              blockName?: T;
+            };
+        ctaButtons?:
+          | T
+          | {
+              overline?: T;
+              heading?: T;
+              body?: T;
+              buttons?:
+                | T
+                | {
+                    label?: T;
+                    linkType?: T;
+                    url?: T;
+                    file?: T;
+                    style?: T;
+                    newTab?: T;
+                    id?: T;
+                  };
+              background?: T;
+              id?: T;
+              blockName?: T;
+            };
+        timeline?:
+          | T
+          | {
+              overline?: T;
+              heading?: T;
+              entries?:
+                | T
+                | {
+                    label?: T;
+                    text?: T;
+                    id?: T;
+                  };
+              background?: T;
+              id?: T;
+              blockName?: T;
+            };
+        quoteBand?:
+          | T
+          | {
+              quote?: T;
+              attribution?: T;
+              id?: T;
+              blockName?: T;
+            };
+        embed?:
+          | T
+          | {
+              overline?: T;
+              heading?: T;
+              url?: T;
+              title?: T;
+              height?: T;
+              background?: T;
+              id?: T;
+              blockName?: T;
+            };
+        soldOutBanner?:
+          | T
+          | {
+              heading?: T;
+              body?: T;
+              id?: T;
+              blockName?: T;
+            };
+      };
   importKey?: T;
   updatedAt?: T;
   createdAt?: T;
@@ -750,6 +1612,257 @@ export interface Home {
   updatesOverline?: string | null;
   updatesHeading: string;
   updatesBody?: string | null;
+  /**
+   * Optional sections added at the bottom of the page, before the footer.
+   */
+  extraSections?:
+    | (
+        | {
+            /**
+             * Small gold line. Stars are added automatically.
+             */
+            overline?: string | null;
+            heading: string;
+            /**
+             * Optional second line shown in gold.
+             */
+            headingAccent?: string | null;
+            intro?: string | null;
+            /**
+             * Optional photo beside the heading.
+             */
+            image?: (number | null) | Media;
+            /**
+             * Gold strip across the bottom of the photo.
+             */
+            imageCaption?: string | null;
+            buttons?:
+              | {
+                  label: string;
+                  linkType?: ('url' | 'file') | null;
+                  /**
+                   * e.g. /donate, https://…, or mailto:someone@example.com
+                   */
+                  url?: string | null;
+                  file?: (number | null) | Media;
+                  style?: ('primary' | 'secondary') | null;
+                  newTab?: boolean | null;
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'heroBanner';
+          }
+        | {
+            /**
+             * Small gold line. Stars are added automatically.
+             */
+            overline?: string | null;
+            heading?: string | null;
+            body: {
+              root: {
+                type: string;
+                children: {
+                  type: any;
+                  version: number;
+                  [k: string]: unknown;
+                }[];
+                direction: ('ltr' | 'rtl') | null;
+                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                indent: number;
+                version: number;
+              };
+              [k: string]: unknown;
+            };
+            /**
+             * Alternate backgrounds between sections to separate them.
+             */
+            background?: ('black' | 'nearBlack') | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'richText';
+          }
+        | {
+            image: number | Media;
+            /**
+             * Gold strip across the bottom of the photo.
+             */
+            imageCaption?: string | null;
+            imagePosition?: ('left' | 'right') | null;
+            /**
+             * Small gold line. Stars are added automatically.
+             */
+            overline?: string | null;
+            heading: string;
+            /**
+             * Wrap words in **double stars** to highlight them.
+             */
+            body?: string | null;
+            buttons?:
+              | {
+                  label: string;
+                  linkType?: ('url' | 'file') | null;
+                  /**
+                   * e.g. /donate, https://…, or mailto:someone@example.com
+                   */
+                  url?: string | null;
+                  file?: (number | null) | Media;
+                  style?: ('primary' | 'secondary') | null;
+                  newTab?: boolean | null;
+                  id?: string | null;
+                }[]
+              | null;
+            /**
+             * Alternate backgrounds between sections to separate them.
+             */
+            background?: ('black' | 'nearBlack') | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'imageWithText';
+          }
+        | {
+            /**
+             * Small gold line. Stars are added automatically.
+             */
+            overline?: string | null;
+            heading?: string | null;
+            photos?:
+              | {
+                  image: number | Media;
+                  caption?: string | null;
+                  id?: string | null;
+                }[]
+              | null;
+            /**
+             * Alternate backgrounds between sections to separate them.
+             */
+            background?: ('black' | 'nearBlack') | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'photoGallery';
+          }
+        | {
+            /**
+             * Small gold line. Stars are added automatically.
+             */
+            overline?: string | null;
+            heading?: string | null;
+            items?:
+              | {
+                  text: string;
+                  id?: string | null;
+                }[]
+              | null;
+            /**
+             * Alternate backgrounds between sections to separate them.
+             */
+            background?: ('black' | 'nearBlack') | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'factsList';
+          }
+        | {
+            /**
+             * Small gold line. Stars are added automatically.
+             */
+            overline?: string | null;
+            heading: string;
+            body?: string | null;
+            buttons?:
+              | {
+                  label: string;
+                  linkType?: ('url' | 'file') | null;
+                  /**
+                   * e.g. /donate, https://…, or mailto:someone@example.com
+                   */
+                  url?: string | null;
+                  file?: (number | null) | Media;
+                  style?: ('primary' | 'secondary') | null;
+                  newTab?: boolean | null;
+                  id?: string | null;
+                }[]
+              | null;
+            /**
+             * Alternate backgrounds between sections to separate them.
+             */
+            background?: ('black' | 'nearBlack') | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'ctaButtons';
+          }
+        | {
+            /**
+             * Small gold line. Stars are added automatically.
+             */
+            overline?: string | null;
+            heading?: string | null;
+            entries?:
+              | {
+                  /**
+                   * e.g. a year: "2025".
+                   */
+                  label: string;
+                  /**
+                   * Wrap words in **double stars** to highlight them.
+                   */
+                  text: string;
+                  id?: string | null;
+                }[]
+              | null;
+            /**
+             * Alternate backgrounds between sections to separate them.
+             */
+            background?: ('black' | 'nearBlack') | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'timeline';
+          }
+        | {
+            /**
+             * Shown in italics on a cream band.
+             */
+            quote: string;
+            attribution?: string | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'quoteBand';
+          }
+        | {
+            /**
+             * Small gold line. Stars are added automatically.
+             */
+            overline?: string | null;
+            heading?: string | null;
+            /**
+             * The embed address from Donorbox, YouTube (…/embed/…) or Facebook.
+             */
+            url: string;
+            /**
+             * Describes the embed for screen readers.
+             */
+            title: string;
+            /**
+             * Height in pixels.
+             */
+            height?: number | null;
+            /**
+             * Alternate backgrounds between sections to separate them.
+             */
+            background?: ('black' | 'nearBlack') | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'embed';
+          }
+        | {
+            heading: string;
+            body?: string | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'soldOutBanner';
+          }
+      )[]
+    | null;
   _status?: ('draft' | 'published') | null;
   updatedAt?: string | null;
   createdAt?: string | null;
@@ -825,6 +1938,257 @@ export interface About {
    * Small line under the photo. Stars are added automatically.
    */
   signOffImageCaption?: string | null;
+  /**
+   * Optional sections added at the bottom of the page, before the footer.
+   */
+  extraSections?:
+    | (
+        | {
+            /**
+             * Small gold line. Stars are added automatically.
+             */
+            overline?: string | null;
+            heading: string;
+            /**
+             * Optional second line shown in gold.
+             */
+            headingAccent?: string | null;
+            intro?: string | null;
+            /**
+             * Optional photo beside the heading.
+             */
+            image?: (number | null) | Media;
+            /**
+             * Gold strip across the bottom of the photo.
+             */
+            imageCaption?: string | null;
+            buttons?:
+              | {
+                  label: string;
+                  linkType?: ('url' | 'file') | null;
+                  /**
+                   * e.g. /donate, https://…, or mailto:someone@example.com
+                   */
+                  url?: string | null;
+                  file?: (number | null) | Media;
+                  style?: ('primary' | 'secondary') | null;
+                  newTab?: boolean | null;
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'heroBanner';
+          }
+        | {
+            /**
+             * Small gold line. Stars are added automatically.
+             */
+            overline?: string | null;
+            heading?: string | null;
+            body: {
+              root: {
+                type: string;
+                children: {
+                  type: any;
+                  version: number;
+                  [k: string]: unknown;
+                }[];
+                direction: ('ltr' | 'rtl') | null;
+                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                indent: number;
+                version: number;
+              };
+              [k: string]: unknown;
+            };
+            /**
+             * Alternate backgrounds between sections to separate them.
+             */
+            background?: ('black' | 'nearBlack') | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'richText';
+          }
+        | {
+            image: number | Media;
+            /**
+             * Gold strip across the bottom of the photo.
+             */
+            imageCaption?: string | null;
+            imagePosition?: ('left' | 'right') | null;
+            /**
+             * Small gold line. Stars are added automatically.
+             */
+            overline?: string | null;
+            heading: string;
+            /**
+             * Wrap words in **double stars** to highlight them.
+             */
+            body?: string | null;
+            buttons?:
+              | {
+                  label: string;
+                  linkType?: ('url' | 'file') | null;
+                  /**
+                   * e.g. /donate, https://…, or mailto:someone@example.com
+                   */
+                  url?: string | null;
+                  file?: (number | null) | Media;
+                  style?: ('primary' | 'secondary') | null;
+                  newTab?: boolean | null;
+                  id?: string | null;
+                }[]
+              | null;
+            /**
+             * Alternate backgrounds between sections to separate them.
+             */
+            background?: ('black' | 'nearBlack') | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'imageWithText';
+          }
+        | {
+            /**
+             * Small gold line. Stars are added automatically.
+             */
+            overline?: string | null;
+            heading?: string | null;
+            photos?:
+              | {
+                  image: number | Media;
+                  caption?: string | null;
+                  id?: string | null;
+                }[]
+              | null;
+            /**
+             * Alternate backgrounds between sections to separate them.
+             */
+            background?: ('black' | 'nearBlack') | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'photoGallery';
+          }
+        | {
+            /**
+             * Small gold line. Stars are added automatically.
+             */
+            overline?: string | null;
+            heading?: string | null;
+            items?:
+              | {
+                  text: string;
+                  id?: string | null;
+                }[]
+              | null;
+            /**
+             * Alternate backgrounds between sections to separate them.
+             */
+            background?: ('black' | 'nearBlack') | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'factsList';
+          }
+        | {
+            /**
+             * Small gold line. Stars are added automatically.
+             */
+            overline?: string | null;
+            heading: string;
+            body?: string | null;
+            buttons?:
+              | {
+                  label: string;
+                  linkType?: ('url' | 'file') | null;
+                  /**
+                   * e.g. /donate, https://…, or mailto:someone@example.com
+                   */
+                  url?: string | null;
+                  file?: (number | null) | Media;
+                  style?: ('primary' | 'secondary') | null;
+                  newTab?: boolean | null;
+                  id?: string | null;
+                }[]
+              | null;
+            /**
+             * Alternate backgrounds between sections to separate them.
+             */
+            background?: ('black' | 'nearBlack') | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'ctaButtons';
+          }
+        | {
+            /**
+             * Small gold line. Stars are added automatically.
+             */
+            overline?: string | null;
+            heading?: string | null;
+            entries?:
+              | {
+                  /**
+                   * e.g. a year: "2025".
+                   */
+                  label: string;
+                  /**
+                   * Wrap words in **double stars** to highlight them.
+                   */
+                  text: string;
+                  id?: string | null;
+                }[]
+              | null;
+            /**
+             * Alternate backgrounds between sections to separate them.
+             */
+            background?: ('black' | 'nearBlack') | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'timeline';
+          }
+        | {
+            /**
+             * Shown in italics on a cream band.
+             */
+            quote: string;
+            attribution?: string | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'quoteBand';
+          }
+        | {
+            /**
+             * Small gold line. Stars are added automatically.
+             */
+            overline?: string | null;
+            heading?: string | null;
+            /**
+             * The embed address from Donorbox, YouTube (…/embed/…) or Facebook.
+             */
+            url: string;
+            /**
+             * Describes the embed for screen readers.
+             */
+            title: string;
+            /**
+             * Height in pixels.
+             */
+            height?: number | null;
+            /**
+             * Alternate backgrounds between sections to separate them.
+             */
+            background?: ('black' | 'nearBlack') | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'embed';
+          }
+        | {
+            heading: string;
+            body?: string | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'soldOutBanner';
+          }
+      )[]
+    | null;
   _status?: ('draft' | 'published') | null;
   updatedAt?: string | null;
   createdAt?: string | null;
@@ -882,6 +2246,257 @@ export interface Donate {
    * Legal small print at the bottom of the page.
    */
   disclaimer: string;
+  /**
+   * Optional sections added at the bottom of the page, before the footer.
+   */
+  extraSections?:
+    | (
+        | {
+            /**
+             * Small gold line. Stars are added automatically.
+             */
+            overline?: string | null;
+            heading: string;
+            /**
+             * Optional second line shown in gold.
+             */
+            headingAccent?: string | null;
+            intro?: string | null;
+            /**
+             * Optional photo beside the heading.
+             */
+            image?: (number | null) | Media;
+            /**
+             * Gold strip across the bottom of the photo.
+             */
+            imageCaption?: string | null;
+            buttons?:
+              | {
+                  label: string;
+                  linkType?: ('url' | 'file') | null;
+                  /**
+                   * e.g. /donate, https://…, or mailto:someone@example.com
+                   */
+                  url?: string | null;
+                  file?: (number | null) | Media;
+                  style?: ('primary' | 'secondary') | null;
+                  newTab?: boolean | null;
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'heroBanner';
+          }
+        | {
+            /**
+             * Small gold line. Stars are added automatically.
+             */
+            overline?: string | null;
+            heading?: string | null;
+            body: {
+              root: {
+                type: string;
+                children: {
+                  type: any;
+                  version: number;
+                  [k: string]: unknown;
+                }[];
+                direction: ('ltr' | 'rtl') | null;
+                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                indent: number;
+                version: number;
+              };
+              [k: string]: unknown;
+            };
+            /**
+             * Alternate backgrounds between sections to separate them.
+             */
+            background?: ('black' | 'nearBlack') | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'richText';
+          }
+        | {
+            image: number | Media;
+            /**
+             * Gold strip across the bottom of the photo.
+             */
+            imageCaption?: string | null;
+            imagePosition?: ('left' | 'right') | null;
+            /**
+             * Small gold line. Stars are added automatically.
+             */
+            overline?: string | null;
+            heading: string;
+            /**
+             * Wrap words in **double stars** to highlight them.
+             */
+            body?: string | null;
+            buttons?:
+              | {
+                  label: string;
+                  linkType?: ('url' | 'file') | null;
+                  /**
+                   * e.g. /donate, https://…, or mailto:someone@example.com
+                   */
+                  url?: string | null;
+                  file?: (number | null) | Media;
+                  style?: ('primary' | 'secondary') | null;
+                  newTab?: boolean | null;
+                  id?: string | null;
+                }[]
+              | null;
+            /**
+             * Alternate backgrounds between sections to separate them.
+             */
+            background?: ('black' | 'nearBlack') | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'imageWithText';
+          }
+        | {
+            /**
+             * Small gold line. Stars are added automatically.
+             */
+            overline?: string | null;
+            heading?: string | null;
+            photos?:
+              | {
+                  image: number | Media;
+                  caption?: string | null;
+                  id?: string | null;
+                }[]
+              | null;
+            /**
+             * Alternate backgrounds between sections to separate them.
+             */
+            background?: ('black' | 'nearBlack') | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'photoGallery';
+          }
+        | {
+            /**
+             * Small gold line. Stars are added automatically.
+             */
+            overline?: string | null;
+            heading?: string | null;
+            items?:
+              | {
+                  text: string;
+                  id?: string | null;
+                }[]
+              | null;
+            /**
+             * Alternate backgrounds between sections to separate them.
+             */
+            background?: ('black' | 'nearBlack') | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'factsList';
+          }
+        | {
+            /**
+             * Small gold line. Stars are added automatically.
+             */
+            overline?: string | null;
+            heading: string;
+            body?: string | null;
+            buttons?:
+              | {
+                  label: string;
+                  linkType?: ('url' | 'file') | null;
+                  /**
+                   * e.g. /donate, https://…, or mailto:someone@example.com
+                   */
+                  url?: string | null;
+                  file?: (number | null) | Media;
+                  style?: ('primary' | 'secondary') | null;
+                  newTab?: boolean | null;
+                  id?: string | null;
+                }[]
+              | null;
+            /**
+             * Alternate backgrounds between sections to separate them.
+             */
+            background?: ('black' | 'nearBlack') | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'ctaButtons';
+          }
+        | {
+            /**
+             * Small gold line. Stars are added automatically.
+             */
+            overline?: string | null;
+            heading?: string | null;
+            entries?:
+              | {
+                  /**
+                   * e.g. a year: "2025".
+                   */
+                  label: string;
+                  /**
+                   * Wrap words in **double stars** to highlight them.
+                   */
+                  text: string;
+                  id?: string | null;
+                }[]
+              | null;
+            /**
+             * Alternate backgrounds between sections to separate them.
+             */
+            background?: ('black' | 'nearBlack') | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'timeline';
+          }
+        | {
+            /**
+             * Shown in italics on a cream band.
+             */
+            quote: string;
+            attribution?: string | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'quoteBand';
+          }
+        | {
+            /**
+             * Small gold line. Stars are added automatically.
+             */
+            overline?: string | null;
+            heading?: string | null;
+            /**
+             * The embed address from Donorbox, YouTube (…/embed/…) or Facebook.
+             */
+            url: string;
+            /**
+             * Describes the embed for screen readers.
+             */
+            title: string;
+            /**
+             * Height in pixels.
+             */
+            height?: number | null;
+            /**
+             * Alternate backgrounds between sections to separate them.
+             */
+            background?: ('black' | 'nearBlack') | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'embed';
+          }
+        | {
+            heading: string;
+            body?: string | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'soldOutBanner';
+          }
+      )[]
+    | null;
   _status?: ('draft' | 'published') | null;
   updatedAt?: string | null;
   createdAt?: string | null;
@@ -954,6 +2569,257 @@ export interface InOffice {
         id?: string | null;
       }[]
     | null;
+  /**
+   * Optional sections added at the bottom of the page, before the footer.
+   */
+  extraSections?:
+    | (
+        | {
+            /**
+             * Small gold line. Stars are added automatically.
+             */
+            overline?: string | null;
+            heading: string;
+            /**
+             * Optional second line shown in gold.
+             */
+            headingAccent?: string | null;
+            intro?: string | null;
+            /**
+             * Optional photo beside the heading.
+             */
+            image?: (number | null) | Media;
+            /**
+             * Gold strip across the bottom of the photo.
+             */
+            imageCaption?: string | null;
+            buttons?:
+              | {
+                  label: string;
+                  linkType?: ('url' | 'file') | null;
+                  /**
+                   * e.g. /donate, https://…, or mailto:someone@example.com
+                   */
+                  url?: string | null;
+                  file?: (number | null) | Media;
+                  style?: ('primary' | 'secondary') | null;
+                  newTab?: boolean | null;
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'heroBanner';
+          }
+        | {
+            /**
+             * Small gold line. Stars are added automatically.
+             */
+            overline?: string | null;
+            heading?: string | null;
+            body: {
+              root: {
+                type: string;
+                children: {
+                  type: any;
+                  version: number;
+                  [k: string]: unknown;
+                }[];
+                direction: ('ltr' | 'rtl') | null;
+                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                indent: number;
+                version: number;
+              };
+              [k: string]: unknown;
+            };
+            /**
+             * Alternate backgrounds between sections to separate them.
+             */
+            background?: ('black' | 'nearBlack') | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'richText';
+          }
+        | {
+            image: number | Media;
+            /**
+             * Gold strip across the bottom of the photo.
+             */
+            imageCaption?: string | null;
+            imagePosition?: ('left' | 'right') | null;
+            /**
+             * Small gold line. Stars are added automatically.
+             */
+            overline?: string | null;
+            heading: string;
+            /**
+             * Wrap words in **double stars** to highlight them.
+             */
+            body?: string | null;
+            buttons?:
+              | {
+                  label: string;
+                  linkType?: ('url' | 'file') | null;
+                  /**
+                   * e.g. /donate, https://…, or mailto:someone@example.com
+                   */
+                  url?: string | null;
+                  file?: (number | null) | Media;
+                  style?: ('primary' | 'secondary') | null;
+                  newTab?: boolean | null;
+                  id?: string | null;
+                }[]
+              | null;
+            /**
+             * Alternate backgrounds between sections to separate them.
+             */
+            background?: ('black' | 'nearBlack') | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'imageWithText';
+          }
+        | {
+            /**
+             * Small gold line. Stars are added automatically.
+             */
+            overline?: string | null;
+            heading?: string | null;
+            photos?:
+              | {
+                  image: number | Media;
+                  caption?: string | null;
+                  id?: string | null;
+                }[]
+              | null;
+            /**
+             * Alternate backgrounds between sections to separate them.
+             */
+            background?: ('black' | 'nearBlack') | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'photoGallery';
+          }
+        | {
+            /**
+             * Small gold line. Stars are added automatically.
+             */
+            overline?: string | null;
+            heading?: string | null;
+            items?:
+              | {
+                  text: string;
+                  id?: string | null;
+                }[]
+              | null;
+            /**
+             * Alternate backgrounds between sections to separate them.
+             */
+            background?: ('black' | 'nearBlack') | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'factsList';
+          }
+        | {
+            /**
+             * Small gold line. Stars are added automatically.
+             */
+            overline?: string | null;
+            heading: string;
+            body?: string | null;
+            buttons?:
+              | {
+                  label: string;
+                  linkType?: ('url' | 'file') | null;
+                  /**
+                   * e.g. /donate, https://…, or mailto:someone@example.com
+                   */
+                  url?: string | null;
+                  file?: (number | null) | Media;
+                  style?: ('primary' | 'secondary') | null;
+                  newTab?: boolean | null;
+                  id?: string | null;
+                }[]
+              | null;
+            /**
+             * Alternate backgrounds between sections to separate them.
+             */
+            background?: ('black' | 'nearBlack') | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'ctaButtons';
+          }
+        | {
+            /**
+             * Small gold line. Stars are added automatically.
+             */
+            overline?: string | null;
+            heading?: string | null;
+            entries?:
+              | {
+                  /**
+                   * e.g. a year: "2025".
+                   */
+                  label: string;
+                  /**
+                   * Wrap words in **double stars** to highlight them.
+                   */
+                  text: string;
+                  id?: string | null;
+                }[]
+              | null;
+            /**
+             * Alternate backgrounds between sections to separate them.
+             */
+            background?: ('black' | 'nearBlack') | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'timeline';
+          }
+        | {
+            /**
+             * Shown in italics on a cream band.
+             */
+            quote: string;
+            attribution?: string | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'quoteBand';
+          }
+        | {
+            /**
+             * Small gold line. Stars are added automatically.
+             */
+            overline?: string | null;
+            heading?: string | null;
+            /**
+             * The embed address from Donorbox, YouTube (…/embed/…) or Facebook.
+             */
+            url: string;
+            /**
+             * Describes the embed for screen readers.
+             */
+            title: string;
+            /**
+             * Height in pixels.
+             */
+            height?: number | null;
+            /**
+             * Alternate backgrounds between sections to separate them.
+             */
+            background?: ('black' | 'nearBlack') | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'embed';
+          }
+        | {
+            heading: string;
+            body?: string | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'soldOutBanner';
+          }
+      )[]
+    | null;
   _status?: ('draft' | 'published') | null;
   updatedAt?: string | null;
   createdAt?: string | null;
@@ -1002,6 +2868,257 @@ export interface EventsPage {
         }[]
       | null;
   };
+  /**
+   * Optional sections added at the bottom of the page, before the footer.
+   */
+  extraSections?:
+    | (
+        | {
+            /**
+             * Small gold line. Stars are added automatically.
+             */
+            overline?: string | null;
+            heading: string;
+            /**
+             * Optional second line shown in gold.
+             */
+            headingAccent?: string | null;
+            intro?: string | null;
+            /**
+             * Optional photo beside the heading.
+             */
+            image?: (number | null) | Media;
+            /**
+             * Gold strip across the bottom of the photo.
+             */
+            imageCaption?: string | null;
+            buttons?:
+              | {
+                  label: string;
+                  linkType?: ('url' | 'file') | null;
+                  /**
+                   * e.g. /donate, https://…, or mailto:someone@example.com
+                   */
+                  url?: string | null;
+                  file?: (number | null) | Media;
+                  style?: ('primary' | 'secondary') | null;
+                  newTab?: boolean | null;
+                  id?: string | null;
+                }[]
+              | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'heroBanner';
+          }
+        | {
+            /**
+             * Small gold line. Stars are added automatically.
+             */
+            overline?: string | null;
+            heading?: string | null;
+            body: {
+              root: {
+                type: string;
+                children: {
+                  type: any;
+                  version: number;
+                  [k: string]: unknown;
+                }[];
+                direction: ('ltr' | 'rtl') | null;
+                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                indent: number;
+                version: number;
+              };
+              [k: string]: unknown;
+            };
+            /**
+             * Alternate backgrounds between sections to separate them.
+             */
+            background?: ('black' | 'nearBlack') | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'richText';
+          }
+        | {
+            image: number | Media;
+            /**
+             * Gold strip across the bottom of the photo.
+             */
+            imageCaption?: string | null;
+            imagePosition?: ('left' | 'right') | null;
+            /**
+             * Small gold line. Stars are added automatically.
+             */
+            overline?: string | null;
+            heading: string;
+            /**
+             * Wrap words in **double stars** to highlight them.
+             */
+            body?: string | null;
+            buttons?:
+              | {
+                  label: string;
+                  linkType?: ('url' | 'file') | null;
+                  /**
+                   * e.g. /donate, https://…, or mailto:someone@example.com
+                   */
+                  url?: string | null;
+                  file?: (number | null) | Media;
+                  style?: ('primary' | 'secondary') | null;
+                  newTab?: boolean | null;
+                  id?: string | null;
+                }[]
+              | null;
+            /**
+             * Alternate backgrounds between sections to separate them.
+             */
+            background?: ('black' | 'nearBlack') | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'imageWithText';
+          }
+        | {
+            /**
+             * Small gold line. Stars are added automatically.
+             */
+            overline?: string | null;
+            heading?: string | null;
+            photos?:
+              | {
+                  image: number | Media;
+                  caption?: string | null;
+                  id?: string | null;
+                }[]
+              | null;
+            /**
+             * Alternate backgrounds between sections to separate them.
+             */
+            background?: ('black' | 'nearBlack') | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'photoGallery';
+          }
+        | {
+            /**
+             * Small gold line. Stars are added automatically.
+             */
+            overline?: string | null;
+            heading?: string | null;
+            items?:
+              | {
+                  text: string;
+                  id?: string | null;
+                }[]
+              | null;
+            /**
+             * Alternate backgrounds between sections to separate them.
+             */
+            background?: ('black' | 'nearBlack') | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'factsList';
+          }
+        | {
+            /**
+             * Small gold line. Stars are added automatically.
+             */
+            overline?: string | null;
+            heading: string;
+            body?: string | null;
+            buttons?:
+              | {
+                  label: string;
+                  linkType?: ('url' | 'file') | null;
+                  /**
+                   * e.g. /donate, https://…, or mailto:someone@example.com
+                   */
+                  url?: string | null;
+                  file?: (number | null) | Media;
+                  style?: ('primary' | 'secondary') | null;
+                  newTab?: boolean | null;
+                  id?: string | null;
+                }[]
+              | null;
+            /**
+             * Alternate backgrounds between sections to separate them.
+             */
+            background?: ('black' | 'nearBlack') | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'ctaButtons';
+          }
+        | {
+            /**
+             * Small gold line. Stars are added automatically.
+             */
+            overline?: string | null;
+            heading?: string | null;
+            entries?:
+              | {
+                  /**
+                   * e.g. a year: "2025".
+                   */
+                  label: string;
+                  /**
+                   * Wrap words in **double stars** to highlight them.
+                   */
+                  text: string;
+                  id?: string | null;
+                }[]
+              | null;
+            /**
+             * Alternate backgrounds between sections to separate them.
+             */
+            background?: ('black' | 'nearBlack') | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'timeline';
+          }
+        | {
+            /**
+             * Shown in italics on a cream band.
+             */
+            quote: string;
+            attribution?: string | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'quoteBand';
+          }
+        | {
+            /**
+             * Small gold line. Stars are added automatically.
+             */
+            overline?: string | null;
+            heading?: string | null;
+            /**
+             * The embed address from Donorbox, YouTube (…/embed/…) or Facebook.
+             */
+            url: string;
+            /**
+             * Describes the embed for screen readers.
+             */
+            title: string;
+            /**
+             * Height in pixels.
+             */
+            height?: number | null;
+            /**
+             * Alternate backgrounds between sections to separate them.
+             */
+            background?: ('black' | 'nearBlack') | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'embed';
+          }
+        | {
+            heading: string;
+            body?: string | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'soldOutBanner';
+          }
+      )[]
+    | null;
   _status?: ('draft' | 'published') | null;
   updatedAt?: string | null;
   createdAt?: string | null;
@@ -1125,6 +3242,163 @@ export interface HomeSelect<T extends boolean = true> {
   updatesOverline?: T;
   updatesHeading?: T;
   updatesBody?: T;
+  extraSections?:
+    | T
+    | {
+        heroBanner?:
+          | T
+          | {
+              overline?: T;
+              heading?: T;
+              headingAccent?: T;
+              intro?: T;
+              image?: T;
+              imageCaption?: T;
+              buttons?:
+                | T
+                | {
+                    label?: T;
+                    linkType?: T;
+                    url?: T;
+                    file?: T;
+                    style?: T;
+                    newTab?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        richText?:
+          | T
+          | {
+              overline?: T;
+              heading?: T;
+              body?: T;
+              background?: T;
+              id?: T;
+              blockName?: T;
+            };
+        imageWithText?:
+          | T
+          | {
+              image?: T;
+              imageCaption?: T;
+              imagePosition?: T;
+              overline?: T;
+              heading?: T;
+              body?: T;
+              buttons?:
+                | T
+                | {
+                    label?: T;
+                    linkType?: T;
+                    url?: T;
+                    file?: T;
+                    style?: T;
+                    newTab?: T;
+                    id?: T;
+                  };
+              background?: T;
+              id?: T;
+              blockName?: T;
+            };
+        photoGallery?:
+          | T
+          | {
+              overline?: T;
+              heading?: T;
+              photos?:
+                | T
+                | {
+                    image?: T;
+                    caption?: T;
+                    id?: T;
+                  };
+              background?: T;
+              id?: T;
+              blockName?: T;
+            };
+        factsList?:
+          | T
+          | {
+              overline?: T;
+              heading?: T;
+              items?:
+                | T
+                | {
+                    text?: T;
+                    id?: T;
+                  };
+              background?: T;
+              id?: T;
+              blockName?: T;
+            };
+        ctaButtons?:
+          | T
+          | {
+              overline?: T;
+              heading?: T;
+              body?: T;
+              buttons?:
+                | T
+                | {
+                    label?: T;
+                    linkType?: T;
+                    url?: T;
+                    file?: T;
+                    style?: T;
+                    newTab?: T;
+                    id?: T;
+                  };
+              background?: T;
+              id?: T;
+              blockName?: T;
+            };
+        timeline?:
+          | T
+          | {
+              overline?: T;
+              heading?: T;
+              entries?:
+                | T
+                | {
+                    label?: T;
+                    text?: T;
+                    id?: T;
+                  };
+              background?: T;
+              id?: T;
+              blockName?: T;
+            };
+        quoteBand?:
+          | T
+          | {
+              quote?: T;
+              attribution?: T;
+              id?: T;
+              blockName?: T;
+            };
+        embed?:
+          | T
+          | {
+              overline?: T;
+              heading?: T;
+              url?: T;
+              title?: T;
+              height?: T;
+              background?: T;
+              id?: T;
+              blockName?: T;
+            };
+        soldOutBanner?:
+          | T
+          | {
+              heading?: T;
+              body?: T;
+              id?: T;
+              blockName?: T;
+            };
+      };
   _status?: T;
   updatedAt?: T;
   createdAt?: T;
@@ -1168,6 +3442,163 @@ export interface AboutSelect<T extends boolean = true> {
       };
   signOffImage?: T;
   signOffImageCaption?: T;
+  extraSections?:
+    | T
+    | {
+        heroBanner?:
+          | T
+          | {
+              overline?: T;
+              heading?: T;
+              headingAccent?: T;
+              intro?: T;
+              image?: T;
+              imageCaption?: T;
+              buttons?:
+                | T
+                | {
+                    label?: T;
+                    linkType?: T;
+                    url?: T;
+                    file?: T;
+                    style?: T;
+                    newTab?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        richText?:
+          | T
+          | {
+              overline?: T;
+              heading?: T;
+              body?: T;
+              background?: T;
+              id?: T;
+              blockName?: T;
+            };
+        imageWithText?:
+          | T
+          | {
+              image?: T;
+              imageCaption?: T;
+              imagePosition?: T;
+              overline?: T;
+              heading?: T;
+              body?: T;
+              buttons?:
+                | T
+                | {
+                    label?: T;
+                    linkType?: T;
+                    url?: T;
+                    file?: T;
+                    style?: T;
+                    newTab?: T;
+                    id?: T;
+                  };
+              background?: T;
+              id?: T;
+              blockName?: T;
+            };
+        photoGallery?:
+          | T
+          | {
+              overline?: T;
+              heading?: T;
+              photos?:
+                | T
+                | {
+                    image?: T;
+                    caption?: T;
+                    id?: T;
+                  };
+              background?: T;
+              id?: T;
+              blockName?: T;
+            };
+        factsList?:
+          | T
+          | {
+              overline?: T;
+              heading?: T;
+              items?:
+                | T
+                | {
+                    text?: T;
+                    id?: T;
+                  };
+              background?: T;
+              id?: T;
+              blockName?: T;
+            };
+        ctaButtons?:
+          | T
+          | {
+              overline?: T;
+              heading?: T;
+              body?: T;
+              buttons?:
+                | T
+                | {
+                    label?: T;
+                    linkType?: T;
+                    url?: T;
+                    file?: T;
+                    style?: T;
+                    newTab?: T;
+                    id?: T;
+                  };
+              background?: T;
+              id?: T;
+              blockName?: T;
+            };
+        timeline?:
+          | T
+          | {
+              overline?: T;
+              heading?: T;
+              entries?:
+                | T
+                | {
+                    label?: T;
+                    text?: T;
+                    id?: T;
+                  };
+              background?: T;
+              id?: T;
+              blockName?: T;
+            };
+        quoteBand?:
+          | T
+          | {
+              quote?: T;
+              attribution?: T;
+              id?: T;
+              blockName?: T;
+            };
+        embed?:
+          | T
+          | {
+              overline?: T;
+              heading?: T;
+              url?: T;
+              title?: T;
+              height?: T;
+              background?: T;
+              id?: T;
+              blockName?: T;
+            };
+        soldOutBanner?:
+          | T
+          | {
+              heading?: T;
+              body?: T;
+              id?: T;
+              blockName?: T;
+            };
+      };
   _status?: T;
   updatedAt?: T;
   createdAt?: T;
@@ -1199,6 +3630,163 @@ export interface DonateSelect<T extends boolean = true> {
         id?: T;
       };
   disclaimer?: T;
+  extraSections?:
+    | T
+    | {
+        heroBanner?:
+          | T
+          | {
+              overline?: T;
+              heading?: T;
+              headingAccent?: T;
+              intro?: T;
+              image?: T;
+              imageCaption?: T;
+              buttons?:
+                | T
+                | {
+                    label?: T;
+                    linkType?: T;
+                    url?: T;
+                    file?: T;
+                    style?: T;
+                    newTab?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        richText?:
+          | T
+          | {
+              overline?: T;
+              heading?: T;
+              body?: T;
+              background?: T;
+              id?: T;
+              blockName?: T;
+            };
+        imageWithText?:
+          | T
+          | {
+              image?: T;
+              imageCaption?: T;
+              imagePosition?: T;
+              overline?: T;
+              heading?: T;
+              body?: T;
+              buttons?:
+                | T
+                | {
+                    label?: T;
+                    linkType?: T;
+                    url?: T;
+                    file?: T;
+                    style?: T;
+                    newTab?: T;
+                    id?: T;
+                  };
+              background?: T;
+              id?: T;
+              blockName?: T;
+            };
+        photoGallery?:
+          | T
+          | {
+              overline?: T;
+              heading?: T;
+              photos?:
+                | T
+                | {
+                    image?: T;
+                    caption?: T;
+                    id?: T;
+                  };
+              background?: T;
+              id?: T;
+              blockName?: T;
+            };
+        factsList?:
+          | T
+          | {
+              overline?: T;
+              heading?: T;
+              items?:
+                | T
+                | {
+                    text?: T;
+                    id?: T;
+                  };
+              background?: T;
+              id?: T;
+              blockName?: T;
+            };
+        ctaButtons?:
+          | T
+          | {
+              overline?: T;
+              heading?: T;
+              body?: T;
+              buttons?:
+                | T
+                | {
+                    label?: T;
+                    linkType?: T;
+                    url?: T;
+                    file?: T;
+                    style?: T;
+                    newTab?: T;
+                    id?: T;
+                  };
+              background?: T;
+              id?: T;
+              blockName?: T;
+            };
+        timeline?:
+          | T
+          | {
+              overline?: T;
+              heading?: T;
+              entries?:
+                | T
+                | {
+                    label?: T;
+                    text?: T;
+                    id?: T;
+                  };
+              background?: T;
+              id?: T;
+              blockName?: T;
+            };
+        quoteBand?:
+          | T
+          | {
+              quote?: T;
+              attribution?: T;
+              id?: T;
+              blockName?: T;
+            };
+        embed?:
+          | T
+          | {
+              overline?: T;
+              heading?: T;
+              url?: T;
+              title?: T;
+              height?: T;
+              background?: T;
+              id?: T;
+              blockName?: T;
+            };
+        soldOutBanner?:
+          | T
+          | {
+              heading?: T;
+              body?: T;
+              id?: T;
+              blockName?: T;
+            };
+      };
   _status?: T;
   updatedAt?: T;
   createdAt?: T;
@@ -1248,6 +3836,163 @@ export interface InOfficeSelect<T extends boolean = true> {
         newTab?: T;
         id?: T;
       };
+  extraSections?:
+    | T
+    | {
+        heroBanner?:
+          | T
+          | {
+              overline?: T;
+              heading?: T;
+              headingAccent?: T;
+              intro?: T;
+              image?: T;
+              imageCaption?: T;
+              buttons?:
+                | T
+                | {
+                    label?: T;
+                    linkType?: T;
+                    url?: T;
+                    file?: T;
+                    style?: T;
+                    newTab?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        richText?:
+          | T
+          | {
+              overline?: T;
+              heading?: T;
+              body?: T;
+              background?: T;
+              id?: T;
+              blockName?: T;
+            };
+        imageWithText?:
+          | T
+          | {
+              image?: T;
+              imageCaption?: T;
+              imagePosition?: T;
+              overline?: T;
+              heading?: T;
+              body?: T;
+              buttons?:
+                | T
+                | {
+                    label?: T;
+                    linkType?: T;
+                    url?: T;
+                    file?: T;
+                    style?: T;
+                    newTab?: T;
+                    id?: T;
+                  };
+              background?: T;
+              id?: T;
+              blockName?: T;
+            };
+        photoGallery?:
+          | T
+          | {
+              overline?: T;
+              heading?: T;
+              photos?:
+                | T
+                | {
+                    image?: T;
+                    caption?: T;
+                    id?: T;
+                  };
+              background?: T;
+              id?: T;
+              blockName?: T;
+            };
+        factsList?:
+          | T
+          | {
+              overline?: T;
+              heading?: T;
+              items?:
+                | T
+                | {
+                    text?: T;
+                    id?: T;
+                  };
+              background?: T;
+              id?: T;
+              blockName?: T;
+            };
+        ctaButtons?:
+          | T
+          | {
+              overline?: T;
+              heading?: T;
+              body?: T;
+              buttons?:
+                | T
+                | {
+                    label?: T;
+                    linkType?: T;
+                    url?: T;
+                    file?: T;
+                    style?: T;
+                    newTab?: T;
+                    id?: T;
+                  };
+              background?: T;
+              id?: T;
+              blockName?: T;
+            };
+        timeline?:
+          | T
+          | {
+              overline?: T;
+              heading?: T;
+              entries?:
+                | T
+                | {
+                    label?: T;
+                    text?: T;
+                    id?: T;
+                  };
+              background?: T;
+              id?: T;
+              blockName?: T;
+            };
+        quoteBand?:
+          | T
+          | {
+              quote?: T;
+              attribution?: T;
+              id?: T;
+              blockName?: T;
+            };
+        embed?:
+          | T
+          | {
+              overline?: T;
+              heading?: T;
+              url?: T;
+              title?: T;
+              height?: T;
+              background?: T;
+              id?: T;
+              blockName?: T;
+            };
+        soldOutBanner?:
+          | T
+          | {
+              heading?: T;
+              body?: T;
+              id?: T;
+              blockName?: T;
+            };
+      };
   _status?: T;
   updatedAt?: T;
   createdAt?: T;
@@ -1279,6 +4024,163 @@ export interface EventsPageSelect<T extends boolean = true> {
               style?: T;
               newTab?: T;
               id?: T;
+            };
+      };
+  extraSections?:
+    | T
+    | {
+        heroBanner?:
+          | T
+          | {
+              overline?: T;
+              heading?: T;
+              headingAccent?: T;
+              intro?: T;
+              image?: T;
+              imageCaption?: T;
+              buttons?:
+                | T
+                | {
+                    label?: T;
+                    linkType?: T;
+                    url?: T;
+                    file?: T;
+                    style?: T;
+                    newTab?: T;
+                    id?: T;
+                  };
+              id?: T;
+              blockName?: T;
+            };
+        richText?:
+          | T
+          | {
+              overline?: T;
+              heading?: T;
+              body?: T;
+              background?: T;
+              id?: T;
+              blockName?: T;
+            };
+        imageWithText?:
+          | T
+          | {
+              image?: T;
+              imageCaption?: T;
+              imagePosition?: T;
+              overline?: T;
+              heading?: T;
+              body?: T;
+              buttons?:
+                | T
+                | {
+                    label?: T;
+                    linkType?: T;
+                    url?: T;
+                    file?: T;
+                    style?: T;
+                    newTab?: T;
+                    id?: T;
+                  };
+              background?: T;
+              id?: T;
+              blockName?: T;
+            };
+        photoGallery?:
+          | T
+          | {
+              overline?: T;
+              heading?: T;
+              photos?:
+                | T
+                | {
+                    image?: T;
+                    caption?: T;
+                    id?: T;
+                  };
+              background?: T;
+              id?: T;
+              blockName?: T;
+            };
+        factsList?:
+          | T
+          | {
+              overline?: T;
+              heading?: T;
+              items?:
+                | T
+                | {
+                    text?: T;
+                    id?: T;
+                  };
+              background?: T;
+              id?: T;
+              blockName?: T;
+            };
+        ctaButtons?:
+          | T
+          | {
+              overline?: T;
+              heading?: T;
+              body?: T;
+              buttons?:
+                | T
+                | {
+                    label?: T;
+                    linkType?: T;
+                    url?: T;
+                    file?: T;
+                    style?: T;
+                    newTab?: T;
+                    id?: T;
+                  };
+              background?: T;
+              id?: T;
+              blockName?: T;
+            };
+        timeline?:
+          | T
+          | {
+              overline?: T;
+              heading?: T;
+              entries?:
+                | T
+                | {
+                    label?: T;
+                    text?: T;
+                    id?: T;
+                  };
+              background?: T;
+              id?: T;
+              blockName?: T;
+            };
+        quoteBand?:
+          | T
+          | {
+              quote?: T;
+              attribution?: T;
+              id?: T;
+              blockName?: T;
+            };
+        embed?:
+          | T
+          | {
+              overline?: T;
+              heading?: T;
+              url?: T;
+              title?: T;
+              height?: T;
+              background?: T;
+              id?: T;
+              blockName?: T;
+            };
+        soldOutBanner?:
+          | T
+          | {
+              heading?: T;
+              body?: T;
+              id?: T;
+              blockName?: T;
             };
       };
   _status?: T;

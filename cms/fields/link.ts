@@ -1,4 +1,4 @@
-import type { Field } from 'payload';
+import type { ArrayField, Field } from 'payload';
 import { validateLinkUrl } from './validators';
 
 /**
@@ -47,7 +47,7 @@ export const buttonFields: Field[] = [
   { name: 'newTab', type: 'checkbox', label: 'Open in a new tab', defaultValue: false },
 ];
 
-export const buttonsField = (name = 'buttons', label = 'Buttons'): Field => ({
+export const buttonsField = (name = 'buttons', label = 'Buttons'): ArrayField => ({
   name,
   label,
   type: 'array',

@@ -1,6 +1,6 @@
 import 'server-only';
 import { unstable_cache } from 'next/cache';
-import type { Config, Event, SiteSetting } from '@/payload-types';
+import type { Config, Event, Page, SiteSetting } from '@/payload-types';
 import { CMS_TAG } from '@/cms/hooks/invalidate';
 import { getPayloadClient } from './payload';
 
@@ -97,3 +97,33 @@ export const listEventSlugs = cached(async (): Promise<{ slug: string; updatedAt
   });
   return result.docs.map((doc) => ({ slug: doc.slug, updatedAt: doc.updatedAt }));
 }, 'listEventSlugs');
+
+/** A published CMS page by slug. */
+export const getPageBySlug = cached(async (slug: string): Promise<Page | null> => {
+  const payload = await getPayloadClient();
+  const result = await payload.find({
+    collection: 'pages',
+    where: { and: [{ slug: { equals: slug } }, { _status: { equals: 'published' } }] },
+    depth: 1,
+    limit: 1,
+    draft: false,
+    overrideAccess: true,
+  });
+  return result.docs[0] ?? null;
+}, 'getPageBySlug');
+
+/** Slugs of every published CMS page (static params + sitemap). */
+export const listPageSlugs = cached(async (): Promise<{ slug: string; updatedAt: string }[]> => {
+  const payload = await getPayloadClient();
+  const result = await payload.find({
+    collection: 'pages',
+    where: { _status: { equals: 'published' } },
+    depth: 0,
+    limit: 500,
+    pagination: false,
+    draft: false,
+    overrideAccess: true,
+    select: { slug: true, updatedAt: true },
+  });
+  return result.docs.map((doc) => ({ slug: doc.slug, updatedAt: doc.updatedAt }));
+}, 'listPageSlugs');

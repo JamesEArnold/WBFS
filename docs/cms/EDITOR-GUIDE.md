@@ -3,7 +3,6 @@
 A plain-language guide for people who update the site. You don't need any technical knowledge.
 
 > Screenshots will be added once the editing site is live.
-> Sections marked *(coming soon)* describe features that aren't built yet.
 
 ---
 
@@ -87,8 +86,39 @@ They're under **Pages** in the left menu. Each one is a single form, laid out to
 - **Reset someone's password / resend an invite:** open the user, then **Copy setup / reset link** on the right. This cancels any earlier link.
 - **Remove someone:** open the user and delete them.
 
-## 8. Extra sections and new pages *(coming soon)*
-Optional extra sections you can add to any page, and brand-new pages built from ready-made sections.
+## 8. Extra sections and new pages
+Both use the same ready-made **sections**. You pick a section type and fill in the words and pictures, and the design (fonts, colours, layout) is applied for you.
+
+| Section | What it's for |
+|---|---|
+| **Page heading** | The big two-line headline at the top, with an optional photo and buttons. Use it first on a new page. |
+| **Text** | Paragraphs with bold, italics, links, lists and sub-headings. |
+| **Photo with text** | A photo beside a heading, a paragraph and buttons. The photo can go left or right. |
+| **Photo gallery** | Photos two per row, each with a small caption. |
+| **Starred list** | Short lines, each with a gold star. |
+| **Call to action** | A centred heading, a sentence and buttons, like the end of the In Office page. |
+| **Timeline** | Years (or other labels) with a paragraph each, like the About page. |
+| **Quote** | A large italic quote on a cream band. |
+| **Embed** | A Donorbox form, YouTube video or Facebook post. Paste the embed address. |
+| **Gold notice banner** | A full-width gold strip with a short message. |
+
+Most sections have a **Background** choice (Black or Charcoal). Alternate them so sections stand apart.
+
+### Add sections to an existing page
+Open the page (e.g. **Pages → In Office**), scroll to **Extra sections** at the bottom, click **Add Extra section**, choose a type and fill it in. Extra sections appear after the page's own content, just above the footer. Drag them to reorder. Events have **Extra sections** too.
+
+### Create a new page
+1. **Pages → Pages → Create New**.
+2. **Title:** shown in the browser tab and search results.
+3. **URL slug** (right side): leave it blank to fill it in from the title, e.g. `meet-the-team` → weisburnforsheriff.com/meet-the-team.
+   - Some addresses are taken by the site (about, donate, events, time-in-office, admin…) and can't be used.
+   - Once published, the address **can't be changed**.
+4. **Description** (right side): one or two sentences for Google and link previews.
+5. **Sections:** start with a **Page heading**, then add the others you need.
+6. Check the live preview beside the form, then **Publish changes**.
+7. New pages are **not** added to the menu automatically. To add one, go to **Site Settings → Header → navigation** and add a link to `/meet-the-team`.
+
+To take a page down, use **Unpublish**, which keeps it for later, or delete it.
 
 ## Need help?
 Contact James. Nothing you do in the editor can break the site's design. Drafts and version history mean any mistake can be undone.

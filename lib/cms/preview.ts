@@ -1,6 +1,6 @@
 import 'server-only';
 import { headers } from 'next/headers';
-import type { Event } from '@/payload-types';
+import type { Event, Page } from '@/payload-types';
 import { getPayloadClient } from './payload';
 import type { PageGlobal, PageGlobalSlug } from './public';
 
@@ -50,4 +50,19 @@ export async function previewListedEvents(): Promise<Event[]> {
     user,
   });
   return result.docs;
+}
+
+export async function previewPageBySlug(slug: string): Promise<Page | null> {
+  const { payload, user } = await currentUser();
+  if (!user) return null;
+  const result = await payload.find({
+    collection: 'pages',
+    where: { slug: { equals: slug } },
+    depth: 1,
+    limit: 1,
+    draft: true,
+    overrideAccess: false,
+    user,
+  });
+  return result.docs[0] ?? null;
 }

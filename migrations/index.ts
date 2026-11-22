@@ -5,6 +5,7 @@ import * as migration_20261122_013451_in_office from './20261122_013451_in_offic
 import * as migration_20261122_013722_donate from './20261122_013722_donate';
 import * as migration_20261122_013938_about from './20261122_013938_about';
 import * as migration_20261122_014231_home from './20261122_014231_home';
+import * as migration_20261122_014709_blocks_and_pages from './20261122_014709_blocks_and_pages';
 
 export const migrations = [
   {
@@ -40,6 +41,11 @@ export const migrations = [
   {
     up: migration_20261122_014231_home.up,
     down: migration_20261122_014231_home.down,
-    name: '20261122_014231_home'
+    name: '20261122_014231_home',
+  },
+  {
+    up: migration_20261122_014709_blocks_and_pages.up,
+    down: migration_20261122_014709_blocks_and_pages.down,
+    name: '20261122_014709_blocks_and_pages'
   },
 ];

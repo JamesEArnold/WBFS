@@ -124,6 +124,8 @@ test('anonymous visitors cannot read or write anything through the API', async (
     '/api/globals/donate',
     '/api/globals/about',
     '/api/globals/home',
+    '/api/pages',
+    '/api/pages?draft=true',
   ]) {
     expect((await anon.get(path)).status(), path).toBe(403);
   }
@@ -392,6 +394,84 @@ test('Home: text, gallery photos, links and the featured event are editable', as
   await eventually(async () => !(await pageText('/')).text.includes(golfLink));
   expect((await publishHome(original)).status()).toBe(200);
   await eventually(async () => (await pageText('/')).text.includes(golfLink));
+});
+
+test('a page built from every section type is private as a draft, then live at /<slug> and in the sitemap', async () => {
+  const upload = await editor.post('/api/media', {
+    multipart: {
+      file: { name: 'e2e-section.png', mimeType: 'image/png', buffer: DOT_PNG },
+      _payload: JSON.stringify({ alt: 'E2E section photo' }),
+    },
+  });
+  expect(upload.status()).toBe(201);
+  const photoId = (await upload.json()).doc.id as number;
+  const text = (t: string) => ({ type: 'text', text: t, version: 1, format: 0, detail: 0, mode: 'normal', style: '' });
+  const richBody = {
+    root: {
+      type: 'root', version: 1, direction: 'ltr', format: '', indent: 0,
+      children: [{ type: 'paragraph', version: 1, direction: 'ltr', format: '', indent: 0, textFormat: 0, children: [text('E2E rich text body')] }],
+    },
+  };
+  const go = { label: 'E2E Go', linkType: 'url', url: '/donate', style: 'primary' };
+  const sections = [
+    { blockType: 'heroBanner', overline: 'E2E Overline', heading: 'E2E Built Page', headingAccent: 'Accent', intro: 'E2E intro', image: photoId, buttons: [go] },
+    { blockType: 'richText', heading: 'E2E Rich Heading', body: richBody },
+    { blockType: 'imageWithText', image: photoId, heading: 'E2E Photo Text', body: 'Join **US** today', imagePosition: 'right' },
+    { blockType: 'photoGallery', heading: 'E2E Gallery', photos: [{ image: photoId, caption: 'E2E Caption' }] },
+    { blockType: 'factsList', heading: 'E2E Facts', items: [{ text: 'E2E fact one' }] },
+    { blockType: 'ctaButtons', heading: 'E2E Call To Action', buttons: [go] },
+    { blockType: 'timeline', heading: 'E2E Timeline', entries: [{ label: '2030', text: 'E2E milestone' }] },
+    { blockType: 'quoteBand', quote: 'E2E quote **now**', attribution: 'E2E Speaker' },
+    { blockType: 'embed', url: 'https://donorbox.org/embed/e2e-form', title: 'E2E donation form', height: 500 },
+    { blockType: 'soldOutBanner', heading: 'E2E Notice', body: 'E2E notice body' },
+  ];
+
+  const created = await editor.post('/api/pages', {
+    data: { title: 'E2E Built Page', slug: 'e2e-built-page', description: 'E2E description', sections, _status: 'draft' },
+  });
+  expect(created.status(), await created.text()).toBe(201);
+  const pageId = (await created.json()).doc.id as number;
+  expect((await pageText('/e2e-built-page')).status).toBe(404);
+
+  expect((await editor.patch(`/api/pages/${pageId}`, { data: { _status: 'published' } })).status()).toBe(200);
+  await eventually(async () => (await pageText('/e2e-built-page')).status === 200);
+  const page = (await pageText('/e2e-built-page')).text;
+  for (const blockType of sections.map((b) => b.blockType)) expect(page, blockType).toContain(`data-block="${blockType}"`);
+  for (const expected of [
+    'E2E Built Page', 'E2E rich text body', '>US</span>', 'E2E Caption', 'E2E fact one', 'E2E Call To Action',
+    'E2E milestone', 'E2E Speaker', 'src="https://donorbox.org/embed/e2e-form"', 'E2E Notice', 'alt="E2E section photo"',
+    '<title>E2E Built Page | Weisburn for Sheriff</title>',
+  ]) {
+    expect(page, expected).toContain(expected);
+  }
+  expect(page.match(/<h1/g)?.length).toBe(1);
+  await eventually(async () => (await pageText('/sitemap.xml')).text.includes('https://weisburnforsheriff.com/e2e-built-page<'));
+
+  // A photo used by a page can't be deleted.
+  const inUse = await editor.delete(`/api/media/${photoId}`);
+  expect(inUse.ok()).toBe(false);
+  expect(await inUse.text()).toContain('Page: E2E Built Page');
+
+  // Reserved addresses and embeds outside the allowlist are refused.
+  const reserved = await editor.post('/api/pages', { data: { title: 'Donate', slug: 'donate', _status: 'draft' } });
+  expect(reserved.status()).toBe(400);
+  const badEmbed = await editor.patch(`/api/pages/${pageId}`, {
+    data: { sections: [{ blockType: 'embed', url: 'https://evil.example/x', title: 'x' }] },
+  });
+  expect(badEmbed.status()).toBe(400);
+
+  // Deleting the page takes it off the site and out of the sitemap.
+  expect((await editor.delete(`/api/pages/${pageId}`)).status()).toBe(200);
+  await eventually(async () => (await pageText('/e2e-built-page')).status === 404);
+  await eventually(async () => !(await pageText('/sitemap.xml')).text.includes('/e2e-built-page<'));
+  expect((await editor.delete(`/api/media/${photoId}`)).status()).toBe(200);
+});
+
+test('existing pages accept extra sections after their own content', async () => {
+  await editAndRestoreGlobal('inOffice', '/time-in-office', (doc) => {
+    doc.extraSections = [{ blockType: 'factsList', heading: 'E2E Extra Facts', items: [{ text: 'E2E extra fact' }] }];
+    return ['data-block="factsList"', 'E2E Extra Facts', 'E2E extra fact'];
+  });
 });
 
 test('media in use cannot be deleted; uploads require alt text', async () => {

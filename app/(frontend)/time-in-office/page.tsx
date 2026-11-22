@@ -1,4 +1,5 @@
 import { notFound } from 'next/navigation';
+import { RenderBlocks } from '@/components/blocks/render-blocks';
 import { LAWMAN } from '@/components/designs/lawman/theme';
 import { CmsButton } from '@/components/ui/cms-button';
 import { loadPageGlobal } from '@/lib/cms/content';
@@ -187,6 +188,7 @@ export default async function TimeInOffice() {
           </div>
         </div>
       </section>
+      <RenderBlocks blocks={page.extraSections} />
     </main>
   );
 }

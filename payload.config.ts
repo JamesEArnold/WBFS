@@ -9,6 +9,7 @@ import { blobToken as getBlobToken } from './lib/blob-token';
 
 import { Events } from './cms/collections/Events';
 import { Media } from './cms/collections/Media';
+import { Pages } from './cms/collections/Pages';
 import { Users } from './cms/collections/Users';
 import { About } from './cms/globals/About';
 import { Donate } from './cms/globals/Donate';
@@ -36,7 +37,7 @@ export default buildConfig({
       ],
     },
   },
-  collections: [Events, Media, Users],
+  collections: [Pages, Events, Media, Users],
   globals: [SiteSettings, Home, About, Donate, InOffice, EventsPage],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
