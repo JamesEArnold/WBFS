@@ -123,6 +123,7 @@ test('anonymous visitors cannot read or write anything through the API', async (
     '/api/globals/inOffice',
     '/api/globals/donate',
     '/api/globals/about',
+    '/api/globals/home',
   ]) {
     expect((await anon.get(path)).status(), path).toBe(403);
   }
@@ -360,6 +361,37 @@ test('About: text, photo and links are editable; a photo in use cannot be delete
 
   // The replacement is no longer used after the restore, so it can be.
   expect((await editor.delete(`/api/media/${photoId}`)).status()).toBe(200);
+});
+
+test('Home: text, gallery photos, links and the featured event are editable', async () => {
+  const upload = await editor.post('/api/media', {
+    multipart: {
+      file: { name: 'e2e-gallery.png', mimeType: 'image/png', buffer: DOT_PNG },
+      _payload: JSON.stringify({ alt: 'E2E gallery photo' }),
+    },
+  });
+  expect(upload.status()).toBe(201);
+  const photoId = (await upload.json()).doc.id as number;
+
+  await editAndRestoreGlobal('home', '/', (doc) => {
+    doc.intro = 'E2E leads from the front.';
+    doc.gallery[1].image = photoId;
+    doc.gallery[1].caption = 'E2E Gallery Caption';
+    doc.pillars[2].ctaUrl = '/e2e-home-link';
+    doc.eventsHeading = 'E2E On The Calendar';
+    return ['E2E leads from the front.', 'alt="E2E gallery photo"', 'E2E Gallery Caption', 'href="/e2e-home-link"', 'E2E On The Calendar'];
+  });
+  expect((await editor.delete(`/api/media/${photoId}`)).status()).toBe(200);
+
+  // With no featured event, the events strip disappears; choosing it again brings it back.
+  const golfLink = 'href="/events/golf-fundraiser-3"';
+  const original = (await (await editor.get('/api/globals/home?depth=0')).json()) as Doc;
+  expect(original.featuredEvent).toBeTruthy();
+  const publishHome = (data: Doc) => editor.post('/api/globals/home', { data: { ...data, _status: 'published' } });
+  expect((await publishHome({ ...original, featuredEvent: null })).status()).toBe(200);
+  await eventually(async () => !(await pageText('/')).text.includes(golfLink));
+  expect((await publishHome(original)).status()).toBe(200);
+  await eventually(async () => (await pageText('/')).text.includes(golfLink));
 });
 
 test('media in use cannot be deleted; uploads require alt text', async () => {

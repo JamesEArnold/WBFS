@@ -13,6 +13,7 @@ import { Users } from './cms/collections/Users';
 import { About } from './cms/globals/About';
 import { Donate } from './cms/globals/Donate';
 import { EventsPage } from './cms/globals/EventsPage';
+import { Home } from './cms/globals/Home';
 import { InOffice } from './cms/globals/InOffice';
 import { SiteSettings } from './cms/globals/SiteSettings';
 
@@ -36,7 +37,7 @@ export default buildConfig({
     },
   },
   collections: [Events, Media, Users],
-  globals: [SiteSettings, About, Donate, InOffice, EventsPage],
+  globals: [SiteSettings, Home, About, Donate, InOffice, EventsPage],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
   // Public site reads through the Local API only; GraphQL is unused.

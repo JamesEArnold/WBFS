@@ -3,7 +3,7 @@
 A plain-language guide for people who update the site. You don't need any technical knowledge.
 
 > Screenshots will be added once the editing site is live.
-> Sections marked *(coming soon)* describe pages that aren't editable yet.
+> Sections marked *(coming soon)* describe features that aren't built yet.
 
 ---
 
@@ -21,7 +21,7 @@ A plain-language guide for people who update the site. You don't need any techni
   - **Preview:** opens the page with your draft changes. A red bar at the bottom reminds you it's a preview. Click **Exit preview** when done.
   - **Publish changes:** your changes go live within about 10 seconds. No need to ask anyone.
   - **Unpublish:** takes the page off the site, but keeps it in the CMS so you can publish it again later.
-- **Live preview:** on Events and the Events Page, the real page is shown **beside the form** and updates as you type (your changes are saved as a draft automatically — visitors don't see them until you publish). Use the **Phone / Desktop** switch above it to check both sizes, or the toggle to hide it.
+- **Live preview:** on every page and event, the real page is shown **beside the form** and updates as you type. Your changes are saved as a draft automatically, and visitors don't see them until you publish. Use the **Phone / Desktop** switch above it to check both sizes, or the toggle to hide it.
 - Every save is kept in **Versions** (top of each page). You can look back at older versions and restore one if needed.
 
 ## 3. Events
@@ -60,8 +60,16 @@ Go to **Site Settings** (left menu, under Globals). These changes go live as soo
   - the header and mobile-menu buttons.
 - **Footer tab:** the blurb, headquarters address, email, the footer button, Facebook/Instagram links, and the required "Paid for by…" line.
 
-## 5. The Events page itself
-**Events Page** (under Globals) holds the words around the list of events: the top heading and intro, the list heading, and the "More events coming soon" message shown when nothing is listed.
+## 5. The pages: Home, About, Donate, In Office, Events Page
+They're under **Pages** in the left menu. Each one is a single form, laid out top to bottom in the same order as the page, with each section in its own fold-out group.
+- **Small gold lines** (e.g. "★ Career In Service ★"): type only the words. The stars are added for you.
+- **Two-line headlines:** the first line is white and the optional second line is gold.
+- **Highlighting words:** in fields that say so, wrap words in double stars, like `Are **YOU** with me?`. The page shows them highlighted in that section's style.
+- **Lists** (timeline years, starred lines, gallery photos, buttons): use **Add** to add a row, drag the handle to reorder, and the **⋯** menu to remove or duplicate a row.
+- **Home → Featured event:** pick which event appears in the strip under the portrait. It shows that event's card details (gold line, title, subtitle) and links to its page. Clear it to hide the strip.
+- **Donate → Donorbox form address:** only a `https://donorbox.org/…` address is accepted.
+- **Events Page** holds the words around the list of events: the top heading and intro, the list heading, and the "More events coming soon" message shown when nothing is listed.
+- The sheriff star badge, the logo and the sign-up forms are part of the design and aren't edited here.
 
 ## 6. Pictures and files
 - Upload in **Media**, or directly from any image/file field.
@@ -79,8 +87,8 @@ Go to **Site Settings** (left menu, under Globals). These changes go live as soo
 - **Reset someone's password / resend an invite:** open the user, then **Copy setup / reset link** on the right. This cancels any earlier link.
 - **Remove someone:** open the user and delete them.
 
-## 8. Other pages *(coming soon)*
-Home, About, Donate and In Office will be editable the same way, with optional extra sections you can add. Brand-new pages built from ready-made sections are also coming.
+## 8. Extra sections and new pages *(coming soon)*
+Optional extra sections you can add to any page, and brand-new pages built from ready-made sections.
 
 ## Need help?
 Contact James. Nothing you do in the editor can break the site's design. Drafts and version history mean any mistake can be undone.

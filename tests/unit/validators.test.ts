@@ -31,6 +31,11 @@ describe('links typed into content', () => {
     }
   });
 
+  it('allows jumping to a section of the same page', () => {
+    expect(validateLinkUrl('#volunteer')).toBe(true);
+    expect(validateLinkUrl('#')).toEqual(expect.any(String));
+  });
+
   it('treats empty as fine unless required', () => {
     expect(validateLinkUrl('')).toBe(true);
     expect(validateLinkUrl('', { required: true })).toEqual(expect.any(String));

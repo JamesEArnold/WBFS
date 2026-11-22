@@ -15,6 +15,7 @@ export const MEDIA_REFERENCES: { collection: 'events'; label: string; paths: str
 
 /** Page globals that can reference Media, with the field paths (arrays are walked). */
 export const GLOBAL_MEDIA_REFERENCES: { global: GlobalSlug; label: string; paths: string[] }[] = [
+  { global: 'home', label: 'Home page', paths: ['heroButtons.file', 'portraitImage', 'gallery.image'] },
   { global: 'about', label: 'About page', paths: ['heroImage', 'signature', 'signOffImage', 'signOffButtons.file'] },
   { global: 'inOffice', label: 'In Office page', paths: ['ctaButtons.file'] },
 ];

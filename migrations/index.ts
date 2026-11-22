@@ -4,6 +4,7 @@ import * as migration_20261122_000643_autosave from './20261122_000643_autosave'
 import * as migration_20261122_013451_in_office from './20261122_013451_in_office';
 import * as migration_20261122_013722_donate from './20261122_013722_donate';
 import * as migration_20261122_013938_about from './20261122_013938_about';
+import * as migration_20261122_014231_home from './20261122_014231_home';
 
 export const migrations = [
   {
@@ -34,6 +35,11 @@ export const migrations = [
   {
     up: migration_20261122_013938_about.up,
     down: migration_20261122_013938_about.down,
-    name: '20261122_013938_about'
+    name: '20261122_013938_about',
+  },
+  {
+    up: migration_20261122_014231_home.up,
+    down: migration_20261122_014231_home.down,
+    name: '20261122_014231_home'
   },
 ];

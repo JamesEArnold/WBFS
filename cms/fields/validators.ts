@@ -56,12 +56,14 @@ export function validateLinkUrl(value: unknown, { required = false } = {}): true
   if (typeof value !== 'string') return 'Enter a link.';
   const trimmed = value.trim();
   if (trimmed.startsWith('/') && !trimmed.startsWith('//')) return true;
+  // A section on the same page, e.g. #volunteer.
+  if (/^#[A-Za-z][\w-]*$/.test(trimmed)) return true;
   if (/^(mailto|tel):/i.test(trimmed)) return true;
   let url: URL;
   try {
     url = new URL(trimmed);
   } catch {
-    return 'Enter a full link (https://…), a site path (/events), or a mailto: address.';
+    return 'Enter a full link (https://…), a site path (/events), a section (#volunteer), or a mailto: address.';
   }
   if (url.protocol !== 'https:' && url.protocol !== 'http:') {
     return 'Only https://, site paths (/…), mailto: and tel: links are allowed.';

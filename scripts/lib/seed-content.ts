@@ -293,6 +293,84 @@ const seedAbout = async (payload: Payload, log: Seeded) => {
   });
 };
 
+const seedHome = async (payload: Payload, log: Seeded) => {
+  const media = (file: string, alt: string) => seedMedia(payload, log, `asset:/${file}`, file, alt);
+  const portraitImage = await media('post-election/head-shot-with-hat.jpg', 'Sheriff Eric Weisburn');
+  // Gallery photos keep their caption as the description, as on the original page.
+  const gallery = [
+    { image: await media('new-may-2026/Sheriff_Weisburn_High_Fiving_Child.jpg', 'Stark County Parade'), caption: 'Stark County Parade', focus: 'upper' },
+    { image: await media('honor-guard.jpg', 'Service & Country'), caption: 'Service & Country', focus: 'center' },
+    { image: await media('new-may-2026/Sheriff_Weisburn_OVI_Taskforce_trailer.JPG', 'OVI Taskforce'), caption: 'OVI Taskforce', focus: 'center' },
+    {
+      image: await media('new-may-2026/Operation_Spring_Cleaning.JPG', 'Operation Spring Cleaning'),
+      caption: 'Operation Spring Cleaning',
+      focus: 'center',
+    },
+  ];
+  const golf = await payload.find({
+    collection: 'events',
+    where: { importKey: { equals: 'event:golf-2026' } },
+    limit: 1,
+    depth: 0,
+    overrideAccess: true,
+  });
+
+  await seedPageGlobal(payload, log, 'home', {
+    overline: 'Sworn In · January 6, 2025',
+    heading: 'Sheriff',
+    headingAccent: 'Eric Weisburn',
+    intro: 'With over 30 years of service, Sheriff Weisburn leads from the frontline. Sworn to protect every citizen of Stark County.',
+    heroButtons: [button('Contribute', '/donate'), button('Service Record', '/about', 'secondary')],
+    portraitImage,
+    portraitCaption: 'Eric Weisburn — Sheriff of Stark County',
+    portraitOverline: 'On Oath',
+    portraitHeading: 'A Sheriff sworn to serve Stark County.',
+    portraitBody:
+      'From Corrections Officer in 1991 to Sheriff in 2025. With over 30 years on the job — patrol, investigations, command. The fight to keep Stark County safe is far from over.',
+    portraitLinkLabel: 'Read His Record',
+    portraitLinkUrl: '/about',
+    eventsOverline: 'Upcoming Events',
+    eventsHeading: 'On The Calendar.',
+    featuredEvent: golf.docs[0]?.id ?? null,
+    featuredEventCtaLabel: 'View Details',
+    pillarsOverline: 'Three Ways To Stand With The Sheriff',
+    pillars: [
+      {
+        title: 'Events',
+        body: 'Parades, rallies, and community gatherings across Stark County. Check back here for our latest scheduled appearances.',
+        ctaLabel: 'See Calendar',
+        ctaUrl: '/events',
+      },
+      {
+        title: 'Volunteer',
+        body: 'I need boots on the ground. Stand by my side as we fight for a better Stark County. Yard signs, parades, doors — every action counts.',
+        ctaLabel: 'Sign Up',
+        ctaUrl: '#volunteer',
+      },
+      {
+        title: 'Contribute',
+        body: 'Your donation will make a huge impact. The fight to keep Stark County safe is far from over. Thank you for your support.',
+        ctaLabel: 'Donate',
+        ctaUrl: '/donate',
+      },
+    ],
+    quote: '“Action starts **now.**”',
+    quoteAttribution: 'Sheriff Eric Weisburn',
+    galleryOverline: 'In The Community',
+    galleryHeading: 'On The Trail.',
+    gallery,
+    volunteerOverline: 'Boots On The Ground',
+    volunteerHeading: 'Join the team.',
+    volunteerBody: 'Stand by my side as I fight for a better Stark County. Are **YOU** with me?',
+    volunteerTasks: lines(['Walk in parades and rallies', 'Display a yard sign', 'Knock on doors', 'Make calls to fellow voters']),
+    volunteerFormOverline: 'Enlist Here',
+    volunteerFormHeading: 'Volunteer Sign-Up',
+    updatesOverline: 'Stay Updated',
+    updatesHeading: 'Join the effort.',
+    updatesBody: 'News from the campaign, delivered straight to your inbox.',
+  });
+};
+
 async function seedGolfEvent(payload: Payload, log: Seeded) {
   const importKey = 'event:golf-2026';
   const existing = await payload.find({
@@ -386,5 +464,7 @@ export async function seed(payload: Payload): Promise<Seeded> {
   await seedDonate(payload, log);
   await seedAbout(payload, log);
   await seedGolfEvent(payload, log);
+  // After the golf event: the home page features it.
+  await seedHome(payload, log);
   return log;
 }

@@ -9,12 +9,14 @@ const { BLACK, COAL_LIFT, GOLD, GOLD_BRIGHT } = LAWMAN;
  * - `hero`: event-page hero buttons (inline-flex, shadowed primary)
  * - `compact`: empty-state / card buttons
  * - `cta`: closing call-to-action buttons on content pages
+ * - `raised`: like `cta`, with the shadowed primary (home page top)
  * - `signoff`: About page sign-off buttons (centred text, shadowed primary)
  */
 const SIZES = {
   hero: { className: 'inline-flex items-center px-7 py-4 text-xs font-bold tracking-[0.3em] uppercase', shadow: true },
   compact: { className: 'px-7 py-3 text-xs font-bold tracking-[0.3em] uppercase', shadow: false },
   cta: { className: 'px-7 py-4 text-xs font-bold tracking-[0.3em] uppercase', shadow: false },
+  raised: { className: 'px-7 py-4 text-xs font-bold tracking-[0.3em] uppercase', shadow: true },
   signoff: { className: 'px-7 py-4 text-xs font-bold tracking-[0.3em] text-center uppercase', shadow: true },
 } as const;
 

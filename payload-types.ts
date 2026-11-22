@@ -91,6 +91,7 @@ export interface Config {
   fallbackLocale: null;
   globals: {
     siteSettings: SiteSetting;
+    home: Home;
     about: About;
     donate: Donate;
     inOffice: InOffice;
@@ -98,6 +99,7 @@ export interface Config {
   };
   globalsSelect: {
     siteSettings: SiteSettingsSelect<false> | SiteSettingsSelect<true>;
+    home: HomeSelect<false> | HomeSelect<true>;
     about: AboutSelect<false> | AboutSelect<true>;
     donate: DonateSelect<false> | DonateSelect<true>;
     inOffice: InOfficeSelect<false> | InOfficeSelect<true>;
@@ -616,6 +618,143 @@ export interface SiteSetting {
   createdAt?: string | null;
 }
 /**
+ * The home page (/). The sign-up forms themselves are built in and not edited here.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "home".
+ */
+export interface Home {
+  id: number;
+  /**
+   * Small gold line above the headline.
+   */
+  overline: string;
+  heading: string;
+  /**
+   * Optional second line shown in gold.
+   */
+  headingAccent?: string | null;
+  intro?: string | null;
+  heroButtons?:
+    | {
+        label: string;
+        linkType?: ('url' | 'file') | null;
+        /**
+         * e.g. /donate, https://…, or mailto:someone@example.com
+         */
+        url?: string | null;
+        file?: (number | null) | Media;
+        style?: ('primary' | 'secondary') | null;
+        newTab?: boolean | null;
+        id?: string | null;
+      }[]
+    | null;
+  portraitImage: number | Media;
+  /**
+   * Gold strip across the bottom of the photo. Stars are added automatically.
+   */
+  portraitCaption?: string | null;
+  /**
+   * Small gold line above the heading.
+   */
+  portraitOverline?: string | null;
+  portraitHeading: string;
+  portraitBody?: string | null;
+  /**
+   * Underlined link text, e.g. "Read His Record". The arrow is added automatically.
+   */
+  portraitLinkLabel?: string | null;
+  /**
+   * e.g. /about, #volunteer, or https://…
+   */
+  portraitLinkUrl?: string | null;
+  /**
+   * Small gold line. Stars are added automatically.
+   */
+  eventsOverline?: string | null;
+  eventsHeading?: string | null;
+  /**
+   * Shows the event’s small gold line, title and subtitle from its Events list card.
+   */
+  featuredEvent?: (number | null) | Event;
+  /**
+   * The arrow is added automatically.
+   */
+  featuredEventCtaLabel?: string | null;
+  /**
+   * Small gold line. Stars are added automatically.
+   */
+  pillarsOverline?: string | null;
+  pillars?:
+    | {
+        title: string;
+        body?: string | null;
+        /**
+         * e.g. "Sign Up". The arrow is added automatically.
+         */
+        ctaLabel?: string | null;
+        /**
+         * e.g. /about, #volunteer, or https://…
+         */
+        ctaUrl?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Shown in italics. Wrap words in **double stars** to show them upright.
+   */
+  quote?: string | null;
+  quoteAttribution?: string | null;
+  /**
+   * Small gold line. Stars are added automatically.
+   */
+  galleryOverline?: string | null;
+  galleryHeading?: string | null;
+  /**
+   * Shown two per row on desktop. The caption appears on the photo.
+   */
+  gallery?:
+    | {
+        image: number | Media;
+        caption: string;
+        /**
+         * Which part of the photo to keep when it is cropped.
+         */
+        focus?: ('center' | 'upper') | null;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Small gold line. Stars are added automatically.
+   */
+  volunteerOverline?: string | null;
+  volunteerHeading: string;
+  /**
+   * Wrap words in **double stars** to highlight them.
+   */
+  volunteerBody?: string | null;
+  volunteerTasks?:
+    | {
+        text: string;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Small gold line above the form title. Stars are added automatically.
+   */
+  volunteerFormOverline?: string | null;
+  volunteerFormHeading: string;
+  /**
+   * Small gold line. Stars are added automatically.
+   */
+  updatesOverline?: string | null;
+  updatesHeading: string;
+  updatesBody?: string | null;
+  _status?: ('draft' | 'published') | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
  * The About page (/about).
  *
  * This interface was referenced by `Config`'s JSON-Schema
@@ -915,6 +1054,78 @@ export interface SiteSettingsSelect<T extends boolean = true> {
   facebookUrl?: T;
   instagramUrl?: T;
   disclaimer?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "home_select".
+ */
+export interface HomeSelect<T extends boolean = true> {
+  overline?: T;
+  heading?: T;
+  headingAccent?: T;
+  intro?: T;
+  heroButtons?:
+    | T
+    | {
+        label?: T;
+        linkType?: T;
+        url?: T;
+        file?: T;
+        style?: T;
+        newTab?: T;
+        id?: T;
+      };
+  portraitImage?: T;
+  portraitCaption?: T;
+  portraitOverline?: T;
+  portraitHeading?: T;
+  portraitBody?: T;
+  portraitLinkLabel?: T;
+  portraitLinkUrl?: T;
+  eventsOverline?: T;
+  eventsHeading?: T;
+  featuredEvent?: T;
+  featuredEventCtaLabel?: T;
+  pillarsOverline?: T;
+  pillars?:
+    | T
+    | {
+        title?: T;
+        body?: T;
+        ctaLabel?: T;
+        ctaUrl?: T;
+        id?: T;
+      };
+  quote?: T;
+  quoteAttribution?: T;
+  galleryOverline?: T;
+  galleryHeading?: T;
+  gallery?:
+    | T
+    | {
+        image?: T;
+        caption?: T;
+        focus?: T;
+        id?: T;
+      };
+  volunteerOverline?: T;
+  volunteerHeading?: T;
+  volunteerBody?: T;
+  volunteerTasks?:
+    | T
+    | {
+        text?: T;
+        id?: T;
+      };
+  volunteerFormOverline?: T;
+  volunteerFormHeading?: T;
+  updatesOverline?: T;
+  updatesHeading?: T;
+  updatesBody?: T;
+  _status?: T;
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;

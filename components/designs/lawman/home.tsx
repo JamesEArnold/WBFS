@@ -1,10 +1,14 @@
-'use client';
-
 import Image from 'next/image';
 import Link from 'next/link';
+import { CmsButton } from '@/components/ui/cms-button';
 import { EmailSignupForm } from '@/components/ui/email-signup';
+import { Highlighted } from '@/components/ui/highlighted';
 import { VolunteerSignupForm } from '@/components/ui/volunteer-signup';
+import { asMedia } from '@/lib/cms/content';
+import type { Event, Home } from '@/payload-types';
 import { LAWMAN } from './theme';
+
+type Props = { page: Home };
 
 const { BLACK, NEAR_BLACK, COAL, COAL_LIFT, GOLD, GOLD_BRIGHT, CREAM, BODY } = LAWMAN;
 
@@ -20,7 +24,7 @@ const SheriffBadge = ({ size = 200, priority = false }: { size?: number; priorit
   />
 );
 
-const Hero = () => (
+const Hero = ({ page }: Props) => (
   <section className="relative overflow-hidden" style={{ background: BLACK }}>
     <div
       aria-hidden
@@ -34,7 +38,7 @@ const Hero = () => (
         <div className="flex items-center justify-center gap-3 md:justify-start">
           <span className="block w-10 h-px" style={{ background: GOLD_BRIGHT }} />
           <p className="text-[11px] font-bold tracking-[0.4em] uppercase" style={{ color: GOLD_BRIGHT }}>
-            Sworn In · January 6, 2025
+            {page.overline}
           </p>
           <span className="block w-10 h-px md:hidden" style={{ background: GOLD_BRIGHT }} />
         </div>
@@ -47,38 +51,31 @@ const Hero = () => (
             letterSpacing: '0.01em',
           }}
         >
-          Sheriff
-          <span
-            className="block"
-            style={{
-              color: GOLD_BRIGHT,
-              WebkitTextStroke: `1px ${GOLD}`,
-            }}
-          >
-            Eric Weisburn
-          </span>
+          {page.heading}
+          {page.headingAccent && (
+            <span
+              className="block"
+              style={{
+                color: GOLD_BRIGHT,
+                WebkitTextStroke: `1px ${GOLD}`,
+              }}
+            >
+              {page.headingAccent}
+            </span>
+          )}
         </h1>
-        <p
-          className="max-w-xl mt-6 text-base leading-[1.7] md:text-lg"
-          style={{ color: BODY }}
-        >
-          With over 30 years of service, Sheriff Weisburn leads from the frontline. Sworn to protect every citizen of Stark County.
-        </p>
+        {page.intro && (
+          <p
+            className="max-w-xl mt-6 text-base leading-[1.7] md:text-lg"
+            style={{ color: BODY }}
+          >
+            {page.intro}
+          </p>
+        )}
         <div className="flex flex-col items-center gap-3 mt-8 sm:flex-row md:justify-start">
-          <Link
-            href="/donate"
-            className="px-7 py-4 text-xs font-bold tracking-[0.3em] uppercase"
-            style={{ background: GOLD, color: BLACK, boxShadow: `0 4px 0 ${COAL_LIFT}` }}
-          >
-            Contribute
-          </Link>
-          <Link
-            href="/about"
-            className="px-7 py-4 text-xs font-bold tracking-[0.3em] uppercase border-2"
-            style={{ borderColor: GOLD, color: GOLD_BRIGHT }}
-          >
-            Service Record
-          </Link>
+          {(page.heroButtons ?? []).map((button, i) => (
+            <CmsButton key={button.id ?? i} button={button} size="raised" />
+          ))}
         </div>
       </div>
       <div className="relative md:col-span-5">
@@ -95,14 +92,17 @@ const Hero = () => (
   </section>
 );
 
-const PortraitBlock = () => (
+const PortraitBlock = ({ page }: Props) => {
+  const photo = asMedia(page.portraitImage);
+  return (
   <section className="relative overflow-hidden" style={{ background: NEAR_BLACK }}>
     <div className="grid max-w-6xl gap-10 px-5 py-20 mx-auto md:grid-cols-12">
       <div className="relative md:col-span-7">
         <div className="relative" style={{ border: `4px solid ${GOLD}` }}>
+          {photo?.url && (
           <Image
-            src="/post-election/head-shot-with-hat.jpg"
-            alt="Sheriff Eric Weisburn"
+            src={photo.url}
+            alt={photo.alt}
             width={1200}
             height={1500}
             sizes="(max-width: 768px) 100vw, 700px"
@@ -110,17 +110,20 @@ const PortraitBlock = () => (
             style={{ filter: 'contrast(1.05) brightness(0.95)' }}
             priority
           />
+          )}
+          {page.portraitCaption && (
           <div
             className="absolute bottom-0 left-0 right-0 px-5 py-3 text-[11px] font-bold tracking-[0.35em] uppercase"
             style={{ background: 'rgba(10,10,10,0.85)', color: GOLD_BRIGHT, borderTop: `1px solid ${GOLD}` }}
           >
-            ★ Eric Weisburn — Sheriff of Stark County ★
+            ★ {page.portraitCaption} ★
           </div>
+          )}
         </div>
       </div>
       <div className="md:col-span-5 md:py-6">
         <p className="text-[11px] font-bold tracking-[0.4em] uppercase" style={{ color: GOLD_BRIGHT }}>
-          On Oath
+          {page.portraitOverline}
         </p>
         <h2
           className="mt-3 font-serif font-black"
@@ -130,24 +133,36 @@ const PortraitBlock = () => (
             lineHeight: 1,
           }}
         >
-          A Sheriff sworn to serve Stark County.
+          {page.portraitHeading}
         </h2>
-        <p className="mt-5 text-base leading-relaxed" style={{ color: BODY }}>
-          From Corrections Officer in 1991 to Sheriff in 2025. With over 30 years on the job — patrol, investigations, command. The fight to keep Stark County safe is far from over.
-        </p>
+        {page.portraitBody && (
+          <p className="mt-5 text-base leading-relaxed" style={{ color: BODY }}>
+            {page.portraitBody}
+          </p>
+        )}
+        {page.portraitLinkLabel && page.portraitLinkUrl && (
         <Link
-          href="/about"
+          href={page.portraitLinkUrl}
           className="inline-flex items-center gap-3 mt-7 text-xs font-bold tracking-[0.3em] uppercase"
           style={{ color: GOLD_BRIGHT, borderBottom: `2px solid ${GOLD}`, paddingBottom: 4 }}
         >
-          Read His Record &rarr;
+          {page.portraitLinkLabel} &rarr;
         </Link>
+        )}
       </div>
     </div>
   </section>
-);
+  );
+};
 
-const GolfBanner = () => (
+/** The featured event, when one is chosen and it is published and not hidden. */
+function featuredEvent(page: Home): Event | null {
+  const event = page.featuredEvent;
+  if (!event || typeof event !== 'object') return null;
+  return event._status === 'published' && event.status !== 'hidden' ? event : null;
+}
+
+const FeaturedEvent = ({ page, event }: Props & { event: Event }) => (
   <section className="px-5 py-20" style={{ background: BLACK }}>
     <div className="max-w-6xl mx-auto">
       <div className="text-center">
@@ -155,7 +170,7 @@ const GolfBanner = () => (
           className="text-[11px] font-bold tracking-[0.4em] uppercase"
           style={{ color: GOLD_BRIGHT }}
         >
-          ★ Upcoming Events ★
+          ★ {page.eventsOverline} ★
         </p>
         <h2
           className="mt-3 font-serif font-black"
@@ -165,7 +180,7 @@ const GolfBanner = () => (
             lineHeight: 1,
           }}
         >
-          On The Calendar.
+          {page.eventsHeading}
         </h2>
         <div
           aria-hidden
@@ -174,7 +189,7 @@ const GolfBanner = () => (
         />
       </div>
       <Link
-        href="/events/golf-fundraiser-3"
+        href={`/events/${event.slug}`}
         className="block mt-12 transition-colors group"
       >
         <div
@@ -189,22 +204,22 @@ const GolfBanner = () => (
             <SheriffBadge size={64} />
             <div>
               <p className="text-[10px] font-bold tracking-[0.4em] uppercase" style={{ color: GOLD_BRIGHT }}>
-                Save The Date
+                {event.overline}
               </p>
               <h3
                 className="mt-1 font-serif text-2xl font-bold md:text-3xl"
                 style={{ color: CREAM }}
               >
-                Annual Golf Fundraiser
+                {event.title}
               </h3>
-              <p className="text-sm" style={{ color: BODY }}>Friday, September 18, 2026 · Sable Creek Golf Course</p>
+              <p className="text-sm" style={{ color: BODY }}>{event.subtitle}</p>
             </div>
           </div>
           <span
             className="inline-flex items-center gap-3 text-xs font-bold tracking-[0.3em] uppercase group-hover:gap-4 transition-all"
             style={{ color: GOLD_BRIGHT }}
           >
-            View Details &rarr;
+            {page.featuredEventCtaLabel} &rarr;
           </span>
         </div>
       </Link>
@@ -212,44 +227,20 @@ const GolfBanner = () => (
   </section>
 );
 
-const Pillars = () => {
-  const items = [
-    {
-      title: 'Events',
-      body:
-        'Parades, rallies, and community gatherings across Stark County. Check back here for our latest scheduled appearances.',
-      cta: 'See Calendar',
-      href: '/events',
-    },
-    {
-      title: 'Volunteer',
-      body:
-        "I need boots on the ground. Stand by my side as we fight for a better Stark County. Yard signs, parades, doors — every action counts.",
-      cta: 'Sign Up',
-      href: '#volunteer',
-    },
-    {
-      title: 'Contribute',
-      body:
-        'Your donation will make a huge impact. The fight to keep Stark County safe is far from over. Thank you for your support.',
-      cta: 'Donate',
-      href: '/donate',
-    },
-  ];
-
+const Pillars = ({ page }: Props) => {
   return (
     <section className="px-5 py-24" style={{ background: BLACK }}>
       <div className="max-w-6xl mx-auto">
         <div className="text-center">
           <p className="text-[11px] font-bold tracking-[0.4em] uppercase" style={{ color: GOLD_BRIGHT }}>
-            ★ Three Ways To Stand With The Sheriff ★
+            ★ {page.pillarsOverline} ★
           </p>
         </div>
         <div className="grid gap-5 mt-12 md:grid-cols-3">
-          {items.map((it) => (
+          {(page.pillars ?? []).map((it, i) => (
             <Link
-              key={it.title}
-              href={it.href}
+              key={it.id ?? i}
+              href={it.ctaUrl ?? '#'}
               className="relative flex flex-col p-7 transition-colors group"
               style={{
                 background: COAL,
@@ -268,14 +259,16 @@ const Pillars = () => {
               >
                 {it.title}
               </h3>
-              <p className="mt-4 text-sm leading-relaxed" style={{ color: BODY }}>
-                {it.body}
-              </p>
+              {it.body && (
+                <p className="mt-4 text-sm leading-relaxed" style={{ color: BODY }}>
+                  {it.body}
+                </p>
+              )}
               <span
                 className="inline-flex items-center self-start gap-2 mt-6 text-[11px] font-bold tracking-[0.3em] uppercase group-hover:gap-3 transition-all"
                 style={{ color: GOLD_BRIGHT }}
               >
-                {it.cta} &rarr;
+                {it.ctaLabel} &rarr;
               </span>
             </Link>
           ))}
@@ -285,7 +278,7 @@ const Pillars = () => {
   );
 };
 
-const Quote = () => (
+const Quote = ({ page }: Props) => (
   <section className="px-5 py-20" style={{ background: CREAM }}>
     <div className="max-w-3xl mx-auto text-center">
       <p
@@ -296,12 +289,12 @@ const Quote = () => (
           lineHeight: 1.15,
         }}
       >
-        “Action starts <span className="not-italic">now.</span>”
+        <Highlighted text={page.quote ?? ''} className="not-italic" />
       </p>
       <div className="flex items-center justify-center gap-4 mt-7">
         <span className="block w-12 h-px" style={{ background: BLACK }} />
         <p className="text-[11px] font-bold tracking-[0.4em] uppercase" style={{ color: BLACK }}>
-          Sheriff Eric Weisburn
+          {page.quoteAttribution}
         </p>
         <span className="block w-12 h-px" style={{ background: BLACK }} />
       </div>
@@ -312,12 +305,18 @@ const Quote = () => (
   </section>
 );
 
-const Gallery = () => (
+/** Crop focus options (literal class names so Tailwind keeps them). */
+const FOCUS: Record<string, string> = {
+  center: 'object-center',
+  upper: 'object-center md:object-[center_38%]',
+};
+
+const Gallery = ({ page }: Props) => (
   <section className="px-5 py-24" style={{ background: NEAR_BLACK }}>
     <div className="max-w-6xl mx-auto">
       <div className="text-center mb-12">
         <p className="text-[11px] font-bold tracking-[0.4em] uppercase" style={{ color: GOLD_BRIGHT }}>
-          ★ In The Community ★
+          ★ {page.galleryOverline} ★
         </p>
         <h2
           className="mt-3 font-serif font-black"
@@ -326,28 +325,23 @@ const Gallery = () => (
             fontSize: 'clamp(2rem, 4.5vw, 3rem)',
           }}
         >
-          On The Trail.
+          {page.galleryHeading}
         </h2>
       </div>
       <div className="grid gap-3 md:grid-cols-2">
-        {[
-          {
-            src: '/new-may-2026/Sheriff_Weisburn_High_Fiving_Child.jpg',
-            cap: 'Stark County Parade',
-            cls: 'object-center md:object-[center_38%]',
-          },
-          { src: '/honor-guard.jpg', cap: 'Service & Country', cls: 'object-center' },
-          { src: '/new-may-2026/Sheriff_Weisburn_OVI_Taskforce_trailer.JPG', cap: 'OVI Taskforce', cls: 'object-center' },
-          { src: '/new-may-2026/Operation_Spring_Cleaning.JPG', cap: 'Operation Spring Cleaning', cls: 'object-center' },
-        ].map((p) => (
-          <figure key={p.src} className="relative" style={{ border: `1px solid ${GOLD}` }}>
+        {(page.gallery ?? []).map((item, i) => {
+          const photo = asMedia(item.image);
+          if (!photo?.url) return null;
+          const p = { src: photo.url, alt: photo.alt, cap: item.caption, cls: FOCUS[item.focus ?? 'center'] ?? FOCUS.center };
+          return (
+          <figure key={item.id ?? i} className="relative" style={{ border: `1px solid ${GOLD}` }}>
             <div
               className="relative h-[22rem] overflow-hidden"
               style={{ filter: 'contrast(1.08) brightness(0.95)' }}
             >
               <Image
                 src={p.src}
-                alt={p.cap}
+                alt={p.alt}
                 fill
                 sizes="(max-width: 768px) 100vw, 600px"
                 className={`object-cover ${p.cls}`}
@@ -360,18 +354,19 @@ const Gallery = () => (
               {p.cap}
             </figcaption>
           </figure>
-        ))}
+          );
+        })}
       </div>
     </div>
   </section>
 );
 
-const VolunteerSection = () => (
+const VolunteerSection = ({ page }: Props) => (
   <section id="volunteer" className="px-5 py-24" style={{ background: BLACK }}>
     <div className="grid max-w-6xl gap-10 mx-auto md:grid-cols-12">
       <div className="md:col-span-5">
         <p className="text-[11px] font-bold tracking-[0.4em] uppercase" style={{ color: GOLD_BRIGHT }}>
-          ★ Boots On The Ground ★
+          ★ {page.volunteerOverline} ★
         </p>
         <h2
           className="mt-3 font-serif font-black"
@@ -381,16 +376,17 @@ const VolunteerSection = () => (
             lineHeight: 1,
           }}
         >
-          Join the team.
+          {page.volunteerHeading}
         </h2>
-        <p className="mt-5 text-base leading-relaxed" style={{ color: BODY }}>
-          Stand by my side as I fight for a better Stark County. Are{' '}
-          <span className="font-semibold" style={{ color: CREAM }}>YOU</span> with me?
-        </p>
+        {page.volunteerBody && (
+          <p className="mt-5 text-base leading-relaxed" style={{ color: BODY }}>
+            <Highlighted text={page.volunteerBody} className="font-semibold" style={{ color: CREAM }} />
+          </p>
+        )}
         <ul className="mt-6 space-y-2 text-sm" style={{ color: CREAM }}>
-          {['Walk in parades and rallies', 'Display a yard sign', 'Knock on doors', 'Make calls to fellow voters'].map((x) => (
-            <li key={x} className="flex items-start gap-3">
-              <span style={{ color: GOLD_BRIGHT }}>★</span> {x}
+          {(page.volunteerTasks ?? []).map((x, i) => (
+            <li key={x.id ?? i} className="flex items-start gap-3">
+              <span style={{ color: GOLD_BRIGHT }}>★</span> {x.text}
             </li>
           ))}
         </ul>
@@ -414,13 +410,13 @@ const VolunteerSection = () => (
                 className="text-[10px] font-bold tracking-[0.4em] uppercase"
                 style={{ color: GOLD }}
               >
-                ★ Enlist Here ★
+                ★ {page.volunteerFormOverline} ★
               </p>
               <h3
                 className="mt-2 font-serif text-2xl font-black uppercase md:text-3xl"
                 style={{ color: BLACK, letterSpacing: '0.04em' }}
               >
-                Volunteer Sign-Up
+                {page.volunteerFormHeading}
               </h3>
               <div
                 aria-hidden
@@ -436,7 +432,9 @@ const VolunteerSection = () => (
   </section>
 );
 
-const GetInvolved = () => (
+type Social = { facebookUrl?: string | null; instagramUrl?: string | null };
+
+const GetInvolved = ({ page, social }: Props & { social: Social }) => (
   <section className="relative px-5 py-24 overflow-hidden" style={{ background: NEAR_BLACK }}>
     <div
       aria-hidden
@@ -448,7 +446,7 @@ const GetInvolved = () => (
     <div className="relative max-w-2xl mx-auto text-center">
       <SheriffBadge size={140} />
       <p className="mt-4 text-[11px] font-bold tracking-[0.4em] uppercase" style={{ color: GOLD_BRIGHT }}>
-        ★ Stay Updated ★
+        ★ {page.updatesOverline} ★
       </p>
       <h2
         className="mt-3 font-serif font-black"
@@ -458,45 +456,54 @@ const GetInvolved = () => (
           lineHeight: 1,
         }}
       >
-        Join the effort.
+        {page.updatesHeading}
       </h2>
-      <p className="mt-4" style={{ color: BODY }}>
-        News from the campaign, delivered straight to your inbox.
-      </p>
+      {page.updatesBody && (
+        <p className="mt-4" style={{ color: BODY }}>
+          {page.updatesBody}
+        </p>
+      )}
       <div className="mt-8">
         <EmailSignupForm />
       </div>
       <div className="flex justify-center gap-3 mt-8">
+        {social.facebookUrl && (
         <a
-          href="https://www.facebook.com/profile.php?id=61552050077933"
+          href={social.facebookUrl}
           aria-label="Facebook"
           className="flex items-center justify-center w-11 h-11 rounded-full transition-colors hover:opacity-90"
           style={{ background: GOLD_BRIGHT }}
         >
           <Image src="/icon-facebook.svg" width={26} height={26} alt="Facebook" />
         </a>
+        )}
+        {social.instagramUrl && (
         <a
-          href="https://instagram.com/weisburnforsheriff"
+          href={social.instagramUrl}
           aria-label="Instagram"
           className="flex items-center justify-center w-11 h-11 rounded-full transition-colors hover:opacity-90"
           style={{ background: GOLD_BRIGHT }}
         >
           <Image src="/icon-instagram.svg" width={24} height={24} alt="Instagram" />
         </a>
+        )}
       </div>
     </div>
   </section>
 );
 
-export const LawmanHome = () => (
-  <main style={{ background: BLACK, color: CREAM }}>
-    <Hero />
-    <PortraitBlock />
-    <GolfBanner />
-    <Pillars />
-    <Quote />
-    <Gallery />
-    <VolunteerSection />
-    <GetInvolved />
-  </main>
-);
+export const LawmanHome = ({ page, social }: Props & { social: Social }) => {
+  const event = featuredEvent(page);
+  return (
+    <main style={{ background: BLACK, color: CREAM }}>
+      <Hero page={page} />
+      <PortraitBlock page={page} />
+      {event && <FeaturedEvent page={page} event={event} />}
+      <Pillars page={page} />
+      <Quote page={page} />
+      <Gallery page={page} />
+      <VolunteerSection page={page} />
+      <GetInvolved page={page} social={social} />
+    </main>
+  );
+};
