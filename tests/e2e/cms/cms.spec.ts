@@ -199,6 +199,32 @@ test('a draft event is private, previewable by editors, and goes live when publi
   expect(live.text).not.toContain('Unpublished draft wording.');
 });
 
+test('live preview beside the editor updates as the editor types', async ({ page }) => {
+  test.setTimeout(90_000);
+  // Log the browser in as the editor (cookie session, same Origin as the site).
+  const login = await page.request.post('/api/users/login', {
+    headers: { Origin: baseURL },
+    data: { email: EDITOR.email, password: EDITOR.password },
+  });
+  expect(login.status()).toBe(200);
+
+  await page.goto(`/admin/collections/events/${eventId}`);
+  await page.waitForLoadState('networkidle');
+
+  // Live Preview opens by default, showing the event page in draft mode
+  // (with the newer unpublished draft wording from the previous test).
+  const frame = page.frameLocator('iframe[src*="/preview/enter"]');
+  await expect(frame.getByRole('heading', { level: 1 })).toContainText('Summer', { timeout: 30_000 });
+  await expect(frame.getByText('Unpublished draft wording.')).toBeVisible();
+
+  // Type a new headline: autosave + refresh shows it in the preview without saving manually.
+  await page.locator('#field-heading').fill('Live Preview Works');
+  await expect(frame.getByRole('heading', { level: 1 })).toContainText('Live Preview Works', { timeout: 20_000 });
+
+  // ...while the public page is unchanged until publish.
+  expect((await pageText('/events/e2e-summer-picnic')).text).not.toContain('Live Preview Works');
+});
+
 test('sold out shows the banner; published slugs are locked for editors', async () => {
   const soldOut = await editor.patch(`/api/events/${eventId}`, {
     data: { _status: 'published', status: 'soldOut', soldOutBanner: { heading: 'All Booked Up' } },

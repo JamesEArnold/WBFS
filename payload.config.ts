@@ -23,6 +23,14 @@ export default buildConfig({
     user: Users.slug,
     meta: { titleSuffix: ' — Weisburn for Sheriff CMS', robots: 'noindex, nofollow' },
     importMap: { baseDir: path.resolve(dirname) },
+    // Side-by-side preview while editing (collections/globals opt in with a url).
+    livePreview: {
+      openByDefault: true,
+      breakpoints: [
+        { name: 'mobile', label: 'Phone', width: 390, height: 844 },
+        { name: 'desktop', label: 'Desktop', width: 1440, height: 900 },
+      ],
+    },
   },
   collections: [Events, Media, Users],
   globals: [SiteSettings, EventsPage],

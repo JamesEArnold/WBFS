@@ -3,6 +3,7 @@ import { isStaff } from '../access/roles';
 import { buttonsField, headingFields } from '../fields/link';
 import { lockSlugAfterPublish, slugFields } from '../fields/slug';
 import { invalidateAfterChange, invalidateAfterDelete } from '../hooks/invalidate';
+import { livePreviewUrl, previewPath } from '../livePreview';
 
 export const EVENT_STATUSES = ['upcoming', 'soldOut', 'past', 'hidden'] as const;
 export type EventStatus = (typeof EVENT_STATUSES)[number];
@@ -17,11 +18,14 @@ export const Events: CollectionConfig = {
     useAsTitle: 'title',
     defaultColumns: ['title', 'status', 'date', '_status', 'updatedAt'],
     description: 'Fundraisers, parades and other appearances. Publish to put an event on the site.',
-    preview: (doc) =>
-      doc?.slug ? `/preview/enter?path=${encodeURIComponent(`/events/${doc.slug}`)}` : null,
+    preview: (doc) => (doc?.slug ? previewPath(`/events/${doc.slug}`) : null),
+    livePreview: {
+      url: ({ data }) => (data?.slug ? livePreviewUrl(`/events/${data.slug}`) : null),
+    },
   },
   versions: {
-    drafts: true,
+    // Autosave keeps the draft (and the live preview beside the form) up to date as you type.
+    drafts: { autosave: { interval: 500 } },
     maxPerDoc: 20,
   },
   access: {

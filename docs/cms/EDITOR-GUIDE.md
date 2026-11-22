@@ -21,6 +21,7 @@ A plain-language guide for people who update the site. You don't need any techni
   - **Preview:** opens the page with your draft changes. A red bar at the bottom reminds you it's a preview. Click **Exit preview** when done.
   - **Publish changes:** your changes go live within about 10 seconds. No need to ask anyone.
   - **Unpublish:** takes the page off the site, but keeps it in the CMS so you can publish it again later.
+- **Live preview:** on Events and the Events Page, the real page is shown **beside the form** and updates as you type (your changes are saved as a draft automatically — visitors don't see them until you publish). Use the **Phone / Desktop** switch above it to check both sizes, or the toggle to hide it.
 - Every save is kept in **Versions** (top of each page). You can look back at older versions and restore one if needed.
 
 ## 3. Events

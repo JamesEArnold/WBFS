@@ -2,19 +2,21 @@ import type { GlobalConfig } from 'payload';
 import { isStaff } from '../access/roles';
 import { buttonsField, headingFields } from '../fields/link';
 import { invalidateGlobalAfterChange } from '../hooks/invalidate';
+import { livePreviewUrl, previewPath } from '../livePreview';
 
 /** Copy on the /events page around the list of events. */
 export const EventsPage: GlobalConfig = {
   slug: 'eventsPage',
   label: 'Events Page',
-  versions: { drafts: true, max: 20 },
+  versions: { drafts: { autosave: { interval: 500 } }, max: 20 },
   access: {
     read: isStaff,
     update: isStaff,
     readVersions: isStaff,
   },
   admin: {
-    preview: () => `/preview/enter?path=${encodeURIComponent('/events')}`,
+    preview: () => previewPath('/events'),
+    livePreview: { url: () => livePreviewUrl('/events') },
   },
   hooks: {
     afterChange: [invalidateGlobalAfterChange],
