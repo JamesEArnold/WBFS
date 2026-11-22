@@ -7,6 +7,7 @@ import { slugify, validateSlug } from './validators';
 export const slugFields = (sourceField = 'title'): Field[] => [
   {
     name: 'slug',
+    label: 'Web address',
     type: 'text',
     required: true,
     unique: true,

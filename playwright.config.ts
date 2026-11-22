@@ -75,10 +75,10 @@ export default defineConfig({
       dependencies: ['smoke', 'text', 'visual-desktop', 'visual-mobile'],
       fullyParallel: false,
     },
-    // Editor-guide screenshots (docs/cms/screenshots), taken after the CMS tests set up the admin.
+    // How-to guide screenshots (public/admin-help), made by doing each guide's steps.
     {
-      name: 'docs-screenshots',
-      testMatch: /manual\/screenshots\.spec\.ts/,
+      name: 'help-screenshots',
+      testMatch: /manual\/help-screenshots\.spec\.ts/,
       use: { ...desktop, colorScheme: 'light' },
       dependencies: ['cms'],
     },

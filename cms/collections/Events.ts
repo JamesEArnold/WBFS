@@ -1,6 +1,7 @@
 import type { CollectionConfig } from 'payload';
 import { isStaff } from '../access/roles';
 import { extraSectionsField } from '../blocks';
+import { withPlainLabels } from '../fields/plainLabels';
 import { buttonsField, headingFields } from '../fields/link';
 import { lockSlugAfterPublish, slugFields } from '../fields/slug';
 import { invalidateAfterChange, invalidateAfterDelete } from '../hooks/invalidate';
@@ -15,7 +16,9 @@ export type EventStatus = (typeof EVENT_STATUSES)[number];
  */
 export const Events: CollectionConfig = {
   slug: 'events',
+  labels: { singular: 'Event', plural: 'Events' },
   admin: {
+    group: 'Events & Photos',
     useAsTitle: 'title',
     defaultColumns: ['title', 'status', 'date', 'expiresAt', '_status', 'updatedAt'],
     description: 'Fundraisers, parades and other appearances. Publish to put an event on the site.',
@@ -42,7 +45,7 @@ export const Events: CollectionConfig = {
     afterChange: [invalidateAfterChange],
     afterDelete: [invalidateAfterDelete],
   },
-  fields: [
+  fields: withPlainLabels([
     {
       name: 'title',
       type: 'text',
@@ -111,12 +114,13 @@ export const Events: CollectionConfig = {
             { name: 'body', type: 'textarea' },
           ],
         },
-        { name: 'dateLabel', type: 'text', admin: { description: 'Gold line above the headline, e.g. "Friday · September 18, 2026".' } },
+        { name: 'dateLabel', label: 'Date line', type: 'text', admin: { description: 'Gold line above the headline, e.g. "Friday · September 18, 2026".' } },
         ...headingFields(true),
-        { name: 'heroBlurb', type: 'textarea', admin: { description: 'Paragraph under the headline.' } },
+        { name: 'heroBlurb', label: 'Paragraph under the headline', type: 'textarea', admin: { description: 'Paragraph under the headline.' } },
         buttonsField('buttons', 'Buttons'),
         {
           name: 'flyerPdf',
+          label: 'Flyer PDF',
           type: 'upload',
           relationTo: 'media',
           filterOptions: { mimeType: { equals: 'application/pdf' } },
@@ -124,10 +128,11 @@ export const Events: CollectionConfig = {
         },
         {
           name: 'flyerImages',
+          label: 'Flyer pictures',
           type: 'array',
           fields: [
             { name: 'image', type: 'upload', relationTo: 'media', required: true },
-            { name: 'linkLabel', type: 'text', admin: { description: 'Read aloud by screen readers for the link, e.g. "Open the printable flyer PDF — outside".' } },
+            { name: 'linkLabel', label: 'Description for screen readers', type: 'text', admin: { description: 'Read aloud by screen readers for the link, e.g. "Open the printable flyer PDF — outside".' } },
           ],
         },
         { name: 'flyerCaption', type: 'text', admin: { description: 'e.g. "Tap either page to open the printable PDF".' } },
@@ -135,5 +140,5 @@ export const Events: CollectionConfig = {
     },
     extraSectionsField(),
     { name: 'importKey', type: 'text', unique: true, index: true, admin: { hidden: true } },
-  ],
+  ]),
 };

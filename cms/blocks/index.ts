@@ -1,5 +1,6 @@
 import type { Block, Field, UploadField } from 'payload';
 import { buttonsField, headingFields } from '../fields/link';
+import { withPlainLabels } from '../fields/plainLabels';
 import { validateEmbedUrl } from '../fields/validators';
 
 /**
@@ -179,7 +180,7 @@ export const SECTION_BLOCKS: Block[] = [
   QuoteBand,
   Embed,
   SoldOutBanner,
-];
+].map((block) => ({ ...block, fields: withPlainLabels(block.fields) }));
 
 /** Where blocks can reference Media, relative to the blocks field (see cms/hooks/mediaRefs.ts). */
 export const BLOCK_MEDIA_PATHS = ['image', 'photos.image', 'buttons.file'];
@@ -188,6 +189,7 @@ export const sectionsField = (name: string, label: string, description: string):
   name,
   label,
   type: 'blocks',
+  labels: { singular: 'Section', plural: 'Sections' },
   blocks: SECTION_BLOCKS,
   admin: { description, initCollapsed: false },
 });

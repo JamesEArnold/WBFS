@@ -552,6 +552,44 @@ test('media in use cannot be deleted; uploads require alt text', async () => {
   expect(saved.totalDocs).toBe(0);
 });
 
+test('how-to guides: on the home screen, all guides open, and only for logged-in people', async ({ page }) => {
+  // Logged out: no guide content, sent to the login page instead.
+  const stranger = await newContext();
+  const anonymousHelp = await stranger.get('/admin/help/getting-started', { maxRedirects: 0 });
+  const anonymousBody = await anonymousHelp.text();
+  await stranger.dispose();
+  expect(anonymousBody).not.toContain('Finding your way around');
+  expect(anonymousBody).not.toContain('data-testid="help-guide"');
+  expect(anonymousHelp.status() >= 300 || anonymousBody.includes('/admin/login')).toBe(true);
+
+  await page.goto('/admin/login');
+  await page.waitForLoadState('networkidle');
+  await page.getByLabel('Email').fill(EDITOR.email);
+  await page.getByLabel('Password').fill(EDITOR.password);
+  await page.getByRole('button', { name: 'Login' }).click();
+  const block = page.getByTestId('howto-dashboard');
+  await expect(block).toBeVisible({ timeout: 20_000 });
+  await expect(block.getByRole('link')).toHaveCount(7); // 6 popular guides + "See all"
+
+  await block.getByRole('link', { name: /See all \d+ guides/ }).click();
+  await expect(page).toHaveURL(/\/admin\/help$/);
+  const cards = page.getByTestId('help-card');
+  const total = await cards.count();
+  expect(total).toBeGreaterThanOrEqual(15);
+  const hrefs = await cards.evaluateAll((els) => els.map((el) => el.getAttribute('href')!));
+
+  await page.getByTestId('help-search').fill('banner');
+  await expect(cards.first()).toContainText(/banner/i);
+  expect(await cards.count()).toBeLessThan(total);
+
+  for (const href of hrefs) {
+    const res = await page.goto(href);
+    expect(res?.status(), href).toBe(200);
+    await expect(page.getByTestId('help-guide').locator('h1'), href).toBeVisible();
+  }
+  expect((await page.goto('/admin/help/no-such-guide'))?.status()).toBe(404);
+});
+
 test('accounts lock after 5 failed logins', async () => {
   const ctx = await newContext();
   for (let i = 0; i < 5; i++) {

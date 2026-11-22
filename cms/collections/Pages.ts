@@ -1,6 +1,7 @@
 import type { CollectionConfig } from 'payload';
 import { isStaff } from '../access/roles';
 import { sectionsField } from '../blocks';
+import { withPlainLabels } from '../fields/plainLabels';
 import { lockSlugAfterPublish, slugFields } from '../fields/slug';
 import { invalidateAfterChange, invalidateAfterDelete } from '../hooks/invalidate';
 import { livePreviewUrl, previewPath } from '../livePreview';
@@ -11,6 +12,7 @@ import { livePreviewUrl, previewPath } from '../livePreview';
  */
 export const Pages: CollectionConfig = {
   slug: 'pages',
+  labels: { singular: 'Custom Page', plural: 'Custom Pages' },
   admin: {
     group: 'Pages',
     useAsTitle: 'title',
@@ -38,7 +40,7 @@ export const Pages: CollectionConfig = {
     afterChange: [invalidateAfterChange],
     afterDelete: [invalidateAfterDelete],
   },
-  fields: [
+  fields: withPlainLabels([
     {
       name: 'title',
       type: 'text',
@@ -57,5 +59,5 @@ export const Pages: CollectionConfig = {
       'Build the page top to bottom. Start with a "Page heading" section; it becomes the page title on the site.',
     ),
     { name: 'importKey', type: 'text', unique: true, index: true, admin: { hidden: true } },
-  ],
+  ]),
 };

@@ -413,6 +413,8 @@ export interface Page {
   _status?: ('draft' | 'published') | null;
 }
 /**
+ * Every photo and PDF used on the site. Upload here, or straight from any photo or file box on a page.
+ *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "media".
  */
@@ -817,6 +819,8 @@ export interface Event {
   _status?: ('draft' | 'published') | null;
 }
 /**
+ * People who can log in and edit the site.
+ *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "users".
  */
@@ -1429,6 +1433,8 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
   createdAt?: T;
 }
 /**
+ * The announcement banner, the menu and header, and the footer — shown on every page. Saving makes changes live straight away.
+ *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "siteSettings".
  */
@@ -1440,6 +1446,9 @@ export interface SiteSetting {
   banner?: {
     enabled?: boolean | null;
     text?: string | null;
+    /**
+     * Optional, e.g. "Details".
+     */
     linkLabel?: string | null;
     linkUrl?: string | null;
   };

@@ -1,6 +1,7 @@
 import type { GlobalConfig } from 'payload';
 import { isStaff } from '../access/roles';
 import { validateLinkUrl } from '../fields/validators';
+import { withPlainLabels } from '../fields/plainLabels';
 import { invalidateGlobalAfterChange } from '../hooks/invalidate';
 
 const link = (name: string, label: string) => ({
@@ -18,6 +19,10 @@ const link = (name: string, label: string) => ({
 export const SiteSettings: GlobalConfig = {
   slug: 'siteSettings',
   label: 'Site Settings',
+  admin: {
+    group: 'Settings',
+    description: 'The announcement banner, the menu and header, and the footer — shown on every page. Saving makes changes live straight away.',
+  },
   versions: { drafts: false, max: 20 },
   access: {
     read: isStaff,
@@ -27,7 +32,7 @@ export const SiteSettings: GlobalConfig = {
   hooks: {
     afterChange: [invalidateGlobalAfterChange],
   },
-  fields: [
+  fields: withPlainLabels([
     {
       type: 'tabs',
       tabs: [
@@ -39,11 +44,12 @@ export const SiteSettings: GlobalConfig = {
               type: 'group',
               admin: { description: 'Optional announcement strip under the header on every page.' },
               fields: [
-                { name: 'enabled', type: 'checkbox', defaultValue: false },
-                { name: 'text', type: 'text' },
-                { name: 'linkLabel', type: 'text' },
+                { name: 'enabled', label: 'Show the announcement banner', type: 'checkbox', defaultValue: false },
+                { name: 'text', label: 'Message', type: 'text' },
+                { name: 'linkLabel', label: 'Link text', type: 'text', admin: { description: 'Optional, e.g. "Details".' } },
                 {
                   name: 'linkUrl',
+                  label: 'Link address',
                   type: 'text',
                   validate: (value: unknown) => validateLinkUrl(value),
                 },
@@ -54,7 +60,7 @@ export const SiteSettings: GlobalConfig = {
         {
           label: 'Header',
           fields: [
-            { name: 'tagline', type: 'text', required: true, admin: { description: 'Thin strip at the very top, e.g. "SWORN TO PROTECT — STARK COUNTY, OHIO" (stars are added automatically).' } },
+            { name: 'tagline', label: 'Thin line at the very top', type: 'text', required: true, admin: { description: 'Thin strip at the very top, e.g. "SWORN TO PROTECT — STARK COUNTY, OHIO" (stars are added automatically).' } },
             {
               name: 'nav',
               label: 'Navigation menu',
@@ -83,20 +89,20 @@ export const SiteSettings: GlobalConfig = {
         {
           label: 'Footer',
           fields: [
-            { name: 'footerBlurb', type: 'textarea', required: true },
-            { name: 'hqHeading', type: 'text', required: true },
-            { name: 'addressLine1', type: 'text' },
-            { name: 'addressLine2', type: 'text' },
-            { name: 'contactEmail', type: 'email' },
-            { name: 'actionHeading', type: 'text', required: true },
+            { name: 'footerBlurb', label: 'Short description', type: 'textarea', required: true },
+            { name: 'hqHeading', label: 'Address heading', type: 'text', required: true },
+            { name: 'addressLine1', label: 'Address line 1', type: 'text' },
+            { name: 'addressLine2', label: 'Address line 2', type: 'text' },
+            { name: 'contactEmail', label: 'Contact email', type: 'email' },
+            { name: 'actionHeading', label: 'Button heading', type: 'text', required: true },
             {
               name: 'footerCta',
               label: 'Footer button',
               type: 'group',
               fields: [{ name: 'label', type: 'text', required: true }, link('href', 'Link')],
             },
-            { name: 'facebookUrl', type: 'text', validate: (value: unknown) => validateLinkUrl(value) },
-            { name: 'instagramUrl', type: 'text', validate: (value: unknown) => validateLinkUrl(value) },
+            { name: 'facebookUrl', label: 'Facebook page address', type: 'text', validate: (value: unknown) => validateLinkUrl(value) },
+            { name: 'instagramUrl', label: 'Instagram page address', type: 'text', validate: (value: unknown) => validateLinkUrl(value) },
             {
               name: 'disclaimer',
               type: 'text',
@@ -107,5 +113,5 @@ export const SiteSettings: GlobalConfig = {
         },
       ],
     },
-  ],
+  ]),
 };

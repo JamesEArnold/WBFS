@@ -106,6 +106,8 @@ const guardAccountOperations: CollectionBeforeOperationHook = ({ args, operation
 export const Users: CollectionConfig = {
   slug: 'users',
   admin: {
+    group: 'Settings',
+    description: 'People who can log in and edit the site.',
     useAsTitle: 'name',
     defaultColumns: ['name', 'email', 'role'],
     components: {

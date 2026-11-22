@@ -36,6 +36,15 @@ export default buildConfig({
     user: Users.slug,
     meta: { titleSuffix: ' — Weisburn for Sheriff CMS', robots: 'noindex, nofollow' },
     importMap: { baseDir: path.resolve(dirname) },
+    components: {
+      // How-to guides: a block at the top of the home screen, a link at the top of the menu, and the pages themselves.
+      beforeDashboard: ['/cms/components/help/HowToDashboard#HowToDashboard'],
+      beforeNavLinks: ['/cms/components/help/HelpNavLink#HelpNavLink'],
+      views: {
+        help: { Component: '/cms/components/help/HelpView#HelpView', path: '/help', exact: true },
+        helpGuide: { Component: '/cms/components/help/HelpView#HelpView', path: '/help/:guide' },
+      },
+    },
     // Side-by-side preview while editing (collections/globals opt in with a url).
     livePreview: {
       openByDefault: true,

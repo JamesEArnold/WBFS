@@ -1,6 +1,7 @@
 import type { Field, GlobalConfig } from 'payload';
 import { isStaff } from '../access/roles';
 import { extraSectionsField } from '../blocks';
+import { withPlainLabels } from '../fields/plainLabels';
 import { invalidateGlobalAfterChange } from '../hooks/invalidate';
 import { livePreviewUrl, previewPath } from '../livePreview';
 
@@ -40,7 +41,7 @@ export const pageGlobal = ({
   hooks: {
     afterChange: [invalidateGlobalAfterChange],
   },
-  fields: [...fields, extraSectionsField()],
+  fields: [...withPlainLabels(fields), extraSectionsField()],
 });
 
 /** Small gold line with stars, e.g. "★ By The Year ★" (stars are added by the page). */

@@ -32,7 +32,10 @@ export const limitFileSize: CollectionBeforeValidateHook = ({ data }) => {
  */
 export const Media: CollectionConfig = {
   slug: 'media',
+  labels: { singular: 'Photo or File', plural: 'Photos & Files' },
   admin: {
+    group: 'Events & Photos',
+    description: 'Every photo and PDF used on the site. Upload here, or straight from any photo or file box on a page.',
     useAsTitle: 'alt',
     defaultColumns: ['filename', 'alt', 'mimeType', 'updatedAt'],
   },

@@ -37,7 +37,7 @@
     "restore": "payload run scripts/restore.ts",
     "db:preview:reset": "payload run scripts/reset-preview.ts",
     "test:upload-check": "playwright test --project=upload-check",
-    "docs:screenshots": "playwright test --project=docs-screenshots",
+    "docs:help-screenshots": "playwright test --project=help-screenshots",
     "perf:compare": "node scripts/perf-compare.ts"
   },
   "dependencies": {

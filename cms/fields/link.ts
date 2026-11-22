@@ -9,6 +9,7 @@ export const buttonFields: Field[] = [
   { name: 'label', type: 'text', required: true },
   {
     name: 'linkType',
+    label: 'Where it goes',
     type: 'radio',
     defaultValue: 'url',
     options: [
@@ -19,6 +20,7 @@ export const buttonFields: Field[] = [
   },
   {
     name: 'url',
+    label: 'Link address',
     type: 'text',
     admin: {
       condition: (_, sibling) => sibling?.linkType !== 'file',
