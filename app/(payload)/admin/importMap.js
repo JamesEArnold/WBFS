@@ -21,11 +21,15 @@ import { StrikethroughFeatureClient as StrikethroughFeatureClient_e70f5e05f09f93
 import { UnderlineFeatureClient as UnderlineFeatureClient_e70f5e05f09f93e00b997edb1ef0c864 } from '@payloadcms/richtext-lexical/client'
 import { BoldFeatureClient as BoldFeatureClient_e70f5e05f09f93e00b997edb1ef0c864 } from '@payloadcms/richtext-lexical/client'
 import { ItalicFeatureClient as ItalicFeatureClient_e70f5e05f09f93e00b997edb1ef0c864 } from '@payloadcms/richtext-lexical/client'
+import { NewEventCallout as NewEventCallout_91b0de3f12fc37d0a9d22c08bb2f190d } from '../../../cms/components/quick/NewEventCallout'
 import { SetupLinkButton as SetupLinkButton_df590f9e84970da4cd3182e12ae35b83 } from '../../../cms/components/SetupLinkButton'
 import { InviteUser as InviteUser_2eaddaede3f41939d00a985d860fbb86 } from '../../../cms/components/InviteUser'
 import { HowToDashboard as HowToDashboard_edf1ef588d0e81568be08644ef51f8fa } from '../../../cms/components/help/HowToDashboard'
+import { QuickActions as QuickActions_ff70ddf54307ef35ac96942ab5d4e9ad } from '../../../cms/components/quick/QuickActions'
 import { HelpNavLink as HelpNavLink_62adf9f34065aa54f51ff1eb555b4d6d } from '../../../cms/components/help/HelpNavLink'
+import { PreviewJump as PreviewJump_0640f06f9735fb2edad0aa6dc59bdade } from '../../../cms/components/PreviewJump'
 import { HelpView as HelpView_8d6c4bb974c93f3ab16f6ae0dca9ddfc } from '../../../cms/components/help/HelpView'
+import { NewEventView as NewEventView_4a9ebfc2ea411445e8b59209d60538c0 } from '../../../cms/components/quick/NewEventView'
 import { CollectionCards as CollectionCards_f9c02e79a4aed9a3924487c0cd4cafb1 } from '@payloadcms/next/rsc'
 import { VercelBlobClientUploadHandler as VercelBlobClientUploadHandler_16c82c5e25f430251a3e3ba57219ff4e } from '@payloadcms/storage-vercel-blob/client'
 
@@ -54,11 +58,15 @@ export const importMap = {
   "@payloadcms/richtext-lexical/client#UnderlineFeatureClient": UnderlineFeatureClient_e70f5e05f09f93e00b997edb1ef0c864,
   "@payloadcms/richtext-lexical/client#BoldFeatureClient": BoldFeatureClient_e70f5e05f09f93e00b997edb1ef0c864,
   "@payloadcms/richtext-lexical/client#ItalicFeatureClient": ItalicFeatureClient_e70f5e05f09f93e00b997edb1ef0c864,
+  "/cms/components/quick/NewEventCallout#NewEventCallout": NewEventCallout_91b0de3f12fc37d0a9d22c08bb2f190d,
   "/cms/components/SetupLinkButton#SetupLinkButton": SetupLinkButton_df590f9e84970da4cd3182e12ae35b83,
   "/cms/components/InviteUser#InviteUser": InviteUser_2eaddaede3f41939d00a985d860fbb86,
   "/cms/components/help/HowToDashboard#HowToDashboard": HowToDashboard_edf1ef588d0e81568be08644ef51f8fa,
+  "/cms/components/quick/QuickActions#QuickActions": QuickActions_ff70ddf54307ef35ac96942ab5d4e9ad,
   "/cms/components/help/HelpNavLink#HelpNavLink": HelpNavLink_62adf9f34065aa54f51ff1eb555b4d6d,
+  "/cms/components/PreviewJump#PreviewJump": PreviewJump_0640f06f9735fb2edad0aa6dc59bdade,
   "/cms/components/help/HelpView#HelpView": HelpView_8d6c4bb974c93f3ab16f6ae0dca9ddfc,
+  "/cms/components/quick/NewEventView#NewEventView": NewEventView_4a9ebfc2ea411445e8b59209d60538c0,
   "@payloadcms/next/rsc#CollectionCards": CollectionCards_f9c02e79a4aed9a3924487c0cd4cafb1,
   "@payloadcms/storage-vercel-blob/client#VercelBlobClientUploadHandler": VercelBlobClientUploadHandler_16c82c5e25f430251a3e3ba57219ff4e
 }

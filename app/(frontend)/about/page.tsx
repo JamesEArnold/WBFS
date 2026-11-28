@@ -4,18 +4,23 @@ import { notFound } from 'next/navigation';
 import { LAWMAN } from '@/components/designs/lawman/theme';
 import { CmsButton } from '@/components/ui/cms-button';
 import { Highlighted } from '@/components/ui/highlighted';
+import { TAB } from '@/cms/tabs';
 import { asMedia, loadPageGlobal } from '@/lib/cms/content';
+import { editable, type EditableAttrs } from '@/lib/cms/editable';
 
 const { BLACK, NEAR_BLACK, COAL, COAL_LIFT, GOLD, GOLD_BRIGHT, GOLD_LIGHT, CREAM, BODY } = LAWMAN;
 
 const TimelineEntry = ({
   year,
   children,
+  edit,
 }: {
   year: string;
   children: React.ReactNode;
+  edit?: EditableAttrs;
 }) => (
   <section
+    {...edit}
     className="relative pl-6 pt-10 md:pl-10"
     style={{ borderLeft: `1px solid ${COAL_LIFT}` }}
   >
@@ -69,14 +74,14 @@ export default async function About() {
           <div className="md:col-span-7">
             <div className="flex items-center gap-3">
               <span className="block w-10 h-px" style={{ background: GOLD_BRIGHT }} />
-              <p
+              <p {...editable('overline', TAB.top)}
                 className="text-[11px] font-bold tracking-[0.4em] uppercase"
                 style={{ color: GOLD_BRIGHT }}
               >
                 {page.overline}
               </p>
             </div>
-            <h1
+            <h1 {...editable('heading', TAB.top)}
               className="mt-6 font-serif font-black uppercase"
               style={{
                 color: CREAM,
@@ -87,7 +92,7 @@ export default async function About() {
             >
               {page.heading}
               {page.headingAccent && (
-                <span
+                <span {...editable('headingAccent', TAB.top)}
                   className="block"
                   style={{
                     color: GOLD_BRIGHT,
@@ -99,13 +104,13 @@ export default async function About() {
               )}
             </h1>
             {page.intro && (
-              <p className="max-w-xl mt-6 text-base leading-relaxed md:text-lg" style={{ color: BODY }}>
+              <p {...editable('intro', TAB.top)} className="max-w-xl mt-6 text-base leading-relaxed md:text-lg" style={{ color: BODY }}>
                 {page.intro}
               </p>
             )}
           </div>
           <div className="relative md:col-span-5">
-            <div className="relative" style={{ border: `4px solid ${GOLD}` }}>
+            <div {...editable('heroImage', TAB.top)} className="relative" style={{ border: `4px solid ${GOLD}` }}>
               {heroImage?.url && (
               <Image
                 src={heroImage.url}
@@ -119,7 +124,7 @@ export default async function About() {
               />
               )}
               {page.heroImageCaption && (
-              <div
+              <div {...editable('heroImageCaption', TAB.top)}
                 className="absolute bottom-0 left-0 right-0 px-4 py-2 text-[11px] font-bold tracking-[0.35em] uppercase"
                 style={{ background: 'rgba(10,10,10,0.85)', color: GOLD_BRIGHT, borderTop: `1px solid ${GOLD}` }}
               >
@@ -134,14 +139,14 @@ export default async function About() {
       {/* Intro paragraph */}
       <section className="px-5 py-16" style={{ background: BLACK }}>
         <div className="max-w-3xl mx-auto">
-          <p
+          <p {...editable('originsOverline', TAB.origins)}
             className="text-[11px] font-bold tracking-[0.4em] uppercase"
             style={{ color: GOLD_BRIGHT }}
           >
             ★ {page.originsOverline} ★
           </p>
           {page.originsBody && (
-            <p
+            <p {...editable('originsBody', TAB.origins)}
               className="mt-4 text-base leading-[1.85] md:text-lg"
               style={{ color: CREAM }}
             >
@@ -155,13 +160,13 @@ export default async function About() {
       <section className="px-5 py-20" style={{ background: NEAR_BLACK }}>
         <div className="max-w-3xl mx-auto">
           <div className="text-center mb-14">
-            <p
+            <p {...editable('timelineOverline', TAB.serviceRecord)}
               className="text-[11px] font-bold tracking-[0.4em] uppercase"
               style={{ color: GOLD_BRIGHT }}
             >
               ★ {page.timelineOverline} ★
             </p>
-            <h2
+            <h2 {...editable('timelineHeading', TAB.serviceRecord)}
               className="mt-3 font-serif font-black uppercase"
               style={{
                 color: CREAM,
@@ -174,7 +179,7 @@ export default async function About() {
           </div>
           <div className="relative">
             {(page.timeline ?? []).map((entry, i) => (
-              <TimelineEntry key={entry.id ?? i} year={entry.year}>
+              <TimelineEntry key={entry.id ?? i} year={entry.year} edit={editable(`timeline.${i}`, TAB.serviceRecord)}>
                 <Highlighted
                   text={entry.text}
                   className="px-1.5 font-bold"
@@ -190,14 +195,14 @@ export default async function About() {
       <section className="px-5 py-20" style={{ background: BLACK }}>
         <div className="grid items-center max-w-5xl gap-12 mx-auto md:grid-cols-12">
           <div className="md:col-span-7">
-            <p
+            <p {...editable('signOffGreeting', TAB.signOff)}
               className="font-serif text-2xl md:text-3xl"
               style={{ color: CREAM, fontWeight: 700 }}
             >
               {page.signOffGreeting}
             </p>
             {signature?.url && (
-            <div className="relative w-48 mt-2 overflow-hidden">
+            <div {...editable('signature', TAB.signOff)} className="relative w-48 mt-2 overflow-hidden">
               <Image
                 src={signature.url}
                 width={300}
@@ -209,13 +214,13 @@ export default async function About() {
               />
             </div>
             )}
-            <p
+            <p {...editable('signOffName', TAB.signOff)}
               className="mt-4 font-serif text-2xl font-bold"
               style={{ color: GOLD_BRIGHT }}
             >
               {page.signOffName}
             </p>
-            <div className="flex flex-col gap-3 mt-8 sm:flex-row">
+            <div {...editable('signOffButtons', TAB.signOff)} className="flex flex-col gap-3 mt-8 sm:flex-row">
               {(page.signOffButtons ?? []).map((button, i) => (
                 <CmsButton key={button.id ?? i} button={button} size="signoff" />
               ))}
@@ -223,7 +228,7 @@ export default async function About() {
           </div>
           <div className="md:col-span-5">
             {signOffImage?.url && (
-            <div
+            <div {...editable('signOffImage', TAB.signOff)}
               className="relative p-2"
               style={{ background: COAL, border: `1px solid ${GOLD}` }}
             >
@@ -239,7 +244,7 @@ export default async function About() {
             </div>
             )}
             {page.signOffImageCaption && (
-            <p
+            <p {...editable('signOffImageCaption', TAB.signOff)}
               className="mt-3 text-[10px] tracking-[0.3em] text-center uppercase"
               style={{ color: BODY }}
             >

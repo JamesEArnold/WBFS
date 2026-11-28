@@ -73,7 +73,7 @@ export const GUIDES: Guide[] = [
         heading: 'Find your way around',
         steps: [
           {
-            text: 'After logging in you see the home screen. These guides are at the top. Underneath is everything you can change.',
+            text: 'After logging in you see the home screen. These guides are at the top, then **Quick actions** for the most common jobs (like **Post a new event**). Underneath is everything you can change.',
             image: 'getting-started-2',
             detail:
               '**Pages** holds each page of the website (Home, About, Donate, In Office, Events Page) plus any **Custom Pages** you create. **Events & Photos** holds your events and every photo and PDF. **Settings** holds the banner, menu and footer, and the list of people who can log in.',
@@ -91,8 +91,17 @@ export const GUIDES: Guide[] = [
           {
             text: 'Open a page, for example **Home**. The form is on the left and a live preview of the real page is on the right.',
             image: 'getting-started-3',
+          },
+          {
+            text: 'The form is split into tabs, one for each part of the page, in the same order as the page: **Top of page**, **Portrait**, **Photo gallery** and so on. Click a tab to see its boxes.',
+            image: 'getting-started-tabs',
             detail:
-              'The form is split into folded sections (like **Top of page** or **Photo gallery**) in the same order as the page. Click a section’s name to open or close it.',
+              'Boxes you rarely need, like the small gold lines, are folded away under **More options** at the bottom of a tab. Click **More options** to open it.',
+          },
+          {
+            text: 'The quickest way to find a box: click the words or photo you want to change in the preview. The form opens the right tab, flashes the box gold and puts your cursor in it.',
+            image: 'getting-started-click',
+            detail: 'When you point at something in the preview, a gold dotted outline and **✎ Click to edit** show what you’re about to open.',
           },
           {
             text: 'Change something in the form. The preview on the right updates within a second.',
@@ -139,13 +148,13 @@ export const GUIDES: Guide[] = [
             image: 'change-words-1',
           },
           {
-            text: 'Find the part of the page you want to change. The sections of the form follow the page from top to bottom. Click a section’s name to open it.',
+            text: 'In the preview on the right, click the words you want to change.',
+            image: 'change-words-2',
             detail:
-              'Not sure which box is which? Type a letter in a box and watch the preview on the right. The text that changes is the text that box controls. Then delete the letter.',
+              'The form jumps to the box that holds those words, flashes it gold and puts your cursor in it. You can also find it yourself: the tabs above the form follow the page from top to bottom.',
           },
           {
-            text: 'Click into the box and type your new words.',
-            image: 'change-words-2',
+            text: 'Type your new words.',
             detail: 'The preview on the right updates as you type.',
           },
           {
@@ -158,7 +167,7 @@ export const GUIDES: Guide[] = [
         heading: 'Good to know',
         steps: [
           {
-            text: '**Small gold line:** type only the words. The stars (★) on each side are added for you.',
+            text: '**Small gold line:** type only the words. The stars (★) on each side are added for you. Most gold lines are under **More options** at the bottom of their tab, because they rarely change.',
           },
           {
             text: '**Headline** and **Headline — gold second line:** big headlines have a white first line and an optional gold second line.',
@@ -169,7 +178,7 @@ export const GUIDES: Guide[] = [
               'Only boxes that say “Wrap words in **double stars**” support this. The page shows those words highlighted in the style of that section (for example the gold “YOUR” on the About page).',
           },
           {
-            text: 'Lists, such as the years on the In Office page or the starred list on Home, have an **Add** button underneath (for example **Add Line**) for a new row. Drag the dotted handle on a row to move it, and use the **⋯** button on a row to remove it.',
+            text: 'Lists, such as the years on the In Office page (**Year by year** tab) or the starred list on Home, have an **Add** button underneath (for example **Add Line**) for a new row. Drag the dotted handle on a row to move it, and use the **⋯** button on a row to remove it.',
             image: 'change-words-3',
           },
         ],
@@ -183,7 +192,11 @@ export const GUIDES: Guide[] = [
       },
       {
         problem: 'A box has a red message under it.',
-        fix: 'That box is required or has something it can’t accept. Read the message, fix the box, then publish again.',
+        fix: 'That box is required or has something it can’t accept. Read the message, fix the box, then publish again. A tab with a problem shows a red mark, so check the tabs too.',
+      },
+      {
+        problem: 'Clicking the preview doesn’t jump anywhere.',
+        fix: 'Some things, like the sign-up forms and the menu, aren’t changed on this page. The menu, header and footer are in **Site Settings**.',
       },
     ],
     related: ['change-photo', 'change-button', 'add-section'],
@@ -202,7 +215,7 @@ export const GUIDES: Guide[] = [
       {
         steps: [
           {
-            text: 'Open the page (for example **About**) and find the photo box. It shows a small picture of the current photo.',
+            text: 'Open the page (for example **About**) and click the photo in the preview. The form jumps to its photo box, which shows a small picture of the current photo.',
             image: 'change-photo-1',
           },
           {
@@ -252,7 +265,7 @@ export const GUIDES: Guide[] = [
       {
         steps: [
           {
-            text: 'Open the page and find its **Buttons** list. Click a button’s row (for example **Button 01**) to open it.',
+            text: 'Open the page and click the button in the preview. The form jumps to its **Buttons** list. Click a button’s row (for example **Button 01**) to open it.',
             image: 'change-button-1',
           },
           {
@@ -265,10 +278,7 @@ export const GUIDES: Guide[] = [
             image: 'change-button-2',
           },
           {
-            text: 'Pick the **Style**: **Solid gold** for the main button, **Gold outline** for a second one.',
-          },
-          {
-            text: 'Tick **Open in a new tab** if it goes to another website and you want people to stay on yours too.',
+            text: 'Pick the **Style**: **Solid gold** for the main button, **Gold outline** for a second one. Next to it, tick **Open in a new tab** if it goes to another website and you want people to stay on yours too.',
           },
           {
             text: 'Click **Publish changes**.',
@@ -293,68 +303,62 @@ export const GUIDES: Guide[] = [
   {
     slug: 'add-event',
     title: 'Add a new event',
-    summary: 'Put a fundraiser, parade or appearance on the Events page, with its own page and flyer.',
+    summary: 'Put a fundraiser, parade or appearance on the Events page in a minute: name, day and place are enough.',
     category: 'Events',
-    minutes: 8,
-    beforeYouStart: ['Have the date, the place and a short description. A flyer PDF and pictures are optional.'],
+    minutes: 3,
+    beforeYouStart: ['Have the name, the day, and the time and place. A short description and a flyer are optional.'],
     parts: [
       {
-        heading: 'Create the event',
+        heading: 'Post it with the quick form',
         steps: [
           {
-            text: 'On the home screen, click **Events**, then **Create New**.',
+            text: 'On the home screen, under **Quick actions**, click **Post a new event**.',
             image: 'add-event-1',
+            detail: 'It is also at the top of the **Events** list.',
           },
           {
-            text: 'Type the **Title**, for example “Summer Picnic”. This is shown on the Events list.',
+            text: 'Type the **Event name**, for example “Summer Picnic”, and pick the **Day of the event**.',
             image: 'add-event-2',
           },
           {
-            text: 'On the right, set the **Status** to **Upcoming** and pick the **Date**.',
-            detail: 'Events on the Events page are listed soonest first using this date.',
+            text: 'Optional: type the **Time and place**, such as “1 PM · North Canton Park”, and a sentence or two in **About the event**.',
+            detail: 'The Events list shows the date followed by the time and place, like “Saturday, June 5, 2027 · 1 PM · North Canton Park”.',
           },
           {
-            text: 'Leave **Web address** empty. It fills in from the title when you publish, for example `summer-picnic` → weisburnforsheriff.com/events/summer-picnic.',
-            detail: 'Once published, the web address can’t be changed, so links people share keep working.',
+            text: 'Leave **Take it off the Events list after that day** ticked, so the event drops off the list by itself once it’s over.',
+            detail: 'Its own page stays up for anyone who has the link.',
           },
           {
-            text: 'Optional: set **Remove from listings after** to the day the event is over. It then drops off the Events page by itself the next day.',
-          },
-        ],
-      },
-      {
-        heading: 'Fill in the Events list card',
-        intro: 'Open **Events list card**. This is the box people see on the Events page.',
-        steps: [
-          { text: '**Small gold line:** a few words above the title, such as “Save The Date”.' },
-          { text: '**Subtitle:** the date and place, such as “Saturday, June 6 · North Canton Park”.' },
-          { text: '**Facts:** click **Add Line** for each short starred fact (time, price, what’s included).' },
-          { text: '**Card link text:** the words on the link, such as “View Details”.' },
-        ],
-      },
-      {
-        heading: 'Fill in the event’s own page',
-        intro: 'Open **Event page**.',
-        steps: [
-          { text: '**Date line:** the gold line above the headline, such as “Saturday · June 6, 2026”.' },
-          { text: '**Headline** and **Headline — gold second line**, such as “Summer” and “Picnic”.' },
-          { text: '**Paragraph under the headline:** a few sentences about the event.' },
-          {
-            text: '**Buttons:** click **Add Button** for things like “RSVP” or “Sponsor”. See the guide on buttons and links.',
-          },
-          {
-            text: 'Optional flyer: add the **Flyer PDF**, then under **Flyer pictures** click **Add Flyer picture** for pictures of each page of the flyer. Visitors can click the pictures to open the PDF.',
+            text: 'Click **Publish now** to put it on the website straight away, or **Save as a draft** to finish it later.',
+            detail: 'The event is on the Events page within about 10 seconds.',
           },
         ],
       },
       {
-        heading: 'Publish',
+        heading: 'Add a flyer or buttons (optional)',
+        intro: 'After you click, the full event form opens with a preview of the event’s page beside it.',
         steps: [
           {
-            text: 'Check the preview on the right, then click **Publish changes**.',
+            text: 'For a flyer, click the **Flyer** tab. Add the **Flyer PDF**, then under **Flyer pictures** click **Add Flyer picture** for a picture of each page of the flyer.',
             image: 'add-event-3',
-            detail: 'The event appears on the Events page within about 10 seconds.',
+            detail: 'Visitors click the pictures to open the printable PDF.',
           },
+          {
+            text: 'For buttons like “RSVP” or “Sponsor”, stay on the **Basics** tab and click **Add Button**. See the guide on buttons and links.',
+          },
+          {
+            text: 'Click **Publish changes** to put your additions live.',
+          },
+        ],
+      },
+      {
+        heading: 'Filled in for you (change them if you like)',
+        intro: 'These are under **More options** on the **Basics** tab. Leave them empty and the page uses sensible wording.',
+        steps: [
+          { text: '**Date line:** the gold line above the headline. Empty shows the date, like “Saturday · June 5, 2027”.' },
+          { text: '**Headline** and **Headline — gold second line:** empty uses the event name. To split it in two colours, type “Summer” and “Picnic”.' },
+          { text: '**Small gold line:** a few words above the name on the Events list, such as “Save The Date”.' },
+          { text: '**Starred lines on the Events list:** click **Add Line** for short facts like the time, price or what’s included.' },
         ],
       },
     ],
@@ -364,8 +368,12 @@ export const GUIDES: Guide[] = [
     ],
     troubleshooting: [
       {
+        problem: 'It says there’s already an event with that name.',
+        fix: 'Each event needs its own name, because the name becomes its web address. Add something to tell them apart, like the year: “Summer Picnic 2027”.',
+      },
+      {
         problem: 'The event isn’t on the Events page.',
-        fix: 'Check that you clicked **Publish changes**, that **Status** is **Upcoming** or **Sold out**, and that the **Remove from listings after** date hasn’t passed.',
+        fix: 'Check that it was published (**Publish now**, or **Publish changes** in the full form), that **Status** on the right is **Upcoming** or **Sold out**, and that the **Remove from listings after** date hasn’t passed.',
       },
     ],
     related: ['update-event', 'feature-event', 'change-button'],
@@ -386,7 +394,7 @@ export const GUIDES: Guide[] = [
             text: 'On the right, change **Status**:',
             image: 'update-event-2',
             detail:
-              '**Upcoming** is listed on the Events page. **Sold out** is still listed, and its page shows a gold banner (write it under **Event page → Sold-out banner**). **Past** comes off the Events list, but its page stays up for anyone with the link. **Hidden** takes its page off the website completely.',
+              '**Upcoming** is listed on the Events page. **Sold out** is still listed, and its page shows a gold banner (write the banner on the **Sold out** tab). **Past** comes off the Events list, but its page stays up for anyone with the link. **Hidden** takes its page off the website completely.',
           },
           { text: 'Click **Publish changes**.' },
         ],
@@ -428,10 +436,10 @@ export const GUIDES: Guide[] = [
     parts: [
       {
         steps: [
-          { text: 'Under **Pages**, click **Home**, then open the **Featured event** section.', image: 'feature-event-1' },
+          { text: 'Under **Pages**, click **Home**, then click the **Featured event** tab.', image: 'feature-event-1' },
           {
             text: 'In **Event to feature**, choose the event from the list.',
-            detail: 'The strip uses the event’s **Events list card** (small gold line, title and subtitle) and links to its page.',
+            detail: 'The strip shows the event’s name and its date and place line, and links to its page.',
           },
           { text: 'To hide the strip, click the **×** in **Event to feature** to clear it.' },
           { text: 'Click **Publish changes**.' },
@@ -527,7 +535,10 @@ export const GUIDES: Guide[] = [
     parts: [
       {
         steps: [
-          { text: 'Open the page (for example **In Office**) and scroll to the bottom of the form, to **Extra sections**.' },
+          {
+            text: 'Open the page (for example **In Office**) and click the last tab, **Add more sections**.',
+            detail: 'Events have the same tab. On a **Custom Page**, the sections are the page itself: they’re under **Sections**.',
+          },
           { text: 'Click **Add Section**.', image: 'add-section-1' },
           {
             text: 'Choose the kind of section you want.',

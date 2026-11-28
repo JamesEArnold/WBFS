@@ -5,6 +5,9 @@ import { notFound } from "next/navigation";
 import { LAWMAN } from "@/components/designs/lawman/theme";
 import { CmsButton } from "@/components/ui/cms-button";
 import { loadListedEvents, loadPageGlobal } from "@/lib/cms/content";
+import { eventSubtitle } from "@/lib/cms/eventText";
+import { editable } from "@/lib/cms/editable";
+import { TAB } from "@/cms/tabs";
 
 const { BLACK, NEAR_BLACK, COAL, COAL_LIFT, GOLD, GOLD_BRIGHT, CREAM, BODY } = LAWMAN;
 
@@ -36,11 +39,11 @@ export default async function EventsPage() {
         <div className="relative max-w-5xl px-5 py-16 mx-auto md:py-20">
           <div className="flex items-center gap-3">
             <span className="block w-10 h-px" style={{ background: GOLD_BRIGHT }} />
-            <p className="text-[11px] font-bold tracking-[0.4em] uppercase" style={{ color: GOLD_BRIGHT }}>
+            <p {...editable('overline', TAB.top)} className="text-[11px] font-bold tracking-[0.4em] uppercase" style={{ color: GOLD_BRIGHT }}>
               {page.overline}
             </p>
           </div>
-          <h1
+          <h1 {...editable('heading', TAB.top)}
             className="mt-6 font-serif font-black uppercase"
             style={{
               color: CREAM,
@@ -51,7 +54,7 @@ export default async function EventsPage() {
           >
             {page.heading}
             {page.headingAccent && (
-              <span
+              <span {...editable('headingAccent', TAB.top)}
                 className="block"
                 style={{
                   color: GOLD_BRIGHT,
@@ -63,7 +66,7 @@ export default async function EventsPage() {
             )}
           </h1>
           {page.intro && (
-            <p className="max-w-xl mt-6 text-base leading-relaxed md:text-lg" style={{ color: BODY }}>
+            <p {...editable('intro', TAB.top)} className="max-w-xl mt-6 text-base leading-relaxed md:text-lg" style={{ color: BODY }}>
               {page.intro}
             </p>
           )}
@@ -78,7 +81,7 @@ export default async function EventsPage() {
               <p className="text-[11px] font-bold tracking-[0.4em] uppercase" style={{ color: GOLD_BRIGHT }}>
                 ★ {currentMonth} {currentYear} ★
               </p>
-              <h2
+              <h2 {...editable('listHeading', TAB.eventsList)}
                 className="mt-2 font-serif font-black uppercase"
                 style={{
                   color: CREAM,
@@ -104,7 +107,7 @@ export default async function EventsPage() {
                   key={e.id}
                   href={`/events/${e.slug}`}
                   className="block transition-transform group hover:-translate-y-0.5"
-                  aria-label={`${e.title} — ${e.subtitle}`}
+                  aria-label={[e.title, eventSubtitle(e)].filter(Boolean).join(' — ')}
                 >
                   <article
                     className="grid items-stretch grid-cols-1 md:grid-cols-12"
@@ -138,7 +141,7 @@ export default async function EventsPage() {
                         {e.title}
                       </h3>
                       <p className="mt-2 text-sm md:text-base" style={{ color: BODY }}>
-                        {e.subtitle}
+                        {eventSubtitle(e)}
                       </p>
                       <ul className="mt-5 space-y-1.5 text-sm md:text-base" style={{ color: CREAM }}>
                         {(e.facts ?? []).map((f) => (
@@ -168,13 +171,13 @@ export default async function EventsPage() {
                 borderTop: `3px solid ${GOLD}`,
               }}
             >
-              <p
+              <p {...editable('emptyState.overline', TAB.noEvents)}
                 className="text-[11px] font-bold tracking-[0.4em] uppercase"
                 style={{ color: GOLD_BRIGHT }}
               >
                 ★ {page.emptyState.overline} ★
               </p>
-              <h3
+              <h3 {...editable('emptyState.heading', TAB.noEvents)}
                 className="mt-3 font-serif font-black uppercase"
                 style={{
                   color: CREAM,
@@ -185,11 +188,11 @@ export default async function EventsPage() {
                 {page.emptyState.heading}
               </h3>
               {page.emptyState.body && (
-                <p className="max-w-xl mx-auto mt-4 text-base" style={{ color: BODY }}>
+                <p {...editable('emptyState.body', TAB.noEvents)} className="max-w-xl mx-auto mt-4 text-base" style={{ color: BODY }}>
                   {page.emptyState.body}
                 </p>
               )}
-              <div className="flex flex-col items-center gap-3 mt-7 sm:flex-row sm:justify-center">
+              <div {...editable('emptyState.buttons', TAB.noEvents)} className="flex flex-col items-center gap-3 mt-7 sm:flex-row sm:justify-center">
                 {(page.emptyState.buttons ?? []).map((button) => (
                   <CmsButton key={button.id ?? button.label} button={button} size="compact" />
                 ))}

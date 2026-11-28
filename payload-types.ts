@@ -475,7 +475,7 @@ export interface Media {
 export interface Event {
   id: number;
   /**
-   * Shown on the Events list, e.g. "Annual Golf Fundraiser".
+   * e.g. "Annual Golf Fundraiser". Shown on the Events list, and as the headline on its page.
    */
   title: string;
   /**
@@ -485,7 +485,7 @@ export interface Event {
   firstPublishedAt?: string | null;
   status: 'upcoming' | 'soldOut' | 'past' | 'hidden';
   /**
-   * Used to sort the Events list.
+   * The day of the event. Sorts the Events list.
    */
   date: string;
   /**
@@ -493,41 +493,11 @@ export interface Event {
    */
   expiresAt?: string | null;
   /**
-   * Small gold text above the title, e.g. "Save The Date".
-   */
-  overline?: string | null;
-  /**
-   * e.g. "Friday, September 18, 2026 · Sable Creek Golf Course".
+   * Shown under the name on the Events list and the Home page, e.g. "Friday, September 18 · Sable Creek Golf Course". Leave blank to show just the date.
    */
   subtitle?: string | null;
   /**
-   * Short starred lines on the card.
-   */
-  facts?:
-    | {
-        text: string;
-        id?: string | null;
-      }[]
-    | null;
-  listingCtaLabel?: string | null;
-  /**
-   * Gold banner across the top of the event page, shown while the status is "Sold out".
-   */
-  soldOutBanner?: {
-    heading?: string | null;
-    body?: string | null;
-  };
-  /**
-   * Gold line above the headline, e.g. "Friday · September 18, 2026".
-   */
-  dateLabel?: string | null;
-  heading: string;
-  /**
-   * Optional second line shown in gold.
-   */
-  headingAccent?: string | null;
-  /**
-   * Paragraph under the headline.
+   * A sentence or two on the event’s own page, under the headline.
    */
   heroBlurb?: string | null;
   buttons?:
@@ -545,14 +515,40 @@ export interface Event {
       }[]
     | null;
   /**
-   * Printable flyer. The flyer images below link to it.
+   * Small gold text above the name on the Events list, e.g. "Save The Date".
+   */
+  overline?: string | null;
+  /**
+   * Short starred lines on the event’s box on the Events list.
+   */
+  facts?:
+    | {
+        text: string;
+        id?: string | null;
+      }[]
+    | null;
+  listingCtaLabel?: string | null;
+  /**
+   * Gold line above the headline on the event’s page. Leave blank to show the date, e.g. "Friday · September 18, 2026".
+   */
+  dateLabel?: string | null;
+  /**
+   * Big headline on the event’s page. Leave blank to use the event name.
+   */
+  heading?: string | null;
+  /**
+   * Optional second line of the headline, shown in gold.
+   */
+  headingAccent?: string | null;
+  /**
+   * Printable flyer. The flyer pictures below link to it.
    */
   flyerPdf?: (number | null) | Media;
   flyerImages?:
     | {
         image: number | Media;
         /**
-         * Read aloud by screen readers for the link, e.g. "Open the printable flyer PDF — outside".
+         * Optional. Read aloud by screen readers, e.g. "Open the printable flyer PDF — outside".
          */
         linkLabel?: string | null;
         id?: string | null;
@@ -562,6 +558,10 @@ export interface Event {
    * e.g. "Tap either page to open the printable PDF".
    */
   flyerCaption?: string | null;
+  soldOutBanner?: {
+    heading?: string | null;
+    body?: string | null;
+  };
   /**
    * Optional sections added at the bottom of the page, before the footer.
    */
@@ -1111,24 +1111,7 @@ export interface EventsSelect<T extends boolean = true> {
   status?: T;
   date?: T;
   expiresAt?: T;
-  overline?: T;
   subtitle?: T;
-  facts?:
-    | T
-    | {
-        text?: T;
-        id?: T;
-      };
-  listingCtaLabel?: T;
-  soldOutBanner?:
-    | T
-    | {
-        heading?: T;
-        body?: T;
-      };
-  dateLabel?: T;
-  heading?: T;
-  headingAccent?: T;
   heroBlurb?: T;
   buttons?:
     | T
@@ -1141,6 +1124,17 @@ export interface EventsSelect<T extends boolean = true> {
         newTab?: T;
         id?: T;
       };
+  overline?: T;
+  facts?:
+    | T
+    | {
+        text?: T;
+        id?: T;
+      };
+  listingCtaLabel?: T;
+  dateLabel?: T;
+  heading?: T;
+  headingAccent?: T;
   flyerPdf?: T;
   flyerImages?:
     | T
@@ -1150,6 +1144,12 @@ export interface EventsSelect<T extends boolean = true> {
         id?: T;
       };
   flyerCaption?: T;
+  soldOutBanner?:
+    | T
+    | {
+        heading?: T;
+        body?: T;
+      };
   extraSections?:
     | T
     | {
@@ -1530,10 +1530,6 @@ export interface Home {
    * Gold strip across the bottom of the photo. Stars are added automatically.
    */
   portraitCaption?: string | null;
-  /**
-   * Small gold line above the heading.
-   */
-  portraitOverline?: string | null;
   portraitHeading: string;
   portraitBody?: string | null;
   /**
@@ -1545,22 +1541,22 @@ export interface Home {
    */
   portraitLinkUrl?: string | null;
   /**
+   * Small gold line above the heading.
+   */
+  portraitOverline?: string | null;
+  /**
+   * Shows the event’s name and its date and place line, and links to its page.
+   */
+  featuredEvent?: (number | null) | Event;
+  eventsHeading?: string | null;
+  /**
    * Small gold line. Stars are added automatically.
    */
   eventsOverline?: string | null;
-  eventsHeading?: string | null;
-  /**
-   * Shows the event’s small gold line, title and subtitle from its Events list card.
-   */
-  featuredEvent?: (number | null) | Event;
   /**
    * The arrow is added automatically.
    */
   featuredEventCtaLabel?: string | null;
-  /**
-   * Small gold line. Stars are added automatically.
-   */
-  pillarsOverline?: string | null;
   pillars?:
     | {
         title: string;
@@ -1577,14 +1573,14 @@ export interface Home {
       }[]
     | null;
   /**
+   * Small gold line. Stars are added automatically.
+   */
+  pillarsOverline?: string | null;
+  /**
    * Shown in italics. Wrap words in **double stars** to show them upright.
    */
   quote?: string | null;
   quoteAttribution?: string | null;
-  /**
-   * Small gold line. Stars are added automatically.
-   */
-  galleryOverline?: string | null;
   galleryHeading?: string | null;
   /**
    * Shown two per row on desktop. The caption appears on the photo.
@@ -1603,7 +1599,7 @@ export interface Home {
   /**
    * Small gold line. Stars are added automatically.
    */
-  volunteerOverline?: string | null;
+  galleryOverline?: string | null;
   volunteerHeading: string;
   /**
    * Wrap words in **double stars** to highlight them.
@@ -1615,17 +1611,21 @@ export interface Home {
         id?: string | null;
       }[]
     | null;
-  /**
-   * Small gold line above the form title. Stars are added automatically.
-   */
-  volunteerFormOverline?: string | null;
   volunteerFormHeading: string;
   /**
    * Small gold line. Stars are added automatically.
    */
-  updatesOverline?: string | null;
+  volunteerOverline?: string | null;
+  /**
+   * Small gold line above the form title. Stars are added automatically.
+   */
+  volunteerFormOverline?: string | null;
   updatesHeading: string;
   updatesBody?: string | null;
+  /**
+   * Small gold line. Stars are added automatically.
+   */
+  updatesOverline?: string | null;
   /**
    * Optional sections added at the bottom of the page, before the footer.
    */
@@ -1904,15 +1904,11 @@ export interface About {
    * Gold strip across the bottom of the photo. Stars are added automatically.
    */
   heroImageCaption?: string | null;
-  /**
-   * Small gold line. Stars are added automatically.
-   */
-  originsOverline?: string | null;
   originsBody?: string | null;
   /**
    * Small gold line. Stars are added automatically.
    */
-  timelineOverline?: string | null;
+  originsOverline?: string | null;
   timelineHeading: string;
   /**
    * Oldest first.
@@ -1930,7 +1926,10 @@ export interface About {
         id?: string | null;
       }[]
     | null;
-  signOffGreeting?: string | null;
+  /**
+   * Small gold line. Stars are added automatically.
+   */
+  timelineOverline?: string | null;
   signature?: (number | null) | Media;
   signOffName: string;
   signOffButtons?:
@@ -1952,6 +1951,7 @@ export interface About {
    * Small line under the photo. Stars are added automatically.
    */
   signOffImageCaption?: string | null;
+  signOffGreeting?: string | null;
   /**
    * Optional sections added at the bottom of the page, before the footer.
    */
@@ -2229,16 +2229,11 @@ export interface Donate {
    * The Donorbox embed address, e.g. https://donorbox.org/embed/weisburn-for-sheriff
    */
   donorboxUrl: string;
-  /**
-   * Small gold line. Stars are added automatically.
-   */
-  mailOverline?: string | null;
   mailHeading: string;
   /**
    * Wrap words in **double stars** to make them stand out.
    */
   mailBody?: string | null;
-  mailToLabel?: string | null;
   mailToName: string;
   mailToLine1?: string | null;
   mailToLine2?: string | null;
@@ -2256,6 +2251,11 @@ export interface Donate {
         id?: string | null;
       }[]
     | null;
+  /**
+   * Small gold line. Stars are added automatically.
+   */
+  mailOverline?: string | null;
+  mailToLabel?: string | null;
   /**
    * Legal small print at the bottom of the page.
    */
@@ -2533,15 +2533,7 @@ export interface InOffice {
    */
   headingAccent?: string | null;
   intro?: string | null;
-  /**
-   * Small gold line. Stars are added automatically.
-   */
-  timelineOverline?: string | null;
   timelineHeading: string;
-  /**
-   * Small heading above each year’s second list.
-   */
-  outreachHeading: string;
   /**
    * Newest year first.
    */
@@ -2566,7 +2558,11 @@ export interface InOffice {
   /**
    * Small gold line. Stars are added automatically.
    */
-  ctaOverline?: string | null;
+  timelineOverline?: string | null;
+  /**
+   * Small heading above each year’s second list.
+   */
+  outreachHeading: string;
   ctaHeading: string;
   ctaBody?: string | null;
   ctaButtons?:
@@ -2583,6 +2579,10 @@ export interface InOffice {
         id?: string | null;
       }[]
     | null;
+  /**
+   * Small gold line. Stars are added automatically.
+   */
+  ctaOverline?: string | null;
   /**
    * Optional sections added at the bottom of the page, before the footer.
    */
@@ -2854,12 +2854,9 @@ export interface EventsPage {
   headingAccent?: string | null;
   intro?: string | null;
   /**
-   * Heading above the events list, e.g. "On The Calendar".
+   * Heading above the events list, e.g. "On The Calendar". The month line above it is automatic.
    */
   listHeading: string;
-  /**
-   * Shown when no events are listed.
-   */
   emptyState: {
     /**
      * Stars are added automatically.
@@ -3211,16 +3208,15 @@ export interface HomeSelect<T extends boolean = true> {
       };
   portraitImage?: T;
   portraitCaption?: T;
-  portraitOverline?: T;
   portraitHeading?: T;
   portraitBody?: T;
   portraitLinkLabel?: T;
   portraitLinkUrl?: T;
-  eventsOverline?: T;
-  eventsHeading?: T;
+  portraitOverline?: T;
   featuredEvent?: T;
+  eventsHeading?: T;
+  eventsOverline?: T;
   featuredEventCtaLabel?: T;
-  pillarsOverline?: T;
   pillars?:
     | T
     | {
@@ -3230,9 +3226,9 @@ export interface HomeSelect<T extends boolean = true> {
         ctaUrl?: T;
         id?: T;
       };
+  pillarsOverline?: T;
   quote?: T;
   quoteAttribution?: T;
-  galleryOverline?: T;
   galleryHeading?: T;
   gallery?:
     | T
@@ -3242,7 +3238,7 @@ export interface HomeSelect<T extends boolean = true> {
         focus?: T;
         id?: T;
       };
-  volunteerOverline?: T;
+  galleryOverline?: T;
   volunteerHeading?: T;
   volunteerBody?: T;
   volunteerTasks?:
@@ -3251,11 +3247,12 @@ export interface HomeSelect<T extends boolean = true> {
         text?: T;
         id?: T;
       };
-  volunteerFormOverline?: T;
   volunteerFormHeading?: T;
-  updatesOverline?: T;
+  volunteerOverline?: T;
+  volunteerFormOverline?: T;
   updatesHeading?: T;
   updatesBody?: T;
+  updatesOverline?: T;
   extraSections?:
     | T
     | {
@@ -3429,9 +3426,8 @@ export interface AboutSelect<T extends boolean = true> {
   intro?: T;
   heroImage?: T;
   heroImageCaption?: T;
-  originsOverline?: T;
   originsBody?: T;
-  timelineOverline?: T;
+  originsOverline?: T;
   timelineHeading?: T;
   timeline?:
     | T
@@ -3440,7 +3436,7 @@ export interface AboutSelect<T extends boolean = true> {
         text?: T;
         id?: T;
       };
-  signOffGreeting?: T;
+  timelineOverline?: T;
   signature?: T;
   signOffName?: T;
   signOffButtons?:
@@ -3456,6 +3452,7 @@ export interface AboutSelect<T extends boolean = true> {
       };
   signOffImage?: T;
   signOffImageCaption?: T;
+  signOffGreeting?: T;
   extraSections?:
     | T
     | {
@@ -3628,10 +3625,8 @@ export interface DonateSelect<T extends boolean = true> {
   headingAccent?: T;
   intro?: T;
   donorboxUrl?: T;
-  mailOverline?: T;
   mailHeading?: T;
   mailBody?: T;
-  mailToLabel?: T;
   mailToName?: T;
   mailToLine1?: T;
   mailToLine2?: T;
@@ -3643,6 +3638,8 @@ export interface DonateSelect<T extends boolean = true> {
         label?: T;
         id?: T;
       };
+  mailOverline?: T;
+  mailToLabel?: T;
   disclaimer?: T;
   extraSections?:
     | T
@@ -3815,9 +3812,7 @@ export interface InOfficeSelect<T extends boolean = true> {
   heading?: T;
   headingAccent?: T;
   intro?: T;
-  timelineOverline?: T;
   timelineHeading?: T;
-  outreachHeading?: T;
   years?:
     | T
     | {
@@ -3836,7 +3831,8 @@ export interface InOfficeSelect<T extends boolean = true> {
             };
         id?: T;
       };
-  ctaOverline?: T;
+  timelineOverline?: T;
+  outreachHeading?: T;
   ctaHeading?: T;
   ctaBody?: T;
   ctaButtons?:
@@ -3850,6 +3846,7 @@ export interface InOfficeSelect<T extends boolean = true> {
         newTab?: T;
         id?: T;
       };
+  ctaOverline?: T;
   extraSections?:
     | T
     | {

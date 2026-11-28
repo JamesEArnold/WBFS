@@ -1,14 +1,44 @@
-import type { CollectionConfig } from 'payload';
-import { isStaff } from '../access/roles';
-import { extraSectionsField } from '../blocks';
+import { TAB } from '../tabs';
+import type { CollectionConfig, Endpoint } from 'payload';
+import { addDataAndFileToRequest, APIError, Forbidden, ValidationError } from 'payload';
+import { isStaff, isStaffReq } from '../access/roles';
+import { quickEventData, quickEventErrors } from '../quickEvent';
 import { withPlainLabels } from '../fields/plainLabels';
-import { buttonsField, headingFields } from '../fields/link';
+import { moreOptions, pageTabs, tab } from '../globals/pageGlobal';
+import { buttonsField } from '../fields/link';
 import { lockSlugAfterPublish, slugFields } from '../fields/slug';
+import { slugify } from '../fields/validators';
 import { invalidateAfterChange, invalidateAfterDelete } from '../hooks/invalidate';
 import { livePreviewUrl, previewPath } from '../livePreview';
 
 export const EVENT_STATUSES = ['upcoming', 'soldOut', 'past', 'hidden'] as const;
 export type EventStatus = (typeof EVENT_STATUSES)[number];
+
+/** POST /api/events/quick-create — the "Post a new event" quick form. Returns the new event's id. */
+const quickCreateEndpoint: Endpoint = {
+  path: '/quick-create',
+  method: 'post',
+  handler: async (req) => {
+    if (!isStaffReq(req)) throw new Forbidden(req.t);
+    await addDataAndFileToRequest(req);
+    const input = (req.data ?? {}) as Record<string, unknown>;
+    const errors = quickEventErrors(input);
+    if (errors.length) throw new APIError(errors.join(' '), 400);
+    const data = quickEventData(input);
+    try {
+      const event =
+        data._status === 'published'
+          ? await req.payload.create({ collection: 'events', data: { ...data, slug: slugify(data.title) }, overrideAccess: false, req })
+          : await req.payload.create({ collection: 'events', data, draft: true, overrideAccess: false, req });
+      return Response.json({ id: event.id });
+    } catch (error) {
+      if (error instanceof ValidationError && error.data?.errors?.some((e) => e.path === 'slug')) {
+        throw new APIError('There’s already an event with that name. Add something to make it different, like the year.', 400);
+      }
+      throw error;
+    }
+  },
+};
 
 /**
  * Campaign events. Each published event gets a page at /events/<slug> using the
@@ -22,6 +52,9 @@ export const Events: CollectionConfig = {
     useAsTitle: 'title',
     defaultColumns: ['title', 'status', 'date', 'expiresAt', '_status', 'updatedAt'],
     description: 'Fundraisers, parades and other appearances. Publish to put an event on the site.',
+    components: {
+      beforeListTable: ['/cms/components/quick/NewEventCallout#NewEventCallout'],
+    },
     preview: (doc) => (doc?.slug ? previewPath(`/events/${doc.slug}`) : null),
     livePreview: {
       url: ({ data }) => (data?.slug ? livePreviewUrl(`/events/${data.slug}`) : null),
@@ -40,6 +73,7 @@ export const Events: CollectionConfig = {
     delete: isStaff,
     readVersions: isStaff,
   },
+  endpoints: [quickCreateEndpoint],
   hooks: {
     beforeChange: [lockSlugAfterPublish],
     afterChange: [invalidateAfterChange],
@@ -50,7 +84,8 @@ export const Events: CollectionConfig = {
       name: 'title',
       type: 'text',
       required: true,
-      admin: { description: 'Shown on the Events list, e.g. "Annual Golf Fundraiser".' },
+      label: 'Event name',
+      admin: { description: 'e.g. "Annual Golf Fundraiser". Shown on the Events list, and as the headline on its page.' },
     },
     ...slugFields('title'),
     {
@@ -72,7 +107,7 @@ export const Events: CollectionConfig = {
       name: 'date',
       type: 'date',
       required: true,
-      admin: { position: 'sidebar', description: 'Used to sort the Events list.' },
+      admin: { position: 'sidebar', description: 'The day of the event. Sorts the Events list.' },
     },
     {
       name: 'expiresAt',
@@ -85,60 +120,93 @@ export const Events: CollectionConfig = {
           'Optional. The event stays on the Events list (and the Home page strip) through this day, then drops off automatically. Its own page stays up for anyone with the link; set Status to "Hidden" to remove it completely.',
       },
     },
-    {
-      type: 'collapsible',
-      label: 'Events list card',
-      fields: [
-        { name: 'overline', type: 'text', admin: { description: 'Small gold text above the title, e.g. "Save The Date".' } },
-        { name: 'subtitle', type: 'text', admin: { description: 'e.g. "Friday, September 18, 2026 · Sable Creek Golf Course".' } },
+    pageTabs([
+      tab(TAB.basics, [
         {
-          name: 'facts',
-          type: 'array',
-          admin: { description: 'Short starred lines on the card.' },
-          fields: [{ name: 'text', type: 'text', required: true }],
+          name: 'subtitle',
+          label: 'Date and place',
+          type: 'text',
+          admin: {
+            description:
+              'Shown under the name on the Events list and the Home page, e.g. "Friday, September 18 · Sable Creek Golf Course". Leave blank to show just the date.',
+          },
         },
-        { name: 'listingCtaLabel', type: 'text', defaultValue: 'View Details', label: 'Card link text' },
-      ],
-    },
-    {
-      type: 'collapsible',
-      label: 'Event page',
-      fields: [
         {
-          name: 'soldOutBanner',
-          type: 'group',
-          label: 'Sold-out banner',
-          admin: { description: 'Gold banner across the top of the event page, shown while the status is "Sold out".' },
-          fields: [
-            { name: 'heading', type: 'text' },
-            { name: 'body', type: 'textarea' },
-          ],
+          name: 'heroBlurb',
+          label: 'About the event',
+          type: 'textarea',
+          admin: { description: 'A sentence or two on the event’s own page, under the headline.' },
         },
-        { name: 'dateLabel', label: 'Date line', type: 'text', admin: { description: 'Gold line above the headline, e.g. "Friday · September 18, 2026".' } },
-        ...headingFields(true),
-        { name: 'heroBlurb', label: 'Paragraph under the headline', type: 'textarea', admin: { description: 'Paragraph under the headline.' } },
         buttonsField('buttons', 'Buttons'),
-        {
-          name: 'flyerPdf',
-          label: 'Flyer PDF',
-          type: 'upload',
-          relationTo: 'media',
-          filterOptions: { mimeType: { equals: 'application/pdf' } },
-          admin: { description: 'Printable flyer. The flyer images below link to it.' },
-        },
-        {
-          name: 'flyerImages',
-          label: 'Flyer pictures',
-          type: 'array',
-          fields: [
-            { name: 'image', type: 'upload', relationTo: 'media', required: true },
-            { name: 'linkLabel', label: 'Description for screen readers', type: 'text', admin: { description: 'Read aloud by screen readers for the link, e.g. "Open the printable flyer PDF — outside".' } },
-          ],
-        },
-        { name: 'flyerCaption', type: 'text', admin: { description: 'e.g. "Tap either page to open the printable PDF".' } },
-      ],
-    },
-    extraSectionsField(),
+        moreOptions([
+          { name: 'overline', type: 'text', admin: { description: 'Small gold text above the name on the Events list, e.g. "Save The Date".' } },
+          {
+            name: 'facts',
+            label: 'Starred lines on the Events list',
+            type: 'array',
+            admin: { description: 'Short starred lines on the event’s box on the Events list.' },
+            fields: [{ name: 'text', type: 'text', required: true }],
+          },
+          { name: 'listingCtaLabel', type: 'text', defaultValue: 'View Details', label: 'Link text on the Events list' },
+          {
+            name: 'dateLabel',
+            label: 'Date line',
+            type: 'text',
+            admin: { description: 'Gold line above the headline on the event’s page. Leave blank to show the date, e.g. "Friday · September 18, 2026".' },
+          },
+          {
+            name: 'heading',
+            type: 'text',
+            admin: { description: 'Big headline on the event’s page. Leave blank to use the event name.' },
+          },
+          { name: 'headingAccent', type: 'text', admin: { description: 'Optional second line of the headline, shown in gold.' } },
+        ]),
+      ]),
+      tab(
+        TAB.flyer,
+        [
+          {
+            name: 'flyerPdf',
+            label: 'Flyer PDF',
+            type: 'upload',
+            relationTo: 'media',
+            filterOptions: { mimeType: { equals: 'application/pdf' } },
+            admin: { description: 'Printable flyer. The flyer pictures below link to it.' },
+          },
+          {
+            name: 'flyerImages',
+            label: 'Flyer pictures',
+            type: 'array',
+            fields: [
+              { name: 'image', type: 'upload', relationTo: 'media', required: true },
+              {
+                name: 'linkLabel',
+                label: 'Description for screen readers',
+                type: 'text',
+                admin: { description: 'Optional. Read aloud by screen readers, e.g. "Open the printable flyer PDF — outside".' },
+              },
+            ],
+          },
+          { name: 'flyerCaption', type: 'text', admin: { description: 'e.g. "Tap either page to open the printable PDF".' } },
+        ],
+        'Optional. Pictures of the flyer on the event’s page; visitors click them to open the PDF.',
+      ),
+      tab(
+        TAB.soldOut,
+        [
+          {
+            name: 'soldOutBanner',
+            type: 'group',
+            label: 'Sold-out banner',
+            fields: [
+              { name: 'heading', type: 'text' },
+              { name: 'body', type: 'textarea' },
+            ],
+          },
+        ],
+        'Gold banner across the top of the event’s page, shown while the Status (on the right) is "Sold out".',
+      ),
+    ]),
     { name: 'importKey', type: 'text', unique: true, index: true, admin: { hidden: true } },
   ]),
 };

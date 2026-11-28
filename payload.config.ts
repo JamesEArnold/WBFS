@@ -38,11 +38,14 @@ export default buildConfig({
     importMap: { baseDir: path.resolve(dirname) },
     components: {
       // How-to guides: a block at the top of the home screen, a link at the top of the menu, and the pages themselves.
-      beforeDashboard: ['/cms/components/help/HowToDashboard#HowToDashboard'],
+      beforeDashboard: ['/cms/components/help/HowToDashboard#HowToDashboard', '/cms/components/quick/QuickActions#QuickActions'],
       beforeNavLinks: ['/cms/components/help/HelpNavLink#HelpNavLink'],
+      // Click part of the Live Preview to jump to that field in the form.
+      providers: ['/cms/components/PreviewJump#PreviewJump'],
       views: {
         help: { Component: '/cms/components/help/HelpView#HelpView', path: '/help', exact: true },
         helpGuide: { Component: '/cms/components/help/HelpView#HelpView', path: '/help/:guide' },
+        newEvent: { Component: '/cms/components/quick/NewEventView#NewEventView', path: '/new-event', exact: true },
       },
     },
     // Side-by-side preview while editing (collections/globals opt in with a url).

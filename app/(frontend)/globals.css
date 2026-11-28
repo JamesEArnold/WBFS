@@ -95,3 +95,13 @@
   .cms-prose li + li { margin-top: 0.35em; }
   .cms-prose blockquote { border-left: 3px solid #c89b3c; padding-left: 1em; font-style: italic; }
 }
+
+/* Click-to-edit in the admin's Live Preview (components/ui/preview-click.tsx). */
+.cms-click-to-edit [data-cms-field],
+.cms-click-to-edit [data-cms-tab] {
+  cursor: pointer;
+}
+.cms-click-to-edit [data-cms-hover] {
+  outline: 2px dashed #e6c673;
+  outline-offset: 4px;
+}

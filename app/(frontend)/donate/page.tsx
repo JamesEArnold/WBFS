@@ -3,7 +3,9 @@ import { RenderBlocks } from '@/components/blocks/render-blocks';
 import { notFound } from 'next/navigation';
 import { LAWMAN } from '@/components/designs/lawman/theme';
 import { Highlighted } from '@/components/ui/highlighted';
+import { TAB } from '@/cms/tabs';
 import { loadPageGlobal } from '@/lib/cms/content';
+import { editable } from '@/lib/cms/editable';
 
 const { BLACK, NEAR_BLACK, COAL, COAL_LIFT, GOLD, GOLD_BRIGHT, GOLD_LIGHT, CREAM, BODY } = LAWMAN;
 
@@ -32,10 +34,10 @@ export default async function Donate() {
               priority
             />
           </div>
-          <p className="mt-5 text-[11px] font-bold tracking-[0.4em] uppercase" style={{ color: GOLD_BRIGHT }}>
+          <p {...editable('overline', TAB.top)} className="mt-5 text-[11px] font-bold tracking-[0.4em] uppercase" style={{ color: GOLD_BRIGHT }}>
             ★ {page.overline} ★
           </p>
-          <h1
+          <h1 {...editable('heading', TAB.top)}
             className="mt-3 font-serif font-black uppercase"
             style={{
               color: CREAM,
@@ -45,7 +47,7 @@ export default async function Donate() {
           >
             {page.heading}
             {page.headingAccent && (
-              <span
+              <span {...editable('headingAccent', TAB.top)}
                 className="block"
                 style={{
                   color: GOLD_BRIGHT,
@@ -57,7 +59,7 @@ export default async function Donate() {
             )}
           </h1>
           {page.intro && (
-            <p className="max-w-xl mx-auto mt-6 text-base leading-relaxed md:text-lg" style={{ color: BODY }}>
+            <p {...editable('intro', TAB.top)} className="max-w-xl mx-auto mt-6 text-base leading-relaxed md:text-lg" style={{ color: BODY }}>
               {page.intro}
             </p>
           )}
@@ -86,13 +88,13 @@ export default async function Donate() {
             </div>
           </div>
           <div className="md:col-span-5">
-            <p
+            <p {...editable('mailOverline', TAB.mailIn)}
               className="text-[11px] font-bold tracking-[0.4em] uppercase"
               style={{ color: GOLD_BRIGHT }}
             >
               ★ {page.mailOverline} ★
             </p>
-            <h2
+            <h2 {...editable('mailHeading', TAB.mailIn)}
               className="mt-3 font-serif font-black uppercase"
               style={{
                 color: CREAM,
@@ -103,7 +105,7 @@ export default async function Donate() {
               {page.mailHeading}
             </h2>
             {page.mailBody && (
-              <p className="mt-4 text-sm leading-relaxed" style={{ color: BODY }}>
+              <p {...editable('mailBody', TAB.mailIn)} className="mt-4 text-sm leading-relaxed" style={{ color: BODY }}>
                 <Highlighted text={page.mailBody} style={{ color: CREAM }} />
               </p>
             )}
@@ -115,23 +117,23 @@ export default async function Donate() {
                 borderLeft: `4px solid ${GOLD}`,
               }}
             >
-              <p
+              <p {...editable('mailToLabel', TAB.mailIn)}
                 className="text-[10px] font-bold tracking-[0.35em] uppercase"
                 style={{ color: GOLD_BRIGHT }}
               >
                 {page.mailToLabel}
               </p>
-              <p className="mt-3 font-serif text-xl font-bold" style={{ color: CREAM }}>
+              <p {...editable('mailToName', TAB.mailIn)} className="mt-3 font-serif text-xl font-bold" style={{ color: CREAM }}>
                 {page.mailToName}
               </p>
               {page.mailToLine1 && (
-                <p className="mt-1" style={{ color: CREAM }}>
+                <p {...editable('mailToLine1', TAB.mailIn)} className="mt-1" style={{ color: CREAM }}>
                   {page.mailToLine1}
                 </p>
               )}
-              {page.mailToLine2 && <p style={{ color: CREAM }}>{page.mailToLine2}</p>}
+              {page.mailToLine2 && <p {...editable('mailToLine2', TAB.mailIn)} style={{ color: CREAM }}>{page.mailToLine2}</p>}
               {page.mailNote && (
-                <p
+                <p {...editable('mailNote', TAB.mailIn)}
                   className="mt-4 text-[11px] tracking-[0.15em]"
                   style={{ color: BODY }}
                 >
@@ -145,7 +147,7 @@ export default async function Donate() {
               style={{ background: COAL_LIFT }}
             >
               {(page.stats ?? []).map((s, i) => (
-                <div
+                <div {...editable(`stats.${i}`, TAB.mailIn)}
                   key={s.id ?? i}
                   className="px-2 py-4 text-center"
                   style={{ background: COAL }}
@@ -172,7 +174,7 @@ export default async function Donate() {
 
       {/* Footer disclaimer */}
       <section className="px-5 py-10" style={{ background: NEAR_BLACK }}>
-        <p
+        <p {...editable('disclaimer', TAB.smallPrint)}
           className="max-w-3xl mx-auto text-xs leading-relaxed text-center"
           style={{ color: BODY }}
         >

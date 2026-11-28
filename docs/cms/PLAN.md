@@ -408,6 +408,8 @@ These came up over 7 rounds of Codex review on 2026-11-21. The owner directed th
 - [x] Phase 6 — Docs (2026-11-22)
 - [ ] Phase 7 — Go-live
 
+- [x] Editor UX pass (2026-11-28): forms split into tabs with "More options"; events fill in their headline and date lines; "Post a new event" quick form and dashboard Quick actions; click-to-edit in the Live Preview. Layout only, no migration (`migrate:create` reports no schema changes). Guides and screenshots updated.
+
 Record as you go: Q1 evidence/decision · pinned versions + cache API · traffic baseline · upload strategy · usage projection · pre-CMS rollback deployment ID · 1-week actual usage.
 
 **Recorded values**

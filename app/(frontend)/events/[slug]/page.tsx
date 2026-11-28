@@ -3,7 +3,10 @@ import { RenderBlocks } from "@/components/blocks/render-blocks";
 import { notFound } from "next/navigation";
 import { LAWMAN } from "@/components/designs/lawman/theme";
 import { CmsButton } from "@/components/ui/cms-button";
+import { TAB } from "@/cms/tabs";
 import { asMedia, loadEvent } from "@/lib/cms/content";
+import { editable, editableTab } from "@/lib/cms/editable";
+import { eventDateLabel, eventHeading } from "@/lib/cms/eventText";
 import { listEventSlugs } from "@/lib/cms/public";
 
 const { BLACK, NEAR_BLACK, COAL_LIFT, GOLD, GOLD_BRIGHT, CREAM, BODY } = LAWMAN;
@@ -24,11 +27,12 @@ export default async function EventPage({ params }: { params: Promise<{ slug: st
     .map((item) => ({ ...item, media: asMedia(item.image) }))
     .filter((item) => item.media?.url);
   const showSoldOut = event.status === "soldOut" && Boolean(event.soldOutBanner?.heading);
+  const dateLabel = eventDateLabel(event);
 
   return (
     <main style={{ background: BLACK, color: CREAM }}>
       {showSoldOut && (
-        <div className="w-full py-5 text-center sticky top-0 z-50" style={{ background: GOLD }}>
+        <div className="w-full py-5 text-center sticky top-0 z-50" style={{ background: GOLD }} {...editable("soldOutBanner.heading", TAB.soldOut)}>
           <p
             className="font-black uppercase tracking-[0.25em]"
             style={{ color: BLACK, fontSize: "clamp(1.1rem, 3vw, 1.5rem)" }}
@@ -44,7 +48,7 @@ export default async function EventPage({ params }: { params: Promise<{ slug: st
       )}
 
       {/* Hero */}
-      <section className="relative overflow-hidden" style={{ background: NEAR_BLACK }}>
+      <section className="relative overflow-hidden" style={{ background: NEAR_BLACK }} {...editableTab(TAB.basics)}>
         <div
           aria-hidden
           className="absolute inset-0"
@@ -53,18 +57,19 @@ export default async function EventPage({ params }: { params: Promise<{ slug: st
           }}
         />
         <div className="relative max-w-5xl px-5 pt-16 pb-10 mx-auto md:pt-20">
-          {event.dateLabel && (
-            <div className="flex items-center gap-3">
+          {dateLabel && (
+            <div className="flex items-center gap-3" {...editable("dateLabel")}>
               <span className="block w-10 h-px" style={{ background: GOLD_BRIGHT }} />
               <p
                 className="text-[11px] font-bold tracking-[0.4em] uppercase"
                 style={{ color: GOLD_BRIGHT }}
               >
-                {event.dateLabel}
+                {dateLabel}
               </p>
             </div>
           )}
           <h1
+            {...editable(event.heading ? "heading" : "title")}
             className="mt-6 font-serif font-black uppercase"
             style={{
               color: CREAM,
@@ -73,7 +78,7 @@ export default async function EventPage({ params }: { params: Promise<{ slug: st
               letterSpacing: "0.01em",
             }}
           >
-            {event.heading}
+            {eventHeading(event)}
             {event.headingAccent && (
               <span
                 className="block"
@@ -88,6 +93,7 @@ export default async function EventPage({ params }: { params: Promise<{ slug: st
           </h1>
           {event.heroBlurb && (
             <p
+              {...editable("heroBlurb")}
               className="max-w-xl mt-6 text-base leading-relaxed md:text-lg"
               style={{ color: BODY }}
             >
@@ -96,7 +102,7 @@ export default async function EventPage({ params }: { params: Promise<{ slug: st
           )}
 
           {(event.buttons ?? []).length > 0 && (
-            <div className="flex flex-wrap items-center gap-3 mt-6">
+            <div className="flex flex-wrap items-center gap-3 mt-6" {...editable("buttons")}>
               {(event.buttons ?? []).map((button) => (
                 <CmsButton key={button.id ?? button.label} button={button} />
               ))}
@@ -106,7 +112,7 @@ export default async function EventPage({ params }: { params: Promise<{ slug: st
       </section>
 
       {flyerImages.length > 0 && (
-        <section className="px-5 py-12 md:py-16" style={{ background: BLACK }}>
+        <section className="px-5 py-12 md:py-16" style={{ background: BLACK }} {...editable("flyerImages", TAB.flyer)}>
           <div className="max-w-5xl mx-auto space-y-8">
             {flyerImages.map(({ media, linkLabel, id }, index) => {
               const image = (

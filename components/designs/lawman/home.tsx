@@ -6,6 +6,9 @@ import { EmailSignupForm } from '@/components/ui/email-signup';
 import { Highlighted } from '@/components/ui/highlighted';
 import { VolunteerSignupForm } from '@/components/ui/volunteer-signup';
 import { asMedia } from '@/lib/cms/content';
+import { TAB } from '@/cms/tabs';
+import { editable } from '@/lib/cms/editable';
+import { eventSubtitle } from '@/lib/cms/eventText';
 import { isExpired } from '@/lib/cms/expiry';
 import type { Event, Home } from '@/payload-types';
 import { LAWMAN } from './theme';
@@ -39,12 +42,12 @@ const Hero = ({ page }: Props) => (
       <div className="text-center md:col-span-7 md:text-left">
         <div className="flex items-center justify-center gap-3 md:justify-start">
           <span className="block w-10 h-px" style={{ background: GOLD_BRIGHT }} />
-          <p className="text-[11px] font-bold tracking-[0.4em] uppercase" style={{ color: GOLD_BRIGHT }}>
+          <p {...editable('overline', TAB.top)} className="text-[11px] font-bold tracking-[0.4em] uppercase" style={{ color: GOLD_BRIGHT }}>
             {page.overline}
           </p>
           <span className="block w-10 h-px md:hidden" style={{ background: GOLD_BRIGHT }} />
         </div>
-        <h1
+        <h1 {...editable('heading', TAB.top)}
           className="mt-6 font-serif font-black uppercase"
           style={{
             color: CREAM,
@@ -55,7 +58,7 @@ const Hero = ({ page }: Props) => (
         >
           {page.heading}
           {page.headingAccent && (
-            <span
+            <span {...editable('headingAccent', TAB.top)}
               className="block"
               style={{
                 color: GOLD_BRIGHT,
@@ -67,14 +70,14 @@ const Hero = ({ page }: Props) => (
           )}
         </h1>
         {page.intro && (
-          <p
+          <p {...editable('intro', TAB.top)}
             className="max-w-xl mt-6 text-base leading-[1.7] md:text-lg"
             style={{ color: BODY }}
           >
             {page.intro}
           </p>
         )}
-        <div className="flex flex-col items-center gap-3 mt-8 sm:flex-row md:justify-start">
+        <div {...editable('heroButtons', TAB.top)} className="flex flex-col items-center gap-3 mt-8 sm:flex-row md:justify-start">
           {(page.heroButtons ?? []).map((button, i) => (
             <CmsButton key={button.id ?? i} button={button} size="raised" />
           ))}
@@ -100,7 +103,7 @@ const PortraitBlock = ({ page }: Props) => {
   <section className="relative overflow-hidden" style={{ background: NEAR_BLACK }}>
     <div className="grid max-w-6xl gap-10 px-5 py-20 mx-auto md:grid-cols-12">
       <div className="relative md:col-span-7">
-        <div className="relative" style={{ border: `4px solid ${GOLD}` }}>
+        <div {...editable('portraitImage', TAB.portrait)} className="relative" style={{ border: `4px solid ${GOLD}` }}>
           {photo?.url && (
           <Image
             src={photo.url}
@@ -114,7 +117,7 @@ const PortraitBlock = ({ page }: Props) => {
           />
           )}
           {page.portraitCaption && (
-          <div
+          <div {...editable('portraitCaption', TAB.portrait)}
             className="absolute bottom-0 left-0 right-0 px-5 py-3 text-[11px] font-bold tracking-[0.35em] uppercase"
             style={{ background: 'rgba(10,10,10,0.85)', color: GOLD_BRIGHT, borderTop: `1px solid ${GOLD}` }}
           >
@@ -124,10 +127,10 @@ const PortraitBlock = ({ page }: Props) => {
         </div>
       </div>
       <div className="md:col-span-5 md:py-6">
-        <p className="text-[11px] font-bold tracking-[0.4em] uppercase" style={{ color: GOLD_BRIGHT }}>
+        <p {...editable('portraitOverline', TAB.portrait)} className="text-[11px] font-bold tracking-[0.4em] uppercase" style={{ color: GOLD_BRIGHT }}>
           {page.portraitOverline}
         </p>
-        <h2
+        <h2 {...editable('portraitHeading', TAB.portrait)}
           className="mt-3 font-serif font-black"
           style={{
             color: CREAM,
@@ -138,12 +141,12 @@ const PortraitBlock = ({ page }: Props) => {
           {page.portraitHeading}
         </h2>
         {page.portraitBody && (
-          <p className="mt-5 text-base leading-relaxed" style={{ color: BODY }}>
+          <p {...editable('portraitBody', TAB.portrait)} className="mt-5 text-base leading-relaxed" style={{ color: BODY }}>
             {page.portraitBody}
           </p>
         )}
         {page.portraitLinkLabel && page.portraitLinkUrl && (
-        <Link
+        <Link {...editable('portraitLinkLabel', TAB.portrait)}
           href={page.portraitLinkUrl}
           className="inline-flex items-center gap-3 mt-7 text-xs font-bold tracking-[0.3em] uppercase"
           style={{ color: GOLD_BRIGHT, borderBottom: `2px solid ${GOLD}`, paddingBottom: 4 }}
@@ -168,13 +171,13 @@ const FeaturedEvent = ({ page, event }: Props & { event: Event }) => (
   <section className="px-5 py-20" style={{ background: BLACK }}>
     <div className="max-w-6xl mx-auto">
       <div className="text-center">
-        <p
+        <p {...editable('eventsOverline', TAB.featuredEvent)}
           className="text-[11px] font-bold tracking-[0.4em] uppercase"
           style={{ color: GOLD_BRIGHT }}
         >
           ★ {page.eventsOverline} ★
         </p>
-        <h2
+        <h2 {...editable('eventsHeading', TAB.featuredEvent)}
           className="mt-3 font-serif font-black"
           style={{
             color: CREAM,
@@ -202,7 +205,7 @@ const FeaturedEvent = ({ page, event }: Props & { event: Event }) => (
             borderBottom: `2px solid ${GOLD}`,
           }}
         >
-          <div className="flex items-center gap-5">
+          <div {...editable('featuredEvent', TAB.featuredEvent)} className="flex items-center gap-5">
             <SheriffBadge size={64} />
             <div>
               <p className="text-[10px] font-bold tracking-[0.4em] uppercase" style={{ color: GOLD_BRIGHT }}>
@@ -214,10 +217,10 @@ const FeaturedEvent = ({ page, event }: Props & { event: Event }) => (
               >
                 {event.title}
               </h3>
-              <p className="text-sm" style={{ color: BODY }}>{event.subtitle}</p>
+              <p className="text-sm" style={{ color: BODY }}>{eventSubtitle(event)}</p>
             </div>
           </div>
-          <span
+          <span {...editable('featuredEventCtaLabel', TAB.featuredEvent)}
             className="inline-flex items-center gap-3 text-xs font-bold tracking-[0.3em] uppercase group-hover:gap-4 transition-all"
             style={{ color: GOLD_BRIGHT }}
           >
@@ -234,13 +237,13 @@ const Pillars = ({ page }: Props) => {
     <section className="px-5 py-24" style={{ background: BLACK }}>
       <div className="max-w-6xl mx-auto">
         <div className="text-center">
-          <p className="text-[11px] font-bold tracking-[0.4em] uppercase" style={{ color: GOLD_BRIGHT }}>
+          <p {...editable('pillarsOverline', TAB.waysToHelp)} className="text-[11px] font-bold tracking-[0.4em] uppercase" style={{ color: GOLD_BRIGHT }}>
             ★ {page.pillarsOverline} ★
           </p>
         </div>
         <div className="grid gap-5 mt-12 md:grid-cols-3">
           {(page.pillars ?? []).map((it, i) => (
-            <Link
+            <Link {...editable(`pillars.${i}`, TAB.waysToHelp)}
               key={it.id ?? i}
               href={it.ctaUrl ?? '#'}
               className="relative flex flex-col p-7 transition-colors group"
@@ -283,7 +286,7 @@ const Pillars = ({ page }: Props) => {
 const Quote = ({ page }: Props) => (
   <section className="px-5 py-20" style={{ background: CREAM }}>
     <div className="max-w-3xl mx-auto text-center">
-      <p
+      <p {...editable('quote', TAB.quote)}
         className="font-serif font-bold italic"
         style={{
           color: BLACK,
@@ -295,7 +298,7 @@ const Quote = ({ page }: Props) => (
       </p>
       <div className="flex items-center justify-center gap-4 mt-7">
         <span className="block w-12 h-px" style={{ background: BLACK }} />
-        <p className="text-[11px] font-bold tracking-[0.4em] uppercase" style={{ color: BLACK }}>
+        <p {...editable('quoteAttribution', TAB.quote)} className="text-[11px] font-bold tracking-[0.4em] uppercase" style={{ color: BLACK }}>
           {page.quoteAttribution}
         </p>
         <span className="block w-12 h-px" style={{ background: BLACK }} />
@@ -317,10 +320,10 @@ const Gallery = ({ page }: Props) => (
   <section className="px-5 py-24" style={{ background: NEAR_BLACK }}>
     <div className="max-w-6xl mx-auto">
       <div className="text-center mb-12">
-        <p className="text-[11px] font-bold tracking-[0.4em] uppercase" style={{ color: GOLD_BRIGHT }}>
+        <p {...editable('galleryOverline', TAB.gallery)} className="text-[11px] font-bold tracking-[0.4em] uppercase" style={{ color: GOLD_BRIGHT }}>
           ★ {page.galleryOverline} ★
         </p>
-        <h2
+        <h2 {...editable('galleryHeading', TAB.gallery)}
           className="mt-3 font-serif font-black"
           style={{
             color: CREAM,
@@ -336,7 +339,7 @@ const Gallery = ({ page }: Props) => (
           if (!photo?.url) return null;
           const p = { src: photo.url, alt: photo.alt, cap: item.caption, cls: FOCUS[item.focus ?? 'center'] ?? FOCUS.center };
           return (
-          <figure key={item.id ?? i} className="relative" style={{ border: `1px solid ${GOLD}` }}>
+          <figure {...editable(`gallery.${i}`, TAB.gallery)} key={item.id ?? i} className="relative" style={{ border: `1px solid ${GOLD}` }}>
             <div
               className="relative h-[22rem] overflow-hidden"
               style={{ filter: 'contrast(1.08) brightness(0.95)' }}
@@ -367,10 +370,10 @@ const VolunteerSection = ({ page }: Props) => (
   <section id="volunteer" className="px-5 py-24" style={{ background: BLACK }}>
     <div className="grid max-w-6xl gap-10 mx-auto md:grid-cols-12">
       <div className="md:col-span-5">
-        <p className="text-[11px] font-bold tracking-[0.4em] uppercase" style={{ color: GOLD_BRIGHT }}>
+        <p {...editable('volunteerOverline', TAB.volunteer)} className="text-[11px] font-bold tracking-[0.4em] uppercase" style={{ color: GOLD_BRIGHT }}>
           ★ {page.volunteerOverline} ★
         </p>
-        <h2
+        <h2 {...editable('volunteerHeading', TAB.volunteer)}
           className="mt-3 font-serif font-black"
           style={{
             color: CREAM,
@@ -381,11 +384,11 @@ const VolunteerSection = ({ page }: Props) => (
           {page.volunteerHeading}
         </h2>
         {page.volunteerBody && (
-          <p className="mt-5 text-base leading-relaxed" style={{ color: BODY }}>
+          <p {...editable('volunteerBody', TAB.volunteer)} className="mt-5 text-base leading-relaxed" style={{ color: BODY }}>
             <Highlighted text={page.volunteerBody} className="font-semibold" style={{ color: CREAM }} />
           </p>
         )}
-        <ul className="mt-6 space-y-2 text-sm" style={{ color: CREAM }}>
+        <ul {...editable('volunteerTasks', TAB.volunteer)} className="mt-6 space-y-2 text-sm" style={{ color: CREAM }}>
           {(page.volunteerTasks ?? []).map((x, i) => (
             <li key={x.id ?? i} className="flex items-start gap-3">
               <span style={{ color: GOLD_BRIGHT }}>★</span> {x.text}
@@ -408,13 +411,13 @@ const VolunteerSection = ({ page }: Props) => (
             style={{ border: `1px solid ${GOLD}` }}
           >
             <div className="mb-6 text-center">
-              <p
+              <p {...editable('volunteerFormOverline', TAB.volunteer)}
                 className="text-[10px] font-bold tracking-[0.4em] uppercase"
                 style={{ color: GOLD }}
               >
                 ★ {page.volunteerFormOverline} ★
               </p>
-              <h3
+              <h3 {...editable('volunteerFormHeading', TAB.volunteer)}
                 className="mt-2 font-serif text-2xl font-black uppercase md:text-3xl"
                 style={{ color: BLACK, letterSpacing: '0.04em' }}
               >
@@ -447,10 +450,10 @@ const GetInvolved = ({ page, social }: Props & { social: Social }) => (
     />
     <div className="relative max-w-2xl mx-auto text-center">
       <SheriffBadge size={140} />
-      <p className="mt-4 text-[11px] font-bold tracking-[0.4em] uppercase" style={{ color: GOLD_BRIGHT }}>
+      <p {...editable('updatesOverline', TAB.updates)} className="mt-4 text-[11px] font-bold tracking-[0.4em] uppercase" style={{ color: GOLD_BRIGHT }}>
         ★ {page.updatesOverline} ★
       </p>
-      <h2
+      <h2 {...editable('updatesHeading', TAB.updates)}
         className="mt-3 font-serif font-black"
         style={{
           color: CREAM,
@@ -461,7 +464,7 @@ const GetInvolved = ({ page, social }: Props & { social: Social }) => (
         {page.updatesHeading}
       </h2>
       {page.updatesBody && (
-        <p className="mt-4" style={{ color: BODY }}>
+        <p {...editable('updatesBody', TAB.updates)} className="mt-4" style={{ color: BODY }}>
           {page.updatesBody}
         </p>
       )}

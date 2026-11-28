@@ -38,15 +38,22 @@ export const buttonFields: Field[] = [
       siblingData?.linkType === 'file' && !value ? 'Choose a file.' : true,
   },
   {
-    name: 'style',
-    type: 'select',
-    defaultValue: 'primary',
-    options: [
-      { label: 'Solid gold', value: 'primary' },
-      { label: 'Gold outline', value: 'secondary' },
+    // Side by side, so each button takes less room in the form.
+    type: 'row',
+    fields: [
+      {
+        name: 'style',
+        type: 'select',
+        defaultValue: 'primary',
+        options: [
+          { label: 'Solid gold', value: 'primary' },
+          { label: 'Gold outline', value: 'secondary' },
+        ],
+        admin: { width: '50%' },
+      },
+      { name: 'newTab', type: 'checkbox', label: 'Open in a new tab', defaultValue: false, admin: { width: '50%', style: { alignSelf: 'flex-end' } } },
     ],
   },
-  { name: 'newTab', type: 'checkbox', label: 'Open in a new tab', defaultValue: false },
 ];
 
 export const buttonsField = (name = 'buttons', label = 'Buttons'): ArrayField => ({

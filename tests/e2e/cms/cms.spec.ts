@@ -1,5 +1,5 @@
 import fs from 'node:fs';
-import { expect, request as playwrightRequest, test, type APIRequestContext } from '@playwright/test';
+import { expect, request as playwrightRequest, test, type APIRequestContext, type Page } from '@playwright/test';
 import { SETUP_LINK_FILE, TEST_ADMIN } from '../../../playwright.config';
 
 /**
@@ -27,6 +27,15 @@ async function login(email: string, password: string): Promise<APIRequestContext
   const res = await ctx.post('/api/users/login', { data: { email, password } });
   expect(res.status(), `login ${email}`).toBe(200);
   return ctx;
+}
+
+/** Log a browser page in as the editor (cookie session, same Origin as the site). */
+async function loginPage(page: Page) {
+  const res = await page.request.post('/api/users/login', {
+    headers: { Origin: baseURL },
+    data: { email: EDITOR.email, password: EDITOR.password },
+  });
+  expect(res.status()).toBe(200);
 }
 
 function tokenFrom(link: string): string {
@@ -241,12 +250,7 @@ test('a draft event is private, previewable by editors, and goes live when publi
 
 test('live preview beside the editor updates as the editor types', async ({ page }) => {
   test.setTimeout(90_000);
-  // Log the browser in as the editor (cookie session, same Origin as the site).
-  const login = await page.request.post('/api/users/login', {
-    headers: { Origin: baseURL },
-    data: { email: EDITOR.email, password: EDITOR.password },
-  });
-  expect(login.status()).toBe(200);
+  await loginPage(page);
 
   await page.goto(`/admin/collections/events/${eventId}`);
   await page.waitForLoadState('networkidle');
@@ -257,12 +261,93 @@ test('live preview beside the editor updates as the editor types', async ({ page
   await expect(frame.getByRole('heading', { level: 1 })).toContainText('Summer', { timeout: 30_000 });
   await expect(frame.getByText('Unpublished draft wording.')).toBeVisible();
 
+  // Click-to-edit: clicking the headline in the preview unfolds "More options" and puts the cursor in the headline field.
+  await frame.getByRole('heading', { level: 1 }).click();
+  await expect(page.locator('#field-heading')).toBeFocused({ timeout: 10_000 });
+
   // Type a new headline: autosave + refresh shows it in the preview without saving manually.
   await page.locator('#field-heading').fill('Live Preview Works');
   await expect(frame.getByRole('heading', { level: 1 })).toContainText('Live Preview Works', { timeout: 20_000 });
 
   // ...while the public page is unchanged until publish.
   expect((await pageText('/events/e2e-summer-picnic')).text).not.toContain('Live Preview Works');
+});
+
+test('"Post a new event" quick form: name, day and place are enough for a finished event', async ({ page }) => {
+  test.setTimeout(90_000);
+  await loginPage(page);
+
+  // From the home screen's quick actions.
+  await page.goto('/admin');
+  await page.getByTestId('quick-actions').getByRole('link', { name: /Post a new event/ }).click();
+  await expect(page.getByRole('heading', { name: 'Post a new event' })).toBeVisible({ timeout: 20_000 });
+
+  const form = page.getByTestId('new-event-form');
+  // Nothing filled in: the browser asks for the name first, and nothing is created.
+  await form.getByRole('button', { name: 'Publish now' }).click();
+  await expect(page).toHaveURL(/\/admin\/new-event$/);
+
+  await form.getByLabel('Event name').fill('E2E Quick Picnic');
+  await form.getByLabel('Day of the event').fill('2027-06-05');
+  await form.getByLabel(/Time and place/).fill('1 PM · North Canton Park');
+  await form.getByLabel(/About the event/).fill('Food and games for the whole family.');
+  await form.getByRole('button', { name: 'Publish now' }).click();
+
+  // Lands on the full event form for the new event, to add a flyer or anything else.
+  await expect(page).toHaveURL(/\/admin\/collections\/events\/\d+/, { timeout: 20_000 });
+  const quickId = Number(page.url().match(/events\/(\d+)/)![1]);
+
+  // Live: listed with the date and place line, and its page is filled in from the name and day.
+  await eventually(async () => (await pageText('/events')).text.includes('Saturday, June 5, 2027 · 1 PM · North Canton Park'));
+  const eventPage = await pageText('/events/e2e-quick-picnic');
+  expect(eventPage.status).toBe(200);
+  expect(eventPage.text).toContain('E2E Quick Picnic');
+  expect(eventPage.text).toContain('Saturday · June 5, 2027');
+  expect(eventPage.text).toContain('Food and games for the whole family.');
+  const saved = (await (await editor.get(`/api/events/${quickId}?depth=0`)).json()) as Doc;
+  expect(saved.expiresAt).toBe('2027-06-05T12:00:00.000Z'); // drops off the list after the day
+
+  // The same name again gets a plain explanation instead of a second event.
+  await page.goto('/admin/new-event');
+  await form.getByLabel('Event name').fill('E2E Quick Picnic');
+  await form.getByLabel('Day of the event').fill('2027-06-05');
+  await form.getByRole('button', { name: 'Save as a draft' }).click();
+  await expect(form.getByRole('alert')).toContainText('already an event with that name');
+
+  // Not signed in (a fresh session; `anon` picked up a login from the password-reset test): the quick form's API refuses.
+  const stranger = await newContext();
+  expect((await stranger.post('/api/events/quick-create', { data: { title: 'x', date: '2027-06-05' } })).status()).toBe(403);
+  await stranger.dispose();
+
+  expect((await editor.delete(`/api/events/${quickId}`)).status()).toBe(200);
+  await eventually(async () => !(await pageText('/events')).text.includes('E2E Quick Picnic'));
+});
+
+test('clicking part of the live preview opens that field in the form, on the right tab', async ({ page }) => {
+  test.setTimeout(90_000);
+  await loginPage(page);
+  await page.goto('/admin/globals/about');
+  const frame = page.frameLocator('iframe[src*="/preview/enter"]');
+  await expect(frame.getByRole('heading', { level: 1 })).toContainText('Meet Sheriff', { timeout: 30_000 });
+  await expect(frame.getByTestId('preview-bar')).toContainText('click any words or photo');
+
+  // A gold line folded away under "More options" on another tab.
+  await frame.locator('[data-cms-field="timelineOverline"]').click();
+  await expect(page.locator('.tabs-field__tab-button--active')).toHaveText('Service record');
+  await expect(page.locator('#field-timelineOverline')).toBeFocused({ timeout: 10_000 });
+
+  // Back up to the intro paragraph on the first tab.
+  await frame.locator('[data-cms-field="intro"]').click();
+  await expect(page.locator('.tabs-field__tab-button--active')).toHaveText('Top of page');
+  await expect(page.locator('#field-intro')).toBeFocused({ timeout: 10_000 });
+
+  // One entry of a list opens that entry.
+  await frame.locator('[data-cms-field="timeline.1"]').click();
+  await expect(page.locator('#timeline-row-1')).toBeInViewport({ timeout: 10_000 });
+
+  // Clicking a button in the preview doesn't leave the page.
+  await frame.locator('[data-cms-field="signOffButtons"] a').first().click();
+  await expect(frame.getByRole('heading', { level: 1 })).toContainText('Meet Sheriff');
 });
 
 test('sold out shows the banner; published slugs are locked for editors', async () => {

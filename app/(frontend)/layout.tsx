@@ -5,6 +5,7 @@ import { globalMeta } from '@/components/seo/globalMeta';
 import { draftMode } from 'next/headers';
 import { SiteAnnouncement, SiteFooter, SiteHeader } from '@/components/site-chrome';
 import { PreviewBar } from '@/components/ui/preview-bar';
+import { PreviewClick } from '@/components/ui/preview-click';
 import { RefreshOnSave } from '@/components/ui/refresh-on-save';
 import { getSiteSettings } from '@/lib/cms/public';
 import { ToastContainer } from 'react-toastify';
@@ -69,6 +70,7 @@ export default async function RootLayout({
       <SiteFooter settings={settings} />
       {preview && <PreviewBar />}
       {preview && <RefreshOnSave />}
+      {preview && <PreviewClick />}
       </body>
     </html>
   )

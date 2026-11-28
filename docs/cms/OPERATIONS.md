@@ -12,10 +12,12 @@ Architecture, decisions and progress: `docs/cms/PLAN.md`.
   - Publishing anything in the CMS invalidates the whole site cache (tag `cms`), so changes show within ~10 s with no redeploy.
   - Public reads: `lib/cms/public.ts` (published content only). Draft preview: `lib/cms/preview.ts`. Pages pick between them with `lib/cms/content.ts`.
 - **Content model** (field-by-field map in `FIELD-INVENTORY.md`):
-  - Globals: `siteSettings` (no drafts), and page globals `home`, `about`, `donate`, `inOffice`, `eventsPage`. These are built with `cms/globals/pageGlobal.ts`, which provides drafts, 0.5 s autosave, live preview and an **Extra sections** field.
+  - Globals: `siteSettings` (no drafts), and page globals `home`, `about`, `donate`, `inOffice`, `eventsPage`. These are built with `cms/globals/pageGlobal.ts`, which provides drafts, 0.5 s autosave, live preview, a form split into **tabs** (one per part of the page, then **Add more sections**) and `moreOptions([...])` for rarely changed fields. Tabs and "More options" are unnamed/presentational, so they never change the database. Tab names live in `cms/tabs.ts`.
   - Collections: `events` (`/events/<slug>`), `pages` (`/<slug>`, built from sections), `media`, `users`.
   - Section blocks: `cms/blocks/index.ts`, rendered by `components/blocks/render-blocks.tsx` with the site's own markup. Style options are limited to the Lawman design.
   - **Live preview:** the admin shows `/preview/enter?path=…` beside the form, and `RefreshOnSave` (draft mode only) re-renders after each autosave.
+  - **Click-to-edit:** page markup carries `{...editable('field.path', TAB.x)}` (`lib/cms/editable.ts`, plain `data-cms-*` attributes). Inside the Live Preview frame only, `components/ui/preview-click.tsx` outlines marked parts and posts the clicked field to the admin; `cms/components/PreviewJump.tsx` (an admin provider) opens the tab, unfolds "More options"/rows, focuses and flashes the field. When you add a field to a page, mark where it renders.
+  - **Events fill themselves in:** a blank headline uses the event name, a blank date line or date-and-place line uses the date (`lib/cms/eventText.ts`). The **Post a new event** quick form (`/admin/new-event`, `cms/components/quick/`) posts to `POST /api/events/quick-create` (staff only, `cms/quickEvent.ts`).
 - **Security:** `cors`/`csrf` are limited to `NEXT_PUBLIC_SERVER_URL` plus the production domains (`payload.config.ts`). API reads need a login, except Media files, which are public. Uploads: images/PDF only, **25 MB max**. Browser uploads go straight to Blob, so the cap is checked when the Media record is saved.
 
 ## 2. Environments

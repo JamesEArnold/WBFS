@@ -4,7 +4,9 @@ import type { ReactNode } from 'react';
 import { LAWMAN } from '@/components/designs/lawman/theme';
 import { CmsButton } from '@/components/ui/cms-button';
 import { Highlighted } from '@/components/ui/highlighted';
+import { TAB } from '@/cms/tabs';
 import { asMedia, type Button } from '@/lib/cms/content';
+import { editable } from '@/lib/cms/editable';
 import type { Page } from '@/payload-types';
 
 /**
@@ -370,10 +372,13 @@ function renderBlock(block: SectionBlock, index: number, firstIsPageHeading: boo
  */
 export function RenderBlocks({ blocks, asPage = false }: { blocks?: SectionBlock[] | null; asPage?: boolean }) {
   if (!blocks?.length) return null;
+  // Custom pages keep their sections in `sections`; other pages in the "Add more sections" tab.
+  const field = asPage ? 'sections' : 'extraSections';
+  const tab = asPage ? undefined : TAB.extraSections;
   return (
     <>
       {blocks.map((block, i) => (
-        <div key={block.id ?? i} data-block={block.blockType}>
+        <div key={block.id ?? i} data-block={block.blockType} {...editable(`${field}.${i}`, tab)}>
           {renderBlock(block, i, asPage)}
         </div>
       ))}

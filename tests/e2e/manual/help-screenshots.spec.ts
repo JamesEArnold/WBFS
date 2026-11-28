@@ -53,6 +53,11 @@ const card = (page: Page, name: string) => page.locator('.card').filter({ hasTex
 const button = (page: Page, name: string | RegExp) => page.getByRole('button', { name, exact: typeof name === 'string' }).first();
 const preview = (page: Page) => page.frameLocator('iframe').first();
 const docMenu = (page: Page) => page.locator('.doc-controls__dots').first();
+const tabButton = (page: Page, name: string) => page.locator('.tabs-field__tab-button').filter({ hasText: new RegExp(`^${name}$`) }).first();
+async function openTab(page: Page, name: string) {
+  await tabButton(page, name).click();
+  await expect(tabButton(page, name)).toHaveClass(/--active/);
+}
 
 test('how-to guide screenshots', async ({ page }) => {
   test.setTimeout(300_000);
@@ -79,6 +84,15 @@ test('how-to guide screenshots', async ({ page }) => {
   await mark(page.getByText('Phone', { exact: true }).first());
   await shot(page, 'getting-started-4');
   await page.keyboard.press('Escape');
+  await mark(page.locator('.tabs-field__tabs').first());
+  await shot(page, 'getting-started-tabs');
+  // Click the gallery heading in the preview: the form opens the Photo gallery tab at that box.
+  await preview(page).locator('[data-cms-field="galleryHeading"]').click();
+  await expect(page.locator('#field-galleryHeading')).toBeFocused({ timeout: 10_000 });
+  await page.waitForTimeout(300);
+  await mark(page.locator('#field-galleryHeading'));
+  await mark(preview(page).locator('[data-cms-field="galleryHeading"]').first());
+  await shot(page, 'getting-started-click');
   await mark(button(page, 'Publish changes'));
   await shot(page, 'getting-started-5');
 
@@ -88,15 +102,20 @@ test('how-to guide screenshots', async ({ page }) => {
   await shot(page, 'change-words-1');
   await card(page, 'About').click();
   await expect(preview(page).locator('h1')).toContainText('Meet Sheriff', { timeout: 30_000 });
+  await preview(page).locator('[data-cms-field="intro"]').click();
+  await expect(page.locator('#field-intro')).toBeFocused({ timeout: 10_000 });
+  await mark(preview(page).locator('[data-cms-field="intro"]').first());
   await mark(page.locator('#field-intro'));
   await shot(page, 'change-words-2');
 
   await page.goto('/admin/globals/inOffice');
   await settle(page);
+  await openTab(page, 'Year by year');
   await mark(button(page, 'Add Line'));
   await shot(page, 'change-words-3');
 
   // ── Change a button (In Office closing buttons) ─────────────
+  await openTab(page, 'Closing call to action');
   const ctaButtons = page.locator('#field-ctaButtons');
   await mark(ctaButtons);
   await shot(page, 'change-button-1');
@@ -106,6 +125,7 @@ test('how-to guide screenshots', async ({ page }) => {
   // ── Change a photo (About hero) ─────────────────────────────
   await page.goto('/admin/globals/about');
   await settle(page);
+  await openTab(page, 'Top of page');
   const heroImage = page.locator('#field-heroImage');
   const remove = heroImage.locator('.upload-relationship-details__remove').first();
   await mark(remove);
@@ -119,25 +139,28 @@ test('how-to guide screenshots', async ({ page }) => {
   await shot(page, 'change-photo-3');
   await page.keyboard.press('Escape');
 
-  // ── Add an event ────────────────────────────────────────────
-  await page.goto('/admin/collections/events');
+  // ── Add an event (quick form) ───────────────────────────────
+  await page.goto('/admin');
   await settle(page);
-  const createNew = page.getByRole('link', { name: 'Create New' }).first();
-  await mark(createNew);
+  const quickLink = page.getByTestId('quick-actions').getByRole('link', { name: /Post a new event/ });
+  await mark(quickLink);
   await shot(page, 'add-event-1');
-  await createNew.click();
-  await page.locator('#field-title').fill('Summer Picnic');
-  await mark(page.locator('#field-title'));
+  await quickLink.click();
+  const form = page.getByTestId('new-event-form');
+  await expect(form).toBeVisible({ timeout: 20_000 });
+  await form.getByLabel('Event name').fill('Summer Picnic');
+  await form.getByLabel('Day of the event').fill('2027-06-05');
+  await form.getByLabel(/Time and place/).fill('1 PM · North Canton Park');
+  await form.getByLabel(/About the event/).fill('Food, games and a chance to meet the Sheriff. Bring the whole family.');
+  await mark(form);
   await shot(page, 'add-event-2');
-  await page.locator('#field-date input').fill('06/06/2027');
-  await page.keyboard.press('Escape');
-  await page.locator('#field-heading').fill('Summer');
-  await page.locator('#field-headingAccent').fill('Picnic');
-  await page.locator('#field-subtitle').fill('Saturday, June 6 · North Canton Park');
-  await mark(button(page, 'Publish changes'));
+  await form.getByRole('button', { name: 'Publish now' }).click();
+  await expect(page).toHaveURL(/\/admin\/collections\/events\/\d+/, { timeout: 20_000 });
+  await expect(preview(page).locator('h1')).toContainText('Summer Picnic', { timeout: 30_000 });
+  await openTab(page, 'Flyer');
+  await mark(tabButton(page, 'Flyer'));
+  await mark(page.locator('#field-flyerPdf'));
   await shot(page, 'add-event-3');
-  await button(page, 'Publish changes').click();
-  await expect(page.locator('#field-slug')).toHaveValue('summer-picnic', { timeout: 20_000 });
 
   // ── Update an event ─────────────────────────────────────────
   await page.goto('/admin/collections/events');
@@ -166,6 +189,8 @@ test('how-to guide screenshots', async ({ page }) => {
   // ── Feature an event on Home ────────────────────────────────
   await page.goto('/admin/globals/home');
   await settle(page);
+  await openTab(page, 'Featured event');
+  await mark(tabButton(page, 'Featured event'));
   await mark(page.locator('#field-featuredEvent'));
   await shot(page, 'feature-event-1');
 
@@ -185,6 +210,7 @@ test('how-to guide screenshots', async ({ page }) => {
   // ── Add a section ───────────────────────────────────────────
   await page.goto('/admin/globals/inOffice');
   await settle(page);
+  await openTab(page, 'Add more sections');
   const addSection = button(page, 'Add Section');
   await mark(addSection);
   await shot(page, 'add-section-1');
