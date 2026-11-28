@@ -541,9 +541,12 @@ export interface Event {
    */
   headingAccent?: string | null;
   /**
-   * Printable flyer. The flyer pictures below link to it.
+   * The printable flyer. On its own, the event’s page shows a gold “View the printable flyer” button. Add Flyer pictures below to show the flyer itself; they open the PDF when clicked.
    */
   flyerPdf?: (number | null) | Media;
+  /**
+   * Optional. A photo or picture (JPG or PNG) of each page of the flyer, not the PDF itself.
+   */
   flyerImages?:
     | {
         image: number | Media;

@@ -339,9 +339,13 @@ export const GUIDES: Guide[] = [
         intro: 'After you click, the full event form opens with a preview of the event’s page beside it.',
         steps: [
           {
-            text: 'For a flyer, click the **Flyer** tab. Add the **Flyer PDF**, then under **Flyer pictures** click **Add Flyer picture** for a picture of each page of the flyer.',
+            text: 'For a flyer, click the **Flyer** tab. Under **Flyer PDF**, click **Create New**, drag in the PDF (or click **Select a file**), type a short description such as “Printable picnic flyer”, and click **Save**.',
             image: 'add-event-3',
-            detail: 'Visitors click the pictures to open the printable PDF.',
+            detail: 'That’s all you need: the event’s page shows a gold **View the printable flyer** button that opens the PDF.',
+          },
+          {
+            text: 'Optional: to show the flyer itself on the page, under **Flyer pictures** click **Add Flyer picture** and add a picture (JPG or PNG) of each page. Visitors click a picture to open the PDF.',
+            detail: 'Put the PDF only in **Flyer PDF**. The pictures box takes pictures only.',
           },
           {
             text: 'For buttons like “RSVP” or “Sponsor”, stay on the **Basics** tab and click **Add Button**. See the guide on buttons and links.',
@@ -370,6 +374,10 @@ export const GUIDES: Guide[] = [
       {
         problem: 'It says there’s already an event with that name.',
         fix: 'Each event needs its own name, because the name becomes its web address. Add something to tell them apart, like the year: “Summer Picnic 2027”.',
+      },
+      {
+        problem: 'My flyer doesn’t show on the event’s page.',
+        fix: 'Check the PDF is in **Flyer PDF** on the **Flyer** tab (not under **Flyer pictures**), then click **Publish changes**. The page shows a **View the printable flyer** button, or your flyer pictures if you added them.',
       },
       {
         problem: 'The event isn’t on the Events page.',

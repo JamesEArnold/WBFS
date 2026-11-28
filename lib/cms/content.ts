@@ -53,6 +53,29 @@ export function asMedia(value: number | Media | null | undefined): Media | null 
   return { ...value, url: sameSiteUrl(value.url) };
 }
 
+const isPdf = (media: Media | null): media is Media => Boolean(media?.url && media.mimeType === 'application/pdf');
+const isImage = (media: Media | null): media is Media => Boolean(media?.url && media.mimeType?.startsWith('image/'));
+
+export type EventFlyer = {
+  /** The printable PDF, if any. */
+  pdf: Media | null;
+  /** Pictures of the flyer's pages (photos only), each linking to the PDF. */
+  pictures: { id?: string | null; media: Media; linkLabel?: string | null }[];
+};
+
+/**
+ * An event's flyer, forgiving of where the editor put things: a PDF added
+ * under "Flyer pictures" (which can't be shown as a picture) is used as the
+ * PDF instead of breaking the page.
+ */
+export function eventFlyer(event: Pick<Event, 'flyerPdf' | 'flyerImages'>): EventFlyer {
+  const items = (event.flyerImages ?? []).map((item) => ({ id: item.id, media: asMedia(item.image), linkLabel: item.linkLabel }));
+  const declared = asMedia(event.flyerPdf);
+  const pdf = isPdf(declared) ? declared : (items.find((item) => isPdf(item.media))?.media ?? null);
+  const pictures = items.flatMap(({ media, ...item }) => (isImage(media) ? [{ ...item, media }] : []));
+  return { pdf, pictures };
+}
+
 export type Button = NonNullable<Event['buttons']>[number];
 
 /** Where a CMS button points: a typed URL/path, or an uploaded file. */

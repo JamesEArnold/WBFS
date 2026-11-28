@@ -57,6 +57,25 @@ const DOT_PNG = Buffer.from(
   'base64',
 );
 
+/** A minimal PDF that passes Payload's PDF check (header, xref table, %%EOF). */
+const TINY_PDF = Buffer.from(
+  [
+    '%PDF-1.4',
+    '1 0 obj<</Type/Catalog/Pages 2 0 R>>endobj',
+    '2 0 obj<</Type/Pages/Kids[]/Count 0>>endobj',
+    'xref',
+    '0 3',
+    '0000000000 65535 f ',
+    '0000000009 00000 n ',
+    '0000000052 00000 n ',
+    'trailer<</Size 3/Root 1 0 R>>',
+    'startxref',
+    '96',
+    '%%EOF',
+    '',
+  ].join('\n'),
+);
+
 type Doc = Record<string, any>; // eslint-disable-line @typescript-eslint/no-explicit-any
 
 /**
@@ -321,6 +340,35 @@ test('"Post a new event" quick form: name, day and place are enough for a finish
 
   expect((await editor.delete(`/api/events/${quickId}`)).status()).toBe(200);
   await eventually(async () => !(await pageText('/events')).text.includes('E2E Quick Picnic'));
+});
+
+test('an event flyer can be just a PDF; a PDF can’t be used as a flyer picture', async () => {
+  const upload = await editor.post('/api/media', {
+    multipart: {
+      file: { name: 'e2e-flyer.pdf', mimeType: 'application/pdf', buffer: TINY_PDF },
+      _payload: JSON.stringify({ alt: 'E2E printable flyer' }),
+    },
+  });
+  expect(upload.status(), await upload.text()).toBe(201);
+  const pdfId = (await upload.json()).doc.id as number;
+
+  const create = await editor.post('/api/events', {
+    data: { _status: 'published', title: 'E2E Flyer Night', date: '2027-03-01T12:00:00.000Z', status: 'upcoming', flyerPdf: pdfId },
+  });
+  expect(create.status(), await create.text()).toBe(201);
+  const id = (await create.json()).doc.id as number;
+
+  // Just the PDF: the page offers a button that opens it.
+  await eventually(async () => {
+    const { status, text } = await pageText('/events/e2e-flyer-night');
+    return status === 200 && text.includes('View the printable flyer') && /href="[^"]*e2e-flyer[^"]*\.pdf"/.test(text);
+  });
+
+  // The pictures box takes pictures only.
+  expect((await editor.patch(`/api/events/${id}`, { data: { flyerImages: [{ image: pdfId }] } })).status()).toBe(400);
+
+  expect((await editor.delete(`/api/events/${id}`)).status()).toBe(200);
+  expect((await editor.delete(`/api/media/${pdfId}`)).status()).toBe(200);
 });
 
 test('clicking part of the live preview opens that field in the form, on the right tab', async ({ page }) => {

@@ -171,14 +171,25 @@ export const Events: CollectionConfig = {
             type: 'upload',
             relationTo: 'media',
             filterOptions: { mimeType: { equals: 'application/pdf' } },
-            admin: { description: 'Printable flyer. The flyer pictures below link to it.' },
+            admin: {
+              description:
+                'The printable flyer. On its own, the event’s page shows a gold “View the printable flyer” button. Add Flyer pictures below to show the flyer itself; they open the PDF when clicked.',
+            },
           },
           {
             name: 'flyerImages',
             label: 'Flyer pictures',
             type: 'array',
+            admin: { description: 'Optional. A photo or picture (JPG or PNG) of each page of the flyer, not the PDF itself.' },
             fields: [
-              { name: 'image', type: 'upload', relationTo: 'media', required: true },
+              {
+                name: 'image',
+                type: 'upload',
+                relationTo: 'media',
+                required: true,
+                // Pictures only: a PDF can't be shown as a picture (it goes in Flyer PDF above).
+                filterOptions: { mimeType: { contains: 'image/' } },
+              },
               {
                 name: 'linkLabel',
                 label: 'Description for screen readers',
@@ -189,7 +200,7 @@ export const Events: CollectionConfig = {
           },
           { name: 'flyerCaption', type: 'text', admin: { description: 'e.g. "Tap either page to open the printable PDF".' } },
         ],
-        'Optional. Pictures of the flyer on the event’s page; visitors click them to open the PDF.',
+        'Optional. Add the printable flyer PDF. Pictures of its pages are optional too: with them, visitors see the flyer and click it to open the PDF.',
       ),
       tab(
         TAB.soldOut,

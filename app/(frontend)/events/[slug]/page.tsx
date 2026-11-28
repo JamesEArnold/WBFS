@@ -4,7 +4,7 @@ import { notFound } from "next/navigation";
 import { LAWMAN } from "@/components/designs/lawman/theme";
 import { CmsButton } from "@/components/ui/cms-button";
 import { TAB } from "@/cms/tabs";
-import { asMedia, loadEvent } from "@/lib/cms/content";
+import { eventFlyer, loadEvent } from "@/lib/cms/content";
 import { editable, editableTab } from "@/lib/cms/editable";
 import { eventDateLabel, eventHeading } from "@/lib/cms/eventText";
 import { listEventSlugs } from "@/lib/cms/public";
@@ -22,10 +22,7 @@ export default async function EventPage({ params }: { params: Promise<{ slug: st
   const event = await loadEvent(slug);
   if (!event) notFound();
 
-  const flyerPdf = asMedia(event.flyerPdf);
-  const flyerImages = (event.flyerImages ?? [])
-    .map((item) => ({ ...item, media: asMedia(item.image) }))
-    .filter((item) => item.media?.url);
+  const { pdf: flyerPdf, pictures: flyerImages } = eventFlyer(event);
   const showSoldOut = event.status === "soldOut" && Boolean(event.soldOutBanner?.heading);
   const dateLabel = eventDateLabel(event);
 
@@ -111,16 +108,32 @@ export default async function EventPage({ params }: { params: Promise<{ slug: st
         </div>
       </section>
 
+      {flyerImages.length === 0 && flyerPdf && (
+        // A PDF with no pictures of it: a button to open the printable flyer.
+        <section className="px-5 py-12 md:py-16" style={{ background: BLACK }} {...editable("flyerPdf", TAB.flyer)}>
+          <div className="flex flex-col items-center max-w-5xl gap-5 mx-auto text-center">
+            <CmsButton
+              button={{ label: "View the printable flyer", linkType: "file", file: flyerPdf, style: "primary", newTab: true }}
+            />
+            {event.flyerCaption && (
+              <p className="text-[11px] font-bold tracking-[0.35em] uppercase" style={{ color: GOLD_BRIGHT }}>
+                {event.flyerCaption}
+              </p>
+            )}
+          </div>
+        </section>
+      )}
+
       {flyerImages.length > 0 && (
         <section className="px-5 py-12 md:py-16" style={{ background: BLACK }} {...editable("flyerImages", TAB.flyer)}>
           <div className="max-w-5xl mx-auto space-y-8">
             {flyerImages.map(({ media, linkLabel, id }, index) => {
               const image = (
                 <Image
-                  src={media!.url!}
-                  alt={media!.alt}
-                  width={media!.width ?? 2250}
-                  height={media!.height ?? 1750}
+                  src={media.url!}
+                  alt={media.alt}
+                  width={media.width ?? 2250}
+                  height={media.height ?? 1750}
                   sizes="(max-width: 768px) 100vw, 1100px"
                   className="w-full h-auto"
                   priority={index === 0}
