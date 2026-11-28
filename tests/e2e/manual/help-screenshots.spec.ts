@@ -152,7 +152,9 @@ test('how-to guide screenshots', async ({ page }) => {
   await form.getByLabel('Day of the event').fill('2027-06-05');
   await form.getByLabel(/Time and place/).fill('1 PM · North Canton Park');
   await form.getByLabel(/About the event/).fill('Food, games and a chance to meet the Sheriff. Bring the whole family.');
-  await mark(form);
+  const quickPreview = page.frameLocator('[data-testid="new-event-preview"]').getByTestId('quick-event-preview');
+  await expect(quickPreview.getByRole('heading', { level: 1 })).toContainText('Summer Picnic', { timeout: 20_000 });
+  await mark(page.getByTestId('new-event-preview'));
   await shot(page, 'add-event-2');
   await form.getByRole('button', { name: 'Publish now' }).click();
   await expect(page).toHaveURL(/\/admin\/collections\/events\/\d+/, { timeout: 20_000 });

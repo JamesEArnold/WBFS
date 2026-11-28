@@ -1,4 +1,3 @@
-import Image from "next/image";
 import { RenderBlocks } from "@/components/blocks/render-blocks";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -6,6 +5,7 @@ import { LAWMAN } from "@/components/designs/lawman/theme";
 import { CmsButton } from "@/components/ui/cms-button";
 import { loadListedEvents, loadPageGlobal } from "@/lib/cms/content";
 import { eventSubtitle } from "@/lib/cms/eventText";
+import { EventCard } from "@/components/designs/lawman/event-card";
 import { editable } from "@/lib/cms/editable";
 import { TAB } from "@/cms/tabs";
 
@@ -109,56 +109,7 @@ export default async function EventsPage() {
                   className="block transition-transform group hover:-translate-y-0.5"
                   aria-label={[e.title, eventSubtitle(e)].filter(Boolean).join(' — ')}
                 >
-                  <article
-                    className="grid items-stretch grid-cols-1 md:grid-cols-12"
-                    style={{
-                      background: COAL,
-                      border: `1px solid ${COAL_LIFT}`,
-                      borderTop: `3px solid ${GOLD}`,
-                    }}
-                  >
-                    <div className="flex items-center justify-center px-6 py-8 md:col-span-3 md:py-10" style={{ background: NEAR_BLACK }}>
-                      <Image
-                        src="/SheriffStar.PNG"
-                        alt=""
-                        width={120}
-                        height={120}
-                        className="block w-24 h-auto md:w-32"
-                      />
-                    </div>
-                    <div className="flex flex-col justify-center px-6 py-8 md:col-span-9 md:px-10 md:py-10">
-                      <p className="text-[10px] font-bold tracking-[0.4em] uppercase" style={{ color: GOLD_BRIGHT }}>
-                        {e.overline}
-                      </p>
-                      <h3
-                        className="mt-2 font-serif font-bold"
-                        style={{
-                          color: CREAM,
-                          fontSize: 'clamp(1.75rem, 3.5vw, 2.5rem)',
-                          lineHeight: 1.05,
-                        }}
-                      >
-                        {e.title}
-                      </h3>
-                      <p className="mt-2 text-sm md:text-base" style={{ color: BODY }}>
-                        {eventSubtitle(e)}
-                      </p>
-                      <ul className="mt-5 space-y-1.5 text-sm md:text-base" style={{ color: CREAM }}>
-                        {(e.facts ?? []).map((f) => (
-                          <li key={f.id ?? f.text} className="flex items-start gap-3">
-                            <span style={{ color: GOLD_BRIGHT }}>★</span>
-                            {f.text}
-                          </li>
-                        ))}
-                      </ul>
-                      <span
-                        className="inline-flex items-center self-start gap-3 mt-7 text-xs font-bold tracking-[0.3em] uppercase group-hover:gap-4 transition-all"
-                        style={{ color: GOLD_BRIGHT, borderBottom: `2px solid ${GOLD}`, paddingBottom: 4 }}
-                      >
-                        {e.listingCtaLabel} &rarr;
-                      </span>
-                    </div>
-                  </article>
+                  <EventCard event={e} />
                 </Link>
               ))}
             </div>

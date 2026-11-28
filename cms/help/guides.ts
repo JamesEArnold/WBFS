@@ -319,6 +319,7 @@ export const GUIDES: Guide[] = [
           {
             text: 'Type the **Event name**, for example “Summer Picnic”, and pick the **Day of the event**.',
             image: 'add-event-2',
+            detail: 'The preview on the right shows the top of the event’s page and its box on the Events list, and changes as you type.',
           },
           {
             text: 'Optional: type the **Time and place**, such as “1 PM · North Canton Park”, and a sentence or two in **About the event**.',

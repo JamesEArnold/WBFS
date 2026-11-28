@@ -61,3 +61,24 @@ export function quickEventData(input: QuickEventInput): QuickEventData {
     _status: input.publish === true ? 'published' : 'draft',
   };
 }
+
+/** Shown in the preview until a name is typed. */
+export const PREVIEW_TITLE = 'Your event name';
+
+/**
+ * What the event will look like while the quick form is still being filled
+ * in: never throws, and uses a placeholder name until one is typed.
+ */
+export function quickEventPreview(input: QuickEventInput) {
+  const date = dayToInstant(text(input.date));
+  const place = text(input.place);
+  const about = text(input.about);
+  return {
+    title: text(input.title) || PREVIEW_TITLE,
+    date: date ?? '',
+    subtitle: place ? (date ? `${longDate(date)} · ${place}` : place) : null,
+    heroBlurb: about || null,
+    status: 'upcoming' as const,
+    listingCtaLabel: 'View Details',
+  };
+}

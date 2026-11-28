@@ -2,6 +2,7 @@
 
 import { usePathname } from 'next/navigation';
 import { useSyncExternalStore } from 'react';
+import { QUICK_EVENT_PREVIEW_PATH } from '@/lib/cms/previewMessages';
 
 const noSubscribe = () => () => {};
 
@@ -10,6 +11,8 @@ export const PreviewBar = () => {
   const pathname = usePathname();
   // Inside the admin's Live Preview frame, point out click-to-edit instead.
   const inLivePreview = useSyncExternalStore(noSubscribe, () => window.parent !== window, () => false);
+  // The "Post a new event" preview isn't a draft of a saved page, and has nothing to click.
+  if (pathname === QUICK_EVENT_PREVIEW_PATH) return null;
   return (
     <div
       data-testid="preview-bar"

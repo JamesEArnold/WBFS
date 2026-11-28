@@ -1,7 +1,8 @@
 'use client';
 
+import { usePathname } from 'next/navigation';
 import { useEffect } from 'react';
-import { EDIT_FIELD_MESSAGE, type EditFieldMessage } from '@/lib/cms/previewMessages';
+import { EDIT_FIELD_MESSAGE, QUICK_EVENT_PREVIEW_PATH, type EditFieldMessage } from '@/lib/cms/previewMessages';
 
 const MARKED = '[data-cms-field],[data-cms-tab]';
 
@@ -12,8 +13,10 @@ const MARKED = '[data-cms-field],[data-cms-tab]';
  * Does nothing outside the Live Preview frame (e.g. in a "Preview" tab).
  */
 export const PreviewClick = () => {
+  const pathname = usePathname();
   useEffect(() => {
-    if (window.parent === window) return;
+    // Only in the admin's Live Preview frame (not the "Post a new event" preview, which has no saved fields).
+    if (window.parent === window || pathname === QUICK_EVENT_PREVIEW_PATH) return;
 
     const badge = document.createElement('div');
     badge.textContent = '✎ Click to edit';
@@ -80,6 +83,6 @@ export const PreviewClick = () => {
       clearHover();
       badge.remove();
     };
-  }, []);
+  }, [pathname]);
   return null;
 };

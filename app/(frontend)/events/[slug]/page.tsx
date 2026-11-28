@@ -5,11 +5,11 @@ import { LAWMAN } from "@/components/designs/lawman/theme";
 import { CmsButton } from "@/components/ui/cms-button";
 import { TAB } from "@/cms/tabs";
 import { eventFlyer, loadEvent } from "@/lib/cms/content";
-import { editable, editableTab } from "@/lib/cms/editable";
-import { eventDateLabel, eventHeading } from "@/lib/cms/eventText";
+import { editable } from "@/lib/cms/editable";
+import { EventHero } from "@/components/designs/lawman/event-hero";
 import { listEventSlugs } from "@/lib/cms/public";
 
-const { BLACK, NEAR_BLACK, COAL_LIFT, GOLD, GOLD_BRIGHT, CREAM, BODY } = LAWMAN;
+const { BLACK, COAL_LIFT, GOLD_BRIGHT, CREAM } = LAWMAN;
 
 export const dynamicParams = true;
 
@@ -23,90 +23,20 @@ export default async function EventPage({ params }: { params: Promise<{ slug: st
   if (!event) notFound();
 
   const { pdf: flyerPdf, pictures: flyerImages } = eventFlyer(event);
-  const showSoldOut = event.status === "soldOut" && Boolean(event.soldOutBanner?.heading);
-  const dateLabel = eventDateLabel(event);
-
   return (
     <main style={{ background: BLACK, color: CREAM }}>
-      {showSoldOut && (
-        <div className="w-full py-5 text-center sticky top-0 z-50" style={{ background: GOLD }} {...editable("soldOutBanner.heading", TAB.soldOut)}>
-          <p
-            className="font-black uppercase tracking-[0.25em]"
-            style={{ color: BLACK, fontSize: "clamp(1.1rem, 3vw, 1.5rem)" }}
-          >
-            {event.soldOutBanner?.heading}
-          </p>
-          {event.soldOutBanner?.body && (
-            <p className="max-w-2xl mx-auto mt-2 text-sm font-medium leading-relaxed px-5" style={{ color: BLACK, opacity: 0.8 }}>
-              {event.soldOutBanner.body}
-            </p>
-          )}
-        </div>
-      )}
-
-      {/* Hero */}
-      <section className="relative overflow-hidden" style={{ background: NEAR_BLACK }} {...editableTab(TAB.basics)}>
-        <div
-          aria-hidden
-          className="absolute inset-0"
-          style={{
-            backgroundImage: `radial-gradient(circle at 50% 30%, rgba(200,155,60,0.15) 0%, transparent 55%)`,
-          }}
-        />
-        <div className="relative max-w-5xl px-5 pt-16 pb-10 mx-auto md:pt-20">
-          {dateLabel && (
-            <div className="flex items-center gap-3" {...editable("dateLabel")}>
-              <span className="block w-10 h-px" style={{ background: GOLD_BRIGHT }} />
-              <p
-                className="text-[11px] font-bold tracking-[0.4em] uppercase"
-                style={{ color: GOLD_BRIGHT }}
-              >
-                {dateLabel}
-              </p>
-            </div>
-          )}
-          <h1
-            {...editable(event.heading ? "heading" : "title")}
-            className="mt-6 font-serif font-black uppercase"
-            style={{
-              color: CREAM,
-              fontSize: "clamp(2.5rem, 7.5vw, 4.75rem)",
-              lineHeight: 0.95,
-              letterSpacing: "0.01em",
-            }}
-          >
-            {eventHeading(event)}
-            {event.headingAccent && (
-              <span
-                className="block"
-                style={{
-                  color: GOLD_BRIGHT,
-                  WebkitTextStroke: `1px ${GOLD}`,
-                }}
-              >
-                {event.headingAccent}
-              </span>
-            )}
-          </h1>
-          {event.heroBlurb && (
-            <p
-              {...editable("heroBlurb")}
-              className="max-w-xl mt-6 text-base leading-relaxed md:text-lg"
-              style={{ color: BODY }}
-            >
-              {event.heroBlurb}
-            </p>
-          )}
-
-          {(event.buttons ?? []).length > 0 && (
+      <EventHero
+        event={event}
+        buttons={
+          (event.buttons ?? []).length > 0 && (
             <div className="flex flex-wrap items-center gap-3 mt-6" {...editable("buttons")}>
               {(event.buttons ?? []).map((button) => (
                 <CmsButton key={button.id ?? button.label} button={button} />
               ))}
             </div>
-          )}
-        </div>
-      </section>
+          )
+        }
+      />
 
       {flyerImages.length === 0 && flyerPdf && (
         // A PDF with no pictures of it: a button to open the printable flyer.

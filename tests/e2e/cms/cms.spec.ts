@@ -302,6 +302,9 @@ test('"Post a new event" quick form: name, day and place are enough for a finish
   await expect(page.getByRole('heading', { name: 'Post a new event' })).toBeVisible({ timeout: 20_000 });
 
   const form = page.getByTestId('new-event-form');
+  // The preview beside the form shows the real event page, with a placeholder until a name is typed.
+  const preview = page.frameLocator('[data-testid="new-event-preview"]').getByTestId('quick-event-preview');
+  await expect(preview.getByRole('heading', { level: 1 })).toContainText('Your event name', { timeout: 20_000 });
   // Nothing filled in: the browser asks for the name first, and nothing is created.
   await form.getByRole('button', { name: 'Publish now' }).click();
   await expect(page).toHaveURL(/\/admin\/new-event$/);
@@ -310,6 +313,15 @@ test('"Post a new event" quick form: name, day and place are enough for a finish
   await form.getByLabel('Day of the event').fill('2027-06-05');
   await form.getByLabel(/Time and place/).fill('1 PM · North Canton Park');
   await form.getByLabel(/About the event/).fill('Food and games for the whole family.');
+
+  // ...and follows along as you type: headline, date line, paragraph and the Events list box.
+  await expect(preview.getByRole('heading', { level: 1 })).toContainText('E2E Quick Picnic');
+  await expect(preview).toContainText('Saturday · June 5, 2027');
+  await expect(preview).toContainText('Food and games for the whole family.');
+  await expect(preview).toContainText('Saturday, June 5, 2027 · 1 PM · North Canton Park');
+  // It's not a saved draft, so no draft-preview bar.
+  await expect(page.frameLocator('[data-testid="new-event-preview"]').getByTestId('preview-bar')).toHaveCount(0);
+
   await form.getByRole('button', { name: 'Publish now' }).click();
 
   // Lands on the full event form for the new event, to add a flyer or anything else.
@@ -336,6 +348,7 @@ test('"Post a new event" quick form: name, day and place are enough for a finish
   // Not signed in (a fresh session; `anon` picked up a login from the password-reset test): the quick form's API refuses.
   const stranger = await newContext();
   expect((await stranger.post('/api/events/quick-create', { data: { title: 'x', date: '2027-06-05' } })).status()).toBe(403);
+  expect((await stranger.get('/preview/new-event')).status()).toBe(404);
   await stranger.dispose();
 
   expect((await editor.delete(`/api/events/${quickId}`)).status()).toBe(200);
