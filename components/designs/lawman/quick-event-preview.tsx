@@ -2,8 +2,11 @@
 
 import { useEffect, useState } from 'react';
 import { quickEventPreview } from '@/cms/quickEvent';
+import { eventFlyer } from '@/lib/cms/media';
 import { isQuickEventMessage, QUICK_EVENT_READY, type QuickEventMessage } from '@/lib/cms/previewMessages';
+import type { Media } from '@/payload-types';
 import { EventCard } from './event-card';
+import { EventFlyerSection } from './event-flyer';
 import { EventHero } from './event-hero';
 import { LAWMAN } from './theme';
 
@@ -11,7 +14,7 @@ const { BLACK, GOLD_BRIGHT, CREAM } = LAWMAN;
 
 /**
  * Live preview for the "Post a new event" quick form: the top of the event's
- * page and its box on the Events list, drawn with the real site components
+ * page, its flyer, and its box on the Events list, drawn with the real site components
  * from what's typed so far (sent by cms/components/quick/NewEventForm.tsx).
  */
 export function QuickEventPreview() {
@@ -29,9 +32,15 @@ export function QuickEventPreview() {
   }, []);
 
   const event = quickEventPreview(input);
+  // The chosen files carry what the page needs to draw them (url, type, size, description).
+  const flyer = eventFlyer({
+    flyerPdf: (input.flyerPdf ?? null) as Media | null,
+    flyerImages: (input.flyerImages ?? []).map((media) => ({ id: String(media.id), image: media as Media })),
+  });
   return (
     <main style={{ background: BLACK, color: CREAM }} data-testid="quick-event-preview">
       <EventHero event={{ ...event, heading: null, headingAccent: null, dateLabel: null, soldOutBanner: undefined }} />
+      <EventFlyerSection flyer={flyer} />
       <section className="px-5 py-14" style={{ background: BLACK }}>
         <div className="max-w-5xl mx-auto">
           <p className="mb-6 text-[11px] font-bold tracking-[0.4em] uppercase text-center" style={{ color: GOLD_BRIGHT }}>

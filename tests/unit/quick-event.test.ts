@@ -37,6 +37,26 @@ describe('"Post a new event" quick form', () => {
   });
 });
 
+describe('"Post a new event" flyer', () => {
+  it('attaches the chosen flyer PDF and pictures', () => {
+    expect(quickEventData({ ...base, flyerPdf: 7, flyerImages: [8, 9] })).toMatchObject({
+      flyerPdf: 7,
+      flyerImages: [{ image: 8 }, { image: 9 }],
+    });
+  });
+
+  it('leaves them out when none are chosen', () => {
+    const data = quickEventData(base);
+    expect(data).not.toHaveProperty('flyerPdf');
+    expect(data).not.toHaveProperty('flyerImages');
+  });
+
+  it('ignores anything that isn’t a file id, and repeats', () => {
+    expect(quickEventData({ ...base, flyerPdf: 'abc', flyerImages: [8, 8, -1, 2.5, '9', null] })).toMatchObject({ flyerImages: [{ image: 8 }] });
+    expect(quickEventData({ ...base, flyerPdf: 'abc' })).not.toHaveProperty('flyerPdf');
+  });
+});
+
 describe('"Post a new event" preview while typing', () => {
   it('shows a placeholder name and no date until they are filled in', () => {
     expect(quickEventPreview({})).toMatchObject({ title: PREVIEW_TITLE, date: '', subtitle: null, heroBlurb: null });

@@ -16,6 +16,10 @@ export type QuickEventInput = {
   /** Take it off the Events list (and the Home strip) after the event day. */
   dropOffAfter?: unknown;
   publish?: unknown;
+  /** Photos & Files id of the printable flyer PDF. */
+  flyerPdf?: unknown;
+  /** Photos & Files ids of pictures of the flyer's pages. */
+  flyerImages?: unknown;
 };
 
 export type QuickEventData = {
@@ -24,11 +28,16 @@ export type QuickEventData = {
   subtitle?: string;
   heroBlurb?: string;
   expiresAt?: string;
+  flyerPdf?: number;
+  flyerImages?: { image: number }[];
   status: 'upcoming';
   _status: 'draft' | 'published';
 };
 
 const text = (value: unknown) => (typeof value === 'string' ? value.trim() : '');
+const mediaId = (value: unknown): number | null => (typeof value === 'number' && Number.isInteger(value) && value > 0 ? value : null);
+const mediaIds = (value: unknown): number[] =>
+  Array.isArray(value) ? [...new Set(value.map(mediaId).filter((id): id is number => id !== null))].slice(0, 10) : [];
 
 /** A date-only pick, stored the way Payload's own date picker stores it (midday UTC). */
 function dayToInstant(day: string): string | null {
@@ -51,12 +60,16 @@ export function quickEventData(input: QuickEventInput): QuickEventData {
   const date = dayToInstant(text(input.date))!;
   const place = text(input.place);
   const about = text(input.about);
+  const flyerPdf = mediaId(input.flyerPdf);
+  const flyerImages = mediaIds(input.flyerImages);
   return {
     title: text(input.title),
     date,
     ...(place ? { subtitle: `${longDate(date)} · ${place}` } : {}),
     ...(about ? { heroBlurb: about } : {}),
     ...(input.dropOffAfter === false ? {} : { expiresAt: date }),
+    ...(flyerPdf ? { flyerPdf } : {}),
+    ...(flyerImages.length ? { flyerImages: flyerImages.map((image) => ({ image })) } : {}),
     status: 'upcoming',
     _status: input.publish === true ? 'published' : 'draft',
   };

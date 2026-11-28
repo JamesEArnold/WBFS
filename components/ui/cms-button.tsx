@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { LAWMAN } from '@/components/designs/lawman/theme';
-import { buttonHref, type Button } from '@/lib/cms/content';
+import { buttonHref, type Button } from '@/lib/cms/media';
 
 const { BLACK, COAL_LIFT, GOLD, GOLD_BRIGHT } = LAWMAN;
 

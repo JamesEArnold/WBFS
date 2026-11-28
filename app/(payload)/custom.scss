@@ -496,3 +496,85 @@ html[data-theme='dark'] {
   border-radius: 12px;
   background: #0a0a0a;
 }
+
+/* Flyer PDF and pictures in the quick event form (cms/components/quick/MediaPicker.tsx). */
+.quick-media {
+  display: grid;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  legend {
+    margin-bottom: 6px;
+    padding: 0;
+    font-weight: 700;
+    small {
+      font-weight: 400;
+      color: var(--theme-elevation-700);
+    }
+  }
+  > small {
+    color: var(--theme-elevation-700);
+  }
+}
+.quick-media__buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.quick-media__button {
+  padding: 9px 14px;
+  font: inherit;
+  font-size: 14px;
+  font-weight: 700;
+  border-radius: 6px;
+  border: 1px solid var(--help-gold);
+  background: var(--help-gold-soft);
+  color: var(--theme-text);
+  cursor: pointer;
+}
+.quick-media__button--secondary {
+  border-color: var(--theme-elevation-250);
+  background: var(--theme-elevation-0);
+}
+.quick-media__file {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px;
+  border-radius: 8px;
+  border: 1px solid var(--theme-elevation-150);
+  background: var(--theme-elevation-0);
+}
+.quick-media__thumb {
+  flex: 0 0 auto;
+  width: 48px;
+  height: 48px;
+  object-fit: cover;
+  border-radius: 4px;
+}
+.quick-media__thumb--pdf {
+  display: grid;
+  place-items: center;
+  background: #a31818;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 800;
+}
+.quick-media__name {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.quick-media__remove {
+  padding: 6px 10px;
+  font: inherit;
+  font-size: 13px;
+  border-radius: 6px;
+  border: 1px solid var(--theme-elevation-250);
+  background: transparent;
+  color: var(--theme-text);
+  cursor: pointer;
+}

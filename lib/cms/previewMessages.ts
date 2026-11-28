@@ -21,14 +21,52 @@ export const QUICK_EVENT_MESSAGE = 'wbfs:quick-event';
 /** Preview frame → form: ready to receive the form's contents. */
 export const QUICK_EVENT_READY = 'wbfs:quick-event-ready';
 
+/** What the preview needs to draw an uploaded file. */
+export type PreviewMedia = {
+  id: number;
+  url: string;
+  mimeType: string;
+  alt: string;
+  filename?: string;
+  width?: number | null;
+  height?: number | null;
+};
+
 export type QuickEventMessage = {
   type: typeof QUICK_EVENT_MESSAGE;
-  input: { title?: string; date?: string; place?: string; about?: string };
+  input: {
+    title?: string;
+    date?: string;
+    place?: string;
+    about?: string;
+    flyerPdf?: PreviewMedia | null;
+    flyerImages?: PreviewMedia[];
+  };
 };
+
+const isOptionalString = (value: unknown) => value === undefined || typeof value === 'string';
+
+export function isPreviewMedia(value: unknown): value is PreviewMedia {
+  if (!value || typeof value !== 'object') return false;
+  const media = value as Record<string, unknown>;
+  return (
+    typeof media.id === 'number' &&
+    typeof media.url === 'string' &&
+    // Same-site files, or Vercel Blob / other https storage.
+    ((media.url.startsWith('/') && !media.url.startsWith('//')) || media.url.startsWith('https://')) &&
+    typeof media.mimeType === 'string' &&
+    typeof media.alt === 'string'
+  );
+}
 
 export function isQuickEventMessage(data: unknown): data is QuickEventMessage {
   if (!data || typeof data !== 'object') return false;
   const message = data as Record<string, unknown>;
   if (message.type !== QUICK_EVENT_MESSAGE || !message.input || typeof message.input !== 'object') return false;
-  return Object.values(message.input).every((value) => value === undefined || typeof value === 'string');
+  const input = message.input as Record<string, unknown>;
+  return (
+    ['title', 'date', 'place', 'about'].every((key) => isOptionalString(input[key])) &&
+    (input.flyerPdf === undefined || input.flyerPdf === null || isPreviewMedia(input.flyerPdf)) &&
+    (input.flyerImages === undefined || (Array.isArray(input.flyerImages) && input.flyerImages.every(isPreviewMedia)))
+  );
 }

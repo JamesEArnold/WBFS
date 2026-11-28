@@ -2,7 +2,19 @@
 
 import { useRouter } from 'next/navigation';
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { QUICK_EVENT_MESSAGE, QUICK_EVENT_PREVIEW_PATH, QUICK_EVENT_READY, type QuickEventMessage } from '@/lib/cms/previewMessages';
+import { QUICK_EVENT_MESSAGE, QUICK_EVENT_PREVIEW_PATH, QUICK_EVENT_READY, type PreviewMedia, type QuickEventMessage } from '@/lib/cms/previewMessages';
+import { MediaPicker, PickedFile, type PickedMedia } from './MediaPicker';
+
+/** What the preview needs about a chosen file (not its thumbnail). */
+const forPreview = (media: PickedMedia): PreviewMedia => ({
+  id: media.id,
+  url: media.url,
+  mimeType: media.mimeType,
+  alt: media.alt,
+  filename: media.filename,
+  width: media.width,
+  height: media.height,
+});
 
 /**
  * The "Post a new event" form, with a live preview of the event beside it
@@ -15,6 +27,13 @@ export function NewEventForm() {
   const [error, setError] = useState<string | null>(null);
   const formRef = useRef<HTMLFormElement>(null);
   const frameRef = useRef<HTMLIFrameElement>(null);
+  const [flyerPdf, setFlyerPdf] = useState<PickedMedia | null>(null);
+  const [flyerImages, setFlyerImages] = useState<PickedMedia[]>([]);
+  // The latest chosen files, for sending to the preview from event handlers.
+  const filesRef = useRef({ flyerPdf, flyerImages });
+  useEffect(() => {
+    filesRef.current = { flyerPdf, flyerImages };
+  }, [flyerPdf, flyerImages]);
 
   /** Send what's typed so far to the preview. */
   const updatePreview = useCallback(() => {
@@ -30,10 +49,17 @@ export function NewEventForm() {
         date: field('date'),
         place: field('place'),
         about: field('about'),
+        flyerPdf: filesRef.current.flyerPdf ? forPreview(filesRef.current.flyerPdf) : null,
+        flyerImages: filesRef.current.flyerImages.map(forPreview),
       },
     };
     frame.postMessage(message, window.location.origin);
   }, []);
+
+  // Show newly chosen or removed files in the preview.
+  useEffect(() => {
+    updatePreview();
+  }, [flyerPdf, flyerImages, updatePreview]);
 
   useEffect(() => {
     const onMessage = (event: MessageEvent) => {
@@ -45,6 +71,8 @@ export function NewEventForm() {
   }, [updatePreview]);
 
   async function submit(event: React.FormEvent<HTMLFormElement>) {
+    // The upload windows have their own forms; their Save must not submit this one.
+    if (event.target !== event.currentTarget) return;
     event.preventDefault();
     const submitter = (event.nativeEvent as SubmitEvent).submitter as HTMLButtonElement | null;
     const publish = submitter?.value === 'publish';
@@ -62,6 +90,8 @@ export function NewEventForm() {
           place: form.get('place'),
           about: form.get('about'),
           dropOffAfter: form.get('dropOffAfter') === 'on',
+          flyerPdf: flyerPdf?.id,
+          flyerImages: flyerImages.map((media) => media.id),
           publish,
         }),
       });
@@ -105,6 +135,31 @@ export function NewEventForm() {
           </span>
           <textarea name="about" rows={3} placeholder="A sentence or two for the event’s page." />
         </label>
+        <fieldset className="quick-media" data-testid="flyer-pdf">
+          <legend>
+            Flyer PDF <small>(optional)</small>
+          </legend>
+          <small>The printable flyer. The event’s page shows a gold “View the printable flyer” button that opens it.</small>
+          {flyerPdf ? (
+            <PickedFile media={flyerPdf} onRemove={() => setFlyerPdf(null)} />
+          ) : (
+            <MediaPicker kind="pdf" uploadLabel="Upload the flyer PDF" onPick={setFlyerPdf} />
+          )}
+        </fieldset>
+        <fieldset className="quick-media" data-testid="flyer-pictures">
+          <legend>
+            Pictures of the flyer <small>(optional)</small>
+          </legend>
+          <small>A picture (JPG or PNG) of each page. They show on the event’s page, and open the PDF when clicked.</small>
+          {flyerImages.map((media) => (
+            <PickedFile key={media.id} media={media} onRemove={() => setFlyerImages((list) => list.filter((m) => m.id !== media.id))} />
+          ))}
+          <MediaPicker
+            kind="image"
+            uploadLabel={flyerImages.length ? 'Upload another picture' : 'Upload a picture'}
+            onPick={(media) => setFlyerImages((list) => (list.some((m) => m.id === media.id) ? list : [...list, media]))}
+          />
+        </fieldset>
         <label className="quick-form__check">
           <input name="dropOffAfter" type="checkbox" defaultChecked />
           <span>Take it off the Events list after that day. Its own page stays up for anyone with the link.</span>

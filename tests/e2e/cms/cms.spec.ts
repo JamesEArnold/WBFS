@@ -319,6 +319,24 @@ test('"Post a new event" quick form: name, day and place are enough for a finish
   await expect(preview).toContainText('Saturday · June 5, 2027');
   await expect(preview).toContainText('Food and games for the whole family.');
   await expect(preview).toContainText('Saturday, June 5, 2027 · 1 PM · North Canton Park');
+  // A flyer, uploaded right here with the admin's own upload window: the PDF, then a picture of it.
+  await form.getByTestId('flyer-pdf').getByRole('button', { name: 'Upload the flyer PDF' }).click();
+  let drawer = page.locator('.drawer--is-open').last();
+  await drawer.locator('input[type="file"]').setInputFiles({ name: 'e2e-quick-flyer.pdf', mimeType: 'application/pdf', buffer: TINY_PDF });
+  await drawer.locator('#field-alt').fill('E2E quick flyer');
+  await drawer.getByRole('button', { name: 'Save' }).click();
+  await expect(form.getByTestId('flyer-pdf').getByTestId('picked-file')).toContainText('e2e-quick-flyer', { timeout: 20_000 });
+  await expect(page).toHaveURL(/\/admin\/new-event$/); // still on the form
+  await expect(preview.getByText('View the printable flyer')).toBeVisible();
+
+  await form.getByTestId('flyer-pictures').getByRole('button', { name: 'Upload a picture' }).click();
+  drawer = page.locator('.drawer--is-open').last();
+  await drawer.locator('input[type="file"]').setInputFiles({ name: 'e2e-quick-flyer-front.png', mimeType: 'image/png', buffer: DOT_PNG });
+  await drawer.locator('#field-alt').fill('E2E quick flyer front');
+  await drawer.getByRole('button', { name: 'Save' }).click();
+  await expect(form.getByTestId('flyer-pictures').getByTestId('picked-file')).toContainText('e2e-quick-flyer-front', { timeout: 20_000 });
+  await expect(preview.locator('img[alt="E2E quick flyer front"]')).toBeVisible();
+
   // It's not a saved draft, so no draft-preview bar.
   await expect(page.frameLocator('[data-testid="new-event-preview"]').getByTestId('preview-bar')).toHaveCount(0);
 
@@ -335,8 +353,11 @@ test('"Post a new event" quick form: name, day and place are enough for a finish
   expect(eventPage.text).toContain('E2E Quick Picnic');
   expect(eventPage.text).toContain('Saturday · June 5, 2027');
   expect(eventPage.text).toContain('Food and games for the whole family.');
-  const saved = (await (await editor.get(`/api/events/${quickId}?depth=0`)).json()) as Doc;
+  const saved = (await (await editor.get(`/api/events/${quickId}?depth=1`)).json()) as Doc;
   expect(saved.expiresAt).toBe('2027-06-05T12:00:00.000Z'); // drops off the list after the day
+  expect(saved.flyerPdf?.filename).toMatch(/^e2e-quick-flyer.*\.pdf$/);
+  expect(saved.flyerImages?.map((row: Doc) => row.image?.alt)).toEqual(['E2E quick flyer front']);
+  expect(eventPage.text).toMatch(/href="[^"]*e2e-quick-flyer[^"]*\.pdf"/); // the picture opens the PDF
 
   // The same name again gets a plain explanation instead of a second event.
   await page.goto('/admin/new-event');
@@ -353,6 +374,9 @@ test('"Post a new event" quick form: name, day and place are enough for a finish
 
   expect((await editor.delete(`/api/events/${quickId}`)).status()).toBe(200);
   await eventually(async () => !(await pageText('/events')).text.includes('E2E Quick Picnic'));
+  for (const media of [saved.flyerPdf, saved.flyerImages[0].image]) {
+    expect((await editor.delete(`/api/media/${media.id}`)).status()).toBe(200);
+  }
 });
 
 test('an event flyer can be just a PDF; a PDF can’t be used as a flyer picture', async () => {

@@ -306,7 +306,7 @@ export const GUIDES: Guide[] = [
     summary: 'Put a fundraiser, parade or appearance on the Events page in a minute: name, day and place are enough.',
     category: 'Events',
     minutes: 3,
-    beforeYouStart: ['Have the name, the day, and the time and place. A short description and a flyer are optional.'],
+    beforeYouStart: ['Have the name, the day, and the time and place. A short description and a flyer (PDF, and pictures of it if you have them) are optional.'],
     parts: [
       {
         heading: 'Post it with the quick form',
@@ -326,6 +326,16 @@ export const GUIDES: Guide[] = [
             detail: 'The Events list shows the date followed by the time and place, like “Saturday, June 5, 2027 · 1 PM · North Canton Park”.',
           },
           {
+            text: 'Have a flyer? Under **Flyer PDF**, click **Upload the flyer PDF**, drag in the PDF (or click **Select a file**), type a short description such as “Printable picnic flyer”, and click **Save**.',
+            image: 'add-event-3',
+            detail:
+              'The event’s page gets a gold **View the printable flyer** button. Already uploaded it? Click **Choose one already uploaded** instead.',
+          },
+          {
+            text: 'Optional: under **Pictures of the flyer**, click **Upload a picture** for a picture (JPG or PNG) of each page. They show on the event’s page, and open the PDF when clicked.',
+            detail: 'Changed your mind? Click **Remove** next to any file. The preview on the right shows the flyer as you add it.',
+          },
+          {
             text: 'Leave **Take it off the Events list after that day** ticked, so the event drops off the list by itself once it’s over.',
             detail: 'Its own page stays up for anyone who has the link.',
           },
@@ -336,23 +346,17 @@ export const GUIDES: Guide[] = [
         ],
       },
       {
-        heading: 'Add a flyer or buttons (optional)',
+        heading: 'Add buttons, or change anything later (optional)',
         intro: 'After you click, the full event form opens with a preview of the event’s page beside it.',
         steps: [
-          {
-            text: 'For a flyer, click the **Flyer** tab. Under **Flyer PDF**, click **Create New**, drag in the PDF (or click **Select a file**), type a short description such as “Printable picnic flyer”, and click **Save**.',
-            image: 'add-event-3',
-            detail: 'That’s all you need: the event’s page shows a gold **View the printable flyer** button that opens the PDF.',
-          },
-          {
-            text: 'Optional: to show the flyer itself on the page, under **Flyer pictures** click **Add Flyer picture** and add a picture (JPG or PNG) of each page. Visitors click a picture to open the PDF.',
-            detail: 'Put the PDF only in **Flyer PDF**. The pictures box takes pictures only.',
-          },
           {
             text: 'For buttons like “RSVP” or “Sponsor”, stay on the **Basics** tab and click **Add Button**. See the guide on buttons and links.',
           },
           {
-            text: 'Click **Publish changes** to put your additions live.',
+            text: 'To add or change the flyer later, click the **Flyer** tab: **Flyer PDF** holds the PDF, and **Flyer pictures** the pictures of its pages.',
+          },
+          {
+            text: 'Click **Publish changes** to put your changes live.',
           },
         ],
       },
@@ -378,7 +382,7 @@ export const GUIDES: Guide[] = [
       },
       {
         problem: 'My flyer doesn’t show on the event’s page.',
-        fix: 'Check the PDF is in **Flyer PDF** on the **Flyer** tab (not under **Flyer pictures**), then click **Publish changes**. The page shows a **View the printable flyer** button, or your flyer pictures if you added them.',
+        fix: 'Open the event and check the PDF is in **Flyer PDF** on the **Flyer** tab (not under **Flyer pictures**), then click **Publish changes**. The page shows a **View the printable flyer** button, or your flyer pictures if you added them.',
       },
       {
         problem: 'The event isn’t on the Events page.',

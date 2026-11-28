@@ -26,8 +26,8 @@ export function NewEventView({ initPageResult, params, searchParams }: AdminView
           <p className="help-kicker">Quick form</p>
           <h1>Post a new event</h1>
           <p>
-            Just the basics. The date line, headline and Events list box are filled in for you, and the preview on the right shows the
-            result as you type. On the next screen you can add a flyer or buttons and change anything.
+            Name, day and place, plus a flyer if you have one. The date line, headline and Events list box are filled in for you, and
+            the preview on the right shows the result as you type. On the next screen you can add buttons and change anything.
           </p>
         </header>
         <NewEventForm />

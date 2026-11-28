@@ -14,6 +14,25 @@ test.use({ viewport: { width: 1280, height: 800 } });
 
 const OUT = 'public/admin-help';
 
+/** A small one-page PDF for the flyer steps. */
+const FLYER_PDF = Buffer.from(
+  [
+    '%PDF-1.4',
+    '1 0 obj<</Type/Catalog/Pages 2 0 R>>endobj',
+    '2 0 obj<</Type/Pages/Kids[]/Count 0>>endobj',
+    'xref',
+    '0 3',
+    '0000000000 65535 f ',
+    '0000000009 00000 n ',
+    '0000000052 00000 n ',
+    'trailer<</Size 3/Root 1 0 R>>',
+    'startxref',
+    '96',
+    '%%EOF',
+    '',
+  ].join('\n'),
+);
+
 async function settle(page: Page) {
   await page.waitForLoadState('networkidle', { timeout: 15_000 }).catch(() => undefined);
   await page.waitForTimeout(600);
@@ -156,13 +175,21 @@ test('how-to guide screenshots', async ({ page }) => {
   await expect(quickPreview.getByRole('heading', { level: 1 })).toContainText('Summer Picnic', { timeout: 20_000 });
   await mark(page.getByTestId('new-event-preview'));
   await shot(page, 'add-event-2');
+  // Flyer: upload the PDF from the quick form, then show the box and the preview's flyer button.
+  await form.getByTestId('flyer-pdf').getByRole('button', { name: 'Upload the flyer PDF' }).click();
+  const drawer = page.locator('.drawer--is-open').last();
+  await drawer.locator('input[type="file"]').setInputFiles({ name: 'summer-picnic-flyer.pdf', mimeType: 'application/pdf', buffer: FLYER_PDF });
+  await drawer.locator('#field-alt').fill('Printable Summer Picnic flyer');
+  await drawer.getByRole('button', { name: 'Save' }).click();
+  await expect(form.getByTestId('flyer-pdf').getByTestId('picked-file')).toBeVisible({ timeout: 20_000 });
+  const flyerButton = page.frameLocator('[data-testid="new-event-preview"]').getByText('View the printable flyer');
+  await flyerButton.scrollIntoViewIfNeeded();
+  await mark(form.getByTestId('flyer-pdf'));
+  await mark(flyerButton);
+  await shot(page, 'add-event-3');
   await form.getByRole('button', { name: 'Publish now' }).click();
   await expect(page).toHaveURL(/\/admin\/collections\/events\/\d+/, { timeout: 20_000 });
   await expect(preview(page).locator('h1')).toContainText('Summer Picnic', { timeout: 30_000 });
-  await openTab(page, 'Flyer');
-  await mark(tabButton(page, 'Flyer'));
-  await mark(page.locator('#field-flyerPdf'));
-  await shot(page, 'add-event-3');
 
   // ── Update an event ─────────────────────────────────────────
   await page.goto('/admin/collections/events');
